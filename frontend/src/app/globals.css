@@ -1,0 +1,166 @@
+@import "tailwindcss";
+
+/*
+  PakFix design system
+  --------------------
+  One place where the brand is defined. Components never hardcode a colour;
+  they reference these tokens, so a rebrand is an edit to this file.
+
+  The palette is built around a deep teal (trust, utility, not-a-bank blue)
+  with a warm amber accent for actions that cost money or need attention.
+  Greens and reds are reserved for state, never decoration.
+*/
+
+@theme {
+  /* Brand */
+  --color-brand-50: oklch(0.971 0.021 190);
+  --color-brand-100: oklch(0.941 0.043 191);
+  --color-brand-200: oklch(0.885 0.079 192);
+  --color-brand-300: oklch(0.809 0.112 193);
+  --color-brand-400: oklch(0.715 0.124 195);
+  --color-brand-500: oklch(0.627 0.119 197);
+  --color-brand-600: oklch(0.531 0.103 199);
+  --color-brand-700: oklch(0.447 0.086 201);
+  --color-brand-800: oklch(0.378 0.071 203);
+  --color-brand-900: oklch(0.322 0.059 205);
+  --color-brand-950: oklch(0.219 0.045 207);
+
+  /* Accent — calls to action, prices, emphasis */
+  --color-accent-50: oklch(0.982 0.028 84);
+  --color-accent-100: oklch(0.958 0.061 85);
+  --color-accent-200: oklch(0.918 0.111 87);
+  --color-accent-300: oklch(0.869 0.151 84);
+  --color-accent-400: oklch(0.823 0.163 82);
+  --color-accent-500: oklch(0.769 0.166 76);
+  --color-accent-600: oklch(0.681 0.157 65);
+  --color-accent-700: oklch(0.564 0.134 57);
+  --color-accent-800: oklch(0.472 0.110 53);
+  --color-accent-900: oklch(0.406 0.092 51);
+
+  /* Neutrals */
+  --color-ink-50: oklch(0.985 0.002 247);
+  --color-ink-100: oklch(0.967 0.003 247);
+  --color-ink-200: oklch(0.928 0.006 265);
+  --color-ink-300: oklch(0.872 0.010 258);
+  --color-ink-400: oklch(0.704 0.019 261);
+  --color-ink-500: oklch(0.551 0.023 264);
+  --color-ink-600: oklch(0.446 0.026 257);
+  --color-ink-700: oklch(0.373 0.029 256);
+  --color-ink-800: oklch(0.279 0.028 256);
+  --color-ink-900: oklch(0.210 0.028 261);
+  --color-ink-950: oklch(0.130 0.024 263);
+
+  /* State — safety levels map onto these directly */
+  --color-safe-500: oklch(0.696 0.161 149);
+  --color-safe-600: oklch(0.596 0.141 151);
+  --color-warn-500: oklch(0.795 0.161 86);
+  --color-warn-600: oklch(0.681 0.157 65);
+  --color-danger-500: oklch(0.637 0.208 25);
+  --color-danger-600: oklch(0.577 0.199 27);
+  --color-info-500: oklch(0.623 0.152 254);
+
+  /* Typography */
+  --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+
+  /* Radii — generous, to match the "premium, friendly" brief */
+  --radius-card: 1rem;
+  --radius-control: 0.625rem;
+  --radius-pill: 9999px;
+
+  /* Elevation — soft and low-contrast, never a hard drop shadow */
+  --shadow-card: 0 1px 2px oklch(0 0 0 / 0.04), 0 8px 24px oklch(0 0 0 / 0.06);
+  --shadow-lifted: 0 2px 4px oklch(0 0 0 / 0.05), 0 16px 40px oklch(0 0 0 / 0.10);
+}
+
+:root {
+  --background: var(--color-ink-50);
+  --foreground: var(--color-ink-900);
+  --surface: #ffffff;
+  --surface-muted: var(--color-ink-100);
+  --border: var(--color-ink-200);
+  /* A brand-tinted wash. Theme-aware, because the fixed brand-50 token is
+     light in both themes and would put light text on a light panel. */
+  --brand-wash: var(--color-brand-50);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --background: var(--color-ink-950);
+    --foreground: var(--color-ink-100);
+    --surface: var(--color-ink-900);
+    --surface-muted: var(--color-ink-800);
+    --border: var(--color-ink-800);
+    --brand-wash: var(--color-brand-950);
+  }
+}
+
+:root[data-theme="dark"] {
+  --background: var(--color-ink-950);
+  --foreground: var(--color-ink-100);
+  --surface: var(--color-ink-900);
+  --surface-muted: var(--color-ink-800);
+  --border: var(--color-ink-800);
+  --brand-wash: var(--color-brand-950);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-border: var(--border);
+  --color-brand-wash: var(--brand-wash);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  /* The customer app is used one-handed on a phone; never let it scroll
+     sideways, at any breakpoint. */
+  overflow-x: hidden;
+}
+
+/* Visible focus for keyboard users, invisible for mouse users. */
+:focus-visible {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 2px;
+  border-radius: var(--radius-control);
+}
+
+/* Respect a reduced-motion preference everywhere. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Skeleton shimmer used by every loading state. */
+@keyframes pakfix-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+.skeleton {
+  animation: pakfix-pulse 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  background-color: var(--surface-muted);
+  border-radius: var(--radius-control);
+}
+
+/* Room for the mobile bottom navigation, including the iOS home indicator. */
+.has-bottom-nav {
+  padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
+}

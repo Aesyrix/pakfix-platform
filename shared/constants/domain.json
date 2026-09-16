@@ -1,0 +1,100 @@
+{
+  "$comment": "Vocabulary shared by the Laravel enums, the TypeScript types and the future mobile apps. When a value changes it changes here first, then in the PHP enums under backend/app/Enums and src/lib/api/types.ts. Nothing reads this file at runtime; it is the reference the three implementations are kept honest against.",
+  "version": "1.0.0",
+  "currency": {
+    "default": "PKR",
+    "symbol": "Rs",
+    "minor_units_per_major": 100,
+    "$comment": "Every amount crossing the API is an integer count of minor units."
+  },
+  "roles": [
+    "customer",
+    "technician",
+    "company",
+    "property_manager",
+    "support_agent",
+    "admin",
+    "super_admin"
+  ],
+  "self_registerable_roles": ["customer", "technician", "company", "property_manager"],
+  "user_statuses": ["active", "pending", "suspended", "banned"],
+  "booking_statuses": [
+    "pending",
+    "searching_professional",
+    "professional_assigned",
+    "accepted",
+    "scheduled",
+    "technician_on_way",
+    "arrived",
+    "inspection_started",
+    "quote_created",
+    "quote_accepted",
+    "repair_started",
+    "completed",
+    "customer_confirmed",
+    "cancelled",
+    "disputed",
+    "refunded"
+  ],
+  "terminal_booking_statuses": ["customer_confirmed", "cancelled", "refunded"],
+  "safety_levels": ["low", "medium", "high", "emergency"],
+  "safety_levels_allowing_diy": ["low", "medium"],
+  "confidence_levels": ["low", "medium", "high"],
+  "diy_difficulty": ["easy", "medium", "expert"],
+  "urgency_levels": ["flexible", "standard", "urgent", "emergency"],
+  "verification_statuses": [
+    "not_submitted",
+    "pending",
+    "more_info_requested",
+    "verified",
+    "rejected",
+    "suspended"
+  ],
+  "quote_statuses": ["draft", "sent", "accepted", "rejected", "expired", "withdrawn"],
+  "payment_statuses": [
+    "pending",
+    "processing",
+    "awaiting_confirmation",
+    "paid",
+    "failed",
+    "cancelled",
+    "refunded",
+    "partially_refunded"
+  ],
+  "payment_methods": ["cash", "bank_transfer", "jazzcash", "easypaisa", "card", "wallet"],
+  "property_types": ["house", "apartment", "rental", "office", "shop", "warehouse", "other"],
+  "support_ticket_statuses": ["open", "in_progress", "waiting_customer", "resolved", "closed"],
+  "dispute_statuses": ["open", "under_review", "resolved", "rejected"],
+  "dispute_resolutions": [
+    "no_action",
+    "partial_refund",
+    "full_refund",
+    "technician_adjustment",
+    "account_credit"
+  ],
+  "provinces": [
+    "Punjab",
+    "Sindh",
+    "Khyber Pakhtunkhwa",
+    "Balochistan",
+    "Islamabad Capital Territory"
+  ],
+  "upload_limits": {
+    "image": { "mimes": ["jpg", "jpeg", "png", "webp"], "max_kb": 8192 },
+    "video": { "mimes": ["mp4", "webm", "mov"], "max_kb": 51200 },
+    "document": { "mimes": ["pdf"], "max_kb": 10240 }
+  },
+  "phone": {
+    "country_code": "+92",
+    "pattern": "^\\+923\\d{9}$",
+    "accepted_input": ["03xxxxxxxxx", "923xxxxxxxxx", "+923xxxxxxxxx"],
+    "$comment": "Input is normalised to the international form before validation."
+  },
+  "reference_prefixes": {
+    "booking": "PF",
+    "quote": "PFQ",
+    "quote_request": "PFR",
+    "payment": "PFP",
+    "$comment": "Formatted PREFIX-YEAR-NNNNNN, e.g. PF-2026-000125. The number restarts each year."
+  }
+}

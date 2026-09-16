@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Environment — never commit a real one
+.env
+.env.*
+!.env.example
+
+# Laravel
+/backend/storage/*.key
+/backend/storage/app/public
+/backend/storage/framework/cache/*
+/backend/storage/framework/sessions/*
+/backend/storage/framework/testing/*
+/backend/storage/framework/views/*
+/backend/storage/logs/*
+!/backend/storage/**/.gitignore
+/backend/public/storage
+/backend/public/hot
+/backend/database/*.sqlite
+/backend/database/*.sqlite-journal
+/backend/.phpunit.result.cache
+/backend/.phpunit.cache
+
+# Next.js
+/frontend/.next/
+/frontend/out/
+/frontend/build/
+/frontend/.vercel
+/frontend/next-env.d.ts
+/frontend/*.tsbuildinfo
+
+# Tooling
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Local backups
+/backups/

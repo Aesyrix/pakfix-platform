@@ -1,0 +1,274 @@
+# Mobile API guide
+
+For a Flutter or React Native developer building the PakFix Android and iOS apps.
+
+**You do not need a new backend.** Everything the apps need is already an authenticated REST
+endpoint under `/api/v1`. If something you need is missing, it belongs in Laravel, not in the app.
+
+---
+
+## Base URL
+
+| Environment | URL |
+|---|---|
+| Local | `http://10.0.2.2:8000/api/v1` (Android emulator) / `http://localhost:8000/api/v1` (iOS simulator) |
+| Staging | `https://staging-api.pakfix.pk/api/v1` |
+| Production | `https://api.pakfix.pk/api/v1` |
+
+Send on every request:
+
+```
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {token}        // once signed in
+```
+
+The API decides you are a native client by the absence of a session, and issues a bearer token
+rather than a cookie. You never touch `/sanctum/csrf-cookie`; that is the website's path.
+
+---
+
+## Decode the envelope once
+
+Every response, success or failure, has the same shape. Write one generic decoder and use it
+everywhere.
+
+```dart
+class ApiResponse<T> {
+  final bool success;
+  final String message;
+  final T? data;
+  final Map<String, List<String>>? errors;
+  final Pagination? pagination;
+}
+```
+
+```dart
+Future<T> request<T>(...) async {
+  final response = await http.send(...);
+  final body = jsonDecode(response.body);
+
+  if (response.statusCode == 204) return null as T;
+
+  if (body['success'] != true) {
+    throw ApiException(
+      message: body['message'] as String,
+      status: response.statusCode,
+      errors: parseErrors(body['errors']),
+    );
+  }
+
+  return parse(body['data']);
+}
+```
+
+Map status codes to behaviour:
+
+| Code | Do this |
+|---|---|
+| 401 | Clear the stored token, return to sign-in |
+| 403 | Show `message` — the account may be suspended; do not retry |
+| 422 | Attach `errors[field][0]` to the matching form field |
+| 429 | Back off; show `message` |
+| 0 / 5xx | Offer a retry; these are the only failures worth retrying unchanged |
+
+---
+
+## Sign-in
+
+```http
+POST /auth/login
+{ "login": "0300 1234567", "password": "secret123", "device_name": "Pixel 8 Pro" }
+```
+
+`login` takes an email address or a phone number, in local or international format — send whatever
+the user typed and let the API normalise it.
+
+`device_name` is what the user will see in their device list, so send something recognisable.
+
+**Store the token in the platform keychain** — `flutter_secure_storage`, Keychain, EncryptedSharedPreferences. Never in plain preferences.
+
+```json
+{
+  "success": true,
+  "message": "Signed in.",
+  "data": { "user": { "…": "…" }, "token": "17|abcdef…" }
+}
+```
+
+Tokens do not expire on a timer. They end when the user signs out, signs out everywhere, resets
+their password, or an admin suspends the account.
+
+### Sign out
+
+- `POST /auth/logout` — this device only.
+- `POST /auth/logout-all` — every device.
+- `GET /auth/devices` then `DELETE /auth/devices/{id}` — a device manager screen.
+
+---
+
+## Registration
+
+`POST /auth/register`. See [api.md](api.md#post-authregister) for the full rule set. Two things
+that catch people out:
+
+- **Phone format.** `03xxxxxxxxx`, `923xxxxxxxxx` and `+923xxxxxxxxx` are all accepted and
+  normalised to `+92…`. Do not pre-format; do not reject client-side what the API accepts.
+- **Role.** Only `customer`, `technician`, `company` and `property_manager` can be chosen. Staff
+  roles are granted by an admin and will 422 here.
+
+A technician registers with `status: "pending"`: they can sign in and complete onboarding, but they
+are not listed and cannot receive jobs until verified. Build the onboarding flow expecting this.
+
+---
+
+## Account state
+
+Check `user.status` after sign-in and on `GET /auth/me`:
+
+| Status | App behaviour |
+|---|---|
+| `active` | Normal |
+| `pending` | Signed in; show the onboarding or "awaiting verification" screen |
+| `suspended` / `banned` | The API returns 403 with a reason; show it and sign out |
+
+Status is re-checked on **every** request, so an account suspended mid-session stops working on
+the next call. Handle a 403 at any moment, not only at sign-in.
+
+---
+
+## Money
+
+Every amount is an **integer in minor units**. Rs 4,500 is `450000`.
+
+```dart
+String formatPkr(int minor) =>
+    'Rs ${NumberFormat('#,##0', 'en_PK').format(minor / 100)}';
+```
+
+Never do arithmetic on a displayed string, never send a total you calculated, and never use a
+`double` for money. Totals, discounts and commission are server-side, always. Where the backend
+provides a `*_display` string, prefer it — it already matches the website.
+
+---
+
+## Identifiers
+
+Every public id is a **UUID string**, not an integer. Bookings, quotes, payments and support
+tickets also carry a human `reference` such as `PF-2026-000125` — show that one to the user, and
+use the UUID in URLs.
+
+Locations are the exception: `city_id` and `area_id` are integers, because they are shared
+reference data rather than user records.
+
+---
+
+## Uploads
+
+Send `multipart/form-data`; drop the `Content-Type: application/json` header for these.
+
+| Type | Formats | Limit |
+|---|---|---|
+| Image | jpg, jpeg, png, webp | 8 MB |
+| Video | mp4, webm, mov | 50 MB |
+| Document | pdf | 10 MB |
+
+Compress on the device before upload — a modern phone camera produces files well over the limit,
+and a customer on mobile data will thank you. Thumbnails are generated server-side; use the
+`thumbnail_path` a response gives you rather than downscaling the original in the app.
+
+Private documents (CNIC scans, invoices) are never served from a plain path. Ask the API for a
+signed URL, which expires in minutes.
+
+---
+
+## Offline and caching
+
+Cache aggressively, but only the right things.
+
+| Safe to cache for a long time | Never cache |
+|---|---|
+| `/services/categories` | Anything under `/auth` |
+| `/locations/*` | Booking status |
+| `/bootstrap` | Payments, messages, notifications |
+
+The public endpoints above are reference data that changes when an admin edits it. Hold them for a
+day, refresh in the background, and let the app open instantly on a bad connection.
+
+---
+
+## Push notifications
+
+Register the device after sign-in:
+
+```http
+POST /notifications/device-tokens
+{ "token": "fcm-token", "platform": "android", "device_name": "Pixel 8", "app_version": "1.0.0" }
+```
+
+Delete it on sign-out. The `device_tokens` table and the notification preference matrix already
+exist; the endpoint lands with Phase 7.
+
+Notification types the apps should handle: booking received, accepted, technician assigned, on the
+way, arrived, quote received, quote accepted, payment received, payment failed, maintenance
+reminder, new message, review reminder, admin announcement.
+
+---
+
+## Job tracking
+
+The booking timeline is built from `booking_status_history`, which is append-only — fetch it and
+render it in order; never reconstruct it from the current status.
+
+A technician updates a job with `POST /bookings/{uuid}/status`, moving through
+`technician_on_way → arrived → inspection_started → repair_started → completed`. Illegal
+transitions are refused by the server; the app should grey out what is not currently reachable
+rather than letting the user try.
+
+GPS tracking is designed for but not yet enabled. The columns exist on `bookings`; the endpoint
+arrives with Phase 6.
+
+---
+
+## Endpoints available today
+
+```
+GET    /                                API version
+GET    /bootstrap                       Brand, currency, payment methods, feature flags
+GET    /content/blocks                  Editable content
+GET    /content/faqs
+GET    /content/testimonials
+GET    /content/pages/{slug}
+GET    /services/categories             Category tree
+GET    /services/categories/{slug}
+GET    /services
+GET    /locations/provinces
+GET    /locations/cities
+GET    /locations/cities/{slug}
+GET    /locations/cities/{slug}/areas
+POST   /auth/register
+POST   /auth/login
+POST   /auth/forgot-password
+POST   /auth/reset-password
+GET    /auth/me
+GET    /auth/verification-status
+POST   /auth/verify-email/resend
+POST   /auth/logout
+POST   /auth/logout-all
+GET    /auth/devices
+DELETE /auth/devices/{tokenId}
+```
+
+## Endpoints coming with their phase
+
+```
+/properties  /properties/{uuid}/assets  /maintenance
+/ai/sessions  /ai/diagnose
+/technicians  /technicians/{slug}
+/bookings  /bookings/{uuid}/status  /quotes
+/conversations  /messages
+/payments  /reviews  /notifications
+```
+
+Their tables, enums and business rules already exist — see [database.md](database.md). Build the
+app against the contract in this document and the endpoints will match when they land.
