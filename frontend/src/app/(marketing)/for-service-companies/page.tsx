@@ -33,7 +33,7 @@ export default function ServiceCompaniesPage() {
             <div>
               <Link
                 href="/become-a-technician"
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-[#008A4B] hover:bg-[#007541] text-white text-sm font-bold shadow-md transition-all"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-[#00824A] hover:bg-[#006B3C] text-white text-sm font-bold shadow-md transition-all"
               >
                 <span>Register Your Service Company</span>
                 <ArrowRight className="h-4 w-4" />

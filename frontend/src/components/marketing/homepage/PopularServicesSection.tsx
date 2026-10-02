@@ -34,7 +34,7 @@ export function PopularServicesSection() {
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-10">
           <div>
-            <span className="text-xs font-bold text-[#008A4B] uppercase tracking-wider">Services</span>
+            <span className="text-xs font-bold text-[#00824A] uppercase tracking-wider">Services</span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#161616] mt-1">
               Whatever needs fixing, start here.
             </h2>
@@ -45,7 +45,7 @@ export function PopularServicesSection() {
 
           <Link
             href="/services"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#008A4B] hover:text-[#007541] transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#00824A] hover:text-[#006B3C] transition-colors"
           >
             <span>View All Services</span>
             <ArrowRight className="h-4 w-4" />
@@ -60,19 +60,19 @@ export function PopularServicesSection() {
               <Link
                 key={s.title}
                 href={s.href}
-                className="group relative bg-[#F8FAF9] hover:bg-white rounded-2xl border border-[#E5E7EB] hover:border-[#008A4B] p-5 transition-all duration-200 hover:-translate-y-1 hover:shadow-card flex flex-col justify-between h-full"
+                className="group relative bg-[#F8FAF9] hover:bg-white rounded-2xl border border-[#E5E7EB] hover:border-[#00824A] p-5 transition-all duration-200 hover:-translate-y-1 hover:shadow-card flex flex-col justify-between h-full"
               >
                 <div>
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white group-hover:bg-[#EAF7F0] border border-[#E5E7EB] group-hover:border-[#C2ECCF] text-[#161616] group-hover:text-[#008A4B] transition-colors mb-4">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white group-hover:bg-[#EAF7F0] border border-[#E5E7EB] group-hover:border-[#C2ECCF] text-[#161616] group-hover:text-[#00824A] transition-colors mb-4">
                     <Icon className="h-5 w-5" />
                   </div>
-                  <h3 className="text-base font-bold text-[#161616] group-hover:text-[#008A4B] transition-colors">
+                  <h3 className="text-base font-bold text-[#161616] group-hover:text-[#00824A] transition-colors">
                     {s.title}
                   </h3>
                   <p className="text-xs text-[#667085] mt-1 leading-relaxed">{s.desc}</p>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-[#E5E7EB] flex items-center justify-between text-xs font-semibold text-[#008A4B]">
+                <div className="mt-4 pt-3 border-t border-[#E5E7EB] flex items-center justify-between text-xs font-semibold text-[#00824A]">
                   <span>Book Now</span>
                   <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                 </div>

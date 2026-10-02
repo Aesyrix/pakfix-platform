@@ -14,9 +14,9 @@ export function TopUtilityBar() {
         <div className="flex items-center justify-between">
           {/* Left Side Tagline */}
           <div className="flex items-center gap-2 text-gray-300">
-            <span className="inline-block h-2 w-2 rounded-full bg-[#008A4B] animate-pulse" />
+            <span className="inline-block h-2 w-2 rounded-full bg-[#4ADE80] animate-pulse" />
             <span>Pakistan&apos;s Smart Home Repair Platform</span>
-            <span className="text-gray-500">|</span>
+            <span className="text-gray-400">|</span>
             <span className="text-[#00A85B] font-semibold flex items-center gap-1">
               <PhoneCall className="h-3 w-3" /> 24/7 Support: +92 300 123 4567
             </span>
@@ -36,7 +36,7 @@ export function TopUtilityBar() {
               href="/become-a-technician"
               className="hover:text-[#00A85B] transition-colors flex items-center gap-1 font-semibold"
             >
-              <UserPlus className="h-3.5 w-3.5 text-[#008A4B]" />
+              <UserPlus className="h-3.5 w-3.5 text-[#4ADE80]" />
               <span>Become a Pro</span>
             </Link>
 
@@ -48,7 +48,7 @@ export function TopUtilityBar() {
               onClick={() => setLang(lang === 'en' ? 'ur' : 'en')}
               className="flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer bg-gray-800/80 px-2 py-0.5 rounded text-[11px]"
             >
-              <Globe className="h-3 w-3 text-[#008A4B]" />
+              <Globe className="h-3 w-3 text-[#4ADE80]" />
               <span>{lang === 'en' ? 'English' : 'اردو'}</span>
             </button>
           </div>

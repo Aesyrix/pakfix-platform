@@ -36,7 +36,7 @@ export function TrustStripSection() {
                 key={item.title}
                 className="flex items-start gap-3 p-3 rounded-xl bg-white border border-[#E5E7EB] shadow-2xs"
               >
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#EAF7F0] text-[#008A4B]">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#EAF7F0] text-[#00532C]">
                   <Icon className="h-5 w-5" />
                 </div>
                 <div>

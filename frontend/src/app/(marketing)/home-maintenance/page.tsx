@@ -51,7 +51,7 @@ export default function HomeMaintenancePage() {
         breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Home Maintenance' }]}
         eyebrow={
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EAF7F0] text-[#006838] text-xs font-bold">
-            <Home className="h-3.5 w-3.5 text-[#008A4B]" />
+            <Home className="h-3.5 w-3.5 text-[#00824A]" />
             Property Care System
           </div>
         }
@@ -66,7 +66,7 @@ export default function HomeMaintenancePage() {
               const Icon = f.icon;
               return (
                 <div key={f.title} className="bg-[#F8FAF9] rounded-2xl p-6 border border-[#E5E7EB] space-y-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white border border-[#E5E7EB] text-[#008A4B]">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white border border-[#E5E7EB] text-[#00824A]">
                     <Icon className="h-5 w-5" />
                   </div>
                   <h3 className="text-base font-bold text-[#161616]">{f.title}</h3>
@@ -86,7 +86,7 @@ export default function HomeMaintenancePage() {
             <div>
               <Link
                 href="/login"
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-[#008A4B] hover:bg-[#007541] text-white text-sm font-bold shadow-md transition-all"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-[#00824A] hover:bg-[#006B3C] text-white text-sm font-bold shadow-md transition-all"
               >
                 <span>Open Customer Dashboard</span>
                 <ArrowRight className="h-4 w-4" />

@@ -41,7 +41,7 @@ export default function AdminDashboardPage() {
       <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#DC2626] bg-[#FEE2E2] px-2.5 py-0.5 rounded-full">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#B91C1C] bg-[#FEE2E2] px-2.5 py-0.5 rounded-full">
               System Admin & Command Center
             </span>
           </div>
@@ -60,7 +60,7 @@ export default function AdminDashboardPage() {
           <CardBody className="p-4">
             <span className="text-[10px] font-bold uppercase text-ink-500">Gross Marketplace Volume</span>
             <p className="text-2xl font-extrabold text-[#15803D] mt-1">PKR 4.82 M</p>
-            <span className="text-[11px] text-[#16A34A] font-bold">+18.4% this month</span>
+            <span className="text-[11px] text-[#00824A] font-bold">+18.4% this month</span>
           </CardBody>
         </Card>
 
@@ -103,7 +103,7 @@ export default function AdminDashboardPage() {
                   placeholder="Search ID or Customer..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="h-9 pl-9 pr-3 rounded-xl border border-[var(--border)] text-xs bg-surface outline-none focus:ring-2 focus:ring-[#16A34A]"
+                  className="h-9 pl-9 pr-3 rounded-xl border border-[var(--border)] text-xs bg-surface outline-none focus:ring-2 focus:ring-[#00824A]"
                 />
               </div>
 
@@ -143,7 +143,7 @@ export default function AdminDashboardPage() {
                   <td className="p-3.5 text-ink-600">{row.service}</td>
                   <td className="p-3.5 font-medium text-foreground">{row.technician}</td>
                   <td className="p-3.5 text-ink-500">{row.city}</td>
-                  <td className="p-3.5 font-extrabold text-[#16A34A]">PKR {row.amountPkr.toLocaleString()}</td>
+                  <td className="p-3.5 font-extrabold text-[#00824A]">PKR {row.amountPkr.toLocaleString()}</td>
                   <td className="p-3.5">
                     <Badge
                       tone={

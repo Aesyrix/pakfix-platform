@@ -17,12 +17,12 @@ export function SafetyNoticeSection() {
           <div className="grid lg:grid-cols-12 gap-8 items-center">
             {/* Left Header */}
             <div className="lg:col-span-5 space-y-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#DC2626]/10 text-[#DC2626] text-xs font-bold">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#DC2626]/10 text-[#B91C1C] text-xs font-bold">
                 <ShieldAlert className="h-4 w-4" />
                 <span>Safety Protocol</span>
               </div>
               <h2 className="text-2xl font-extrabold text-[#161616]">
-                Some repairs should <span className="text-[#DC2626]">never be DIY.</span>
+                Some repairs should <span className="text-[#B91C1C]">never be DIY.</span>
               </h2>
               <p className="text-xs sm:text-sm text-[#475467] leading-relaxed">
                 PakFix AI strictly classifies high-hazard situations as High Risk and instantly connects you with licensed professionals to protect your home and family.
@@ -30,7 +30,7 @@ export function SafetyNoticeSection() {
               <div className="pt-2">
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#DC2626] hover:underline"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#B91C1C] hover:underline"
                 >
                   <span>Read Emergency Safety Rules</span>
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -43,7 +43,7 @@ export function SafetyNoticeSection() {
               {hazards.map((h) => (
                 <div key={h.title} className="bg-white rounded-xl p-3.5 border border-[#E5E7EB] space-y-1">
                   <div className="flex items-center gap-2 text-xs font-bold text-[#161616]">
-                    <AlertTriangle className="h-3.5 w-3.5 text-[#DC2626]" />
+                    <AlertTriangle className="h-3.5 w-3.5 text-[#B91C1C]" />
                     <span>{h.title}</span>
                   </div>
                   <p className="text-[11px] text-[#667085] leading-snug">{h.desc}</p>

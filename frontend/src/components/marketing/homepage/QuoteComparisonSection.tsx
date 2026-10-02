@@ -43,7 +43,7 @@ export function QuoteComparisonSection() {
     <section className="py-16 sm:py-24 bg-white border-b border-[#E5E7EB]">
       <Container>
         <div className="max-w-2xl mx-auto text-center space-y-2 mb-12">
-          <span className="text-xs font-bold text-[#008A4B] uppercase tracking-wider">Transparent Pricing</span>
+          <span className="text-xs font-bold text-[#00824A] uppercase tracking-wider">Transparent Pricing</span>
           <h2 className="text-2xl sm:text-4xl font-extrabold text-[#161616]">
             Compare before you choose.
           </h2>
@@ -57,7 +57,7 @@ export function QuoteComparisonSection() {
           {quotes.map((q) => (
             <div
               key={q.pro}
-              className="bg-[#F8FAF9] rounded-2xl border border-[#E5E7EB] hover:border-[#008A4B] p-6 shadow-2xs hover:shadow-card transition-all flex flex-col justify-between"
+              className="bg-[#F8FAF9] rounded-2xl border border-[#E5E7EB] hover:border-[#00824A] p-6 shadow-2xs hover:shadow-card transition-all flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
@@ -94,13 +94,13 @@ export function QuoteComparisonSection() {
 
                 <div className="flex items-center justify-between pt-1">
                   <span className="text-xs font-bold text-[#667085]">Estimated Total</span>
-                  <span className="text-lg font-extrabold text-[#008A4B]">{q.total}</span>
+                  <span className="text-lg font-extrabold text-[#00824A]">{q.total}</span>
                 </div>
               </div>
 
               <Link
                 href="#quick-booking"
-                className="mt-6 w-full py-2.5 rounded-xl bg-[#008A4B] hover:bg-[#007541] text-white text-xs font-bold text-center transition-colors block shadow-2xs"
+                className="mt-6 w-full py-2.5 rounded-xl bg-[#00824A] hover:bg-[#006B3C] text-white text-xs font-bold text-center transition-colors block shadow-2xs"
               >
                 Accept Quote & Book
               </Link>

@@ -95,7 +95,7 @@ export function CityView({ slug: builtSlug, initial }: { slug: string | null; in
           title={`Top-rated in ${city.name}`}
           muted
           action={
-            <Link href={`/find-a-technician?city=${city.slug}`} className="text-sm font-semibold text-[#16A34A] hover:text-[#15803D]">
+            <Link href={`/find-a-technician?city=${city.slug}`} className="text-sm font-semibold text-[#00824A] hover:text-[#15803D]">
               See all &rarr;
             </Link>
           }

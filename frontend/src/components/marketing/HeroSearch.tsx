@@ -39,9 +39,9 @@ export function HeroSearch({ examples = [] }: { examples?: string[] }) {
 
         <div
           className={cn(
-            'flex flex-col gap-3 rounded-[var(--radius-card)] border-2 border-[#16A34A]/20',
+            'flex flex-col gap-3 rounded-[var(--radius-card)] border-2 border-[#00824A]/20',
             'bg-surface p-3 shadow-xl backdrop-blur-sm',
-            'transition-all duration-200 focus-within:border-[#16A34A] focus-within:shadow-2xl'
+            'transition-all duration-200 focus-within:border-[#00824A] focus-within:shadow-2xl'
           )}
         >
           <div className="flex items-center gap-2">
@@ -65,10 +65,10 @@ export function HeroSearch({ examples = [] }: { examples?: string[] }) {
                 variant="ghost"
                 size="sm"
                 onClick={() => router.push('/ai?input=camera')}
-                className="h-9 px-2.5 text-xs text-ink-600 hover:text-[#16A34A] hover:bg-brand-50"
+                className="h-9 px-2.5 text-xs text-ink-600 hover:text-[#00824A] hover:bg-brand-50"
                 title="Take or upload a photo"
               >
-                <Camera className="h-4 w-4 text-[#16A34A]" aria-hidden="true" />
+                <Camera className="h-4 w-4 text-[#00824A]" aria-hidden="true" />
                 <span>Upload Photo</span>
               </Button>
 
@@ -104,7 +104,7 @@ export function HeroSearch({ examples = [] }: { examples?: string[] }) {
                 className={cn(
                   'rounded-full border border-[var(--border)] bg-surface/90',
                   'px-3 py-1.5 text-xs font-medium text-ink-600 transition-all',
-                  'hover:border-[#16A34A] hover:text-[#15803D] hover:bg-[#DCFCE7]/50'
+                  'hover:border-[#00824A] hover:text-[#15803D] hover:bg-[#DCFCE7]/50'
                 )}
               >
                 &ldquo;{example}&rdquo;

@@ -75,7 +75,7 @@ export default function HowItWorksPage() {
         breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'How It Works' }]}
         eyebrow={
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EAF7F0] text-[#006838] text-xs font-bold">
-            <Sparkles className="h-3.5 w-3.5 text-[#008A4B]" />
+            <Sparkles className="h-3.5 w-3.5 text-[#00824A]" />
             Simple 4-Step Process
           </div>
         }
@@ -98,7 +98,7 @@ export default function HowItWorksPage() {
                   }`}
                 >
                   <div className={`lg:col-span-6 space-y-4 ${isEven ? 'lg:order-2' : ''}`}>
-                    <span className="text-3xl font-extrabold text-[#008A4B] tracking-wider">
+                    <span className="text-3xl font-extrabold text-[#00824A] tracking-wider">
                       {step.num}
                     </span>
                     <h2 className="text-2xl sm:text-3xl font-bold text-[#161616]">
@@ -111,7 +111,7 @@ export default function HowItWorksPage() {
                     <ul className="space-y-2.5 pt-2">
                       {step.details.map((detail) => (
                         <li key={detail} className="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-[#161616]">
-                          <CheckCircle2 className="h-4 w-4 text-[#008A4B] shrink-0" />
+                          <CheckCircle2 className="h-4 w-4 text-[#00824A] shrink-0" />
                           <span>{detail}</span>
                         </li>
                       ))}
@@ -121,7 +121,7 @@ export default function HowItWorksPage() {
                   <div className={`lg:col-span-6 ${isEven ? 'lg:order-1' : ''}`}>
                     <div className="bg-[#F8FAF9] rounded-3xl p-8 border border-[#E5E7EB] shadow-card space-y-4">
                       <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-4">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EAF7F0] text-[#008A4B]">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EAF7F0] text-[#00532C]">
                           <Icon className="h-6 w-6" />
                         </div>
                         <span className="text-xs font-bold px-3 py-1 rounded-full bg-white text-[#006838] border border-[#E5E7EB]">
@@ -145,17 +145,17 @@ export default function HowItWorksPage() {
         <Container>
           <div className="grid md:grid-cols-3 gap-6 text-center">
             <div className="bg-white p-6 rounded-2xl border border-[#E5E7EB] space-y-2">
-              <ShieldCheck className="h-8 w-8 text-[#008A4B] mx-auto" />
+              <ShieldCheck className="h-8 w-8 text-[#00824A] mx-auto" />
               <h3 className="text-sm font-bold text-[#161616]">Verified Technicians</h3>
               <p className="text-xs text-[#667085]">CNIC checked, background audited & skilled.</p>
             </div>
             <div className="bg-white p-6 rounded-2xl border border-[#E5E7EB] space-y-2">
-              <Sparkles className="h-8 w-8 text-[#008A4B] mx-auto" />
+              <Sparkles className="h-8 w-8 text-[#00824A] mx-auto" />
               <h3 className="text-sm font-bold text-[#161616]">AI Safety Audit</h3>
               <p className="text-xs text-[#667085]">Checks for gas, electrical & high-risk hazards.</p>
             </div>
             <div className="bg-white p-6 rounded-2xl border border-[#E5E7EB] space-y-2">
-              <PhoneCall className="h-8 w-8 text-[#008A4B] mx-auto" />
+              <PhoneCall className="h-8 w-8 text-[#00824A] mx-auto" />
               <h3 className="text-sm font-bold text-[#161616]">24/7 Customer Care</h3>
               <p className="text-xs text-[#667085]">Live phone and WhatsApp support across Pakistan.</p>
             </div>
@@ -164,7 +164,7 @@ export default function HowItWorksPage() {
           <div className="mt-10 text-center">
             <Link
               href="/ai"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-[#008A4B] hover:bg-[#007541] text-white text-sm font-bold shadow-md transition-all"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-[#00824A] hover:bg-[#006B3C] text-white text-sm font-bold shadow-md transition-all"
             >
               <span>Try AI Diagnosis Now</span>
               <ArrowRight className="h-4 w-4" />

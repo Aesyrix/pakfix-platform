@@ -35,7 +35,7 @@ export default function TechnicianDashboardPage() {
             online ? 'bg-[#DCFCE7] text-[#15803D] border border-[#86EFAC]' : 'bg-surface-muted text-ink-600 border border-[var(--border)]'
           }`}
         >
-          <span className={`h-2.5 w-2.5 rounded-full ${online ? 'bg-[#16A34A] animate-pulse' : 'bg-ink-400'}`} />
+          <span className={`h-2.5 w-2.5 rounded-full ${online ? 'bg-[#00824A] animate-pulse' : 'bg-ink-400'}`} />
           {online ? 'ONLINE (ACCEPTING JOBS)' : 'OFFLINE (PAUSED)'}
         </button>
       </div>
@@ -46,7 +46,7 @@ export default function TechnicianDashboardPage() {
           <CardBody className="p-4">
             <span className="text-[10px] font-bold uppercase text-ink-500">Today&apos;s Earnings</span>
             <p className="text-2xl font-extrabold text-[#15803D] mt-1">PKR 8,500</p>
-            <span className="text-[11px] text-[#16A34A] font-semibold">3 jobs completed</span>
+            <span className="text-[11px] text-[#00824A] font-semibold">3 jobs completed</span>
           </CardBody>
         </Card>
 
@@ -83,11 +83,11 @@ export default function TechnicianDashboardPage() {
           <h2 className="text-sm font-bold uppercase tracking-wide text-foreground">Current Active Job</h2>
 
           {acceptedJob ? (
-            <Card className="border-[#16A34A] ring-2 ring-[#16A34A]/20 shadow-xl">
+            <Card className="border-[#00824A] ring-2 ring-[#00824A]/20 shadow-xl">
               <CardHeader className="border-b border-[var(--border)] pb-3">
                 <div className="flex items-center justify-between">
                   <Badge tone="brand">En Route &bull; ETA 12 mins</Badge>
-                  <span className="text-xs font-mono font-bold text-[#16A34A]">Fixed PKR 2,800</span>
+                  <span className="text-xs font-mono font-bold text-[#00824A]">Fixed PKR 2,800</span>
                 </div>
                 <CardTitle className="text-lg font-extrabold text-foreground mt-2">
                   AC Inverter Jet Servicing & Gas Leak Check
@@ -101,7 +101,7 @@ export default function TechnicianDashboardPage() {
                     <span className="font-bold text-foreground">Customer: Hamza Ahmed</span>
                     <a
                       href="tel:+923001234567"
-                      className="inline-flex items-center gap-1 bg-[#16A34A] text-white px-3 py-1 rounded-lg font-bold"
+                      className="inline-flex items-center gap-1 bg-[#00824A] text-white px-3 py-1 rounded-lg font-bold"
                     >
                       <Phone className="h-3.5 w-3.5" /> Call Customer
                     </a>
@@ -116,15 +116,15 @@ export default function TechnicianDashboardPage() {
                   <p className="font-bold text-foreground">Service Checklist:</p>
                   <div className="space-y-1.5 text-ink-600">
                     <label className="flex items-center gap-2 cursor-pointer">
-                      <input type="checkbox" defaultChecked className="h-4 w-4 accent-[#16A34A]" />
+                      <input type="checkbox" defaultChecked className="h-4 w-4 accent-[#00824A]" />
                       <span>Inspect outdoor unit fan & capacitor</span>
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer">
-                      <input type="checkbox" defaultChecked className="h-4 w-4 accent-[#16A34A]" />
+                      <input type="checkbox" defaultChecked className="h-4 w-4 accent-[#00824A]" />
                       <span>High pressure indoor jet wash</span>
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer">
-                      <input type="checkbox" className="h-4 w-4 accent-[#16A34A]" />
+                      <input type="checkbox" className="h-4 w-4 accent-[#00824A]" />
                       <span>R410a Gas pressure test (PSI output)</span>
                     </label>
                   </div>
@@ -152,16 +152,16 @@ export default function TechnicianDashboardPage() {
         <div className="lg:col-span-5 space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-bold uppercase tracking-wide text-foreground">Nearby Available Bids</h2>
-            <span className="text-xs text-[#16A34A] font-bold">2 Jobs Nearby</span>
+            <span className="text-xs text-[#00824A] font-bold">2 Jobs Nearby</span>
           </div>
 
-          <Card className="shadow-md hover:border-[#16A34A] transition-all">
+          <Card className="shadow-md hover:border-[#00824A] transition-all">
             <CardBody className="p-4 space-y-3 text-xs">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-bold uppercase text-[#2563EB] bg-[#DBEAFE] px-2 py-0.5 rounded-full">
                   1.2 km away &bull; Gulberg II
                 </span>
-                <span className="font-extrabold text-[#16A34A] text-sm">Est. PKR 2,800</span>
+                <span className="font-extrabold text-[#00824A] text-sm">Est. PKR 2,800</span>
               </div>
 
               <div>

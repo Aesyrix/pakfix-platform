@@ -30,7 +30,7 @@ export function CustomerDashboardPreviewSection() {
     <section className="py-16 sm:py-24 bg-[#F8FAF9] border-b border-[#E5E7EB]">
       <Container>
         <div className="max-w-2xl mx-auto text-center space-y-2 mb-12">
-          <span className="text-xs font-bold text-[#008A4B] uppercase tracking-wider">Customer Portal</span>
+          <span className="text-xs font-bold text-[#00824A] uppercase tracking-wider">Customer Portal</span>
           <h2 className="text-2xl sm:text-4xl font-extrabold text-[#161616]">
             Everything about your home in one place.
           </h2>
@@ -65,7 +65,7 @@ export function CustomerDashboardPreviewSection() {
                   <div
                     key={item.label}
                     className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
-                      item.active ? 'bg-[#008A4B] text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800'
+                      item.active ? 'bg-[#00824A] text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800'
                     }`}
                   >
                     <div className="flex items-center gap-2.5">
@@ -101,7 +101,7 @@ export function CustomerDashboardPreviewSection() {
                 <div className="bg-white p-4 rounded-2xl border border-[#E5E7EB] space-y-2">
                   <div className="flex items-center justify-between text-xs font-bold text-[#161616]">
                     <span>Upcoming Booking</span>
-                    <span className="text-[#008A4B]">Active</span>
+                    <span className="text-[#00824A]">Active</span>
                   </div>
                   <div className="text-xs">
                     <p className="font-bold text-[#161616]">AC Master Service & Gas Refill</p>
@@ -137,7 +137,7 @@ export function CustomerDashboardPreviewSection() {
                 <div className="bg-white p-4 rounded-2xl border border-[#E5E7EB] space-y-2">
                   <div className="flex items-center justify-between text-xs font-bold text-[#161616]">
                     <span>Maintenance Schedule</span>
-                    <span className="text-amber-600 font-bold">Due</span>
+                    <span className="text-amber-700 font-bold">Due</span>
                   </div>
                   <div className="text-xs">
                     <p className="font-bold text-[#161616]">Water Tank Deep Cleaning</p>

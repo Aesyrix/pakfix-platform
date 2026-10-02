@@ -137,7 +137,7 @@ export default function AdminBlogPage() {
                         href={`/blog/${post.slug}`}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-ink-400 hover:text-[#16A34A]"
+                        className="text-ink-400 hover:text-[#00824A]"
                         aria-label={`View ${post.title}`}
                       >
                         <ExternalLink className="h-4 w-4" />

@@ -47,11 +47,11 @@ export function BottomNav() {
                 aria-current={active ? 'page' : undefined}
                 className={cn(
                   'relative flex min-h-[60px] flex-col items-center justify-center gap-1 px-1 py-1.5 text-[0.6875rem] font-semibold transition-colors',
-                  active ? 'text-[#16A34A]' : 'text-ink-500 hover:text-foreground'
+                  active ? 'text-[#00824A]' : 'text-ink-500 hover:text-foreground'
                 )}
               >
                 {active && (
-                  <span className="absolute top-0 h-0.5 w-8 rounded-full bg-[#16A34A]" />
+                  <span className="absolute top-0 h-0.5 w-8 rounded-full bg-[#00824A]" />
                 )}
                 <Icon
                   className={cn('h-5 w-5 transition-transform', active ? 'scale-110 stroke-[2.4]' : 'scale-100')}

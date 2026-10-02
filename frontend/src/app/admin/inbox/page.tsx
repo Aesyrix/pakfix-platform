@@ -103,7 +103,7 @@ function MessageCard({ message }: { message: AdminContactMessage }) {
         <p className="whitespace-pre-line text-sm leading-relaxed text-ink-700">{message.message}</p>
 
         <div className="flex flex-wrap gap-4 text-sm">
-          <a href={`mailto:${message.email}?subject=${encodeURIComponent(`Re: ${message.subject}`)}`} className="inline-flex items-center gap-1.5 font-medium text-[#16A34A] hover:text-[#15803D]">
+          <a href={`mailto:${message.email}?subject=${encodeURIComponent(`Re: ${message.subject}`)}`} className="inline-flex items-center gap-1.5 font-medium text-[#00824A] hover:text-[#15803D]">
             <Mail className="h-4 w-4" aria-hidden="true" />
             {message.email}
           </a>

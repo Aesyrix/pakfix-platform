@@ -36,7 +36,7 @@ export function CustomerReviewsSection() {
     <section className="py-16 sm:py-24 bg-[#F8FAF9] border-b border-[#E5E7EB]">
       <Container>
         <div className="max-w-2xl mx-auto text-center space-y-2 mb-12">
-          <span className="text-xs font-bold text-[#008A4B] uppercase tracking-wider">Customer Trust</span>
+          <span className="text-xs font-bold text-[#00824A] uppercase tracking-wider">Customer Trust</span>
           <h2 className="text-2xl sm:text-4xl font-extrabold text-[#161616]">
             Homeowners deserve a simpler repair experience.
           </h2>
@@ -59,7 +59,7 @@ export function CustomerReviewsSection() {
                       <Star key={i} className="h-4 w-4 text-amber-500 fill-amber-500" />
                     ))}
                   </div>
-                  <Quote className="h-6 w-6 text-[#008A4B]/20" />
+                  <Quote className="h-6 w-6 text-[#00824A]/20" />
                 </div>
 
                 <p className="text-xs text-[#475467] leading-relaxed italic mb-6">
@@ -68,7 +68,7 @@ export function CustomerReviewsSection() {
               </div>
 
               <div className="pt-4 border-t border-[#E5E7EB] flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full bg-[#EAF7F0] text-[#008A4B] font-extrabold text-xs flex items-center justify-center border border-[#C2ECCF]">
+                <div className="h-10 w-10 rounded-full bg-[#EAF7F0] text-[#00532C] font-extrabold text-xs flex items-center justify-center border border-[#C2ECCF]">
                   {r.initials}
                 </div>
                 <div>

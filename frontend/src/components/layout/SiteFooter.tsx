@@ -25,11 +25,11 @@ export function SiteFooter({ bootstrap, popularCategories }: SiteFooterProps) {
             {/* Direct Contact Handles */}
             <div className="pt-2 space-y-2 text-xs text-gray-300 font-medium">
               <div className="flex items-center gap-2">
-                <Phone className="h-3.5 w-3.5 text-[#008A4B]" />
+                <Phone className="h-3.5 w-3.5 text-[#4ADE80]" />
                 <span>Call Us: +92 300 123 4567</span>
               </div>
               <div className="flex items-center gap-2">
-                <Mail className="h-3.5 w-3.5 text-[#008A4B]" />
+                <Mail className="h-3.5 w-3.5 text-[#4ADE80]" />
                 <span>Email: support@pakfix.pk</span>
               </div>
               <div className="flex items-center gap-2">
@@ -102,10 +102,10 @@ export function SiteFooter({ bootstrap, popularCategories }: SiteFooterProps) {
         </div>
 
         {/* Bottom Copyright Strip */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500">
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-400">
           <div className="flex items-center gap-2">
             <span>&copy; {new Date().getFullYear()} PakFix.pk. All rights reserved.</span>
-            <span className="inline-flex items-center gap-1 text-[#008A4B] font-semibold">
+            <span className="inline-flex items-center gap-1 text-[#4ADE80] font-semibold">
               <ShieldCheck className="h-3.5 w-3.5" /> Verified Platform
             </span>
           </div>

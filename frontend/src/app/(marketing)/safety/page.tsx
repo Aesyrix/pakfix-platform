@@ -44,7 +44,7 @@ export default function SafetyPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {protocols.map((p) => (
               <div key={p.title} className="bg-[#F8FAF9] rounded-2xl p-6 border border-[#E5E7EB] space-y-3">
-                <ShieldCheck className="h-8 w-8 text-[#008A4B]" />
+                <ShieldCheck className="h-8 w-8 text-[#00824A]" />
                 <h3 className="text-base font-bold text-[#161616]">{p.title}</h3>
                 <p className="text-xs text-[#667085] leading-relaxed">{p.desc}</p>
               </div>

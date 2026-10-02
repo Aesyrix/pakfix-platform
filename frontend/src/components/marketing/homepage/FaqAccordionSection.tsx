@@ -58,7 +58,7 @@ export function FaqAccordionSection() {
     <section className="py-16 sm:py-24 bg-[#F8FAF9] border-b border-[#E5E7EB]">
       <Container size="narrow">
         <div className="text-center space-y-2 mb-12">
-          <span className="text-xs font-bold text-[#008A4B] uppercase tracking-wider">FAQ</span>
+          <span className="text-xs font-bold text-[#00824A] uppercase tracking-wider">FAQ</span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#161616]">
             Frequently Asked Questions
           </h2>
@@ -84,7 +84,7 @@ export function FaqAccordionSection() {
                 >
                   <span>{faq.q}</span>
                   <ChevronDown
-                    className={`h-4 w-4 shrink-0 transition-transform duration-200 text-[#008A4B] ${
+                    className={`h-4 w-4 shrink-0 transition-transform duration-200 text-[#00824A] ${
                       isOpen ? 'rotate-180' : ''
                     }`}
                   />

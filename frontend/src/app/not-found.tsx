@@ -18,7 +18,7 @@ export default function NotFound() {
 
       <main id="main" className="flex flex-1 items-center">
         <Container size="narrow" className="py-16 text-center sm:py-24">
-          <p className="text-sm font-bold uppercase tracking-widest text-[#16A34A]">404</p>
+          <p className="text-sm font-bold uppercase tracking-widest text-[#00824A]">404</p>
           <h1 className="mt-3 text-balance text-3xl font-extrabold tracking-tight sm:text-4xl">
             We could not find that page
           </h1>
@@ -49,7 +49,7 @@ export default function NotFound() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="inline-flex min-h-11 items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--border)] bg-surface px-4 text-sm font-medium hover:border-[#16A34A] hover:text-[#15803D]"
+                    className="inline-flex min-h-11 items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--border)] bg-surface px-4 text-sm font-medium hover:border-[#00824A] hover:text-[#15803D]"
                   >
                     <Search className="h-3.5 w-3.5" aria-hidden="true" />
                     {link.label}

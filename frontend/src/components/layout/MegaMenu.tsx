@@ -73,7 +73,7 @@ export function MegaMenu({ onClose }: MegaMenuProps) {
             <div key={col.title} className="space-y-4">
               <div>
                 <h3 className="text-sm font-bold text-[#161616] tracking-wider uppercase flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-[#008A4B]" />
+                  <span className="h-2 w-2 rounded-full bg-[#00824A]" />
                   {col.title}
                 </h3>
                 <p className="text-xs text-[#667085] mt-0.5">{col.description}</p>
@@ -87,10 +87,10 @@ export function MegaMenu({ onClose }: MegaMenuProps) {
                       key={item.href}
                       href={item.href}
                       onClick={onClose}
-                      className="flex items-center justify-between p-2 rounded-lg text-sm text-[#475467] hover:text-[#008A4B] hover:bg-[#F4FBF7] transition-all group"
+                      className="flex items-center justify-between p-2 rounded-lg text-sm text-[#475467] hover:text-[#00824A] hover:bg-[#F4FBF7] transition-all group"
                     >
                       <div className="flex items-center gap-2.5">
-                        <Icon className="h-4 w-4 text-[#667085] group-hover:text-[#008A4B] transition-colors" />
+                        <Icon className="h-4 w-4 text-[#667085] group-hover:text-[#00824A] transition-colors" />
                         <span className="font-medium group-hover:font-semibold">{item.label}</span>
                       </div>
                       {item.badge ? (
@@ -109,7 +109,7 @@ export function MegaMenu({ onClose }: MegaMenuProps) {
         {/* Bottom Banner Bar inside Mega Menu */}
         <div className="mt-8 pt-4 border-t border-[#E5E7EB] flex flex-wrap items-center justify-between gap-4 bg-[#F8FAF9] p-4 rounded-xl">
           <div className="flex items-center gap-3">
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#EAF7F0] text-[#008A4B] font-bold">
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#EAF7F0] text-[#00532C] font-bold">
               AI
             </span>
             <div>
@@ -124,7 +124,7 @@ export function MegaMenu({ onClose }: MegaMenuProps) {
             <Link
               href="/ai"
               onClick={onClose}
-              className="text-xs font-bold text-[#008A4B] hover:underline"
+              className="text-xs font-bold text-[#00824A] hover:underline"
             >
               Try AI Diagnosis &rarr;
             </Link>
@@ -132,7 +132,7 @@ export function MegaMenu({ onClose }: MegaMenuProps) {
             <Link
               href="/services"
               onClick={onClose}
-              className="inline-flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-lg bg-[#008A4B] text-white hover:bg-[#007541] transition-colors shadow-xs"
+              className="inline-flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-lg bg-[#00824A] text-white hover:bg-[#006B3C] transition-colors shadow-xs"
             >
               <span>View All Services</span>
               <ArrowRight className="h-3.5 w-3.5" />

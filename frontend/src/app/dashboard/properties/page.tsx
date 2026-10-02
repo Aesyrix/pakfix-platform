@@ -90,7 +90,7 @@ export default function PropertiesDashboardPage() {
     <Container className="py-8 sm:py-10">
       <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-[#16A34A]">Asset Management</span>
+          <span className="text-xs font-bold uppercase tracking-wider text-[#00824A]">Asset Management</span>
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground mt-1">
             My Properties & Assets
           </h1>
@@ -107,7 +107,7 @@ export default function PropertiesDashboardPage() {
 
       {/* Add Property Form Card Modal */}
       {showAddModal && (
-        <Card className="mb-8 border-[#16A34A] ring-2 ring-[#16A34A]/20 shadow-xl">
+        <Card className="mb-8 border-[#00824A] ring-2 ring-[#00824A]/20 shadow-xl">
           <CardHeader className="border-b border-[var(--border)] pb-3">
             <CardTitle className="text-base font-bold text-foreground">Register New Property</CardTitle>
           </CardHeader>
@@ -186,7 +186,7 @@ export default function PropertiesDashboardPage() {
                 <div className="grid grid-cols-2 gap-2 pt-2 border-t border-[var(--border)] text-ink-600">
                   <div>
                     <span className="text-[10px] text-ink-400 uppercase font-semibold">Total Maintenance Spend</span>
-                    <p className="font-extrabold text-[#16A34A] text-sm mt-0.5">PKR {prop.totalMaintenancePkr.toLocaleString()}</p>
+                    <p className="font-extrabold text-[#00824A] text-sm mt-0.5">PKR {prop.totalMaintenancePkr.toLocaleString()}</p>
                   </div>
                   <div>
                     <span className="text-[10px] text-ink-400 uppercase font-semibold">Last Serviced</span>
@@ -200,7 +200,7 @@ export default function PropertiesDashboardPage() {
             </div>
 
             <div className="p-4 pt-0 border-t border-[var(--border)] mt-2">
-              <Button variant="ghost" size="sm" block className="justify-between text-xs font-bold text-[#16A34A] hover:bg-[#DCFCE7]/40">
+              <Button variant="ghost" size="sm" block className="justify-between text-xs font-bold text-[#00824A] hover:bg-[#DCFCE7]/40">
                 <span>View Property History & Specs</span>
                 <ChevronRight className="h-4 w-4" />
               </Button>

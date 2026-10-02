@@ -146,13 +146,13 @@ export function RegisterForm({
       <div className="space-y-2">
         <div className="flex items-center justify-between text-xs font-bold text-ink-500">
           <span>STEP {step} OF 3</span>
-          <span className="text-[#16A34A]">
+          <span className="text-[#00824A]">
             {step === 1 ? 'Account Type' : step === 2 ? 'Personal Info' : 'Security & Terms'}
           </span>
         </div>
         <div className="h-2 w-full rounded-full bg-surface-muted overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-[#16A34A] to-[#2563EB] transition-all duration-300"
+            className="h-full bg-gradient-to-r from-[#00824A] to-[#2563EB] transition-all duration-300"
             style={{ width: `${(step / 3) * 100}%` }}
           />
         </div>
@@ -179,14 +179,14 @@ export function RegisterForm({
                 className={cn(
                   'flex cursor-pointer items-start gap-3 rounded-2xl border p-4 transition-all duration-200',
                   selectedRole === option.value
-                    ? 'border-[#16A34A] bg-[#DCFCE7]/40 shadow-xs'
+                    ? 'border-[#00824A] bg-[#DCFCE7]/40 shadow-xs'
                     : 'border-[var(--border)] hover:bg-surface-muted'
                 )}
               >
                 <input
                   type="radio"
                   value={option.value}
-                  className="mt-1 h-4 w-4 accent-[#16A34A]"
+                  className="mt-1 h-4 w-4 accent-[#00824A]"
                   {...register('role')}
                 />
                 <span>
@@ -289,11 +289,11 @@ export function RegisterForm({
               label={
                 <>
                   I agree to the{' '}
-                  <Link href="/terms-of-service" className="font-semibold text-[#16A34A] underline">
+                  <Link href="/terms-of-service" className="font-semibold text-[#00824A] underline">
                     terms of service
                   </Link>{' '}
                   and{' '}
-                  <Link href="/privacy-policy" className="font-semibold text-[#16A34A] underline">
+                  <Link href="/privacy-policy" className="font-semibold text-[#00824A] underline">
                     privacy policy
                   </Link>
                   .

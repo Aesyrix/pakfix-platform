@@ -29,15 +29,27 @@
   --color-brand-200: #C2ECCF;
   --color-brand-300: #86DBAA;
   --color-brand-400: #3EB87D;
-  --color-brand-500: #00A85B;
-  --color-brand-600: #008A4B; /* Primary Brand Green */
+  --color-brand-500: #00A85B; /* Only on dark backgrounds (5.8:1 on #161616) */
+  /*
+    Primary action green. Darkened from #008A4B so that white text on it, and
+    the colour itself as text on white, both clear WCAG AA (4.9:1 either way).
+    #008A4B measured 4.43:1, which fails for normal text in both directions.
+  */
+  --color-brand-600: #00824A;
   --color-brand-700: #006838; /* Dark Green */
   --color-brand-800: #00532C;
   --color-brand-900: #003B1F;
   --color-brand-950: #002212;
 
   /* Brand Green Hover */
-  --color-brand-hover: #007541;
+  --color-brand-hover: #006B3C;
+
+  /*
+    Green for text and icons sitting on a dark surface (the footer, the dark
+    call-to-action bands). The action green is far too dark to read there:
+    #00824A on #161616 is 3.7:1, this is 10.4:1.
+  */
+  --color-brand-on-dark: #4ADE80;
 
   /* Accent Blue (#2563EB) — AI Technology & Informational Focus */
   --color-accent-50: #EFF6FF;
@@ -92,6 +104,13 @@
 }
 
 :root {
+  /*
+    PakFix is a light interface. Declaring it stops the browser rendering
+    native controls -- select menus, scrollbars, date pickers -- in dark
+    colours for someone whose system is set to dark, which is where
+    unreadable dark-on-dark text creeps in without any CSS of ours.
+  */
+  color-scheme: light;
   --background: #FFFFFF;
   --background-secondary: #F8FAF9;
   --foreground: #161616;

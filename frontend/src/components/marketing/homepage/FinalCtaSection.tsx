@@ -12,7 +12,7 @@ export function FinalCtaSection() {
     <section className="py-20 sm:py-28 bg-[#161616] text-white relative overflow-hidden border-b border-gray-800">
       <Container size="narrow">
         <div className="text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#008A4B]/20 border border-[#008A4B]/30 text-[#00A85B] text-xs font-bold">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#00824A]/20 border border-[#00824A]/30 text-[#00A85B] text-xs font-bold">
             <Sparkles className="h-4 w-4" />
             <span>Ready to Fix It?</span>
           </div>
@@ -37,7 +37,7 @@ export function FinalCtaSection() {
 
             <Link
               href={{ pathname: '/ai', query: { text } }}
-              className="px-5 py-2.5 rounded-xl bg-[#008A4B] hover:bg-[#007541] text-white text-xs font-bold transition-colors shrink-0"
+              className="px-5 py-2.5 rounded-xl bg-[#00824A] hover:bg-[#006B3C] text-white text-xs font-bold transition-colors shrink-0"
             >
               Ask PakFix AI
             </Link>
@@ -46,7 +46,7 @@ export function FinalCtaSection() {
           <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
             <Link
               href="/ai"
-              className="px-6 py-3 rounded-xl bg-[#008A4B] hover:bg-[#007541] text-white text-xs font-bold transition-colors shadow-md"
+              className="px-6 py-3 rounded-xl bg-[#00824A] hover:bg-[#006B3C] text-white text-xs font-bold transition-colors shadow-md"
             >
               Ask PakFix AI
             </Link>

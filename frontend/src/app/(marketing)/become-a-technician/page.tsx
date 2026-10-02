@@ -51,7 +51,7 @@ export default function BecomeTechnicianPage() {
         breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Become a Pro' }]}
         eyebrow={
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EAF7F0] text-[#006838] text-xs font-bold">
-            <UserCheck className="h-3.5 w-3.5 text-[#008A4B]" />
+            <UserCheck className="h-3.5 w-3.5 text-[#00824A]" />
             Join Pakistan&apos;s Pro Network
           </div>
         }
@@ -64,7 +64,7 @@ export default function BecomeTechnicianPage() {
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             {/* Left Content */}
             <div className="lg:col-span-6 space-y-6">
-              <span className="text-xs font-bold text-[#008A4B] uppercase tracking-wider">Why Join PakFix?</span>
+              <span className="text-xs font-bold text-[#00824A] uppercase tracking-wider">Why Join PakFix?</span>
               <h2 className="text-2xl sm:text-4xl font-extrabold text-[#161616]">
                 Everything you need to succeed as a professional.
               </h2>
@@ -77,7 +77,7 @@ export default function BecomeTechnicianPage() {
                   const Icon = b.icon;
                   return (
                     <div key={b.title} className="p-4 rounded-2xl bg-[#F8FAF9] border border-[#E5E7EB] space-y-1.5">
-                      <Icon className="h-5 w-5 text-[#008A4B]" />
+                      <Icon className="h-5 w-5 text-[#00824A]" />
                       <h3 className="text-sm font-bold text-[#161616]">{b.title}</h3>
                       <p className="text-xs text-[#667085] leading-snug">{b.desc}</p>
                     </div>
@@ -102,7 +102,7 @@ export default function BecomeTechnicianPage() {
                       type="text"
                       required
                       placeholder="e.g. Muhammad Ali"
-                      className="w-full rounded-xl bg-gray-900 border border-gray-700 p-3 text-xs text-white placeholder-gray-500 outline-none focus:border-[#008A4B]"
+                      className="w-full rounded-xl bg-gray-900 border border-gray-700 p-3 text-xs text-white placeholder-gray-500 outline-none focus:border-[#00824A]"
                     />
                   </div>
 
@@ -113,12 +113,12 @@ export default function BecomeTechnicianPage() {
                         type="tel"
                         required
                         placeholder="0300 1234567"
-                        className="w-full rounded-xl bg-gray-900 border border-gray-700 p-3 text-xs text-white placeholder-gray-500 outline-none focus:border-[#008A4B]"
+                        className="w-full rounded-xl bg-gray-900 border border-gray-700 p-3 text-xs text-white placeholder-gray-500 outline-none focus:border-[#00824A]"
                       />
                     </div>
                     <div>
                       <label className="block text-xs font-bold text-gray-300 mb-1">City</label>
-                      <select className="w-full rounded-xl bg-gray-900 border border-gray-700 p-3 text-xs text-white outline-none focus:border-[#008A4B]">
+                      <select className="w-full rounded-xl bg-gray-900 border border-gray-700 p-3 text-xs text-white outline-none focus:border-[#00824A]">
                         <option value="Islamabad">Islamabad</option>
                         <option value="Rawalpindi">Rawalpindi</option>
                         <option value="Lahore">Lahore</option>
@@ -131,7 +131,7 @@ export default function BecomeTechnicianPage() {
 
                   <div>
                     <label className="block text-xs font-bold text-gray-300 mb-1">Primary Skill Trade</label>
-                    <select className="w-full rounded-xl bg-gray-900 border border-gray-700 p-3 text-xs text-white outline-none focus:border-[#008A4B]">
+                    <select className="w-full rounded-xl bg-gray-900 border border-gray-700 p-3 text-xs text-white outline-none focus:border-[#00824A]">
                       <option value="Plumber">Plumber & Drainage</option>
                       <option value="Electrician">Electrician & UPS Specialist</option>
                       <option value="AC Mechanic">AC Technician & Service</option>
@@ -142,7 +142,7 @@ export default function BecomeTechnicianPage() {
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 rounded-xl bg-[#008A4B] hover:bg-[#007541] text-white text-xs font-bold shadow-md transition-colors cursor-pointer"
+                    className="w-full py-3.5 rounded-xl bg-[#00824A] hover:bg-[#006B3C] text-white text-xs font-bold shadow-md transition-colors cursor-pointer"
                   >
                     Submit Registration &rarr;
                   </button>

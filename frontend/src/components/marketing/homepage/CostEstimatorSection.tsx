@@ -24,7 +24,7 @@ export function CostEstimatorSection() {
         <div className="max-w-3xl mx-auto bg-white rounded-3xl border border-[#E5E7EB] p-6 sm:p-10 shadow-card">
           <div className="text-center space-y-2 mb-8">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EAF7F0] text-[#006838] text-xs font-bold">
-              <Calculator className="h-4 w-4 text-[#008A4B]" />
+              <Calculator className="h-4 w-4 text-[#00824A]" />
               <span>Interactive Repair Tool</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#161616]">
@@ -82,7 +82,7 @@ export function CostEstimatorSection() {
 
             <button
               type="submit"
-              className="w-full py-3 rounded-xl bg-[#008A4B] hover:bg-[#007541] text-white text-xs font-bold transition-colors cursor-pointer"
+              className="w-full py-3 rounded-xl bg-[#00824A] hover:bg-[#006B3C] text-white text-xs font-bold transition-colors cursor-pointer"
             >
               Calculate Estimated Cost Range
             </button>
@@ -92,7 +92,7 @@ export function CostEstimatorSection() {
           <div className="mt-6 pt-6 border-t border-[#E5E7EB] bg-[#EAF7F0] p-4 rounded-2xl text-center space-y-1">
             <span className="text-xs font-bold text-[#006838]">Typical Market Range for {city}:</span>
             <div className="text-2xl font-extrabold text-[#006838]">{calculatedRange}</div>
-            <p className="text-[11px] text-[#006838]/80 max-w-md mx-auto pt-1">
+            <p className="text-[11px] text-[#00532C] max-w-md mx-auto pt-1">
               * Actual cost depends on detailed inspection, labour requirements, material parts and service provider choice.
             </p>
           </div>

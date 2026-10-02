@@ -12,10 +12,10 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
 
         <div className="relative z-10">
           <Link href="/" aria-label="PakFix home" className="inline-block">
-            <PakFixLogo className="h-10 text-white fill-white" />
+            <PakFixLogo isDarkBackground className="h-10" />
           </Link>
           <div className="mt-12 space-y-6">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#16A34A]/20 px-3.5 py-1 text-xs font-bold text-[#4ADE80] border border-[#16A34A]/40">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#00824A]/20 px-3.5 py-1 text-xs font-bold text-[#4ADE80] border border-[#00824A]/40">
               <Sparkles className="h-3.5 w-3.5" />
               Trusted Home Services Platform
             </span>

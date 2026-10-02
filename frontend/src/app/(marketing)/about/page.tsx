@@ -30,17 +30,17 @@ export default function AboutPage() {
 
             <div className="grid sm:grid-cols-3 gap-6 my-10 text-center">
               <div className="p-6 rounded-2xl bg-[#F8FAF9] border border-[#E5E7EB] space-y-2">
-                <Sparkles className="h-8 w-8 text-[#008A4B] mx-auto" />
+                <Sparkles className="h-8 w-8 text-[#00824A] mx-auto" />
                 <h3 className="font-bold text-[#161616] text-sm">AI Innovation</h3>
                 <p className="text-xs text-[#667085]">Instant diagnostic guidance in English & Roman Urdu.</p>
               </div>
               <div className="p-6 rounded-2xl bg-[#F8FAF9] border border-[#E5E7EB] space-y-2">
-                <ShieldCheck className="h-8 w-8 text-[#008A4B] mx-auto" />
+                <ShieldCheck className="h-8 w-8 text-[#00824A] mx-auto" />
                 <h3 className="font-bold text-[#161616] text-sm">100% Verification</h3>
                 <p className="text-xs text-[#667085]">CNIC checked & skill-audited local technicians.</p>
               </div>
               <div className="p-6 rounded-2xl bg-[#F8FAF9] border border-[#E5E7EB] space-y-2">
-                <Heart className="h-8 w-8 text-[#008A4B] mx-auto" />
+                <Heart className="h-8 w-8 text-[#00824A] mx-auto" />
                 <h3 className="font-bold text-[#161616] text-sm">Made for Pakistan</h3>
                 <p className="text-xs text-[#667085]">Serving Islamabad, Rawalpindi, Lahore, Karachi & beyond.</p>
               </div>

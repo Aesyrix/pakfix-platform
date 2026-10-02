@@ -51,7 +51,7 @@ export default function PricingPage() {
                   <tbody className="divide-y divide-[#E5E7EB] font-medium text-[#161616]">
                     {priceGrid.map((row) => (
                       <tr key={row.service} className="hover:bg-white transition-colors">
-                        <td className="py-3.5 px-4 font-bold text-[#008A4B]">{row.service}</td>
+                        <td className="py-3.5 px-4 font-bold text-[#00824A]">{row.service}</td>
                         <td className="py-3.5 px-4">{row.visitFee}</td>
                         <td className="py-3.5 px-4 font-bold">{row.labour}</td>
                         <td className="py-3.5 px-4 text-[#667085]">{row.time}</td>

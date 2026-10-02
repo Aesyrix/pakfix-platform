@@ -76,10 +76,10 @@ export function QuickBookingFormSection() {
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           {/* Left Text Column */}
           <div className="lg:col-span-5 space-y-4">
-            <span className="text-xs font-bold text-[#008A4B] uppercase tracking-wider">Fast Booking</span>
+            <span className="text-xs font-bold text-[#00824A] uppercase tracking-wider">Fast Booking</span>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-[#161616]">
               Know what you need?<br />
-              <span className="text-[#008A4B]">Book a service.</span>
+              <span className="text-[#00824A]">Book a service.</span>
             </h2>
             <p className="text-sm text-[#475467] leading-relaxed">
               Fill out the details below to receive instant upfront estimates and connect with available verified service professionals in your area.
@@ -87,19 +87,19 @@ export function QuickBookingFormSection() {
 
             <div className="pt-4 space-y-3">
               <div className="flex items-center gap-3 text-xs font-semibold text-[#161616]">
-                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#EAF7F0] text-[#008A4B]">
+                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#EAF7F0] text-[#00532C]">
                   <CheckCircle2 className="h-4 w-4" />
                 </div>
                 <span>Verified & skilled professionals</span>
               </div>
               <div className="flex items-center gap-3 text-xs font-semibold text-[#161616]">
-                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#EAF7F0] text-[#008A4B]">
+                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#EAF7F0] text-[#00532C]">
                   <CheckCircle2 className="h-4 w-4" />
                 </div>
                 <span>Transparent PKR pricing with no surprises</span>
               </div>
               <div className="flex items-center gap-3 text-xs font-semibold text-[#161616]">
-                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#EAF7F0] text-[#008A4B]">
+                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#EAF7F0] text-[#00532C]">
                   <CheckCircle2 className="h-4 w-4" />
                 </div>
                 <span>On-time arrival & job tracking</span>
@@ -117,7 +117,7 @@ export function QuickBookingFormSection() {
 
               {success ? (
                 <div className="p-4 rounded-xl bg-[#EAF7F0] border border-[#C2ECCF] text-[#006838] text-xs font-semibold flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 shrink-0 text-[#008A4B]" />
+                  <CheckCircle2 className="h-5 w-5 shrink-0 text-[#00824A]" />
                   <div>
                     <p className="font-bold text-sm">Booking Request Sent Successfully!</p>
                     <p className="mt-0.5">Verified service professionals in your city will review your request and send upfront quotes shortly.</p>
@@ -139,7 +139,7 @@ export function QuickBookingFormSection() {
                   <select
                     value={formData.service}
                     onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                    className="w-full rounded-xl border border-[#E5E7EB] bg-white p-3 text-xs text-[#161616] outline-none focus:border-[#008A4B]"
+                    className="w-full rounded-xl border border-[#E5E7EB] bg-white p-3 text-xs text-[#161616] outline-none focus:border-[#00824A]"
                   >
                     {services.map((s) => (
                       <option key={s} value={s}>{s}</option>
@@ -153,7 +153,7 @@ export function QuickBookingFormSection() {
                   <select
                     value={formData.city}
                     onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                    className="w-full rounded-xl border border-[#E5E7EB] bg-white p-3 text-xs text-[#161616] outline-none focus:border-[#008A4B]"
+                    className="w-full rounded-xl border border-[#E5E7EB] bg-white p-3 text-xs text-[#161616] outline-none focus:border-[#00824A]"
                   >
                     {cities.map((c) => (
                       <option key={c} value={c}>{c}</option>
@@ -172,7 +172,7 @@ export function QuickBookingFormSection() {
                     placeholder="e.g. House 45, Street 12, Sector F-8/2"
                     value={formData.address}
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                    className="w-full rounded-xl border border-[#E5E7EB] bg-white p-3 pl-9 text-xs text-[#161616] placeholder-[#9CA3AF] outline-none focus:border-[#008A4B]"
+                    className="w-full rounded-xl border border-[#E5E7EB] bg-white p-3 pl-9 text-xs text-[#161616] placeholder-[#9CA3AF] outline-none focus:border-[#00824A]"
                   />
                   <MapPin className="h-4 w-4 text-[#667085] absolute left-3 top-3.5" />
                 </div>
@@ -188,7 +188,7 @@ export function QuickBookingFormSection() {
                       required
                       value={formData.preferred_date}
                       onChange={(e) => setFormData({ ...formData, preferred_date: e.target.value })}
-                      className="w-full rounded-xl border border-[#E5E7EB] bg-white p-3 text-xs text-[#161616] outline-none focus:border-[#008A4B]"
+                      className="w-full rounded-xl border border-[#E5E7EB] bg-white p-3 text-xs text-[#161616] outline-none focus:border-[#00824A]"
                     />
                   </div>
                 </div>
@@ -199,7 +199,7 @@ export function QuickBookingFormSection() {
                   <select
                     value={formData.preferred_time}
                     onChange={(e) => setFormData({ ...formData, preferred_time: e.target.value })}
-                    className="w-full rounded-xl border border-[#E5E7EB] bg-white p-3 text-xs text-[#161616] outline-none focus:border-[#008A4B]"
+                    className="w-full rounded-xl border border-[#E5E7EB] bg-white p-3 text-xs text-[#161616] outline-none focus:border-[#00824A]"
                   >
                     <option value="Morning (9 AM - 12 PM)">Morning (9 AM - 12 PM)</option>
                     <option value="Afternoon (12 PM - 4 PM)">Afternoon (12 PM - 4 PM)</option>
@@ -217,7 +217,7 @@ export function QuickBookingFormSection() {
                   placeholder="Describe what needs fixing or specific details..."
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full rounded-xl border border-[#E5E7EB] bg-white p-3 text-xs text-[#161616] placeholder-[#9CA3AF] outline-none focus:border-[#008A4B] resize-none"
+                  className="w-full rounded-xl border border-[#E5E7EB] bg-white p-3 text-xs text-[#161616] placeholder-[#9CA3AF] outline-none focus:border-[#00824A] resize-none"
                 />
               </div>
 
@@ -234,7 +234,7 @@ export function QuickBookingFormSection() {
                         formData.urgency === urg
                           ? urg === 'Emergency'
                             ? 'bg-red-600 text-white'
-                            : 'bg-[#008A4B] text-white'
+                            : 'bg-[#00824A] text-white'
                           : 'bg-white border border-[#E5E7EB] text-[#475467] hover:bg-[#EAF7F0]'
                       }`}
                     >
@@ -248,7 +248,7 @@ export function QuickBookingFormSection() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 rounded-xl bg-[#008A4B] hover:bg-[#007541] text-white text-xs font-bold shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                className="w-full py-3 rounded-xl bg-[#00824A] hover:bg-[#006B3C] text-white text-xs font-bold shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
                 <span>Find Available Professionals</span>

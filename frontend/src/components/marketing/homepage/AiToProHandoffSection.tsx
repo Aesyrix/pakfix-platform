@@ -14,10 +14,10 @@ export function AiToProHandoffSection() {
     <section className="py-16 sm:py-24 bg-white border-b border-[#E5E7EB]">
       <Container>
         <div className="max-w-2xl mx-auto text-center space-y-2 mb-12">
-          <span className="text-xs font-bold text-[#008A4B] uppercase tracking-wider">Seamless Handoff</span>
+          <span className="text-xs font-bold text-[#00824A] uppercase tracking-wider">Seamless Handoff</span>
           <h2 className="text-2xl sm:text-4xl font-extrabold text-[#161616]">
             From AI diagnosis to job completed.<br />
-            <span className="text-[#008A4B]">Zero repetitive typing.</span>
+            <span className="text-[#00824A]">Zero repetitive typing.</span>
           </h2>
           <p className="text-sm text-[#475467]">
             When you diagnose an issue with PakFix AI, your photos, safety details and description carry directly into your pro booking request.
@@ -34,7 +34,7 @@ export function AiToProHandoffSection() {
                 className="bg-[#F8FAF9] rounded-2xl p-5 border border-[#E5E7EB] relative flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-[#E5E7EB] text-[#008A4B] mb-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-[#E5E7EB] text-[#00824A] mb-3">
                     <Icon className="h-5 w-5" />
                   </div>
                   <h3 className="text-sm font-bold text-[#161616]">{step.title}</h3>
@@ -42,7 +42,7 @@ export function AiToProHandoffSection() {
                 </div>
 
                 {index < 3 ? (
-                  <div className="hidden lg:block absolute -right-2.5 top-1/2 -translate-y-1/2 z-10 text-[#008A4B] font-bold">
+                  <div className="hidden lg:block absolute -right-2.5 top-1/2 -translate-y-1/2 z-10 text-[#00824A] font-bold">
                     &rarr;
                   </div>
                 ) : null}

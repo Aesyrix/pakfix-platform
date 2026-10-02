@@ -122,7 +122,7 @@ function BlockEditor({ block }: { block: AdminContentBlock }) {
               href={block.page === 'home' ? '/' : `/${block.page}`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-[#16A34A] hover:text-[#15803D]"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-[#00824A] hover:text-[#15803D]"
             >
               View page
               <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />

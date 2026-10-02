@@ -102,10 +102,10 @@ export function LocalPageView({
               <li key={problem}>
                 <Link
                   href={`/ai?q=${encodeURIComponent(problem)}`}
-                  className="flex min-h-14 items-center justify-between gap-3 rounded-[var(--radius-control)] border border-[var(--border)] bg-surface px-4 py-3 text-sm font-medium transition-colors hover:border-[#16A34A]"
+                  className="flex min-h-14 items-center justify-between gap-3 rounded-[var(--radius-control)] border border-[var(--border)] bg-surface px-4 py-3 text-sm font-medium transition-colors hover:border-[#00824A]"
                 >
                   <span className="flex items-center gap-3">
-                    <Wrench className="h-4 w-4 shrink-0 text-[#16A34A]" aria-hidden="true" />
+                    <Wrench className="h-4 w-4 shrink-0 text-[#00824A]" aria-hidden="true" />
                     {problem}
                   </span>
                   <ArrowRight className="h-4 w-4 shrink-0 text-ink-400" aria-hidden="true" />

@@ -68,7 +68,7 @@ export default function AdminPagesPage() {
                     onClick={() => { setSelectedId(page.id); setCreating(false); }}
                     aria-current={selectedId === page.id ? 'true' : undefined}
                     className={`flex w-full min-h-12 items-center justify-between gap-2 rounded-[var(--radius-control)] border px-3 text-left text-sm ${
-                      selectedId === page.id ? 'border-[#16A34A] bg-[#DCFCE7]' : 'border-[var(--border)] bg-surface hover:bg-surface-muted'
+                      selectedId === page.id ? 'border-[#00824A] bg-[#DCFCE7]' : 'border-[var(--border)] bg-surface hover:bg-surface-muted'
                     }`}
                   >
                     <span className="min-w-0">
@@ -169,7 +169,7 @@ function PageEditor({ page }: { page: AdminPage }) {
             href={publicPath}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-[#16A34A] hover:text-[#15803D]"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-[#00824A] hover:text-[#15803D]"
           >
             View page
             <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />

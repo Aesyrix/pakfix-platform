@@ -7,7 +7,7 @@ export function HeroProductVisual() {
   return (
     <div className="relative w-full max-w-lg mx-auto lg:max-w-none">
       {/* Decorative Glow */}
-      <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-[#16A34A]/20 via-[#2563EB]/20 to-[#16A34A]/10 blur-2xl opacity-70 pointer-events-none" />
+      <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-[#00824A]/20 via-[#2563EB]/20 to-[#00824A]/10 blur-2xl opacity-70 pointer-events-none" />
 
       {/* Main Container Layered Visual */}
       <div className="relative rounded-3xl border border-[var(--border)] bg-surface p-5 sm:p-6 shadow-2xl overflow-hidden backdrop-blur-xl">
@@ -15,7 +15,7 @@ export function HeroProductVisual() {
         {/* Header Bar */}
         <div className="flex items-center justify-between pb-4 border-b border-[var(--border)] mb-4">
           <div className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-[#16A34A] to-[#2563EB] text-white shadow-xs">
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-[#00824A] to-[#2563EB] text-white shadow-xs">
               <Sparkles className="h-4 w-4" />
             </span>
             <div>
@@ -24,7 +24,7 @@ export function HeroProductVisual() {
             </div>
           </div>
           <span className="inline-flex items-center gap-1 rounded-full bg-[#DCFCE7] px-2.5 py-0.5 text-[11px] font-bold text-[#15803D]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#16A34A] animate-pulse" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[#00824A] animate-pulse" />
             86% Confidence
           </span>
         </div>
@@ -37,7 +37,7 @@ export function HeroProductVisual() {
               <div className="absolute inset-0 bg-gradient-to-tr from-slate-800 to-slate-600 flex items-center justify-center text-white">
                 <Wrench className="h-6 w-6 text-[#4ADE80]" />
               </div>
-              <span className="absolute bottom-1 right-1 flex h-3 w-3 items-center justify-center rounded-full bg-[#16A34A] text-[8px] text-white">
+              <span className="absolute bottom-1 right-1 flex h-3 w-3 items-center justify-center rounded-full bg-[#00824A] text-[8px] text-white">
                 ✓
               </span>
             </div>
@@ -63,7 +63,7 @@ export function HeroProductVisual() {
               <Sparkles className="h-3.5 w-3.5" /> Likely Problem
             </span>
             <span className="inline-flex items-center gap-1 rounded-full bg-[#DCFCE7] px-2 py-0.5 text-[11px] font-bold text-[#15803D]">
-              <ShieldCheck className="h-3 w-3 text-[#16A34A]" /> Safe to Inspect
+              <ShieldCheck className="h-3 w-3 text-[#00824A]" /> Safe to Inspect
             </span>
           </div>
 
@@ -75,7 +75,7 @@ export function HeroProductVisual() {
           <div className="mt-3 grid grid-cols-2 gap-2 pt-3 border-t border-ink-200/50 dark:border-slate-800">
             <div>
               <p className="text-[10px] text-ink-500 font-medium">Estimated Repair Cost</p>
-              <p className="text-sm font-extrabold text-[#16A34A]">PKR 1,500 &ndash; 3,000</p>
+              <p className="text-sm font-extrabold text-[#00824A]">PKR 1,500 &ndash; 3,000</p>
             </div>
             <div>
               <p className="text-[10px] text-ink-500 font-medium">Recommended Action</p>
@@ -88,10 +88,10 @@ export function HeroProductVisual() {
         <div className="rounded-2xl border border-[var(--border)] bg-surface p-3.5 shadow-md flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <div className="relative">
-              <div className="h-11 w-11 rounded-full bg-gradient-to-tr from-[#16A34A] to-[#2563EB] flex items-center justify-center text-white font-bold text-sm shadow-xs">
+              <div className="h-11 w-11 rounded-full bg-gradient-to-tr from-[#00824A] to-[#2563EB] flex items-center justify-center text-white font-bold text-sm shadow-xs">
                 AH
               </div>
-              <span className="absolute -bottom-0.5 -right-0.5 h-4 w-4 rounded-full bg-[#16A34A] border-2 border-white flex items-center justify-center text-[9px] text-white">
+              <span className="absolute -bottom-0.5 -right-0.5 h-4 w-4 rounded-full bg-[#00824A] border-2 border-white flex items-center justify-center text-[9px] text-white">
                 ✓
               </span>
             </div>
@@ -99,7 +99,7 @@ export function HeroProductVisual() {
               <div className="flex items-center gap-1.5">
                 <p className="text-xs font-bold text-foreground">Tariq Mahmood</p>
                 <span className="inline-flex items-center gap-0.5 rounded-full bg-[#DCFCE7] px-1.5 py-0.2 text-[9px] font-extrabold text-[#15803D]">
-                  <UserCheck className="h-2.5 w-2.5 text-[#16A34A]" /> Verified
+                  <UserCheck className="h-2.5 w-2.5 text-[#00824A]" /> Verified
                 </span>
               </div>
               <p className="text-[11px] text-ink-500 flex items-center gap-1">
@@ -112,7 +112,7 @@ export function HeroProductVisual() {
 
           <Link
             href="/find-a-technician"
-            className="inline-flex items-center gap-1 rounded-xl bg-[#16A34A] px-3.5 py-2 text-xs font-bold text-white shadow-xs hover:bg-[#15803D] transition-colors shrink-0"
+            className="inline-flex items-center gap-1 rounded-xl bg-[#00824A] px-3.5 py-2 text-xs font-bold text-white shadow-xs hover:bg-[#15803D] transition-colors shrink-0"
           >
             Book Now
             <ArrowUpRight className="h-3.5 w-3.5" />

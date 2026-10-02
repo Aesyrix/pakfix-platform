@@ -69,7 +69,7 @@ export default function QuotesPage() {
   return (
     <Container className="py-8 sm:py-10">
       <div className="mb-8">
-        <span className="text-xs font-bold uppercase tracking-wider text-[#16A34A]">Transparent Marketplace</span>
+        <span className="text-xs font-bold uppercase tracking-wider text-[#00824A]">Transparent Marketplace</span>
         <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground mt-1">
           Quote Comparison & Bids
         </h1>
@@ -83,12 +83,12 @@ export default function QuotesPage() {
           const isAccepted = acceptedId === quote.id;
 
           return (
-            <Card key={quote.id} className={`flex flex-col justify-between shadow-md transition-all ${isAccepted ? 'ring-2 ring-[#16A34A] border-[#16A34A] bg-[#DCFCE7]/10' : ''}`}>
+            <Card key={quote.id} className={`flex flex-col justify-between shadow-md transition-all ${isAccepted ? 'ring-2 ring-[#00824A] border-[#00824A] bg-[#DCFCE7]/10' : ''}`}>
               <div>
                 <CardHeader className="border-b border-[var(--border)] pb-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="h-11 w-11 rounded-full bg-gradient-to-tr from-[#16A34A] to-[#2563EB] flex items-center justify-center text-white font-bold text-sm shadow-xs">
+                      <div className="h-11 w-11 rounded-full bg-gradient-to-tr from-[#00824A] to-[#2563EB] flex items-center justify-center text-white font-bold text-sm shadow-xs">
                         {quote.avatar}
                       </div>
                       <div>
@@ -113,11 +113,11 @@ export default function QuotesPage() {
                       <span className="font-bold text-foreground">{quote.rating}</span>
                       <span>({quote.jobsCount} jobs)</span>
                     </div>
-                    <span className="font-semibold text-[#16A34A]">{quote.availability}</span>
+                    <span className="font-semibold text-[#00824A]">{quote.availability}</span>
                   </div>
 
                   {/* Pricing Display */}
-                  <div className="rounded-2xl border border-[#16A34A]/20 bg-[#DCFCE7]/20 p-3 text-center">
+                  <div className="rounded-2xl border border-[#00824A]/20 bg-[#DCFCE7]/20 p-3 text-center">
                     <span className="text-[10px] font-bold text-ink-500 uppercase tracking-wider">Total Fixed Price</span>
                     <p className="text-2xl font-extrabold text-[#15803D] mt-0.5">PKR {quote.totalPkr.toLocaleString()}</p>
                   </div>
@@ -148,7 +148,7 @@ export default function QuotesPage() {
 
               <div className="p-4 pt-0 space-y-2">
                 {isAccepted ? (
-                  <div className="rounded-xl bg-[#16A34A] p-3 text-center text-white text-xs font-bold flex items-center justify-center gap-1.5">
+                  <div className="rounded-xl bg-[#00824A] p-3 text-center text-white text-xs font-bold flex items-center justify-center gap-1.5">
                     <CheckCircle2 className="h-4 w-4" /> Quote Accepted! Technician Dispatched.
                   </div>
                 ) : (

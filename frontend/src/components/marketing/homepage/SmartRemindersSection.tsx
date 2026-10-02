@@ -17,7 +17,7 @@ export function SmartRemindersSection() {
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-4 mb-10">
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EAF7F0] text-[#006838] text-xs font-bold mb-2">
-              <Bell className="h-3.5 w-3.5 text-[#008A4B]" />
+              <Bell className="h-3.5 w-3.5 text-[#00824A]" />
               Automated Reminders
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#161616]">
@@ -30,7 +30,7 @@ export function SmartRemindersSection() {
 
           <Link
             href="/home-maintenance"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#008A4B] hover:bg-[#007541] text-white text-xs font-bold transition-colors shadow-xs"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#00824A] hover:bg-[#006B3C] text-white text-xs font-bold transition-colors shadow-xs"
           >
             <span>Create Maintenance Plan</span>
             <ArrowRight className="h-4 w-4" />
@@ -43,9 +43,9 @@ export function SmartRemindersSection() {
             return (
               <div
                 key={r.title}
-                className="bg-[#F8FAF9] rounded-2xl p-4 border border-[#E5E7EB] hover:border-[#008A4B] transition-all space-y-2"
+                className="bg-[#F8FAF9] rounded-2xl p-4 border border-[#E5E7EB] hover:border-[#00824A] transition-all space-y-2"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-[#E5E7EB] text-[#008A4B]">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-[#E5E7EB] text-[#00824A]">
                   <Icon className="h-5 w-5" />
                 </div>
                 <h3 className="text-sm font-bold text-[#161616]">{r.title}</h3>

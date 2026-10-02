@@ -50,14 +50,14 @@ export function HeroSection() {
           <div className="lg:col-span-7 space-y-6">
             {/* Trust Pill */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EAF7F0] border border-[#C2ECCF] text-[#006838] text-xs font-bold shadow-2xs">
-              <Sparkles className="h-4 w-4 text-[#008A4B]" />
+              <Sparkles className="h-4 w-4 text-[#00824A]" />
               <span>AI-powered home repair assistance</span>
             </div>
 
             {/* Main Heading */}
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#161616] tracking-tight leading-[1.15]">
               Show the Problem.<br />
-              <span className="text-[#008A4B]">PakFix Helps You Fix It.</span>
+              <span className="text-[#00824A]">PakFix Helps You Fix It.</span>
             </h1>
 
             {/* Subheading */}
@@ -69,7 +69,7 @@ export function HeroSection() {
             <div className="bg-white rounded-2xl border border-[#E5E7EB] p-5 sm:p-6 shadow-card space-y-4 relative">
               <div className="flex items-center justify-between">
                 <label htmlFor="ai-problem-input" className="text-sm font-bold text-[#161616] flex items-center gap-2">
-                  <Sparkles className="h-4 w-4 text-[#008A4B]" />
+                  <Sparkles className="h-4 w-4 text-[#00824A]" />
                   What needs fixing?
                 </label>
                 <span className="text-[11px] text-[#667085] font-medium">Free AI Diagnosis</span>
@@ -83,7 +83,7 @@ export function HeroSection() {
                   value={problemText}
                   onChange={(e) => setProblemText(e.target.value)}
                   placeholder="e.g. My AC is running but not cooling, making a click sound..."
-                  className="w-full rounded-xl border border-[#E5E7EB] p-3.5 text-sm text-[#161616] placeholder-[#9CA3AF] focus:border-[#008A4B] focus:ring-2 focus:ring-[#008A4B]/20 outline-none transition-all resize-none"
+                  className="w-full rounded-xl border border-[#E5E7EB] p-3.5 text-sm text-[#161616] placeholder-[#9CA3AF] focus:border-[#00824A] focus:ring-2 focus:ring-[#00824A]/20 outline-none transition-all resize-none"
                 />
               </div>
 
@@ -94,7 +94,7 @@ export function HeroSection() {
                   <button
                     type="button"
                     onClick={() => setSelectedFile(null)}
-                    className="text-red-500 font-bold hover:underline cursor-pointer"
+                    className="text-red-700 font-bold hover:underline cursor-pointer"
                   >
                     Remove
                   </button>
@@ -106,13 +106,13 @@ export function HeroSection() {
                 {/* Media Actions */}
                 <div className="flex items-center gap-2">
                   <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#F8FAF9] border border-[#E5E7EB] text-xs font-semibold text-[#475467] hover:bg-[#EAF7F0] hover:text-[#006838] transition-colors cursor-pointer">
-                    <Camera className="h-3.5 w-3.5 text-[#008A4B]" />
+                    <Camera className="h-3.5 w-3.5 text-[#00824A]" />
                     <span>Camera</span>
                     <input type="file" accept="image/*" capture="environment" onChange={handleFileChange} className="hidden" />
                   </label>
 
                   <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#F8FAF9] border border-[#E5E7EB] text-xs font-semibold text-[#475467] hover:bg-[#EAF7F0] hover:text-[#006838] transition-colors cursor-pointer">
-                    <Upload className="h-3.5 w-3.5 text-[#008A4B]" />
+                    <Upload className="h-3.5 w-3.5 text-[#00824A]" />
                     <span>Upload Photo</span>
                     <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
                   </label>
@@ -128,7 +128,7 @@ export function HeroSection() {
                     onClick={() => setProblemText((prev) => prev + ' [Voice note recorded]')}
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#F8FAF9] border border-[#E5E7EB] text-xs font-semibold text-[#475467] hover:bg-[#EAF7F0] hover:text-[#006838] transition-colors cursor-pointer hidden sm:inline-flex"
                   >
-                    <Mic className="h-3.5 w-3.5 text-[#008A4B]" />
+                    <Mic className="h-3.5 w-3.5 text-[#00824A]" />
                     <span>Voice</span>
                   </button>
                 </div>
@@ -136,7 +136,7 @@ export function HeroSection() {
                 {/* Primary CTA Button */}
                 <Link
                   href={{ pathname: '/ai', query: { text: problemText } }}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#008A4B] hover:bg-[#007541] text-white text-sm font-bold shadow-md transition-all group"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#00824A] hover:bg-[#006B3C] text-white text-sm font-bold shadow-md transition-all group"
                 >
                   <span>Diagnose My Problem</span>
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -164,11 +164,11 @@ export function HeroSection() {
 
           {/* RIGHT SIDE: Product UI Preview Card */}
           <div className="lg:col-span-5 space-y-4">
-            <div className="bg-white rounded-2xl border-2 border-[#008A4B]/20 p-5 shadow-floating relative overflow-hidden">
+            <div className="bg-white rounded-2xl border-2 border-[#00824A]/20 p-5 shadow-floating relative overflow-hidden">
               {/* Header Bar inside preview */}
               <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-3 mb-4">
                 <div className="flex items-center gap-2">
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#008A4B] animate-ping" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-[#00824A] animate-ping" />
                   <span className="text-xs font-extrabold text-[#161616] tracking-wide">PAKFIX AI DIAGNOSIS</span>
                 </div>
                 <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-[#EAF7F0] text-[#006838]">
@@ -199,12 +199,12 @@ export function HeroSection() {
 
                 <div className="flex items-center justify-between p-2 rounded-lg bg-[#F8FAF9]">
                   <span className="text-[#667085]">AI Confidence:</span>
-                  <span className="font-extrabold text-[#008A4B]">95% High Confidence</span>
+                  <span className="font-extrabold text-[#00824A]">95% High Confidence</span>
                 </div>
 
                 <div className="flex items-center justify-between p-2 rounded-lg bg-[#F8FAF9]">
                   <span className="text-[#667085]">Safety Risk:</span>
-                  <span className="font-bold text-[#008A4B] flex items-center gap-1">
+                  <span className="font-bold text-[#00824A] flex items-center gap-1">
                     <ShieldCheck className="h-3.5 w-3.5" /> Low Risk (Generally Safe)
                   </span>
                 </div>
@@ -225,7 +225,7 @@ export function HeroSection() {
                 </Link>
                 <Link
                   href="/find-a-technician"
-                  className="inline-flex items-center justify-center text-xs font-bold py-2.5 rounded-xl bg-[#008A4B] text-white hover:bg-[#007541] transition-colors shadow-xs"
+                  className="inline-flex items-center justify-center text-xs font-bold py-2.5 rounded-xl bg-[#00824A] text-white hover:bg-[#006B3C] transition-colors shadow-xs"
                 >
                   Book Plumber
                 </Link>
@@ -234,13 +234,13 @@ export function HeroSection() {
               {/* Verified Technician Badge Card Underneath */}
               <div className="mt-4 pt-3 border-t border-[#E5E7EB] flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <div className="h-8 w-8 rounded-full bg-[#008A4B] text-white font-bold text-xs flex items-center justify-center">
+                  <div className="h-8 w-8 rounded-full bg-[#00824A] text-white font-bold text-xs flex items-center justify-center">
                     AR
                   </div>
                   <div>
                     <div className="flex items-center gap-1">
                       <span className="text-xs font-bold text-[#161616]">Ali Raza</span>
-                      <CheckCircle2 className="h-3.5 w-3.5 text-[#008A4B] fill-[#008A4B]" />
+                      <CheckCircle2 className="h-3.5 w-3.5 text-[#00824A] fill-[#00824A]" />
                     </div>
                     <span className="text-[10px] text-[#667085]">Master Plumber &bull; Lahore</span>
                   </div>
@@ -250,7 +250,7 @@ export function HeroSection() {
                     <Star className="h-3.5 w-3.5 text-amber-500 fill-amber-500" />
                     <span>4.9 (120+)</span>
                   </div>
-                  <span className="text-[10px] text-[#008A4B] font-bold">Available Today</span>
+                  <span className="text-[10px] text-[#00824A] font-bold">Available Today</span>
                 </div>
               </div>
             </div>

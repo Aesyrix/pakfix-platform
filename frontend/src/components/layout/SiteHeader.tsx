@@ -103,7 +103,7 @@ export function SiteHeader() {
                         <ChevronDown
                           className={cn(
                             'h-4 w-4 transition-transform duration-200',
-                            megaOpen ? 'rotate-180 text-[#008A4B]' : 'text-[#667085]'
+                            megaOpen ? 'rotate-180 text-[#00824A]' : 'text-[#667085]'
                           )}
                         />
                       </button>
@@ -156,7 +156,7 @@ export function SiteHeader() {
                   <ButtonLink
                     href="/ai"
                     size="sm"
-                    className="bg-[#008A4B] hover:bg-[#007541] text-white font-semibold rounded-xl px-5 py-2.5 shadow-xs"
+                    className="bg-[#00824A] hover:bg-[#006B3C] text-white font-semibold rounded-xl px-5 py-2.5 shadow-xs"
                   >
                     Get Started
                   </ButtonLink>
@@ -170,7 +170,7 @@ export function SiteHeader() {
                 <ButtonLink
                   href="/ai"
                   size="sm"
-                  className="bg-[#008A4B] text-white px-3.5 py-1.5 text-xs font-semibold rounded-lg"
+                  className="bg-[#00824A] text-white px-3.5 py-1.5 text-xs font-semibold rounded-lg"
                 >
                   Get Started
                 </ButtonLink>
@@ -222,7 +222,7 @@ export function SiteHeader() {
                     <ButtonLink
                       href="/ai"
                       block
-                      className="bg-[#008A4B] text-white font-bold py-3 text-center rounded-xl"
+                      className="bg-[#00824A] text-white font-bold py-3 text-center rounded-xl"
                     >
                       Diagnose My Problem
                     </ButtonLink>

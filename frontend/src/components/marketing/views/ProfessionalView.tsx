@@ -123,7 +123,7 @@ export function ProfessionalView({ slug: builtSlug, initial }: { slug: string | 
             Booking arrives in Phase 6. Until then this says so plainly rather
             than offering a button that would not book anything.
           */}
-          <Card className="mt-8 border-[#16A34A]/30 bg-surface">
+          <Card className="mt-8 border-[#00824A]/30 bg-surface">
             <CardBody className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="font-semibold">Want this professional for a job?</p>
@@ -171,7 +171,7 @@ export function ProfessionalView({ slug: builtSlug, initial }: { slug: string | 
                   <li key={category.slug}>
                     <Link
                       href={`/services/${category.slug}`}
-                      className="inline-flex min-h-11 items-center rounded-[var(--radius-pill)] border border-[var(--border)] bg-surface px-4 text-sm font-medium hover:border-[#16A34A] hover:text-[#15803D]"
+                      className="inline-flex min-h-11 items-center rounded-[var(--radius-pill)] border border-[var(--border)] bg-surface px-4 text-sm font-medium hover:border-[#00824A] hover:text-[#15803D]"
                     >
                       {category.name}
                     </Link>

@@ -42,12 +42,12 @@ export function AiAssistantFeatureSection() {
       <Container>
         <div className="max-w-3xl mx-auto text-center space-y-3 mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white text-[#006838] text-xs font-bold shadow-2xs">
-            <Sparkles className="h-3.5 w-3.5 text-[#008A4B]" />
+            <Sparkles className="h-3.5 w-3.5 text-[#00824A]" />
             Smart AI Repair Guidance
           </div>
           <h2 className="text-2xl sm:text-4xl font-extrabold text-[#161616]">
             Not sure what&apos;s wrong?<br />
-            <span className="text-[#008A4B]">Ask PakFix AI.</span>
+            <span className="text-[#00824A]">Ask PakFix AI.</span>
           </h2>
           <p className="text-sm sm:text-base text-[#475467]">
             Describe the symptoms or upload photos. PakFix AI evaluates safety risks, predicts estimated repair costs in PKR, and connects you to the right local professional.
@@ -57,7 +57,7 @@ export function AiAssistantFeatureSection() {
         {/* 3 Input Method Pill Headers */}
         <div className="grid md:grid-cols-3 gap-4 mb-8">
           <div className="bg-white rounded-2xl p-4 border border-[#E5E7EB] flex items-start gap-3">
-            <div className="h-9 w-9 rounded-xl bg-[#EAF7F0] text-[#008A4B] font-bold flex items-center justify-center shrink-0">
+            <div className="h-9 w-9 rounded-xl bg-[#EAF7F0] text-[#00532C] font-bold flex items-center justify-center shrink-0">
               <MessageSquare className="h-5 w-5" />
             </div>
             <div>
@@ -77,7 +77,7 @@ export function AiAssistantFeatureSection() {
           </div>
 
           <div className="bg-white rounded-2xl p-4 border border-[#E5E7EB] flex items-start gap-3">
-            <div className="h-9 w-9 rounded-xl bg-[#EAF7F0] text-[#008A4B] font-bold flex items-center justify-center shrink-0">
+            <div className="h-9 w-9 rounded-xl bg-[#EAF7F0] text-[#00532C] font-bold flex items-center justify-center shrink-0">
               <CheckCircle className="h-5 w-5" />
             </div>
             <div>
@@ -97,7 +97,7 @@ export function AiAssistantFeatureSection() {
               onClick={() => setActiveQuery('fridge')}
               className={`text-xs px-3 py-1.5 rounded-xl font-semibold transition-all cursor-pointer ${
                 activeQuery === 'fridge'
-                  ? 'bg-[#008A4B] text-white'
+                  ? 'bg-[#00824A] text-white'
                   : 'bg-[#F8FAF9] text-[#475467] hover:bg-[#EAF7F0]'
               }`}
             >
@@ -108,7 +108,7 @@ export function AiAssistantFeatureSection() {
               onClick={() => setActiveQuery('ac')}
               className={`text-xs px-3 py-1.5 rounded-xl font-semibold transition-all cursor-pointer ${
                 activeQuery === 'ac'
-                  ? 'bg-[#008A4B] text-white'
+                  ? 'bg-[#00824A] text-white'
                   : 'bg-[#F8FAF9] text-[#475467] hover:bg-[#EAF7F0]'
               }`}
             >
@@ -119,7 +119,7 @@ export function AiAssistantFeatureSection() {
               onClick={() => setActiveQuery('water')}
               className={`text-xs px-3 py-1.5 rounded-xl font-semibold transition-all cursor-pointer ${
                 activeQuery === 'water'
-                  ? 'bg-[#008A4B] text-white'
+                  ? 'bg-[#00824A] text-white'
                   : 'bg-[#F8FAF9] text-[#475467] hover:bg-[#EAF7F0]'
               }`}
             >
@@ -145,7 +145,7 @@ export function AiAssistantFeatureSection() {
               <ul className="space-y-2">
                 {current.causes.map((c) => (
                   <li key={c} className="flex items-center gap-2 text-xs font-semibold text-[#161616]">
-                    <CheckCircle className="h-4 w-4 text-[#008A4B]" />
+                    <CheckCircle className="h-4 w-4 text-[#00824A]" />
                     <span>{c}</span>
                   </li>
                 ))}
@@ -155,7 +155,7 @@ export function AiAssistantFeatureSection() {
             <div className="bg-[#F8FAF9] p-4 rounded-xl space-y-2.5 border border-[#E5E7EB] text-xs">
               <div className="flex justify-between">
                 <span className="text-[#667085]">Risk Level:</span>
-                <span className="font-bold text-amber-600 flex items-center gap-1">
+                <span className="font-bold text-amber-700 flex items-center gap-1">
                   <AlertCircle className="h-3.5 w-3.5" /> {current.risk}
                 </span>
               </div>
@@ -165,7 +165,7 @@ export function AiAssistantFeatureSection() {
               </div>
               <div className="flex justify-between">
                 <span className="text-[#667085]">Recommended Service:</span>
-                <span className="font-bold text-[#008A4B]">{current.pro}</span>
+                <span className="font-bold text-[#00824A]">{current.pro}</span>
               </div>
               <div className="flex justify-between pt-2 border-t border-[#E5E7EB]">
                 <span className="text-[#006838] font-bold">Estimated Cost:</span>
@@ -179,7 +179,7 @@ export function AiAssistantFeatureSection() {
             <span className="text-xs text-[#667085]">Have a real home issue right now?</span>
             <Link
               href="/ai"
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#008A4B] hover:bg-[#007541] text-white text-xs font-bold shadow-xs transition-all"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#00824A] hover:bg-[#006B3C] text-white text-xs font-bold shadow-xs transition-all"
             >
               <span>Try PakFix AI Free</span>
               <ArrowRight className="h-4 w-4" />

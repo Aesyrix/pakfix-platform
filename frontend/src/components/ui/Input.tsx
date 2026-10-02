@@ -54,7 +54,7 @@ const controlClasses = [
   'w-full rounded-[var(--radius-control)] border bg-surface px-4 py-3',
   'text-base text-foreground placeholder:text-ink-400',
   'transition-all outline-none',
-  'focus:ring-2 focus:ring-[#16A34A] focus:border-transparent',
+  'focus:ring-2 focus:ring-[#00824A] focus:border-transparent',
   'disabled:cursor-not-allowed disabled:opacity-60',
   'min-h-[48px]',
 ].join(' ');

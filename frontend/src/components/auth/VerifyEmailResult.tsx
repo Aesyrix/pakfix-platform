@@ -37,7 +37,7 @@ export function VerifyEmailResult() {
   if (status === 'verified' || status === 'already-verified') {
     return (
       <div className="flex flex-col items-center gap-3 text-center">
-        <CircleCheck className="h-10 w-10 text-[#16A34A]" aria-hidden="true" />
+        <CircleCheck className="h-10 w-10 text-[#00824A]" aria-hidden="true" />
         <h1 className="text-2xl font-bold tracking-tight">
           {status === 'verified' ? 'Email verified' : 'Already verified'}
         </h1>

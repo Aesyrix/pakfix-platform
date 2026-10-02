@@ -23,7 +23,7 @@ export default function PropertyManagersPage() {
       <section className="py-12 sm:py-20 bg-white">
         <Container>
           <div className="bg-[#F8FAF9] rounded-3xl p-8 sm:p-12 border border-[#E5E7EB] text-center space-y-6">
-            <Home className="h-12 w-12 text-[#008A4B] mx-auto" />
+            <Home className="h-12 w-12 text-[#00824A] mx-auto" />
             <h2 className="text-2xl sm:text-4xl font-extrabold text-[#161616]">
               Streamline Tenant Repairs & Maintenance
             </h2>
@@ -33,7 +33,7 @@ export default function PropertyManagersPage() {
             <div>
               <Link
                 href="/home-maintenance"
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-[#008A4B] hover:bg-[#007541] text-white text-sm font-bold shadow-md transition-all"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-[#00824A] hover:bg-[#006B3C] text-white text-sm font-bold shadow-md transition-all"
               >
                 <span>Add Your Properties</span>
                 <ArrowRight className="h-4 w-4" />

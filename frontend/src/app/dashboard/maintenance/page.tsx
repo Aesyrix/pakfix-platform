@@ -92,7 +92,7 @@ export default function MaintenancePage() {
     <Container className="py-8 sm:py-10">
       <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-[#16A34A]">Preventive Care</span>
+          <span className="text-xs font-bold uppercase tracking-wider text-[#00824A]">Preventive Care</span>
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground mt-1">
             Preventive Maintenance Schedule
           </h1>
@@ -105,19 +105,19 @@ export default function MaintenancePage() {
         <div className="flex items-center gap-1.5 bg-surface p-1 rounded-2xl border border-[var(--border)] shadow-xs text-xs font-semibold">
           <button
             onClick={() => setFilter('all')}
-            className={`px-3 py-1.5 rounded-xl transition-all ${filter === 'all' ? 'bg-[#16A34A] text-white shadow-xs' : 'text-ink-600 hover:text-foreground'}`}
+            className={`px-3 py-1.5 rounded-xl transition-all ${filter === 'all' ? 'bg-[#00824A] text-white shadow-xs' : 'text-ink-600 hover:text-foreground'}`}
           >
             All Services
           </button>
           <button
             onClick={() => setFilter('due')}
-            className={`px-3 py-1.5 rounded-xl transition-all ${filter === 'due' ? 'bg-[#16A34A] text-white shadow-xs' : 'text-ink-600 hover:text-foreground'}`}
+            className={`px-3 py-1.5 rounded-xl transition-all ${filter === 'due' ? 'bg-[#00824A] text-white shadow-xs' : 'text-ink-600 hover:text-foreground'}`}
           >
             Due Soon
           </button>
           <button
             onClick={() => setFilter('scheduled')}
-            className={`px-3 py-1.5 rounded-xl transition-all ${filter === 'scheduled' ? 'bg-[#16A34A] text-white shadow-xs' : 'text-ink-600 hover:text-foreground'}`}
+            className={`px-3 py-1.5 rounded-xl transition-all ${filter === 'scheduled' ? 'bg-[#00824A] text-white shadow-xs' : 'text-ink-600 hover:text-foreground'}`}
           >
             Scheduled
           </button>
@@ -160,7 +160,7 @@ export default function MaintenancePage() {
                     </div>
                     <div>
                       <span className="text-[10px] text-ink-400 font-semibold uppercase">Estimated Cost</span>
-                      <p className="font-extrabold text-[#16A34A] mt-0.5">PKR {plan.estimatedPkr}</p>
+                      <p className="font-extrabold text-[#00824A] mt-0.5">PKR {plan.estimatedPkr}</p>
                     </div>
                   </div>
 
@@ -168,7 +168,7 @@ export default function MaintenancePage() {
                     <p className="font-bold text-foreground text-[11px] uppercase tracking-wide">Key Preventive Benefits</p>
                     {plan.benefits.map((b, i) => (
                       <div key={i} className="flex items-center gap-2 text-ink-600">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-[#16A34A] shrink-0" />
+                        <CheckCircle2 className="h-3.5 w-3.5 text-[#00824A] shrink-0" />
                         <span>{b}</span>
                       </div>
                     ))}

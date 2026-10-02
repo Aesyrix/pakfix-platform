@@ -70,7 +70,7 @@ export default function AdminServicesPage() {
                         href={`/services/${category.slug}`}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-ink-400 hover:text-[#16A34A]"
+                        className="text-ink-400 hover:text-[#00824A]"
                         aria-label={`View ${category.name}`}
                       >
                         <ExternalLink className="h-4 w-4" />
@@ -137,7 +137,7 @@ function CategoryEditor({ category, onClose }: { category: AdminServiceCategory;
   });
 
   return (
-    <Card className="border-[#16A34A]">
+    <Card className="border-[#00824A]">
       <CardBody className="flex flex-col gap-4">
         <h2 className="font-semibold">Editing {category.name}</h2>
 

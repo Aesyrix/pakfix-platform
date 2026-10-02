@@ -10,7 +10,7 @@ export function MobilePwaSection() {
           {/* Left Column */}
           <div className="lg:col-span-7 space-y-4">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-[#006838] text-xs font-bold">
-              <Smartphone className="h-3.5 w-3.5 text-[#008A4B]" />
+              <Smartphone className="h-3.5 w-3.5 text-[#00824A]" />
               PWA & Mobile Ready
             </div>
 
@@ -24,19 +24,19 @@ export function MobilePwaSection() {
 
             <div className="grid sm:grid-cols-2 gap-3 pt-2">
               <div className="flex items-center gap-2 text-xs font-semibold text-[#161616]">
-                <CheckCircle2 className="h-4 w-4 text-[#008A4B]" />
+                <CheckCircle2 className="h-4 w-4 text-[#00824A]" />
                 <span>Instant AI Assistant</span>
               </div>
               <div className="flex items-center gap-2 text-xs font-semibold text-[#161616]">
-                <CheckCircle2 className="h-4 w-4 text-[#008A4B]" />
+                <CheckCircle2 className="h-4 w-4 text-[#00824A]" />
                 <span>Live Technician Tracking</span>
               </div>
               <div className="flex items-center gap-2 text-xs font-semibold text-[#161616]">
-                <CheckCircle2 className="h-4 w-4 text-[#008A4B]" />
+                <CheckCircle2 className="h-4 w-4 text-[#00824A]" />
                 <span>Smart Maintenance Reminders</span>
               </div>
               <div className="flex items-center gap-2 text-xs font-semibold text-[#161616]">
-                <CheckCircle2 className="h-4 w-4 text-[#008A4B]" />
+                <CheckCircle2 className="h-4 w-4 text-[#00824A]" />
                 <span>Zero App Store Download Needed</span>
               </div>
             </div>
@@ -44,7 +44,7 @@ export function MobilePwaSection() {
             <div className="flex flex-wrap items-center gap-3 pt-4">
               <button
                 type="button"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#008A4B] hover:bg-[#007541] text-white text-xs font-bold transition-colors shadow-xs cursor-pointer"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#00824A] hover:bg-[#006B3C] text-white text-xs font-bold transition-colors shadow-xs cursor-pointer"
               >
                 <Download className="h-4 w-4" />
                 <span>Install PakFix Web App</span>
@@ -63,7 +63,7 @@ export function MobilePwaSection() {
               <div className="bg-white rounded-[28px] p-4 text-xs space-y-3 min-h-[380px]">
                 <div className="flex items-center justify-between border-b pb-2">
                   <span className="font-extrabold text-[#161616]">PakFix App</span>
-                  <span className="h-2 w-2 rounded-full bg-[#008A4B]" />
+                  <span className="h-2 w-2 rounded-full bg-[#00824A]" />
                 </div>
                 <div className="bg-[#EAF7F0] p-3 rounded-xl text-[11px] text-[#006838] font-semibold">
                   AI Diagnosis: AC Filter & Gas Issue
@@ -72,7 +72,7 @@ export function MobilePwaSection() {
                   <span className="text-[10px] text-[#667085]">Technician Assigned</span>
                   <p className="font-bold text-[#161616]">Ali Raza &bull; Arriving in 15 mins</p>
                 </div>
-                <div className="bg-[#008A4B] text-white p-3 rounded-xl font-bold text-center">
+                <div className="bg-[#00824A] text-white p-3 rounded-xl font-bold text-center">
                   Book Professional
                 </div>
               </div>

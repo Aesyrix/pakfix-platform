@@ -60,7 +60,7 @@ export default function AdminOverviewPage() {
               <span className="text-2xl font-bold">{tile.value}</span>
               {tile.hint ? <span className="text-xs text-ink-500">{tile.hint}</span> : null}
               {tile.href ? (
-                <span className="mt-auto inline-flex items-center gap-1 pt-2 text-sm font-semibold text-[#16A34A]">
+                <span className="mt-auto inline-flex items-center gap-1 pt-2 text-sm font-semibold text-[#00824A]">
                   Manage
                   <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                 </span>

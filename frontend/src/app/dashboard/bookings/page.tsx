@@ -75,7 +75,7 @@ export default function BookingsDashboardPage() {
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-[#16A34A]">My Service Portal</span>
+          <span className="text-xs font-bold uppercase tracking-wider text-[#00824A]">My Service Portal</span>
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground mt-1">
             Bookings & Live Tracking
           </h1>
@@ -102,7 +102,7 @@ export default function BookingsDashboardPage() {
                 interactive
                 onClick={() => setSelectedBooking(booking)}
                 className={`cursor-pointer transition-all ${
-                  isSelected ? 'border-[#16A34A] ring-2 ring-[#16A34A]/20 bg-[#DCFCE7]/10' : ''
+                  isSelected ? 'border-[#00824A] ring-2 ring-[#00824A]/20 bg-[#DCFCE7]/10' : ''
                 }`}
               >
                 <CardBody className="p-4 space-y-3">
@@ -123,7 +123,7 @@ export default function BookingsDashboardPage() {
 
                   <div className="flex items-center justify-between pt-2 border-t border-[var(--border)] text-xs">
                     <span className="text-ink-600 font-medium">{booking.date}</span>
-                    <span className="font-extrabold text-[#16A34A]">PKR {booking.totalPkr}</span>
+                    <span className="font-extrabold text-[#00824A]">PKR {booking.totalPkr}</span>
                   </div>
                 </CardBody>
               </Card>
@@ -150,7 +150,7 @@ export default function BookingsDashboardPage() {
               {/* Technician Info Card */}
               <div className="rounded-2xl border border-[var(--border)] bg-surface-muted/60 p-4 flex flex-wrap items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
-                  <div className="h-12 w-12 rounded-full bg-gradient-to-tr from-[#16A34A] to-[#2563EB] flex items-center justify-center text-white font-bold text-base shadow-xs">
+                  <div className="h-12 w-12 rounded-full bg-gradient-to-tr from-[#00824A] to-[#2563EB] flex items-center justify-center text-white font-bold text-base shadow-xs">
                     {selectedBooking.technician.avatar}
                   </div>
                   <div>
@@ -190,9 +190,9 @@ export default function BookingsDashboardPage() {
                       <span
                         className={`absolute -left-6 top-1 h-5 w-5 rounded-full border-2 flex items-center justify-center text-[10px] font-bold ${
                           step.active
-                            ? 'border-[#16A34A] bg-[#16A34A] text-white ring-4 ring-[#16A34A]/20 animate-pulse'
+                            ? 'border-[#00824A] bg-[#00824A] text-white ring-4 ring-[#00824A]/20 animate-pulse'
                             : step.completed
-                            ? 'border-[#16A34A] bg-[#16A34A] text-white'
+                            ? 'border-[#00824A] bg-[#00824A] text-white'
                             : 'border-ink-300 bg-surface text-ink-400'
                         }`}
                       >
@@ -201,7 +201,7 @@ export default function BookingsDashboardPage() {
 
                       <div className="flex-1">
                         <div className="flex items-center justify-between">
-                          <p className={`text-sm font-bold ${step.active ? 'text-[#16A34A]' : 'text-foreground'}`}>
+                          <p className={`text-sm font-bold ${step.active ? 'text-[#00824A]' : 'text-foreground'}`}>
                             {step.title}
                           </p>
                           <span className="text-xs font-mono text-ink-400">{step.timestamp}</span>
@@ -220,7 +220,7 @@ export default function BookingsDashboardPage() {
                 </div>
                 <div className="text-right">
                   <span className="text-ink-500">Agreed Price: </span>
-                  <span className="font-extrabold text-[#16A34A] text-sm">PKR {selectedBooking.totalPkr}</span>
+                  <span className="font-extrabold text-[#00824A] text-sm">PKR {selectedBooking.totalPkr}</span>
                 </div>
               </div>
             </CardBody>

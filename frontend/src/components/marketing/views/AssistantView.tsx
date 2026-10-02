@@ -147,7 +147,7 @@ export function AssistantView() {
               PakFix AI Engine Online
             </Badge>
             <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#15803D] bg-[#DCFCE7] px-2 py-0.5 rounded-full">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#16A34A] animate-pulse" />
+              <span className="h-1.5 w-1.5 rounded-full bg-[#00824A] animate-pulse" />
               Live Safety Audit
             </span>
           </div>
@@ -187,7 +187,7 @@ export function AssistantView() {
               aria-describedby={fieldError ? 'problem-error' : undefined}
               className={cn(
                 'min-h-32 w-full resize-y rounded-[var(--radius-card)] border bg-surface p-4 pr-14 text-base outline-none transition-all',
-                'focus:ring-2 focus:ring-[#16A34A] focus:border-transparent',
+                'focus:ring-2 focus:ring-[#00824A] focus:border-transparent',
                 fieldError ? 'border-danger-500' : 'border-[var(--border)]'
               )}
             />
@@ -217,7 +217,7 @@ export function AssistantView() {
                 key={example}
                 type="button"
                 onClick={() => setDescription(example)}
-                className="rounded-full border border-[var(--border)] bg-surface px-3 py-1.5 text-xs font-medium text-ink-600 hover:border-[#16A34A] hover:text-[#15803D] hover:bg-[#DCFCE7]/40 transition-colors"
+                className="rounded-full border border-[var(--border)] bg-surface px-3 py-1.5 text-xs font-medium text-ink-600 hover:border-[#00824A] hover:text-[#15803D] hover:bg-[#DCFCE7]/40 transition-colors"
               >
                 {example}
               </button>
