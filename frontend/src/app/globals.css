@@ -1,115 +1,107 @@
 @import "tailwindcss";
 
 /*
-  PakFix design system
-  --------------------
-  One place where the brand is defined. Components never hardcode a colour;
-  they reference these tokens, so a rebrand is an edit to this file.
+  PakFix Master Brand Palette & Design System
+  -------------------------------------------
+  Primary Brand Green: #008A4B
+  Dark Green: #006838
+  Green Hover: #007541
+  Soft Green: #EAF7F0
+  Very Soft Green: #F4FBF7
+  Primary Dark: #161616
+  Secondary Dark: #252525
+  Body Text: #475467
+  Muted Text: #667085
+  Border: #E5E7EB
+  Page Background: #FFFFFF
+  Secondary Background: #F8FAF9
+  Danger: #DC2626
+  Warning: #F59E0B
+  Information: #2563EB
 
-  The palette is built around a deep teal (trust, utility, not-a-bank blue)
-  with a warm amber accent for actions that cost money or need attention.
-  Greens and reds are reserved for state, never decoration.
+  Proportions: 70% light neutrals, 20% dark typography, 10% green accents.
 */
 
 @theme {
-  /* Brand */
-  --color-brand-50: oklch(0.971 0.021 190);
-  --color-brand-100: oklch(0.941 0.043 191);
-  --color-brand-200: oklch(0.885 0.079 192);
-  --color-brand-300: oklch(0.809 0.112 193);
-  --color-brand-400: oklch(0.715 0.124 195);
-  --color-brand-500: oklch(0.627 0.119 197);
-  --color-brand-600: oklch(0.531 0.103 199);
-  --color-brand-700: oklch(0.447 0.086 201);
-  --color-brand-800: oklch(0.378 0.071 203);
-  --color-brand-900: oklch(0.322 0.059 205);
-  --color-brand-950: oklch(0.219 0.045 207);
+  /* Brand — Primary Green (#008A4B) Scale */
+  --color-brand-50: #F4FBF7;
+  --color-brand-100: #EAF7F0;
+  --color-brand-200: #C2ECCF;
+  --color-brand-300: #86DBAA;
+  --color-brand-400: #3EB87D;
+  --color-brand-500: #00A85B;
+  --color-brand-600: #008A4B; /* Primary Brand Green */
+  --color-brand-700: #006838; /* Dark Green */
+  --color-brand-800: #00532C;
+  --color-brand-900: #003B1F;
+  --color-brand-950: #002212;
 
-  /* Accent — calls to action, prices, emphasis */
-  --color-accent-50: oklch(0.982 0.028 84);
-  --color-accent-100: oklch(0.958 0.061 85);
-  --color-accent-200: oklch(0.918 0.111 87);
-  --color-accent-300: oklch(0.869 0.151 84);
-  --color-accent-400: oklch(0.823 0.163 82);
-  --color-accent-500: oklch(0.769 0.166 76);
-  --color-accent-600: oklch(0.681 0.157 65);
-  --color-accent-700: oklch(0.564 0.134 57);
-  --color-accent-800: oklch(0.472 0.110 53);
-  --color-accent-900: oklch(0.406 0.092 51);
+  /* Brand Green Hover */
+  --color-brand-hover: #007541;
 
-  /* Neutrals */
-  --color-ink-50: oklch(0.985 0.002 247);
-  --color-ink-100: oklch(0.967 0.003 247);
-  --color-ink-200: oklch(0.928 0.006 265);
-  --color-ink-300: oklch(0.872 0.010 258);
-  --color-ink-400: oklch(0.704 0.019 261);
-  --color-ink-500: oklch(0.551 0.023 264);
-  --color-ink-600: oklch(0.446 0.026 257);
-  --color-ink-700: oklch(0.373 0.029 256);
-  --color-ink-800: oklch(0.279 0.028 256);
-  --color-ink-900: oklch(0.210 0.028 261);
-  --color-ink-950: oklch(0.130 0.024 263);
+  /* Accent Blue (#2563EB) — AI Technology & Informational Focus */
+  --color-accent-50: #EFF6FF;
+  --color-accent-100: #DBEAFE;
+  --color-accent-200: #BFDBFE;
+  --color-accent-300: #93C5FD;
+  --color-accent-400: #60A5FA;
+  --color-accent-500: #3B82F6;
+  --color-accent-600: #2563EB;
+  --color-accent-700: #1D4ED8;
+  --color-accent-800: #1E40AF;
+  --color-accent-900: #1E3A8A;
 
-  /* State — safety levels map onto these directly */
-  --color-safe-500: oklch(0.696 0.161 149);
-  --color-safe-600: oklch(0.596 0.141 151);
-  --color-warn-500: oklch(0.795 0.161 86);
-  --color-warn-600: oklch(0.681 0.157 65);
-  --color-danger-500: oklch(0.637 0.208 25);
-  --color-danger-600: oklch(0.577 0.199 27);
-  --color-info-500: oklch(0.623 0.152 254);
+  /* Dark Neutrals (#161616 / #252525) */
+  --color-ink-50: #F8FAF9;
+  --color-ink-100: #F3F4F6;
+  --color-ink-200: #E5E7EB;
+  --color-ink-300: #D1D5DB;
+  --color-ink-400: #9CA3AF;
+  --color-ink-500: #667085; /* Muted Text */
+  --color-ink-600: #475467; /* Body Text */
+  --color-ink-700: #344054;
+  --color-ink-800: #252525; /* Secondary Dark */
+  --color-ink-900: #161616; /* Primary Dark */
+  --color-ink-950: #0C0C0C;
+
+  /* State Colors */
+  --color-safe-500: #008A4B;
+  --color-safe-600: #006838;
+  --color-warn-500: #F59E0B;
+  --color-warn-600: #D97706;
+  --color-danger-500: #DC2626;
+  --color-danger-600: #B91C1C;
+  --color-info-500: #2563EB;
+  --color-info-600: #1D4ED8;
 
   /* Typography */
-  --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
-  /* Radii — generous, to match the "premium, friendly" brief */
-  --radius-card: 1rem;
-  --radius-control: 0.625rem;
+  /* Radius System */
+  --radius-sm: 8px;
+  --radius-control: 12px; /* Inputs & Buttons */
+  --radius-card: 18px;    /* Cards */
+  --radius-section: 24px; /* Large sections */
   --radius-pill: 9999px;
 
-  /* Elevation — soft and low-contrast, never a hard drop shadow */
-  --shadow-card: 0 1px 2px oklch(0 0 0 / 0.04), 0 8px 24px oklch(0 0 0 / 0.06);
-  --shadow-lifted: 0 2px 4px oklch(0 0 0 / 0.05), 0 16px 40px oklch(0 0 0 / 0.10);
+  /* Elevation Shadows */
+  --shadow-sm: 0 1px 2px rgba(22, 22, 22, 0.04);
+  --shadow-card: 0 4px 20px rgba(22, 22, 22, 0.06);
+  --shadow-lifted: 0 10px 28px rgba(22, 22, 22, 0.08);
+  --shadow-floating: 0 20px 48px rgba(22, 22, 22, 0.12);
 }
 
 :root {
-  --background: var(--color-ink-50);
-  --foreground: var(--color-ink-900);
-  --surface: #ffffff;
-  --surface-muted: var(--color-ink-100);
-  --border: var(--color-ink-200);
-  /* A brand-tinted wash. Theme-aware, because the fixed brand-50 token is
-     light in both themes and would put light text on a light panel. */
-  --brand-wash: var(--color-brand-50);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --background: var(--color-ink-950);
-    --foreground: var(--color-ink-100);
-    --surface: var(--color-ink-900);
-    --surface-muted: var(--color-ink-800);
-    --border: var(--color-ink-800);
-    --brand-wash: var(--color-brand-950);
-  }
-}
-
-:root[data-theme="dark"] {
-  --background: var(--color-ink-950);
-  --foreground: var(--color-ink-100);
-  --surface: var(--color-ink-900);
-  --surface-muted: var(--color-ink-800);
-  --border: var(--color-ink-800);
-  --brand-wash: var(--color-brand-950);
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-surface: var(--surface);
-  --color-surface-muted: var(--surface-muted);
-  --color-border: var(--border);
-  --color-brand-wash: var(--brand-wash);
+  --background: #FFFFFF;
+  --background-secondary: #F8FAF9;
+  --foreground: #161616;
+  --surface: #FFFFFF;
+  --surface-muted: #F8FAF9;
+  --border: #E5E7EB;
+  --brand-wash: #EAF7F0;
+  --brand-very-soft: #F4FBF7;
+  --body-text: #475467;
+  --muted-text: #667085;
 }
 
 * {
@@ -118,25 +110,24 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-  /* The customer app is used one-handed on a phone; never let it scroll
-     sideways, at any breakpoint. */
   overflow-x: hidden;
 }
 
-/* Visible focus for keyboard users, invisible for mouse users. */
+/* Visible focus accessibility */
 :focus-visible {
-  outline: 2px solid var(--color-brand-500);
+  outline: 2px solid #008A4B;
   outline-offset: 2px;
   border-radius: var(--radius-control);
 }
 
-/* Respect a reduced-motion preference everywhere. */
+/* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -148,19 +139,18 @@ body {
   }
 }
 
-/* Skeleton shimmer used by every loading state. */
+/* Custom Skeleton pulse */
 @keyframes pakfix-pulse {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.45; }
+  50% { opacity: 0.4; }
 }
 
 .skeleton {
-  animation: pakfix-pulse 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  background-color: var(--surface-muted);
+  animation: pakfix-pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  background-color: var(--border);
   border-radius: var(--radius-control);
 }
 
-/* Room for the mobile bottom navigation, including the iOS home indicator. */
 .has-bottom-nav {
   padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
 }

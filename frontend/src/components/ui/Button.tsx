@@ -12,29 +12,30 @@ import { cn } from '@/lib/utils/cn';
 const button = cva(
   [
     'inline-flex items-center justify-center gap-2 font-semibold',
-    'rounded-[var(--radius-control)] transition-colors',
+    'rounded-[var(--radius-control)] transition-all duration-200',
     'disabled:pointer-events-none disabled:opacity-50',
-    'focus-visible:outline-2 focus-visible:outline-offset-2',
-    // Touch target, without forcing the visual height.
-    'min-h-11 touch-manipulation select-none',
+    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#16A34A]',
+    'min-h-[44px] touch-manipulation select-none cursor-pointer',
   ],
   {
     variants: {
       variant: {
         primary:
-          'bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-800 shadow-[var(--shadow-card)]',
+          'bg-[#16A34A] text-white hover:bg-[#15803D] active:bg-[#166534] shadow-sm hover:shadow transition-all',
         accent:
-          'bg-accent-500 text-ink-950 hover:bg-accent-600 active:bg-accent-700 shadow-[var(--shadow-card)]',
+          'bg-[#2563EB] text-white hover:bg-[#1D4ED8] active:bg-[#1E40AF] shadow-sm hover:shadow transition-all',
         secondary:
-          'bg-surface text-foreground border border-[var(--border)] hover:bg-surface-muted',
+          'bg-surface text-foreground border border-[var(--border)] hover:bg-surface-muted hover:border-ink-300',
+        outline:
+          'bg-transparent text-[#16A34A] border-2 border-[#16A34A] hover:bg-brand-50 hover:text-[#15803D]',
         ghost: 'bg-transparent text-foreground hover:bg-surface-muted',
-        danger: 'bg-danger-600 text-white hover:bg-danger-500 active:bg-danger-600',
-        link: 'bg-transparent text-brand-600 underline underline-offset-4 hover:text-brand-700 min-h-0',
+        danger: 'bg-[#DC2626] text-white hover:bg-[#B91C1C] active:bg-[#991B1B]',
+        link: 'bg-transparent text-[#16A34A] underline underline-offset-4 hover:text-[#15803D] min-h-0 p-0',
       },
       size: {
-        sm: 'h-11 px-3.5 text-sm',
+        sm: 'h-11 px-4 text-sm',
         md: 'h-12 px-5 text-sm',
-        lg: 'h-14 px-7 text-base',
+        lg: 'h-14 px-7 text-base font-bold',
         icon: 'h-11 w-11 p-0',
       },
       block: {

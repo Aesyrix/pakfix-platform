@@ -1,45 +1,86 @@
 import { cn } from '@/lib/utils/cn';
 
+interface PakFixLogoProps {
+  className?: string;
+  showWordmark?: boolean;
+  isDarkBackground?: boolean;
+}
+
 /**
- * The PakFix mark: a house outline whose roof doubles as a wrench head.
- * Drawn inline rather than loaded as an image so it inherits the current
- * colour and stays crisp at every size, including the favicon.
+ * PakFix Logo Component
+ * Incorporates:
+ * - Strong dark wordmark ('Pak' in dark, 'Fix' in #008A4B green)
+ * - House roof + Wrench icon symbol
+ * - Crescent / star Pakistan visual identity element
  */
-export function PakFixLogo({ className, showWordmark = true }: { className?: string; showWordmark?: boolean }) {
+export function PakFixLogo({ className, showWordmark = true, isDarkBackground = false }: PakFixLogoProps) {
   return (
-    <span className={cn('inline-flex items-center gap-2', className)}>
+    <span className={cn('inline-flex items-center gap-2.5 select-none', className)}>
       <svg
-        viewBox="0 0 32 32"
+        viewBox="0 0 36 36"
         fill="none"
-        className="h-full w-auto shrink-0"
+        className="h-9 w-auto shrink-0 drop-shadow-xs"
         role="img"
-        aria-label="PakFix"
+        aria-label="PakFix Logo"
       >
-        <rect width="32" height="32" rx="9" className="fill-brand-600" />
-        {/* Roofline */}
+        {/* Rounded Container Box */}
+        <rect width="36" height="36" rx="10" className="fill-[#008A4B]" />
+        
+        {/* House Roofline */}
         <path
-          d="M7 15.5 16 8l9 7.5"
+          d="M8 17L18 8.5L28 17"
           stroke="white"
-          strokeWidth="2.2"
+          strokeWidth="2.4"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-        {/* Walls */}
+
+        {/* House Walls */}
         <path
-          d="M9.5 15.6V23a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-7.4"
+          d="M10.5 17V26A1.5 1.5 0 0 0 12 27.5H24A1.5 1.5 0 0 0 25.5 26V17"
           stroke="white"
-          strokeWidth="2.2"
+          strokeWidth="2.4"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-        {/* The wrench head sitting where a door would be */}
-        <circle cx="16" cy="18" r="2.1" className="fill-accent-400" />
-        <path d="M16 20.1V24" stroke="var(--color-accent-400)" strokeWidth="2.2" strokeLinecap="round" />
+
+        {/* Wrench Symbol inside house */}
+        <path
+          d="M16 19.5L20 23.5M19 16.5A2.2 2.2 0 1 0 16.5 19L19 16.5Z"
+          stroke="#F4FBF7"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="white"
+        />
+
+        {/* Crescent Star Pakistan Identity accent */}
+        <circle cx="25.5" cy="10.5" r="3.5" fill="#F59E0B" opacity="0.95" />
+        <path
+          d="M26.2 9.2L26.7 10.4L27.9 10.5L27 11.3L27.3 12.5L26.2 11.8L25.1 12.5L25.4 11.3L24.5 10.5L25.7 10.4L26.2 9.2Z"
+          fill="white"
+        />
       </svg>
 
       {showWordmark ? (
-        <span className="text-lg font-extrabold tracking-tight text-foreground">
-          Pak<span className="text-brand-600">Fix</span>
+        <span className="flex items-baseline">
+          <span
+            className={cn(
+              'text-xl font-extrabold tracking-tight',
+              isDarkBackground ? 'text-white' : 'text-[#161616]'
+            )}
+          >
+            Pak
+          </span>
+          <span className="text-xl font-extrabold tracking-tight text-[#008A4B]">Fix</span>
+          <span
+            className={cn(
+              'text-xs font-semibold ml-0.5',
+              isDarkBackground ? 'text-gray-400' : 'text-[#667085]'
+            )}
+          >
+            .pk
+          </span>
         </span>
       ) : null}
     </span>

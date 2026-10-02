@@ -24,7 +24,8 @@ class ServiceCategory extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'parent_id', 'name', 'slug', 'description', 'icon', 'image_path', 'color',
+        'parent_id', 'name', 'slug', 'trade_slug', 'trade_name', 'description',
+        'common_problems', 'icon', 'image_path', 'color',
         'is_emergency', 'is_popular', 'is_active', 'sort_order',
         'typical_min_minor', 'typical_max_minor', 'seo_title', 'seo_description',
     ];
@@ -32,6 +33,7 @@ class ServiceCategory extends Model
     protected function casts(): array
     {
         return [
+            'common_problems' => 'array',
             'is_emergency' => 'boolean',
             'is_popular' => 'boolean',
             'is_active' => 'boolean',
@@ -65,6 +67,16 @@ class ServiceCategory extends Model
         return $this->hasMany(TechnicianService::class);
     }
 
+    public function faqs(): HasMany
+    {
+        return $this->hasMany(Faq::class)->where('is_active', true)->orderBy('sort_order');
+    }
+
+    public function blogPosts(): HasMany
+    {
+        return $this->hasMany(BlogPost::class);
+    }
+
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('is_active', true);
@@ -78,6 +90,12 @@ class ServiceCategory extends Model
     public function scopePopular(Builder $query): Builder
     {
         return $query->where('is_popular', true)->where('is_active', true);
+    }
+
+    /** Categories with a trade name get local SEO pages such as /plumber/lahore. */
+    public function scopeWithTrade(Builder $query): Builder
+    {
+        return $query->whereNotNull('trade_slug');
     }
 
     public function isTopLevel(): bool

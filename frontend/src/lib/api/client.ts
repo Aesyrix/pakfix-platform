@@ -8,18 +8,38 @@ import type { ApiEnvelope, ApiFailure, Pagination } from './types';
  * shape, and the auth token is attached in exactly one place.
  */
 
-export const API_BASE_URL = (
-  process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000/api/v1'
-).replace(/\/$/, '');
+/**
+ * Where the API lives.
+ *
+ * In the browser, NEXT_PUBLIC_API_URL is normally the relative "/api/v1": the
+ * site and the API are served by the same PHP server, so the API is on
+ * whatever origin the page came from. That keeps one build valid on
+ * localhost, staging and pakfix.pk alike.
+ *
+ * During a build or on the Next.js server there is no page origin, so an
+ * absolute URL is used instead (PAKFIX_BUILD_API_URL, set by
+ * `php artisan pakfix:build`).
+ */
+export function apiBaseUrl(): string {
+  const configured = process.env.NEXT_PUBLIC_API_URL ?? '/api/v1';
 
-/** The API's own origin, for endpoints that sit outside /api/v1. */
-export const API_ORIGIN = (() => {
-  try {
-    return new URL(API_BASE_URL).origin;
-  } catch {
-    return 'http://localhost:8000';
+  if (typeof window === 'undefined') {
+    const serverUrl =
+      process.env.PAKFIX_BUILD_API_URL ??
+      (configured.startsWith('/') ? `http://127.0.0.1:8000${configured}` : configured);
+
+    return serverUrl.replace(/\/$/, '');
   }
-})();
+
+  const absolute = configured.startsWith('/') ? `${window.location.origin}${configured}` : configured;
+
+  return absolute.replace(/\/$/, '');
+}
+
+/** The API's own origin, for endpoints outside /api/v1 such as the CSRF cookie. */
+export function apiOrigin(): string {
+  return new URL(apiBaseUrl()).origin;
+}
 
 /**
  * A failed request, carrying enough detail for a form to mark its own fields.
@@ -146,7 +166,7 @@ export async function ensureCsrfCookie(): Promise<void> {
   if (typeof document === 'undefined') return;
   if (readCookie(CSRF_COOKIE)) return;
 
-  csrfRequest ??= fetch(`${API_ORIGIN}/sanctum/csrf-cookie`, {
+  csrfRequest ??= fetch(`${apiOrigin()}/sanctum/csrf-cookie`, {
     credentials: 'include',
     headers: { Accept: 'application/json' },
   })
@@ -176,7 +196,7 @@ export interface RequestOptions extends Omit<RequestInit, 'body' | 'method'> {
 
 function buildUrl(path: string, query?: RequestOptions['query']): string {
   const url = new URL(
-    `${API_BASE_URL}/${path.replace(/^\//, '')}`.replace(/([^:]\/)\/+/g, '$1')
+    `${apiBaseUrl()}/${path.replace(/^\//, '')}`.replace(/([^:]\/)\/+/g, '$1')
   );
 
   for (const [key, value] of Object.entries(query ?? {})) {

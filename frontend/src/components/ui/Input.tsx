@@ -51,12 +51,12 @@ function FieldShell({ id, label, hint, error, required, children, className }: F
 }
 
 const controlClasses = [
-  'w-full rounded-[var(--radius-control)] border bg-surface px-3.5 py-3',
+  'w-full rounded-[var(--radius-control)] border bg-surface px-4 py-3',
   'text-base text-foreground placeholder:text-ink-400',
-  'transition-colors outline-none',
+  'transition-all outline-none',
+  'focus:ring-2 focus:ring-[#16A34A] focus:border-transparent',
   'disabled:cursor-not-allowed disabled:opacity-60',
-  // 16px text on mobile, so iOS does not zoom the viewport on focus.
-  'min-h-12',
+  'min-h-[48px]',
 ].join(' ');
 
 export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'id'> {

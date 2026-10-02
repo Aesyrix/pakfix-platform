@@ -202,6 +202,8 @@ export interface CmsPage {
   title: string;
   slug: string;
   body: string | null;
+  /** Rendered server-side from Markdown, with raw HTML stripped. Safe to insert. */
+  body_html: string;
   seo: { title: string | null; description: string | null };
   updated_at: string | null;
 }
@@ -214,7 +216,11 @@ export interface Bootstrap {
     support_email: string;
     support_phone: string;
     whatsapp: string | null;
+    address: string | null;
+    support_hours: string | null;
   };
+  /** Only networks with a link configured are present. */
+  social: Partial<Record<'facebook' | 'instagram' | 'linkedin' | 'youtube' | 'tiktok', string>>;
   currency: { code: string; symbol: string };
   features: { ai_enabled: boolean; maintenance_mode: boolean };
   payment_methods: string[];
@@ -253,3 +259,5 @@ export type BookingStatus =
   | 'cancelled'
   | 'disputed'
   | 'refunded';
+
+export * from './marketing-types';

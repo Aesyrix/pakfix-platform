@@ -1,19 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
+/**
+ * The application boots and answers.
+ *
+ * `/` is covered by FrontendServingTest: without a website build it returns
+ * 503 with instructions, which is why the stock "homepage returns 200" check
+ * is not the right smoke test for PakFix.
+ */
 class ExampleTest extends TestCase
 {
-    /**
-     * A basic test example.
-     */
-    public function test_the_application_returns_a_successful_response(): void
+    public function test_the_health_check_responds(): void
     {
-        $response = $this->get('/');
+        $this->get('/up')->assertOk();
+    }
 
-        $response->assertStatus(200);
+    public function test_the_api_announces_its_version(): void
+    {
+        $this->getJson('/api/v1')
+            ->assertOk()
+            ->assertJsonPath('success', true)
+            ->assertJsonPath('data.name', 'PakFix API')
+            ->assertJsonPath('data.version', 'v1');
     }
 }

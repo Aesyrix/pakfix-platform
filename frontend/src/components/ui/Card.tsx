@@ -11,9 +11,9 @@ export function Card({
     <div
       className={cn(
         'rounded-[var(--radius-card)] border border-[var(--border)] bg-surface',
-        'shadow-[var(--shadow-card)]',
+        'shadow-[var(--shadow-card)] transition-all duration-200',
         interactive &&
-          'transition-shadow hover:shadow-[var(--shadow-lifted)] focus-within:shadow-[var(--shadow-lifted)]',
+          'hover:-translate-y-0.5 hover:shadow-[var(--shadow-lifted)] hover:border-brand-300 focus-within:shadow-[var(--shadow-lifted)] focus-within:border-brand-300',
         className
       )}
       {...props}

@@ -33,6 +33,15 @@ class SettingsSeeder extends Seeder
             ['platform.whatsapp', 'general', '', Setting::TYPE_STRING, 'WhatsApp number', true],
             ['platform.currency', 'general', 'PKR', Setting::TYPE_STRING, 'Currency', true],
             ['platform.maintenance_mode', 'general', false, Setting::TYPE_BOOLEAN, 'Maintenance mode', true],
+            ['platform.address', 'general', 'Lahore, Pakistan', Setting::TYPE_STRING, 'Office address', true],
+            ['platform.support_hours', 'general', 'Monday to Saturday, 9am to 7pm', Setting::TYPE_STRING, 'Support hours', true],
+
+            // Social links. Empty ones are simply not shown.
+            ['social.facebook', 'social', '', Setting::TYPE_STRING, 'Facebook URL', true],
+            ['social.instagram', 'social', '', Setting::TYPE_STRING, 'Instagram URL', true],
+            ['social.linkedin', 'social', '', Setting::TYPE_STRING, 'LinkedIn URL', true],
+            ['social.youtube', 'social', '', Setting::TYPE_STRING, 'YouTube URL', true],
+            ['social.tiktok', 'social', '', Setting::TYPE_STRING, 'TikTok URL', true],
 
             // Commission and tax -- server-side money rules.
             ['commission.type', 'commission', 'percentage', Setting::TYPE_STRING, 'Commission type', false],

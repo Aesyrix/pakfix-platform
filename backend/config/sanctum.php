@@ -18,13 +18,13 @@ return [
     |
     */
 
-    'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', sprintf(
-        '%s%s',
-        'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1',
-        Sanctum::currentApplicationUrlWithPort(),
-        // Sanctum::currentRequestHost(),
-    ))),
-
+    // The website is served from the same origin as the API, so the app's
+    // own host is always stateful. Extra hosts (a separate frontend domain,
+    // local development on :3000) come from SANCTUM_STATEFUL_DOMAINS.
+    'stateful' => array_values(array_unique(array_filter(array_map('trim', array_merge(
+        explode(',', (string) env('SANCTUM_STATEFUL_DOMAINS', 'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1')),
+        [ltrim(Sanctum::currentApplicationUrlWithPort(), ',')],
+    ))))),
     /*
     |--------------------------------------------------------------------------
     | Sanctum Guards

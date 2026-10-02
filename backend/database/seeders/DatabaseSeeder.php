@@ -23,27 +23,36 @@ class DatabaseSeeder extends Seeder
             RolePermissionSeeder::class,
             LocationSeeder::class,
             ServiceCategorySeeder::class,
+            ServiceContentSeeder::class,
             SettingsSeeder::class,
             CmsSeeder::class,
         ]);
 
         if ($this->shouldSeedDemoData()) {
             $this->call(DemoDataSeeder::class);
-
-            return;
+        } else {
+            $this->command?->warn(
+                'Skipped demo data in production. Set PAKFIX_SEED_DEMO=1 to include it.'
+            );
         }
 
-        $this->command?->warn(
-            'Skipped demo data in production. Set PAKFIX_SEED_DEMO=1 to include it.'
-        );
+        // Last, so launch articles are attributed to the admin when one exists.
+        $this->call(BlogSeeder::class);
     }
 
+    /**
+     * An explicit PAKFIX_SEED_DEMO always wins. Without one, demo accounts are
+     * seeded everywhere except production. Content seeders only create what
+     * is missing, so re-running this never overwrites admin edits.
+     */
     private function shouldSeedDemoData(): bool
     {
-        if (! app()->environment('production')) {
-            return true;
+        $explicit = getenv('PAKFIX_SEED_DEMO');
+
+        if ($explicit !== false && $explicit !== '') {
+            return filter_var($explicit, FILTER_VALIDATE_BOOL);
         }
 
-        return filter_var(env('PAKFIX_SEED_DEMO', false), FILTER_VALIDATE_BOOL);
+        return ! app()->environment('production');
     }
 }

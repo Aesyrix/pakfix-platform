@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm, useWatch } from 'react-hook-form';
 import { useState } from 'react';
@@ -71,11 +72,13 @@ export function RegisterForm({
   const toast = useToast();
   const registerUser = useAuthStore((state) => state.register);
   const [formError, setFormError] = useState<string | null>(null);
+  const [step, setStep] = useState<1 | 2 | 3>(1);
 
   const {
     register,
     handleSubmit,
     setError,
+    trigger,
     control,
     formState: { errors, isSubmitting },
   } = useForm<RegisterValues>({
@@ -83,13 +86,25 @@ export function RegisterForm({
     defaultValues: { role: 'customer', accepts_terms: false as unknown as true },
   });
 
-  // useWatch rather than watch(): it subscribes to one field instead of
-  // re-rendering on every keystroke anywhere in the form.
   const selectedRole = useWatch({ control, name: 'role' });
+
+  async function nextStep() {
+    if (step === 1) {
+      setStep(2);
+      return;
+    }
+    if (step === 2) {
+      const valid = await trigger(['name', 'email', 'phone', 'city_id']);
+      if (valid) setStep(3);
+    }
+  }
+
+  function prevStep() {
+    if (step > 1) setStep((s) => (s - 1) as 1 | 2 | 3);
+  }
 
   async function onSubmit(values: RegisterValues) {
     setFormError(null);
-
     const parsed = schema.parse(values);
 
     try {
@@ -105,7 +120,7 @@ export function RegisterForm({
         accepts_terms: true,
       });
 
-      toast.success('Account created. Welcome to PakFix.');
+      toast.success('Account created! Welcome to PakFix.');
       router.push(user.home_path ?? '/dashboard');
       router.refresh();
     } catch (error) {
@@ -118,139 +133,187 @@ export function RegisterForm({
             matched = true;
           }
         }
-
         if (!matched) setFormError(error.message);
-
         return;
       }
-
       setFormError('Something went wrong. Please try again.');
     }
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={cn('flex flex-col gap-5', className)} noValidate>
-      {formError ? (
-        <p
-          role="alert"
-          className="rounded-[var(--radius-control)] border border-danger-500/40 bg-danger-500/10 px-3.5 py-3 text-sm text-danger-600"
-        >
-          {formError}
-        </p>
-      ) : null}
+    <div className={cn('flex flex-col gap-5', className)}>
+      {/* Step Indicator Header */}
+      <div className="space-y-2">
+        <div className="flex items-center justify-between text-xs font-bold text-ink-500">
+          <span>STEP {step} OF 3</span>
+          <span className="text-[#16A34A]">
+            {step === 1 ? 'Account Type' : step === 2 ? 'Personal Info' : 'Security & Terms'}
+          </span>
+        </div>
+        <div className="h-2 w-full rounded-full bg-surface-muted overflow-hidden">
+          <div
+            className="h-full bg-gradient-to-r from-[#16A34A] to-[#2563EB] transition-all duration-300"
+            style={{ width: `${(step / 3) * 100}%` }}
+          />
+        </div>
+      </div>
 
-      <fieldset className="flex flex-col gap-2">
-        <legend className="mb-2 text-sm font-medium">What brings you to PakFix?</legend>
-
-        {ROLE_OPTIONS.map((option) => (
-          <label
-            key={option.value}
-            className={cn(
-              'flex cursor-pointer items-start gap-3 rounded-[var(--radius-control)] border p-3.5 transition-colors',
-              selectedRole === option.value
-                ? 'border-brand-500 bg-brand-500/10'
-                : 'border-[var(--border)] hover:bg-surface-muted'
-            )}
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4" noValidate>
+        {formError ? (
+          <p
+            role="alert"
+            className="rounded-xl border border-danger-500/40 bg-danger-500/10 px-3.5 py-3 text-sm text-danger-600 font-medium"
           >
-            <input
-              type="radio"
-              value={option.value}
-              className="mt-1 h-4 w-4 accent-[var(--color-brand-600)]"
-              {...register('role')}
+            {formError}
+          </p>
+        ) : null}
+
+        {/* STEP 1: Role Selection */}
+        {step === 1 && (
+          <fieldset className="flex flex-col gap-3">
+            <legend className="mb-1 text-sm font-bold text-foreground">Select your account type:</legend>
+
+            {ROLE_OPTIONS.map((option) => (
+              <label
+                key={option.value}
+                className={cn(
+                  'flex cursor-pointer items-start gap-3 rounded-2xl border p-4 transition-all duration-200',
+                  selectedRole === option.value
+                    ? 'border-[#16A34A] bg-[#DCFCE7]/40 shadow-xs'
+                    : 'border-[var(--border)] hover:bg-surface-muted'
+                )}
+              >
+                <input
+                  type="radio"
+                  value={option.value}
+                  className="mt-1 h-4 w-4 accent-[#16A34A]"
+                  {...register('role')}
+                />
+                <span>
+                  <span className="block text-sm font-bold text-foreground">{option.label}</span>
+                  <span className="block text-xs text-ink-500 mt-0.5">{option.hint}</span>
+                </span>
+              </label>
+            ))}
+
+            <Button type="button" size="lg" block variant="primary" onClick={nextStep} className="mt-4">
+              Continue
+            </Button>
+          </fieldset>
+        )}
+
+        {/* STEP 2: Personal Details */}
+        {step === 2 && (
+          <div className="flex flex-col gap-4">
+            <Input
+              label="Full name"
+              autoComplete="name"
+              placeholder="e.g. Ali Khan"
+              error={errors.name?.message}
+              required
+              {...register('name')}
             />
-            <span>
-              <span className="block text-sm font-semibold">{option.label}</span>
-              <span className="block text-xs text-ink-500">{option.hint}</span>
-            </span>
-          </label>
-        ))}
-      </fieldset>
 
-      <Input
-        label="Full name"
-        autoComplete="name"
-        error={errors.name?.message}
-        required
-        {...register('name')}
-      />
+            <Input
+              label="Email address"
+              type="email"
+              autoComplete="email"
+              placeholder="ali@example.com"
+              error={errors.email?.message}
+              required
+              {...register('email')}
+            />
 
-      <Input
-        label="Email"
-        type="email"
-        autoComplete="email"
-        error={errors.email?.message}
-        required
-        {...register('email')}
-      />
+            <Input
+              label="Mobile number"
+              type="tel"
+              inputMode="tel"
+              autoComplete="tel"
+              placeholder="0300 1234567"
+              hint="We use this to reach you about bookings."
+              error={errors.phone?.message}
+              required
+              {...register('phone')}
+            />
 
-      <Input
-        label="Mobile number"
-        type="tel"
-        inputMode="tel"
-        autoComplete="tel"
-        placeholder="0300 1234567"
-        hint="We use this to reach you about a job. It is never shown publicly."
-        error={errors.phone?.message}
-        required
-        {...register('phone')}
-      />
+            <Select label="City" error={errors.city_id?.message} {...register('city_id')}>
+              <option value="">Choose your city</option>
+              {cities.map((city) => (
+                <option key={city.id} value={city.id}>
+                  {city.name}
+                </option>
+              ))}
+            </Select>
 
-      <Select label="City" error={errors.city_id?.message} {...register('city_id')}>
-        <option value="">Choose your city</option>
-        {cities.map((city) => (
-          <option key={city.id} value={city.id}>
-            {city.name}
-          </option>
-        ))}
-      </Select>
+            <div className="flex items-center gap-2 mt-2">
+              <Button type="button" variant="secondary" size="lg" onClick={prevStep} className="w-1/3">
+                Back
+              </Button>
+              <Button type="button" variant="primary" size="lg" onClick={nextStep} className="w-2/3">
+                Next Step
+              </Button>
+            </div>
+          </div>
+        )}
 
-      <Input
-        label="Password"
-        type="password"
-        autoComplete="new-password"
-        hint="At least 8 characters, with a letter and a number."
-        error={errors.password?.message}
-        required
-        {...register('password')}
-      />
+        {/* STEP 3: Passwords & Terms */}
+        {step === 3 && (
+          <div className="flex flex-col gap-4">
+            <Input
+              label="Password"
+              type="password"
+              autoComplete="new-password"
+              hint="At least 8 characters with a letter & number."
+              error={errors.password?.message}
+              required
+              {...register('password')}
+            />
 
-      <Input
-        label="Confirm password"
-        type="password"
-        autoComplete="new-password"
-        error={errors.password_confirmation?.message}
-        required
-        {...register('password_confirmation')}
-      />
+            <Input
+              label="Confirm password"
+              type="password"
+              autoComplete="new-password"
+              error={errors.password_confirmation?.message}
+              required
+              {...register('password_confirmation')}
+            />
 
-      <Input
-        label="Referral code (optional)"
-        placeholder="PAKFIX-XXXX00"
-        error={errors.referral_code?.message}
-        {...register('referral_code')}
-      />
+            <Input
+              label="Referral code (optional)"
+              placeholder="PAKFIX-XXXX00"
+              error={errors.referral_code?.message}
+              {...register('referral_code')}
+            />
 
-      <Checkbox
-        label={
-          <>
-            I agree to the{' '}
-            <a href="/terms-of-service" className="font-medium text-brand-600 underline">
-              terms of service
-            </a>{' '}
-            and{' '}
-            <a href="/privacy-policy" className="font-medium text-brand-600 underline">
-              privacy policy
-            </a>
-            .
-          </>
-        }
-        error={errors.accepts_terms?.message}
-        {...register('accepts_terms')}
-      />
+            <Checkbox
+              label={
+                <>
+                  I agree to the{' '}
+                  <Link href="/terms-of-service" className="font-semibold text-[#16A34A] underline">
+                    terms of service
+                  </Link>{' '}
+                  and{' '}
+                  <Link href="/privacy-policy" className="font-semibold text-[#16A34A] underline">
+                    privacy policy
+                  </Link>
+                  .
+                </>
+              }
+              error={errors.accepts_terms?.message}
+              {...register('accepts_terms')}
+            />
 
-      <Button type="submit" size="lg" block loading={isSubmitting}>
-        Create account
-      </Button>
-    </form>
+            <div className="flex items-center gap-2 mt-2">
+              <Button type="button" variant="secondary" size="lg" onClick={prevStep} className="w-1/3">
+                Back
+              </Button>
+              <Button type="submit" size="lg" variant="primary" loading={isSubmitting} className="w-2/3">
+                Complete Registration
+              </Button>
+            </div>
+          </div>
+        )}
+      </form>
+    </div>
   );
 }

@@ -2,6 +2,10 @@ import type { MetadataRoute } from 'next';
 import { catalogueApi, locationApi } from '@/lib/api/endpoints';
 import { safeFetch } from '@/lib/api/safe';
 
+/** Generated once at build time: the site is exported as static files. */
+export const dynamic = 'force-static';
+
+
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pakfix.pk').replace(/\/$/, '');
 
 /**

@@ -1,5 +1,9 @@
 import type { MetadataRoute } from 'next';
 
+/** Generated once at build time: the site is exported as static files. */
+export const dynamic = 'force-static';
+
+
 /**
  * PWA manifest.
  *

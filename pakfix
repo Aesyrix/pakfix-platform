@@ -1,0 +1,208 @@
+<?php
+
+declare(strict_types=1);
+
+/*
+|--------------------------------------------------------------------------
+| PakFix launcher
+|--------------------------------------------------------------------------
+| One entry point for the whole platform, run from the repository root:
+|
+|   php pakfix start     Set up if needed, build the website, run everything on :8000
+|   php pakfix setup     First-time setup only (dependencies, .env, database, build)
+|   php pakfix build     Rebuild the website into backend/public
+|   php pakfix deploy    Production release: dependencies, migrations, build, caches
+|   php pakfix package   Zip a ready-to-upload release for PHP-only hosting
+|   php pakfix admin     Create an admin account
+|   php pakfix test      Run the backend test suite
+|
+| This file only has to do what Laravel cannot do for itself before it can
+| boot -- install Composer dependencies and create .env. Everything else is
+| an Artisan command in backend/app/Console/Commands.
+*/
+
+const MIN_PHP = '8.2.0';
+
+$root = __DIR__;
+$backend = $root . DIRECTORY_SEPARATOR . 'backend';
+$args = array_slice($argv, 1);
+$command = $args[0] ?? 'help';
+$extra = array_slice($args, 1);
+
+if (version_compare(PHP_VERSION, MIN_PHP, '<')) {
+    fail('PakFix needs PHP ' . MIN_PHP . ' or newer; this is ' . PHP_VERSION . '.');
+}
+
+foreach (['pdo', 'mbstring', 'openssl', 'fileinfo', 'tokenizer', 'ctype', 'json'] as $extension) {
+    if (! extension_loaded($extension)) {
+        fail("The PHP extension \"{$extension}\" is required but not enabled. Enable it in php.ini.");
+    }
+}
+
+switch ($command) {
+    case 'start':
+    case 'serve':
+        ensureDependencies($backend, production: false);
+        ensureEnv($backend);
+        if (! file_exists("{$backend}/public/index.html") || ! file_exists("{$backend}/database/database.sqlite") && envValue($backend, 'DB_CONNECTION') === 'sqlite') {
+            artisan($backend, ['pakfix:install']);
+        }
+        exit(artisan($backend, ['pakfix:serve', ...$extra]));
+
+    case 'setup':
+    case 'install':
+        ensureDependencies($backend, production: false);
+        ensureEnv($backend);
+        exit(artisan($backend, ['pakfix:install', ...$extra]));
+
+    case 'build':
+        ensureDependencies($backend, production: false);
+        ensureEnv($backend);
+        exit(artisan($backend, ['pakfix:build', ...$extra]));
+
+    case 'deploy':
+        ensureDependencies($backend, production: true);
+        if (! file_exists("{$backend}/.env")) {
+            copy("{$backend}/.env.example", "{$backend}/.env");
+            fail(
+                "Created backend/.env from the template. Fill in APP_URL, APP_ENV=production,\n"
+                . "APP_DEBUG=false and the DB_* settings, then run `php pakfix deploy` again."
+            );
+        }
+        exit(artisan($backend, ['pakfix:deploy', ...$extra]));
+
+    case 'package':
+        ensureDependencies($backend, production: false);
+        ensureEnv($backend);
+        exit(artisan($backend, ['pakfix:package', ...$extra]));
+
+    case 'admin':
+        ensureDependencies($backend, production: false);
+        ensureEnv($backend);
+        exit(artisan($backend, ['pakfix:admin', ...$extra]));
+
+    case 'test':
+        ensureDependencies($backend, production: false);
+        ensureEnv($backend);
+        exit(artisan($backend, ['test', ...$extra]));
+
+    default:
+        echo <<<'HELP'
+
+  PakFix
+
+  Usage: php pakfix <command>
+
+    start     Set up if needed, build the website, and run everything at http://127.0.0.1:8000
+    setup     First-time setup: dependencies, .env, database, demo data, website build
+    build     Rebuild the website into backend/public
+    deploy    Production release: dependencies, migrations, website build, caches
+    package   Create a ready-to-upload zip for PHP-only hosting (no Node or Composer needed there)
+    admin     Create an admin account
+    test      Run the backend test suite
+
+  Options after the command are passed through, e.g.
+    php pakfix start --port=9000
+    php pakfix admin --email=you@example.com
+
+
+HELP;
+        exit($command === 'help' ? 0 : 1);
+}
+
+// ---------------------------------------------------------------------------
+
+function ensureDependencies(string $backend, bool $production): void
+{
+    $vendorReady = file_exists("{$backend}/vendor/autoload.php");
+
+    // Development can reuse whatever is installed; a deploy always syncs to the lockfile.
+    if ($vendorReady && ! $production) {
+        return;
+    }
+
+    $composer = findComposer($backend);
+
+    if ($composer === null) {
+        if ($vendorReady) {
+            info('Composer not found; using the dependencies already in backend/vendor.');
+
+            return;
+        }
+
+        fail("Composer is needed to install dependencies. Get it from https://getcomposer.org,\nor use a release built with `php pakfix package`, which already includes them.");
+    }
+
+    info($production ? 'Installing production dependencies...' : 'Installing dependencies (first run only)...');
+
+    $flags = $production
+        ? '--no-dev --optimize-autoloader --no-interaction --no-progress'
+        : '--no-interaction --no-progress';
+
+    if (run("{$composer} install {$flags}", $backend) !== 0) {
+        fail('Composer could not install the dependencies. See the output above.');
+    }
+}
+
+function ensureEnv(string $backend): void
+{
+    if (file_exists("{$backend}/.env")) {
+        return;
+    }
+
+    copy("{$backend}/.env.example", "{$backend}/.env");
+    info('Created backend/.env from .env.example.');
+}
+
+function envValue(string $backend, string $key): ?string
+{
+    $contents = @file_get_contents("{$backend}/.env");
+
+    if ($contents === false || ! preg_match('/^' . preg_quote($key, '/') . '=(.*)$/m', $contents, $match)) {
+        return null;
+    }
+
+    return trim($match[1], " \t\"'");
+}
+
+function findComposer(string $backend): ?string
+{
+    foreach ([dirname($backend) . '/composer.phar', "{$backend}/composer.phar"] as $phar) {
+        if (file_exists($phar)) {
+            return escapeshellarg(PHP_BINARY) . ' ' . escapeshellarg($phar);
+        }
+    }
+
+    $check = stripos(PHP_OS_FAMILY, 'Windows') === 0 ? 'where composer >NUL 2>NUL' : 'command -v composer >/dev/null 2>&1';
+    exec($check, $output, $status);
+
+    return $status === 0 ? 'composer' : null;
+}
+
+function artisan(string $backend, array $arguments): int
+{
+    $command = escapeshellarg(PHP_BINARY) . ' artisan ' . implode(' ', array_map('escapeshellarg', $arguments));
+
+    return run($command, $backend);
+}
+
+function run(string $command, string $cwd): int
+{
+    $previous = getcwd();
+    chdir($cwd);
+    passthru($command, $status);
+    chdir($previous);
+
+    return (int) $status;
+}
+
+function info(string $message): void
+{
+    fwrite(STDOUT, "\n  {$message}\n");
+}
+
+function fail(string $message): never
+{
+    fwrite(STDERR, "\n  " . str_replace("\n", "\n  ", $message) . "\n\n");
+    exit(1);
+}

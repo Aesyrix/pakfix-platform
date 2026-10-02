@@ -2,11 +2,18 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Api\V1\Admin;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\BlogController;
+use App\Http\Controllers\Api\V1\ContactController;
 use App\Http\Controllers\Api\V1\ContentController;
 use App\Http\Controllers\Api\V1\EmailVerificationController;
+use App\Http\Controllers\Api\V1\LocalPageController;
 use App\Http\Controllers\Api\V1\LocationController;
+use App\Http\Controllers\Api\V1\SearchController;
 use App\Http\Controllers\Api\V1\ServiceCategoryController;
+use App\Http\Controllers\Api\V1\TechnicianController;
+use App\Http\Controllers\Api\V1\TriageController;
 use App\Support\ApiResponse;
 use Illuminate\Support\Facades\Route;
 
@@ -14,14 +21,14 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 | PakFix API, version 1
 |--------------------------------------------------------------------------
-| Every client -- the Next.js site, the future Android app, the future iOS
-| app -- talks to these routes. Nothing meaningful happens anywhere else, so
+| Every client -- the website, the future Android app, the future iOS app --
+| talks to these routes. Nothing meaningful happens anywhere else, so
 | shipping a mobile app later needs no new backend.
 |
-| Route files are grouped by who may call them:
+| Grouped by who may call them:
 |   public     no authentication, cached, safe to hit from a crawler
 |   auth       signed in, active account
-|   role-gated further restricted by role or permission
+|   admin      signed in, active, and holding the relevant permission
 */
 
 Route::prefix('v1')->name('api.v1.')->group(function (): void {
@@ -29,7 +36,6 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
     Route::get('/', fn () => ApiResponse::success([
         'name' => 'PakFix API',
         'version' => 'v1',
-        'docs' => url('/docs/api'),
     ]))->name('index');
 
     // -----------------------------------------------------------------
@@ -58,6 +64,32 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
         Route::get('/', [ServiceCategoryController::class, 'services'])->name('index');
     });
 
+    Route::prefix('technicians')->name('technicians.')->group(function (): void {
+        Route::get('/', [TechnicianController::class, 'index'])->name('index');
+        Route::get('{slug}', [TechnicianController::class, 'show'])->name('show');
+    });
+
+    // Local SEO: /plumber/lahore and /lahore on the website.
+    Route::prefix('local')->name('local.')->group(function (): void {
+        Route::get('pages', [LocalPageController::class, 'index'])->name('index');
+        Route::get('cities/{citySlug}', [LocalPageController::class, 'city'])->name('city');
+        Route::get('{trade}/{citySlug}', [LocalPageController::class, 'show'])->name('show');
+    });
+
+    Route::prefix('blog')->name('blog.')->group(function (): void {
+        Route::get('categories', [BlogController::class, 'categories'])->name('categories');
+        Route::get('posts', [BlogController::class, 'index'])->name('posts');
+        Route::get('posts/{slug}', [BlogController::class, 'show'])->name('post');
+    });
+
+    Route::get('search', SearchController::class)->middleware('throttle:60,1')->name('search');
+
+    // Emergency screening and service matching. Throttled, because it is
+    // public and does text processing on arbitrary input.
+    Route::post('ai/triage', TriageController::class)->middleware('throttle:30,1')->name('ai.triage');
+
+    Route::post('contact', ContactController::class)->middleware('throttle:5,10')->name('contact');
+
     // -----------------------------------------------------------------
     // Authentication
     // -----------------------------------------------------------------
@@ -73,7 +105,7 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
 
         // The signed link from the verification email. Unauthenticated by
         // design -- the signature is the credential -- and it redirects the
-        // browser back to the frontend rather than returning JSON.
+        // browser back to the website rather than returning JSON.
         Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])
             ->middleware(['signed', 'throttle:10,1'])
             ->name('verification.verify');
@@ -93,15 +125,63 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
     });
 
     // -----------------------------------------------------------------
-    // Authenticated
+    // Admin — content management
     //
-    // Phase 1 establishes the shape. Properties, AI, bookings, quotes,
-    // messaging, payments, reviews, maintenance and notifications land in
-    // the phases that follow, each mounted here.
+    // Each group checks its own permission, so a support agent can work the
+    // contact inbox without being able to rewrite the homepage.
     // -----------------------------------------------------------------
 
-    Route::middleware(['auth:sanctum', 'active'])->group(function (): void {
-        //
+    Route::prefix('admin')->name('admin.')->middleware(['auth:sanctum', 'active'])->group(function (): void {
+
+        Route::get('overview', Admin\OverviewController::class)
+            ->middleware('permission:content.manage|blog.manage|services.manage|settings.manage|support.tickets.view.any')
+            ->name('overview');
+
+        Route::middleware('permission:content.manage')->group(function (): void {
+            Route::get('content-blocks', [Admin\ContentBlockController::class, 'index'])->name('blocks.index');
+            Route::patch('content-blocks/{key}', [Admin\ContentBlockController::class, 'update'])->name('blocks.update');
+
+            Route::get('faqs', [Admin\FaqController::class, 'index'])->name('faqs.index');
+            Route::post('faqs', [Admin\FaqController::class, 'store'])->name('faqs.store');
+            Route::patch('faqs/{id}', [Admin\FaqController::class, 'update'])->whereNumber('id')->name('faqs.update');
+            Route::delete('faqs/{id}', [Admin\FaqController::class, 'destroy'])->whereNumber('id')->name('faqs.destroy');
+
+            Route::get('testimonials', [Admin\TestimonialController::class, 'index'])->name('testimonials.index');
+            Route::post('testimonials', [Admin\TestimonialController::class, 'store'])->name('testimonials.store');
+            Route::patch('testimonials/{id}', [Admin\TestimonialController::class, 'update'])->whereNumber('id')->name('testimonials.update');
+            Route::delete('testimonials/{id}', [Admin\TestimonialController::class, 'destroy'])->whereNumber('id')->name('testimonials.destroy');
+
+            Route::get('pages', [Admin\CmsPageController::class, 'index'])->name('pages.index');
+            Route::post('pages', [Admin\CmsPageController::class, 'store'])->name('pages.store');
+            Route::get('pages/{uuid}', [Admin\CmsPageController::class, 'show'])->name('pages.show');
+            Route::patch('pages/{uuid}', [Admin\CmsPageController::class, 'update'])->name('pages.update');
+            Route::delete('pages/{uuid}', [Admin\CmsPageController::class, 'destroy'])->name('pages.destroy');
+        });
+
+        Route::middleware('permission:blog.manage')->group(function (): void {
+            Route::get('blog/options', [Admin\BlogPostController::class, 'options'])->name('blog.options');
+            Route::get('blog/posts', [Admin\BlogPostController::class, 'index'])->name('blog.index');
+            Route::post('blog/posts', [Admin\BlogPostController::class, 'store'])->name('blog.store');
+            Route::get('blog/posts/{uuid}', [Admin\BlogPostController::class, 'show'])->name('blog.show');
+            Route::patch('blog/posts/{uuid}', [Admin\BlogPostController::class, 'update'])->name('blog.update');
+            Route::delete('blog/posts/{uuid}', [Admin\BlogPostController::class, 'destroy'])->name('blog.destroy');
+        });
+
+        Route::middleware('permission:services.manage')->group(function (): void {
+            Route::get('service-categories', [Admin\ServiceCategoryController::class, 'index'])->name('categories.index');
+            Route::post('service-categories', [Admin\ServiceCategoryController::class, 'store'])->name('categories.store');
+            Route::patch('service-categories/{uuid}', [Admin\ServiceCategoryController::class, 'update'])->name('categories.update');
+        });
+
+        Route::middleware('permission:settings.manage')->group(function (): void {
+            Route::get('settings', [Admin\SettingController::class, 'index'])->name('settings.index');
+            Route::patch('settings', [Admin\SettingController::class, 'update'])->name('settings.update');
+        });
+
+        Route::middleware('permission:support.tickets.view.any')->group(function (): void {
+            Route::get('contact-messages', [Admin\ContactMessageController::class, 'index'])->name('contact.index');
+            Route::patch('contact-messages/{uuid}', [Admin\ContactMessageController::class, 'update'])->name('contact.update');
+        });
     });
 });
 

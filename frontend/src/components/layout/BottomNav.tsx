@@ -27,14 +27,12 @@ export function BottomNav() {
     <nav
       aria-label="Primary"
       className={cn(
-        'fixed inset-x-0 bottom-0 z-40 border-t border-[var(--border)] bg-surface/95 backdrop-blur-md',
+        'fixed inset-x-0 bottom-0 z-40 border-t border-[var(--border)] bg-surface/95 backdrop-blur-md shadow-lg',
         'pb-[env(safe-area-inset-bottom,0px)] lg:hidden'
       )}
     >
       <ul className="grid grid-cols-5">
         {ITEMS.map((item) => {
-          // Exact match for the dashboard root, prefix match for the rest, so
-          // /dashboard/bookings does not light up "Home" as well.
           const active =
             item.href === '/dashboard'
               ? pathname === '/dashboard'
@@ -48,12 +46,15 @@ export function BottomNav() {
                 href={item.href}
                 aria-current={active ? 'page' : undefined}
                 className={cn(
-                  'flex min-h-16 flex-col items-center justify-center gap-1 px-1 py-2 text-[0.6875rem] font-medium',
-                  active ? 'text-brand-600' : 'text-ink-500'
+                  'relative flex min-h-[60px] flex-col items-center justify-center gap-1 px-1 py-1.5 text-[0.6875rem] font-semibold transition-colors',
+                  active ? 'text-[#16A34A]' : 'text-ink-500 hover:text-foreground'
                 )}
               >
+                {active && (
+                  <span className="absolute top-0 h-0.5 w-8 rounded-full bg-[#16A34A]" />
+                )}
                 <Icon
-                  className={cn('h-5 w-5', active && 'stroke-[2.4]')}
+                  className={cn('h-5 w-5 transition-transform', active ? 'scale-110 stroke-[2.4]' : 'scale-100')}
                   aria-hidden="true"
                 />
                 <span className="leading-none">{item.label}</span>

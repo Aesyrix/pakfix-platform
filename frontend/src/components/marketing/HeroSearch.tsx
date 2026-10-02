@@ -20,10 +20,15 @@ export function HeroSearch({ examples = [] }: { examples?: string[] }) {
 
   function submit(event: FormEvent) {
     event.preventDefault();
-
     const problem = value.trim();
     router.push(problem ? `/ai?q=${encodeURIComponent(problem)}` : '/ai');
   }
+
+  const defaultExamples = examples.length > 0 ? examples : [
+    'AC running but not cooling',
+    'Kitchen sink leaking under cabinet',
+    'Breaker trips when iron is turned on',
+  ];
 
   return (
     <div className="w-full">
@@ -34,81 +39,80 @@ export function HeroSearch({ examples = [] }: { examples?: string[] }) {
 
         <div
           className={cn(
-            'flex flex-col gap-2 rounded-[var(--radius-card)] border border-[var(--border)]',
-            'bg-surface p-2 shadow-[var(--shadow-lifted)]',
-            'sm:flex-row sm:items-center'
+            'flex flex-col gap-3 rounded-[var(--radius-card)] border-2 border-[#16A34A]/20',
+            'bg-surface p-3 shadow-xl backdrop-blur-sm',
+            'transition-all duration-200 focus-within:border-[#16A34A] focus-within:shadow-2xl'
           )}
         >
-          <input
-            id="hero-problem"
-            value={value}
-            onChange={(event) => setValue(event.target.value)}
-            placeholder="What needs fixing?"
-            autoComplete="off"
-            className={cn(
-              'min-h-12 w-full flex-1 rounded-[var(--radius-control)] bg-transparent px-3.5',
-              'text-base text-foreground outline-none placeholder:text-ink-400'
-            )}
-          />
+          <div className="flex items-center gap-2">
+            <input
+              id="hero-problem"
+              value={value}
+              onChange={(event) => setValue(event.target.value)}
+              placeholder="What needs fixing in your home?"
+              autoComplete="off"
+              className={cn(
+                'min-h-[48px] w-full flex-1 rounded-[var(--radius-control)] bg-transparent px-4',
+                'text-base font-medium text-foreground outline-none placeholder:text-ink-400'
+              )}
+            />
+          </div>
 
-          <div className="flex items-center gap-1.5">
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              onClick={() => router.push('/ai?input=camera')}
-              aria-label="Send a photo of the problem instead"
-              title="Send a photo"
-            >
-              <Camera className="h-5 w-5" aria-hidden="true" />
-            </Button>
+          <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[var(--border)] pt-2.5">
+            <div className="flex items-center gap-1.5 text-xs">
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => router.push('/ai?input=camera')}
+                className="h-9 px-2.5 text-xs text-ink-600 hover:text-[#16A34A] hover:bg-brand-50"
+                title="Take or upload a photo"
+              >
+                <Camera className="h-4 w-4 text-[#16A34A]" aria-hidden="true" />
+                <span>Upload Photo</span>
+              </Button>
 
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              onClick={() => router.push('/ai?input=voice')}
-              aria-label="Describe the problem out loud instead"
-              title="Describe it out loud"
-            >
-              <Mic className="h-5 w-5" aria-hidden="true" />
-            </Button>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => router.push('/ai?input=voice')}
+                className="h-9 px-2.5 text-xs text-ink-600 hover:text-[#2563EB] hover:bg-accent-50"
+                title="Describe it out loud"
+              >
+                <Mic className="h-4 w-4 text-[#2563EB]" aria-hidden="true" />
+                <span>Voice Input</span>
+              </Button>
+            </div>
 
-            <Button type="submit" size="md" className="flex-1 sm:flex-none">
-              Diagnose
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            <Button type="submit" size="md" variant="primary" className="min-w-[140px]">
+              Diagnose Problem
+              <ArrowRight className="h-4 w-4 ml-1" aria-hidden="true" />
             </Button>
           </div>
         </div>
       </form>
 
-      {examples.length > 0 ? (
-        <div className="mt-4">
-          <p className="sr-only" id="hero-examples-label">
-            Example problems
-          </p>
-          <ul
-            aria-labelledby="hero-examples-label"
-            className="flex flex-wrap items-center gap-2"
-          >
-            {examples.map((example) => (
-              <li key={example}>
-                <button
-                  type="button"
-                  onClick={() => setValue(example)}
-                  className={cn(
-                    'rounded-[var(--radius-pill)] border border-[var(--border)] bg-surface/70',
-                    'px-3.5 py-2 text-sm text-ink-600 transition-colors',
-                    'hover:border-brand-300 hover:text-brand-700'
-                  )}
-                >
-                  {example}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : null}
+      <div className="mt-3.5">
+        <p className="text-xs font-medium text-ink-500 mb-1.5">Try describing an issue:</p>
+        <ul className="flex flex-wrap items-center gap-2">
+          {defaultExamples.map((example) => (
+            <li key={example}>
+              <button
+                type="button"
+                onClick={() => setValue(example)}
+                className={cn(
+                  'rounded-full border border-[var(--border)] bg-surface/90',
+                  'px-3 py-1.5 text-xs font-medium text-ink-600 transition-all',
+                  'hover:border-[#16A34A] hover:text-[#15803D] hover:bg-[#DCFCE7]/50'
+                )}
+              >
+                &ldquo;{example}&rdquo;
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

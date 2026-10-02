@@ -128,7 +128,7 @@ class CmsSeeder extends Seeder
         ];
 
         foreach ($blocks as $index => $block) {
-            ContentBlock::updateOrCreate(
+            ContentBlock::firstOrCreate(
                 ['key' => $block['key']],
                 [
                     'type' => $block['type'],
@@ -159,7 +159,7 @@ class CmsSeeder extends Seeder
         ];
 
         foreach ($faqs as $index => [$question, $answer, $group]) {
-            Faq::updateOrCreate(
+            Faq::firstOrCreate(
                 ['question' => $question],
                 [
                     'answer' => $answer,
@@ -180,7 +180,7 @@ class CmsSeeder extends Seeder
         ];
 
         foreach ($testimonials as $index => [$name, $location, $rating, $quote]) {
-            Testimonial::updateOrCreate(
+            Testimonial::firstOrCreate(
                 ['author_name' => $name, 'quote' => $quote],
                 [
                     'author_location' => $location,
@@ -202,7 +202,7 @@ class CmsSeeder extends Seeder
         ];
 
         foreach ($pages as [$title, $body]) {
-            CmsPage::updateOrCreate(
+            CmsPage::firstOrCreate(
                 ['slug' => Str::slug($title)],
                 [
                     'title' => $title,
@@ -224,7 +224,7 @@ class CmsSeeder extends Seeder
         ];
 
         foreach ($categories as $index => $name) {
-            BlogCategory::updateOrCreate(
+            BlogCategory::firstOrCreate(
                 ['slug' => Str::slug($name)],
                 ['name' => $name, 'sort_order' => $index, 'is_active' => true]
             );
