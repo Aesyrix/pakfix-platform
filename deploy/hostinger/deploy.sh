@@ -17,6 +17,9 @@
 #   PAKFIX_PHP_BIN      the php binary                  php
 #   PAKFIX_DB_RESET     drop and rebuild the database   0 (off)
 #
+# These can also be pinned on the server in ~/pakfix-releases/deploy.env (a file
+# of KEY=value lines beside this script); it is read first and survives deploys.
+#
 # PAKFIX_DB_RESET=1 migrates with --fresh before the release. Use it once to
 # recover a database left half-migrated by a failed deploy: MySQL does not roll
 # DDL back, so a table created before a later statement failed makes every
@@ -34,6 +37,18 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Optional server-side overrides, kept next to this script in ~/pakfix-releases.
+# The upload only overwrites the release zip and this script, so a deploy.env
+# file here survives every deploy. It lets an operator pin PAKFIX_PUBLIC_DIR
+# (and friends) on the server, without touching the repository's variables.
+if [ -f "$SCRIPT_DIR/deploy.env" ]; then
+  set -a
+  # shellcheck disable=SC1090
+  . "$SCRIPT_DIR/deploy.env"
+  set +a
+fi
+
 APP_DIR="${PAKFIX_APP_DIR:-$HOME/pakfix}"
 PUBLIC_DIR_EXPLICIT="${PAKFIX_PUBLIC_DIR:-}"
 PUBLIC_DIR="${PUBLIC_DIR_EXPLICIT:-$HOME/public_html}"
