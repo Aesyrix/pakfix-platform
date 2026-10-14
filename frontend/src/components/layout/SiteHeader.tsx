@@ -38,6 +38,33 @@ export function SiteHeader() {
   const [megaOpen, setMegaOpen] = useState(false);
   const pathname = usePathname();
   const megaMenuRef = useRef<HTMLDivElement>(null);
+  const megaCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // There is a gap between the "Services" trigger and the panel (which starts at
+  // the bottom of the header bar). Closing on mouseleave fires while the pointer
+  // is still crossing that gap, so the panel would vanish before it can be used.
+  // Delay the close just long enough for the pointer to reach the panel.
+  const cancelMegaClose = () => {
+    if (megaCloseTimer.current) {
+      clearTimeout(megaCloseTimer.current);
+      megaCloseTimer.current = null;
+    }
+  };
+
+  const openMega = () => {
+    cancelMegaClose();
+    setMegaOpen(true);
+  };
+
+  const closeMegaSoon = () => {
+    cancelMegaClose();
+    megaCloseTimer.current = setTimeout(() => {
+      megaCloseTimer.current = null;
+      setMegaOpen(false);
+    }, 200);
+  };
+
+  useEffect(() => () => cancelMegaClose(), []);
 
   const user = useAuthStore((state) => state.user);
   const initialising = useAuthStore((state) => state.initialising);
@@ -92,12 +119,12 @@ export function SiteHeader() {
                   return (
                     <div
                       key={link.href}
-                      onMouseLeave={() => setMegaOpen(false)}
+                      onMouseEnter={openMega}
+                      onMouseLeave={closeMegaSoon}
                     >
                       <button
                         type="button"
                         onClick={() => setMegaOpen(!megaOpen)}
-                        onMouseEnter={() => setMegaOpen(true)}
                         className={cn(
                           'inline-flex items-center gap-1 rounded-xl px-2.5 py-2 text-[13px] font-semibold whitespace-nowrap transition-all cursor-pointer',
                           megaOpen || pathname.startsWith('/services')
