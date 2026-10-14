@@ -121,7 +121,8 @@ mkdir -p \
   "$APP_DIR/storage/framework/cache/data" \
   "$APP_DIR/storage/framework/sessions" \
   "$APP_DIR/storage/framework/views" \
-  "$APP_DIR/bootstrap/cache"
+  "$APP_DIR/bootstrap/cache" \
+  "$APP_DIR/resources/views"
 
 # Some shared hosts disable PHP's symlink() and exec(), which makes
 # `php artisan storage:link` fail outright. Create the link from the shell
@@ -140,11 +141,15 @@ fi
 
 echo "==> Pointing the web root at $APP_DIR/public"
 if [ -L "$PUBLIC_DIR" ]; then
-  if [ "$(readlink -f "$PUBLIC_DIR")" != "$(readlink -f "$APP_DIR/public")" ]; then
-    echo "    $PUBLIC_DIR pointed elsewhere; re-pointing it."
+  if [ "$(readlink -f "$PUBLIC_DIR")" = "$(readlink -f "$APP_DIR/public")" ]; then
+    echo "    already linked."
+  elif [ -n "$PUBLIC_DIR_EXPLICIT" ]; then
+    echo "    re-pointing $PUBLIC_DIR (was $(readlink -f "$PUBLIC_DIR" 2>/dev/null)) at $APP_DIR/public."
     ln -sfn "$APP_DIR/public" "$PUBLIC_DIR"
   else
-    echo "    already linked."
+    echo "ERROR: $PUBLIC_DIR is a symlink to $(readlink -f "$PUBLIC_DIR" 2>/dev/null), not to PakFix." >&2
+    echo "       Refusing to re-point another site's web root. Set PAKFIX_PUBLIC_DIR to this site's document root." >&2
+    exit 1
   fi
 elif [ -e "$PUBLIC_DIR" ] && [ -n "$(ls -A "$PUBLIC_DIR" 2>/dev/null)" ]; then
   BACKUP="${PUBLIC_DIR}.bak.$(date +%Y%m%d%H%M%S)"
