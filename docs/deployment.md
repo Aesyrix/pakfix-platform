@@ -38,8 +38,9 @@ already resolves files through `public_path()`, which follows the link.
 | Files/CLI | `unzip`, `rsync` (optional), `php` CLI, `cron`, SSH access |
 | SSL | Free Let's Encrypt certificate from hPanel |
 
-No `redis` extension is required: the shared-hosting `.env` uses the database cache, queue and
-session drivers (the migrations create the `cache`, `jobs` and `sessions` tables).
+No `redis` extension is required: the shared-hosting `.env` uses the **file** cache and session
+drivers and the **database** queue (migrations create the `jobs` table). File drivers also keep the
+first deploy working against an empty database, before any tables exist.
 
 ### 1. Create the site (hPanel)
 
@@ -104,18 +105,20 @@ DB_DATABASE=<database>
 DB_USERNAME=<user>
 DB_PASSWORD=<password>
 
-CACHE_STORE=database
+CACHE_STORE=file
 QUEUE_CONNECTION=database
-SESSION_DRIVER=database
+SESSION_DRIVER=file
 SESSION_DOMAIN=null
 SESSION_SECURE_COOKIE=true
 
 SANCTUM_STATEFUL_DOMAINS=pakfix.pk,www.pakfix.pk
 ```
 
-There is no Redis on shared hosting, so the database drivers above are required — do not copy the
-VPS `.env`, which uses `redis` and `pgsql`. If `pakfix.pk` is on a dedicated IP, point the domain
-at it in hPanel and skip the nameserver wait.
+There is no Redis on shared hosting, so the file cache/session and database queue above are used —
+do not copy the VPS `.env`, which uses `redis` and `pgsql`. On an account that hosts more than one
+site, `PAKFIX_PUBLIC_DIR` must be set to this site's real document root
+(`~/domains/<domain>/public_html` on the newer hPanel layout); the deploy script refuses to replace
+a non-empty `~/public_html` otherwise.
 
 ### 5. Cron
 
@@ -517,11 +520,11 @@ Keep DNS TTL at 300 seconds so step 5 is minutes rather than hours.
 - [ ] HTTPS on every hostname; HSTS on
 - [ ] `SESSION_SECURE_COOKIE=true`
 - [ ] Database user has no superuser rights
-- [ ] Redis bound to localhost, or password-protected (VPS only; shared hosting uses the database drivers)
+- [ ] Redis bound to localhost, or password-protected (VPS only; shared hosting uses the file drivers)
 - [ ] `php artisan config:cache route:cache view:cache` run
 - [ ] Queue worker and scheduler running and verified
 - [ ] Shared hosting: `public_html` symlinked to `pakfix/public`, cron entries added
-- [ ] Shared hosting: `.env` uses `mysql` + database cache/queue/session drivers
+- [ ] Shared hosting: `.env` uses `mysql`, file cache/session, database queue, and `PAKFIX_PUBLIC_DIR` points at the right document root
 - [ ] Backups running, and one restore tested
 - [ ] Real credentials entered through the admin dashboard, not committed
 - [ ] Error tracking wired up

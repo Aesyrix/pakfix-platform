@@ -11,12 +11,17 @@
 #   bash deploy.sh                 # uses the newest pakfix-release-*.zip beside it
 #   bash deploy.sh /path/to.zip    # or a specific release zip
 #
-# Environment (all optional; shown with their defaults):
+# Environment (shown with their defaults):
 #   PAKFIX_APP_DIR      where the application lives     $HOME/pakfix
-#   PAKFIX_PUBLIC_DIR   the web root                    $HOME/public_html
+#   PAKFIX_PUBLIC_DIR   this site's document root       $HOME/public_html
 #   PAKFIX_PHP_BIN      the php binary                  php
 #
-# On the very first run the .env is written from these (otherwise defaults):
+# PAKFIX_PUBLIC_DIR must be set on an account that hosts more than one site:
+# the script refuses to replace a non-empty $HOME/public_html unless it has been
+# told which folder is really PakFix's.
+#
+# These are written into .env on the first run and re-applied on every run, so
+# changing one takes effect on the next deploy:
 #   APP_KEY APP_URL APP_ENV DB_CONNECTION DB_HOST DB_PORT
 #   DB_DATABASE DB_USERNAME DB_PASSWORD
 
@@ -24,7 +29,8 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 APP_DIR="${PAKFIX_APP_DIR:-$HOME/pakfix}"
-PUBLIC_DIR="${PAKFIX_PUBLIC_DIR:-$HOME/public_html}"
+PUBLIC_DIR_EXPLICIT="${PAKFIX_PUBLIC_DIR:-}"
+PUBLIC_DIR="${PUBLIC_DIR_EXPLICIT:-$HOME/public_html}"
 PHP="${PAKFIX_PHP_BIN:-php}"
 
 # ---------------------------------------------------------------------------
@@ -48,6 +54,15 @@ fi
 
 if ! command -v unzip >/dev/null 2>&1; then
   echo "ERROR: 'unzip' is required on the server." >&2
+  exit 1
+fi
+
+# Never take over a folder that already holds another site on the strength of a
+# default. The operator has to say which document root belongs to PakFix.
+if [ -z "$PUBLIC_DIR_EXPLICIT" ] && [ -e "$PUBLIC_DIR" ] && [ ! -L "$PUBLIC_DIR" ] \
+   && [ -n "$(ls -A "$PUBLIC_DIR" 2>/dev/null)" ]; then
+  echo "ERROR: $PUBLIC_DIR already contains files and PAKFIX_PUBLIC_DIR is not set." >&2
+  echo "       Refusing to replace it. Set PAKFIX_PUBLIC_DIR to this site's document root." >&2
   exit 1
 fi
 
@@ -125,8 +140,24 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-# First-run .env
+# .env
 # ---------------------------------------------------------------------------
+
+# Sets KEY=value in .env, creating the line when absent. PHP performs the edit
+# so values holding spaces, quotes, #, / or $ are written literally.
+set_env() {
+  "$PHP" -r '
+    $file = $argv[1]; $key = $argv[2]; $value = $argv[3];
+    $contents = (string) file_get_contents($file);
+    $line = $key . "=" . $value;
+    if (preg_match("/^" . preg_quote($key, "/") . "=.*$/m", $contents)) {
+        $contents = preg_replace_callback("/^" . preg_quote($key, "/") . "=.*$/m", fn () => $line, $contents);
+    } else {
+        $contents = rtrim($contents) . PHP_EOL . $line . PHP_EOL;
+    }
+    file_put_contents($file, $contents);
+  ' "$APP_DIR/.env" "$1" "$2"
+}
 
 if [ ! -f "$APP_DIR/.env" ]; then
   echo "==> Creating $APP_DIR/.env"
@@ -158,9 +189,9 @@ DB_DATABASE=${DB_DATABASE:-}
 DB_USERNAME=${DB_USERNAME:-}
 DB_PASSWORD=${DB_PASSWORD:-}
 
-CACHE_STORE=database
+CACHE_STORE=file
 QUEUE_CONNECTION=database
-SESSION_DRIVER=database
+SESSION_DRIVER=file
 SESSION_LIFETIME=120
 SESSION_DOMAIN=null
 SESSION_SECURE_COOKIE=true
@@ -179,12 +210,35 @@ PAYMENTS_DEFAULT_GATEWAY=cash
 PLATFORM_COMMISSION_PERCENT=10
 ENVEOF
 
-  if [ -z "${APP_KEY:-}" ]; then
-    ( cd "$APP_DIR" && "$PHP" artisan key:generate --force )
-  fi
-
-  echo "    Wrote $APP_DIR/.env (review DB_* and APP_URL)."
+  echo "    Wrote $APP_DIR/.env."
 fi
+
+# Re-apply the values the runner supplied, so changing a secret takes effect on
+# the next deploy without having to delete the .env by hand. Anything blank is
+# left as it is, and pakfix:install generates APP_KEY if it is still missing.
+echo "==> Applying environment values"
+apply_env() {
+  if [ -n "$2" ]; then
+    set_env "$1" "$2"
+  fi
+}
+apply_env APP_KEY "${APP_KEY:-}"
+apply_env APP_URL "${APP_URL:-}"
+apply_env DB_CONNECTION "${DB_CONNECTION:-}"
+apply_env DB_HOST "${DB_HOST:-}"
+apply_env DB_PORT "${DB_PORT:-}"
+apply_env DB_DATABASE "${DB_DATABASE:-}"
+apply_env DB_USERNAME "${DB_USERNAME:-}"
+apply_env DB_PASSWORD "${DB_PASSWORD:-}"
+
+# Fixed for shared hosting (no Redis). Files keep the very first deploy working
+# against an empty database, before migrations have created the tables that the
+# database cache and session stores would need.
+set_env CACHE_STORE "${CACHE_STORE:-file}"
+set_env SESSION_DRIVER "${SESSION_DRIVER:-file}"
+set_env SESSION_DOMAIN "null"
+set_env SESSION_SECURE_COOKIE "true"
+set_env QUEUE_CONNECTION "${QUEUE_CONNECTION:-database}"
 
 # ---------------------------------------------------------------------------
 # Release
