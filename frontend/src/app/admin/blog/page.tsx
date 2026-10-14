@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ExternalLink, Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { AdminPageHeader } from '@/components/admin/AdminShell';
+import { useT } from '@/components/i18n/LocaleProvider';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card, CardBody } from '@/components/ui/Card';
@@ -32,6 +33,7 @@ const BLANK = {
 
 /** Writing and publishing the guides on /blog. */
 export default function AdminBlogPage() {
+  const t = useT();
   const queryClient = useQueryClient();
   const toast = useToast();
   const [status, setStatus] = useState('');
@@ -54,11 +56,11 @@ export default function AdminBlogPage() {
   const remove = useMutation({
     mutationFn: (id: string) => adminApi.deletePost(id),
     onSuccess: () => {
-      toast.success('Guide deleted.');
+      toast.success(t('Guide deleted.', 'گائیڈ حذف ہو گئی۔'));
       setEditingId(null);
       void queryClient.invalidateQueries({ queryKey: ['admin-posts'] });
     },
-    onError: () => toast.error('Could not delete that guide.'),
+    onError: () => toast.error(t('Could not delete that guide.', 'وہ گائیڈ حذف نہیں ہو سکی۔')),
   });
 
   if (creating || editingId) {
@@ -82,21 +84,21 @@ export default function AdminBlogPage() {
   return (
     <>
       <AdminPageHeader
-        title="Guides"
-        description="Articles on /blog. Publishing with a future date schedules it; it appears on its own when the time arrives."
+        title={t('Guides', 'گائیڈز')}
+        description={t('Articles on /blog. Publishing with a future date schedules it; it appears on its own when the time arrives.', '/blog پر مضامین۔ مستقبل کی تاریخ کے ساتھ شائع کرنے سے یہ شیڈول ہو جاتا ہے؛ وقت آنے پر خودبخود ظاہر ہو جاتا ہے۔')}
         action={
           <Button onClick={() => setCreating(true)}>
             <Plus className="h-4 w-4" aria-hidden="true" />
-            Write a guide
+            {t('Write a guide', 'گائیڈ لکھیں')}
           </Button>
         }
       />
 
       <div className="mb-4 max-w-xs">
-        <Select label="Show" value={status} onChange={(event) => setStatus(event.target.value)}>
-          <option value="">All guides</option>
-          <option value="published">Published</option>
-          <option value="draft">Drafts</option>
+        <Select label={t('Show', 'دکھائیں')} value={status} onChange={(event) => setStatus(event.target.value)}>
+          <option value="">{t('All guides', 'تمام گائیڈز')}</option>
+          <option value="published">{t('Published', 'شائع شدہ')}</option>
+          <option value="draft">{t('Drafts', 'ڈرافٹس')}</option>
         </Select>
       </div>
 
@@ -107,9 +109,9 @@ export default function AdminBlogPage() {
           ))}
         </div>
       ) : list.isError || !list.data ? (
-        <ErrorState description="Guides could not be loaded." onRetry={() => list.refetch()} />
+        <ErrorState description={t('Guides could not be loaded.', 'گائیڈز لوڈ نہیں ہو سکیں۔')} onRetry={() => list.refetch()} />
       ) : list.data.data.length === 0 ? (
-        <EmptyState title="No guides yet" description="Write the questions customers ask you most often." />
+        <EmptyState title={t('No guides yet', 'ابھی کوئی گائیڈ نہیں')} description={t('Write the questions customers ask you most often.', 'وہ سوالات لکھیں جو گاہک آپ سے سب سے زیادہ پوچھتے ہیں۔')} />
       ) : (
         <ul className="flex flex-col gap-3">
           {list.data.data.map((post) => (
@@ -121,7 +123,7 @@ export default function AdminBlogPage() {
                       {post.title}
                     </button>
                     <p className="mt-0.5 text-xs text-ink-500">
-                      {post.blog_category_name ?? 'Uncategorised'}
+                      {post.blog_category_name ?? t('Uncategorised', 'بغیر زمرہ')}
                       {post.published_at
                         ? ` · ${new Intl.DateTimeFormat('en-PK', { dateStyle: 'medium' }).format(new Date(post.published_at))}`
                         : ''}
@@ -138,7 +140,7 @@ export default function AdminBlogPage() {
                         target="_blank"
                         rel="noreferrer"
                         className="text-ink-400 hover:text-[#00824A]"
-                        aria-label={`View ${post.title}`}
+                        aria-label={t(`View ${post.title}`, `${post.title} دیکھیں`)}
                       >
                         <ExternalLink className="h-4 w-4" />
                       </a>
@@ -165,6 +167,7 @@ function PostEditor({
   onClose: () => void;
   onDelete?: () => void;
 }) {
+  const t = useT();
   const toast = useToast();
   const queryClient = useQueryClient();
 
@@ -222,29 +225,29 @@ function PostEditor({
     onError: (error) => {
       if (error instanceof ApiError && error.isValidationError) {
         setErrors(Object.fromEntries(Object.entries(error.errors).map(([field, messages]) => [field, messages[0]])));
-        toast.error('Check the highlighted fields.');
+        toast.error(t('Check the highlighted fields.', 'نمایاں کیے گئے خانے چیک کریں۔'));
 
         return;
       }
 
-      toast.error(error instanceof ApiError ? error.message : 'Could not save.');
+      toast.error(error instanceof ApiError ? error.message : t('Could not save.', 'محفوظ نہیں ہو سکا۔'));
     },
   });
 
   return (
     <>
       <AdminPageHeader
-        title={post ? 'Edit guide' : 'Write a guide'}
+        title={post ? t('Edit guide', 'گائیڈ میں ترمیم کریں') : t('Write a guide', 'گائیڈ لکھیں')}
         action={
           <div className="flex gap-2">
             {onDelete ? (
               <Button variant="ghost" className="text-danger-600" onClick={onDelete}>
                 <Trash2 className="h-4 w-4" aria-hidden="true" />
-                Delete
+                {t('Delete', 'حذف کریں')}
               </Button>
             ) : null}
             <Button variant="secondary" onClick={onClose}>
-              Back to list
+              {t('Back to list', 'فہرست پر واپس جائیں')}
             </Button>
           </div>
         }
@@ -252,30 +255,30 @@ function PostEditor({
 
       <Card>
         <CardBody className="flex flex-col gap-4">
-          <Input label="Title" value={form.title} onChange={(event) => set('title', event.target.value)} error={errors.title} required />
+          <Input label={t('Title', 'عنوان')} value={form.title} onChange={(event) => set('title', event.target.value)} error={errors.title} required />
 
           <Textarea
-            label="Article (Markdown)"
+            label={t('Article (Markdown)', 'مضمون (مارک ڈاؤن)')}
             rows={18}
             value={form.body}
             onChange={(event) => set('body', event.target.value)}
             error={errors.body}
-            hint="Markdown only; HTML is stripped. Use ## for section headings."
+            hint={t('Markdown only; HTML is stripped. Use ## for section headings.', 'صرف مارک ڈاؤن؛ HTML ہٹا دیا جاتا ہے۔ سیکشن سرخیوں کے لیے ## استعمال کریں۔')}
             required
           />
 
           <Textarea
-            label="Summary"
+            label={t('Summary', 'خلاصہ')}
             rows={2}
             value={form.excerpt}
             onChange={(event) => set('excerpt', event.target.value)}
-            hint="Shown on cards and in search results. Written for you if left blank."
+            hint={t('Shown on cards and in search results. Written for you if left blank.', 'کارڈز اور سرچ نتائج میں دکھایا جاتا ہے۔ خالی چھوڑنے پر آپ کے لیے لکھ دیا جائے گا۔')}
             error={errors.excerpt}
           />
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <Select label="Category" value={form.blog_category_slug} onChange={(event) => set('blog_category_slug', event.target.value)}>
-              <option value="">No category</option>
+            <Select label={t('Category', 'زمرہ')} value={form.blog_category_slug} onChange={(event) => set('blog_category_slug', event.target.value)}>
+              <option value="">{t('No category', 'کوئی زمرہ نہیں')}</option>
               {options?.categories.map((category) => (
                 <option key={category.slug} value={category.slug}>
                   {category.name}
@@ -284,12 +287,12 @@ function PostEditor({
             </Select>
 
             <Select
-              label="Related service"
+              label={t('Related service', 'متعلقہ سروس')}
               value={form.service_category_slug}
               onChange={(event) => set('service_category_slug', event.target.value)}
-              hint="Adds a booking call to action at the end of the article."
+              hint={t('Adds a booking call to action at the end of the article.', 'مضمون کے آخر میں بکنگ کا کال ٹو ایکشن شامل کرتا ہے۔')}
             >
-              <option value="">None</option>
+              <option value="">{t('None', 'کوئی نہیں')}</option>
               {options?.service_categories.map((category) => (
                 <option key={category.slug} value={category.slug}>
                   {category.name}
@@ -299,44 +302,44 @@ function PostEditor({
           </div>
 
           <Input
-            label="Tags"
+            label={t('Tags', 'ٹیگز')}
             value={form.tags}
             onChange={(event) => set('tags', event.target.value)}
-            hint="Separated by commas."
+            hint={t('Separated by commas.', 'کوما سے الگ کریں۔')}
           />
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <Input label="Search engine title" value={form.seo_title} onChange={(event) => set('seo_title', event.target.value)} />
-            <Input label="Button label" value={form.cta_label} onChange={(event) => set('cta_label', event.target.value)} error={errors.cta_label} />
+            <Input label={t('Search engine title', 'سرچ انجن عنوان')} value={form.seo_title} onChange={(event) => set('seo_title', event.target.value)} />
+            <Input label={t('Button label', 'بٹن لیبل')} value={form.cta_label} onChange={(event) => set('cta_label', event.target.value)} error={errors.cta_label} />
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
             <Textarea
-              label="Search engine description"
+              label={t('Search engine description', 'سرچ انجن تفصیل')}
               rows={2}
               value={form.seo_description}
               onChange={(event) => set('seo_description', event.target.value)}
             />
             <Input
-              label="Button link"
+              label={t('Button link', 'بٹن لنک')}
               value={form.cta_url}
               onChange={(event) => set('cta_url', event.target.value)}
-              hint="A path such as /services/plumbing."
+              hint={t('A path such as /services/plumbing.', 'ایک راستہ جیسے /services/plumbing۔')}
               error={errors.cta_url}
             />
           </div>
 
-          <Select label="Status" value={form.status} onChange={(event) => set('status', event.target.value)} error={errors.status}>
-            <option value="draft">Draft — only visible here</option>
-            <option value="published">Published — live on the site</option>
+          <Select label={t('Status', 'حالت')} value={form.status} onChange={(event) => set('status', event.target.value)} error={errors.status}>
+            <option value="draft">{t('Draft — only visible here', 'ڈرافٹ — صرف یہاں نظر آتا ہے')}</option>
+            <option value="published">{t('Published — live on the site', 'شائع شدہ — سائٹ پر لائیو')}</option>
           </Select>
 
           <div className="flex gap-2">
             <Button onClick={() => save.mutate()} loading={save.isPending}>
-              {post ? 'Save guide' : 'Create guide'}
+              {post ? t('Save guide', 'گائیڈ محفوظ کریں') : t('Create guide', 'گائیڈ بنائیں')}
             </Button>
             <Button variant="ghost" onClick={onClose}>
-              Cancel
+              {t('Cancel', 'منسوخ کریں')}
             </Button>
           </div>
         </CardBody>

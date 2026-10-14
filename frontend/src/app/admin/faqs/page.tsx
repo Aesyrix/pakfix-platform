@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { AdminPageHeader } from '@/components/admin/AdminShell';
+import { useT } from '@/components/i18n/LocaleProvider';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card, CardBody } from '@/components/ui/Card';
@@ -20,6 +21,7 @@ const GROUPS = ['general', 'safety', 'payments', 'service', 'professionals', 'ci
 
 /** Questions shown on the homepage, /faq, service pages and city pages. */
 export default function AdminFaqsPage() {
+  const t = useT();
   const toast = useToast();
   const queryClient = useQueryClient();
   const [creating, setCreating] = useState(false);
@@ -34,27 +36,27 @@ export default function AdminFaqsPage() {
       setCreating(false);
       void refresh();
     },
-    onError: (error) => toast.error(error instanceof ApiError ? error.message : 'Could not add the FAQ.'),
+    onError: (error) => toast.error(error instanceof ApiError ? error.message : t('Could not add the FAQ.', 'سوال شامل نہیں ہو سکا۔')),
   });
 
   const remove = useMutation({
     mutationFn: (id: number) => adminApi.deleteFaq(id),
     onSuccess: () => {
-      toast.success('FAQ deleted.');
+      toast.success(t('FAQ deleted.', 'سوال حذف ہو گیا۔'));
       void refresh();
     },
-    onError: () => toast.error('Could not delete that FAQ.'),
+    onError: () => toast.error(t('Could not delete that FAQ.', 'وہ سوال حذف نہیں ہو سکا۔')),
   });
 
   return (
     <>
       <AdminPageHeader
-        title="FAQs"
-        description="A FAQ with no service and no city shows on the homepage and the FAQ page. Attach a service or city to move it to that page."
+        title={t('FAQs', 'عام سوالات')}
+        description={t('A FAQ with no service and no city shows on the homepage and the FAQ page. Attach a service or city to move it to that page.', 'بغیر سروس اور بغیر شہر والا سوال ہوم پیج اور FAQ صفحے پر دکھائی دیتا ہے۔ اسے کسی صفحے پر منتقل کرنے کے لیے سروس یا شہر منسلک کریں۔')}
         action={
           <Button onClick={() => setCreating((open) => !open)}>
             <Plus className="h-4 w-4" aria-hidden="true" />
-            Add a FAQ
+            {t('Add a FAQ', 'ایک سوال شامل کریں')}
           </Button>
         }
       />
@@ -74,9 +76,9 @@ export default function AdminFaqsPage() {
                 });
               }}
             >
-              <Input name="question" label="Question" required minLength={5} />
-              <Textarea name="answer" label="Answer" rows={3} required minLength={5} />
-              <Select name="group" label="Where it appears" defaultValue="general">
+              <Input name="question" label={t('Question', 'سوال')} required minLength={5} />
+              <Textarea name="answer" label={t('Answer', 'جواب')} rows={3} required minLength={5} />
+              <Select name="group" label={t('Where it appears', 'یہ کہاں ظاہر ہوتا ہے')} defaultValue="general">
                 {GROUPS.map((group) => (
                   <option key={group} value={group}>
                     {group}
@@ -85,10 +87,10 @@ export default function AdminFaqsPage() {
               </Select>
               <div className="flex gap-2">
                 <Button type="submit" loading={create.isPending}>
-                  Add FAQ
+                  {t('Add FAQ', 'سوال شامل کریں')}
                 </Button>
                 <Button type="button" variant="ghost" onClick={() => setCreating(false)}>
-                  Cancel
+                  {t('Cancel', 'منسوخ کریں')}
                 </Button>
               </div>
             </form>
@@ -103,9 +105,9 @@ export default function AdminFaqsPage() {
           ))}
         </div>
       ) : query.isError || !query.data ? (
-        <ErrorState description="The FAQs could not be loaded." onRetry={() => query.refetch()} />
+        <ErrorState description={t('The FAQs could not be loaded.', 'عام سوالات لوڈ نہیں ہو سکے۔')} onRetry={() => query.refetch()} />
       ) : query.data.length === 0 ? (
-        <EmptyState title="No FAQs yet" description="Add the questions customers ask most often." />
+        <EmptyState title={t('No FAQs yet', 'ابھی کوئی سوال نہیں')} description={t('Add the questions customers ask most often.', 'وہ سوالات شامل کریں جو گاہک سب سے زیادہ پوچھتے ہیں۔')} />
       ) : (
         <ul className="flex flex-col gap-3">
           {query.data.map((faq) => (
@@ -120,6 +122,7 @@ export default function AdminFaqsPage() {
 }
 
 function FaqRow({ faq, onDeleted, deleting }: { faq: AdminFaq; onDeleted: () => void; deleting: boolean }) {
+  const t = useT();
   const toast = useToast();
   const queryClient = useQueryClient();
   const [question, setQuestion] = useState(faq.question);
@@ -132,7 +135,7 @@ function FaqRow({ faq, onDeleted, deleting }: { faq: AdminFaq; onDeleted: () => 
       toast.success(response.message);
       void queryClient.invalidateQueries({ queryKey: ['admin-faqs'] });
     },
-    onError: (error) => toast.error(error instanceof ApiError ? error.message : 'Could not save.'),
+    onError: (error) => toast.error(error instanceof ApiError ? error.message : t('Could not save.', 'محفوظ نہیں ہو سکا۔')),
   });
 
   const dirty = question !== faq.question || answer !== faq.answer;
@@ -148,25 +151,25 @@ function FaqRow({ faq, onDeleted, deleting }: { faq: AdminFaq; onDeleted: () => 
             <Badge tone="neutral">{faq.group}</Badge>
             {faq.service_category ? <Badge tone="brand">{faq.service_category.name}</Badge> : null}
             {faq.city ? <Badge tone="accent">{faq.city.name}</Badge> : null}
-            <Badge tone={faq.is_active ? 'safe' : 'warn'}>{faq.is_active ? 'Live' : 'Hidden'}</Badge>
+            <Badge tone={faq.is_active ? 'safe' : 'warn'}>{faq.is_active ? t('Live', 'لائیو') : t('Hidden', 'پوشیدہ')}</Badge>
           </div>
         </div>
 
         {open ? (
           <>
-            <Input label="Question" value={question} onChange={(event) => setQuestion(event.target.value)} />
-            <Textarea label="Answer" rows={3} value={answer} onChange={(event) => setAnswer(event.target.value)} />
+            <Input label={t('Question', 'سوال')} value={question} onChange={(event) => setQuestion(event.target.value)} />
+            <Textarea label={t('Answer', 'جواب')} rows={3} value={answer} onChange={(event) => setAnswer(event.target.value)} />
 
             <div className="flex flex-wrap gap-2">
               <Button onClick={() => save.mutate({ question, answer })} loading={save.isPending} disabled={!dirty}>
-                Save
+                {t('Save', 'محفوظ کریں')}
               </Button>
               <Button variant="secondary" onClick={() => save.mutate({ is_active: !faq.is_active })} loading={save.isPending}>
-                {faq.is_active ? 'Hide from the site' : 'Show on the site'}
+                {faq.is_active ? t('Hide from the site', 'سائٹ سے چھپائیں') : t('Show on the site', 'سائٹ پر دکھائیں')}
               </Button>
               <Button variant="ghost" className="text-danger-600" onClick={onDeleted} loading={deleting}>
                 <Trash2 className="h-4 w-4" aria-hidden="true" />
-                Delete
+                {t('Delete', 'حذف کریں')}
               </Button>
             </div>
           </>

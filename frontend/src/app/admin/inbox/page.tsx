@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Mail, Phone } from 'lucide-react';
 import { useState } from 'react';
 import { AdminPageHeader } from '@/components/admin/AdminShell';
+import { useT } from '@/components/i18n/LocaleProvider';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card, CardBody } from '@/components/ui/Card';
@@ -17,6 +18,7 @@ import type { AdminContactMessage } from '@/lib/api/types';
 
 /** Messages from the public contact form. */
 export default function AdminInboxPage() {
+  const t = useT();
   const [status, setStatus] = useState('new');
 
   const query = useQuery({
@@ -28,16 +30,16 @@ export default function AdminInboxPage() {
   return (
     <>
       <AdminPageHeader
-        title="Contact inbox"
-        description="Messages sent from the contact page. Replying by email is still the quickest route; marking a message handled keeps the queue honest."
+        title={t('Contact inbox', 'رابطہ ان باکس')}
+        description={t('Messages sent from the contact page. Replying by email is still the quickest route; marking a message handled keeps the queue honest.', 'رابطہ صفحے سے بھیجے گئے پیغامات۔ ای میل کے ذریعے جواب دینا اب بھی تیز ترین طریقہ ہے؛ پیغام کو نمٹا گیا نشان زد کرنے سے فہرست درست رہتی ہے۔')}
       />
 
       <div className="mb-4 max-w-xs">
-        <Select label="Show" value={status} onChange={(event) => setStatus(event.target.value)}>
-          <option value="new">New</option>
-          <option value="in_progress">In progress</option>
-          <option value="handled">Handled</option>
-          <option value="">Everything</option>
+        <Select label={t('Show', 'دکھائیں')} value={status} onChange={(event) => setStatus(event.target.value)}>
+          <option value="new">{t('New', 'نیا')}</option>
+          <option value="in_progress">{t('In progress', 'جاری')}</option>
+          <option value="handled">{t('Handled', 'نمٹا گیا')}</option>
+          <option value="">{t('Everything', 'سب کچھ')}</option>
         </Select>
       </div>
 
@@ -48,9 +50,9 @@ export default function AdminInboxPage() {
           ))}
         </div>
       ) : query.isError || !query.data ? (
-        <ErrorState description="The inbox could not be loaded." onRetry={() => query.refetch()} />
+        <ErrorState description={t('The inbox could not be loaded.', 'ان باکس لوڈ نہیں ہو سکا۔')} onRetry={() => query.refetch()} />
       ) : query.data.data.length === 0 ? (
-        <EmptyState title="Nothing here" description="No messages with that status." />
+        <EmptyState title={t('Nothing here', 'یہاں کچھ نہیں')} description={t('No messages with that status.', 'اس حالت کے ساتھ کوئی پیغام نہیں۔')} />
       ) : (
         <ul className="flex flex-col gap-3">
           {query.data.data.map((message) => (
@@ -65,6 +67,7 @@ export default function AdminInboxPage() {
 }
 
 function MessageCard({ message }: { message: AdminContactMessage }) {
+  const t = useT();
   const toast = useToast();
   const queryClient = useQueryClient();
   const [note, setNote] = useState(message.internal_note ?? '');
@@ -76,7 +79,7 @@ function MessageCard({ message }: { message: AdminContactMessage }) {
       void queryClient.invalidateQueries({ queryKey: ['admin-contact'] });
       void queryClient.invalidateQueries({ queryKey: ['admin-overview'] });
     },
-    onError: () => toast.error('Could not update that message.'),
+    onError: () => toast.error(t('Could not update that message.', 'وہ پیغام اپ ڈیٹ نہیں ہو سکا۔')),
   });
 
   return (
@@ -116,29 +119,29 @@ function MessageCard({ message }: { message: AdminContactMessage }) {
         </div>
 
         <Textarea
-          label="Internal note"
+          label={t('Internal note', 'اندرونی نوٹ')}
           rows={2}
           value={note}
           onChange={(event) => setNote(event.target.value)}
-          hint="Only staff see this."
+          hint={t('Only staff see this.', 'صرف عملہ یہ دیکھتا ہے۔')}
         />
 
         <div className="flex flex-wrap gap-2">
           <Button size="sm" variant="secondary" loading={update.isPending} onClick={() => update.mutate({ internal_note: note })}>
-            Save note
+            {t('Save note', 'نوٹ محفوظ کریں')}
           </Button>
           {message.status !== 'in_progress' ? (
             <Button size="sm" variant="secondary" loading={update.isPending} onClick={() => update.mutate({ status: 'in_progress', internal_note: note })}>
-              Mark in progress
+              {t('Mark in progress', 'جاری کے طور پر نشان زد کریں')}
             </Button>
           ) : null}
           {message.status !== 'handled' ? (
             <Button size="sm" loading={update.isPending} onClick={() => update.mutate({ status: 'handled', internal_note: note })}>
-              Mark handled
+              {t('Mark handled', 'نمٹا گیا نشان زد کریں')}
             </Button>
           ) : (
             <span className="self-center text-sm text-ink-500">
-              Handled{message.handled_by ? ` by ${message.handled_by}` : ''}
+              {t('Handled', 'نمٹا گیا')}{message.handled_by ? t(` by ${message.handled_by}`, ` بذریعہ ${message.handled_by}`) : ''}
             </span>
           )}
         </div>

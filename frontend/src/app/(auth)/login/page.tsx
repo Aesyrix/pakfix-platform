@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { Suspense } from 'react';
+import { AuthIntro } from '@/components/auth/AuthIntro';
+import { AuthSwitch } from '@/components/auth/AuthSwitch';
 import { LoginForm } from '@/components/auth/LoginForm';
 import { Card, CardBody } from '@/components/ui/Card';
 import { Skeleton } from '@/components/ui/Skeleton';
@@ -16,10 +17,12 @@ export default function LoginPage() {
   return (
     <Card>
       <CardBody className="sm:p-8">
-        <h1 className="text-2xl font-bold tracking-tight">Welcome back</h1>
-        <p className="mt-2 text-sm text-ink-600">
-          Sign in with the email address or phone number on your account.
-        </p>
+        <AuthIntro
+          title="Welcome back"
+          titleUr="خوش آمدید"
+          description="Sign in with the email address or phone number on your account."
+          descriptionUr="اپنے اکاؤنٹ کے ای میل پتے یا فون نمبر سے سائن ان کریں۔"
+        />
 
         {/*
           The form reads `?next=` to resume an interrupted journey, which opts
@@ -30,12 +33,13 @@ export default function LoginPage() {
           <LoginForm className="mt-6" />
         </Suspense>
 
-        <p className="mt-6 text-center text-sm text-ink-600">
-          New to PakFix?{' '}
-          <Link href="/register" className="font-semibold text-brand-600 hover:text-brand-700">
-            Create an account
-          </Link>
-        </p>
+        <AuthSwitch
+          prompt="New to PakFix?"
+          promptUr="پاک فکس پر نئے ہیں؟"
+          href="/register"
+          linkLabel="Create an account"
+          linkLabelUr="اکاؤنٹ بنائیں"
+        />
       </CardBody>
     </Card>
   );

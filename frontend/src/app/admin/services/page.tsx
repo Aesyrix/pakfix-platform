@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ExternalLink } from 'lucide-react';
 import { useState } from 'react';
 import { AdminPageHeader } from '@/components/admin/AdminShell';
+import { useT } from '@/components/i18n/LocaleProvider';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card, CardBody } from '@/components/ui/Card';
@@ -22,14 +23,15 @@ import type { AdminServiceCategory } from '@/lib/api/types';
  * at them, and a job history that says "unknown service" helps nobody.
  */
 export default function AdminServicesPage() {
+  const t = useT();
   const [editing, setEditing] = useState<string | null>(null);
   const query = useQuery({ queryKey: ['admin-categories'], queryFn: adminApi.categories, staleTime: 60_000 });
 
   return (
     <>
       <AdminPageHeader
-        title="Services"
-        description="Names, descriptions, typical prices and the trade name used in local pages such as /plumber/lahore."
+        title={t('Services', 'خدمات')}
+        description={t('Names, descriptions, typical prices and the trade name used in local pages such as /plumber/lahore.', 'نام، تفصیلات، عام قیمتیں اور مقامی صفحات جیسے /plumber/lahore میں استعمال ہونے والا پیشے کا نام۔')}
       />
 
       {query.isPending ? (
@@ -39,7 +41,7 @@ export default function AdminServicesPage() {
           ))}
         </div>
       ) : query.isError || !query.data ? (
-        <ErrorState description="Services could not be loaded." onRetry={() => query.refetch()} />
+        <ErrorState description={t('Services could not be loaded.', 'خدمات لوڈ نہیں ہو سکیں۔')} onRetry={() => query.refetch()} />
       ) : (
         <ul className="flex flex-col gap-3">
           {query.data.map((category) => (
@@ -56,22 +58,22 @@ export default function AdminServicesPage() {
                       </button>
                       <p className="mt-0.5 text-xs text-ink-500">
                         /services/{category.slug}
-                        {category.trade_slug ? ` · local pages as /${category.trade_slug}/<city>` : ' · no local pages'}
+                        {category.trade_slug ? t(` · local pages as /${category.trade_slug}/<city>`, ` · مقامی صفحات بطور /${category.trade_slug}/<city>`) : t(' · no local pages', ' · کوئی مقامی صفحات نہیں')}
                         {category.typical_min_rupees
                           ? ` · Rs ${category.typical_min_rupees.toLocaleString()}–${(category.typical_max_rupees ?? category.typical_min_rupees).toLocaleString()}`
                           : ''}
                       </p>
                     </div>
                     <div className="flex shrink-0 items-center gap-2">
-                      {category.is_popular ? <Badge tone="brand">Popular</Badge> : null}
-                      {category.is_emergency ? <Badge tone="danger">Emergency</Badge> : null}
-                      <Badge tone={category.is_active ? 'safe' : 'warn'}>{category.is_active ? 'Live' : 'Off'}</Badge>
+                      {category.is_popular ? <Badge tone="brand">{t('Popular', 'مقبول')}</Badge> : null}
+                      {category.is_emergency ? <Badge tone="danger">{t('Emergency', 'ہنگامی')}</Badge> : null}
+                      <Badge tone={category.is_active ? 'safe' : 'warn'}>{category.is_active ? t('Live', 'لائیو') : t('Off', 'بند')}</Badge>
                       <a
                         href={`/services/${category.slug}`}
                         target="_blank"
                         rel="noreferrer"
                         className="text-ink-400 hover:text-[#00824A]"
-                        aria-label={`View ${category.name}`}
+                        aria-label={t(`View ${category.name}`, `${category.name} دیکھیں`)}
                       >
                         <ExternalLink className="h-4 w-4" />
                       </a>
@@ -88,6 +90,7 @@ export default function AdminServicesPage() {
 }
 
 function CategoryEditor({ category, onClose }: { category: AdminServiceCategory; onClose: () => void }) {
+  const t = useT();
   const toast = useToast();
   const queryClient = useQueryClient();
 
@@ -119,12 +122,12 @@ function CategoryEditor({ category, onClose }: { category: AdminServiceCategory;
     onError: (error) => {
       if (error instanceof ApiError && error.isValidationError) {
         setErrors(Object.fromEntries(Object.entries(error.errors).map(([field, messages]) => [field, messages[0]])));
-        toast.error('Check the highlighted fields.');
+        toast.error(t('Check the highlighted fields.', 'نمایاں کیے گئے خانے چیک کریں۔'));
 
         return;
       }
 
-      toast.error(error instanceof ApiError ? error.message : 'Could not save.');
+      toast.error(error instanceof ApiError ? error.message : t('Could not save.', 'محفوظ نہیں ہو سکا۔'));
     },
   });
 
@@ -139,31 +142,31 @@ function CategoryEditor({ category, onClose }: { category: AdminServiceCategory;
   return (
     <Card className="border-[#00824A]">
       <CardBody className="flex flex-col gap-4">
-        <h2 className="font-semibold">Editing {category.name}</h2>
+        <h2 className="font-semibold">{t(`Editing ${category.name}`, `${category.name} میں ترمیم`)}</h2>
 
-        <Input label="Name" value={name} onChange={(event) => setName(event.target.value)} error={errors.name} />
-        <Textarea label="Description" rows={2} value={description} onChange={(event) => setDescription(event.target.value)} />
+        <Input label={t('Name', 'نام')} value={name} onChange={(event) => setName(event.target.value)} error={errors.name} />
+        <Textarea label={t('Description', 'تفصیل')} rows={2} value={description} onChange={(event) => setDescription(event.target.value)} />
 
         <div className="grid gap-4 sm:grid-cols-2">
           <Input
-            label="Trade name"
+            label={t('Trade name', 'پیشے کا نام')}
             value={tradeName}
             onChange={(event) => setTradeName(event.target.value)}
-            hint="What people call this professional, e.g. Plumber."
+            hint={t('What people call this professional, e.g. Plumber.', 'لوگ اس پیشہ ور کو کیا کہتے ہیں، مثلاً پلمبر۔')}
             error={errors.trade_name}
           />
           <Input
-            label="Local page slug"
+            label={t('Local page slug', 'مقامی صفحے کا سلگ')}
             value={tradeSlug}
             onChange={(event) => setTradeSlug(event.target.value)}
-            hint="Used as /<slug>/<city>. Leave blank for no local pages."
+            hint={t('Used as /<slug>/<city>. Leave blank for no local pages.', '/<slug>/<city> کے طور پر استعمال ہوتا ہے۔ مقامی صفحات نہ چاہیں تو خالی چھوڑیں۔')}
             error={errors.trade_slug}
           />
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
           <Input
-            label="Typical price from (PKR)"
+            label={t('Typical price from (PKR)', 'عام قیمت سے (PKR)')}
             type="number"
             inputMode="numeric"
             value={minRupees}
@@ -171,7 +174,7 @@ function CategoryEditor({ category, onClose }: { category: AdminServiceCategory;
             error={errors.typical_min_rupees}
           />
           <Input
-            label="Typical price to (PKR)"
+            label={t('Typical price to (PKR)', 'عام قیمت تک (PKR)')}
             type="number"
             inputMode="numeric"
             value={maxRupees}
@@ -181,26 +184,26 @@ function CategoryEditor({ category, onClose }: { category: AdminServiceCategory;
         </div>
 
         <Textarea
-          label="Common problems"
+          label={t('Common problems', 'عام مسائل')}
           rows={6}
           value={problems}
           onChange={(event) => setProblems(event.target.value)}
-          hint="One per line. These appear on the service page and the local pages."
+          hint={t('One per line. These appear on the service page and the local pages.', 'ہر سطر میں ایک۔ یہ سروس صفحے اور مقامی صفحات پر ظاہر ہوتے ہیں۔')}
           error={errors.common_problems}
         />
 
         <div className="flex flex-wrap gap-2">
           <Button onClick={() => save.mutate()} loading={save.isPending}>
-            Save service
+            {t('Save service', 'سروس محفوظ کریں')}
           </Button>
           <Button variant="secondary" onClick={() => toggle.mutate({ is_popular: !category.is_popular })} loading={toggle.isPending}>
-            {category.is_popular ? 'Remove from homepage' : 'Show on homepage'}
+            {category.is_popular ? t('Remove from homepage', 'ہوم پیج سے ہٹائیں') : t('Show on homepage', 'ہوم پیج پر دکھائیں')}
           </Button>
           <Button variant="secondary" onClick={() => toggle.mutate({ is_active: !category.is_active })} loading={toggle.isPending}>
-            {category.is_active ? 'Switch off' : 'Switch on'}
+            {category.is_active ? t('Switch off', 'بند کریں') : t('Switch on', 'آن کریں')}
           </Button>
           <Button variant="ghost" onClick={onClose}>
-            Cancel
+            {t('Cancel', 'منسوخ کریں')}
           </Button>
         </div>
       </CardBody>

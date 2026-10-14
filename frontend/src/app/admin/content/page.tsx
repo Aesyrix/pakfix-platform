@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ExternalLink, Plus, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { AdminPageHeader } from '@/components/admin/AdminShell';
+import { useT } from '@/components/i18n/LocaleProvider';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card, CardBody } from '@/components/ui/Card';
@@ -23,6 +24,7 @@ import type { AdminContentBlock, ContentListItem, ContentValue } from '@/lib/api
  * titled points -- rather than asking anyone to edit JSON.
  */
 export default function AdminContentPage() {
+  const t = useT();
   const query = useQuery({ queryKey: ['admin-blocks'], queryFn: adminApi.blocks, staleTime: 30_000 });
 
   if (query.isPending) {
@@ -36,7 +38,7 @@ export default function AdminContentPage() {
   }
 
   if (query.isError || !query.data) {
-    return <ErrorState description="The page sections could not be loaded." onRetry={() => query.refetch()} />;
+    return <ErrorState description={t('The page sections could not be loaded.', 'صفحے کے حصے لوڈ نہیں ہو سکے۔')} onRetry={() => query.refetch()} />;
   }
 
   const byPage = query.data.reduce<Record<string, AdminContentBlock[]>>((groups, block) => {
@@ -48,14 +50,14 @@ export default function AdminContentPage() {
   return (
     <>
       <AdminPageHeader
-        title="Page sections"
-        description="The words on the homepage and in the footer. Saving publishes straight away; visitors see the change on their next page load."
+        title={t('Page sections', 'صفحے کے حصے')}
+        description={t('The words on the homepage and in the footer. Saving publishes straight away; visitors see the change on their next page load.', 'ہوم پیج اور فوٹر کے الفاظ۔ محفوظ کرنے پر فوراً شائع ہو جاتا ہے؛ وزٹرز اگلی بار صفحہ کھولنے پر تبدیلی دیکھیں گے۔')}
       />
 
       {Object.entries(byPage).map(([page, blocks]) => (
         <section key={page} aria-labelledby={`page-${page}`} className="mb-10">
           <h2 id={`page-${page}`} className="mb-3 text-sm font-semibold uppercase tracking-wide text-ink-500">
-            {page === 'global' ? 'Site-wide' : page}
+            {page === 'global' ? t('Site-wide', 'پوری سائٹ پر') : page}
           </h2>
           <div className="flex flex-col gap-4">
             {blocks.map((block) => (
@@ -72,6 +74,7 @@ export default function AdminContentPage() {
 }
 
 function BlockEditor({ block }: { block: AdminContentBlock }) {
+  const t = useT();
   const toast = useToast();
   const queryClient = useQueryClient();
 
@@ -99,12 +102,12 @@ function BlockEditor({ block }: { block: AdminContentBlock }) {
     onError: (error) => {
       if (error instanceof ApiError && error.isValidationError) {
         setErrors(Object.fromEntries(Object.entries(error.errors).map(([field, messages]) => [field, messages[0]])));
-        toast.error('Check the highlighted fields.');
+        toast.error(t('Check the highlighted fields.', 'نمایاں کیے گئے خانے چیک کریں۔'));
 
         return;
       }
 
-      toast.error(error instanceof ApiError ? error.message : 'Could not save.');
+      toast.error(error instanceof ApiError ? error.message : t('Could not save.', 'محفوظ نہیں ہو سکا۔'));
     },
   });
 
@@ -115,7 +118,7 @@ function BlockEditor({ block }: { block: AdminContentBlock }) {
           <div className="flex items-center gap-2">
             <h3 className="font-semibold">{block.title || block.key}</h3>
             <Badge tone="neutral">{block.key}</Badge>
-            {!block.is_active ? <Badge tone="warn">Hidden</Badge> : null}
+            {!block.is_active ? <Badge tone="warn">{t('Hidden', 'پوشیدہ')}</Badge> : null}
           </div>
           {block.page !== 'global' ? (
             <a
@@ -124,15 +127,15 @@ function BlockEditor({ block }: { block: AdminContentBlock }) {
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 text-sm font-medium text-[#00824A] hover:text-[#15803D]"
             >
-              View page
+              {t('View page', 'صفحہ دیکھیں')}
               <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
             </a>
           ) : null}
         </div>
 
-        <Input label="Heading" value={title} onChange={(event) => setTitle(event.target.value)} error={errors.title} />
+        <Input label={t('Heading', 'سرخی')} value={title} onChange={(event) => setTitle(event.target.value)} error={errors.title} />
         <Textarea
-          label="Supporting text"
+          label={t('Supporting text', 'معاون متن')}
           rows={2}
           value={subtitle}
           onChange={(event) => setSubtitle(event.target.value)}
@@ -141,16 +144,16 @@ function BlockEditor({ block }: { block: AdminContentBlock }) {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <Input
-            label="Button label"
+            label={t('Button label', 'بٹن لیبل')}
             value={ctaLabel}
             onChange={(event) => setCtaLabel(event.target.value)}
             error={errors.cta_label}
           />
           <Input
-            label="Button link"
+            label={t('Button link', 'بٹن لنک')}
             value={ctaUrl}
             onChange={(event) => setCtaUrl(event.target.value)}
-            hint="A site path such as /ai, or a full https:// address."
+            hint={t('A site path such as /ai, or a full https:// address.', 'ایک سائٹ راستہ جیسے /ai، یا مکمل https:// پتہ۔')}
             error={errors.cta_url}
           />
         </div>
@@ -167,9 +170,9 @@ function BlockEditor({ block }: { block: AdminContentBlock }) {
 
         <div className="flex items-center gap-3">
           <Button onClick={() => save.mutate()} loading={save.isPending}>
-            Save section
+            {t('Save section', 'سیکشن محفوظ کریں')}
           </Button>
-          {save.isSuccess ? <span className="text-sm text-[#15803D]">Saved and live.</span> : null}
+          {save.isSuccess ? <span className="text-sm text-[#15803D]">{t('Saved and live.', 'محفوظ اور لائیو۔')}</span> : null}
         </div>
       </CardBody>
     </Card>
@@ -192,6 +195,8 @@ function ContentField({
   error?: string;
   onChange: (value: ContentValue) => void;
 }) {
+  const t = useT();
+
   if (typeof value === 'string') {
     return (
       <Input label={humanise(name)} value={value} onChange={(event) => onChange(event.target.value)} error={error} />
@@ -205,7 +210,7 @@ function ContentField({
         rows={Math.min(8, Math.max(3, value.length + 1))}
         value={(value as string[]).join('\n')}
         onChange={(event) => onChange(event.target.value.split('\n'))}
-        hint="One per line. Blank lines are ignored."
+        hint={t('One per line. Blank lines are ignored.', 'ہر سطر میں ایک۔ خالی سطریں نظر انداز کر دی جاتی ہیں۔')}
         error={error}
       />
     );
@@ -222,14 +227,14 @@ function ContentField({
           {items.map((item, index) => (
             <div key={index} className="flex flex-col gap-2 border-l-2 border-[var(--border)] pl-3">
               <Input
-                label={`Item ${index + 1} title`}
+                label={t(`Item ${index + 1} title`, `آئٹم ${index + 1} کا عنوان`)}
                 value={item.title ?? ''}
                 onChange={(event) =>
                   onChange(items.map((entry, position) => (position === index ? { ...entry, title: event.target.value } : entry)))
                 }
               />
               <Textarea
-                label="Text"
+                label={t('Text', 'متن')}
                 rows={2}
                 value={item.body ?? ''}
                 onChange={(event) =>
@@ -244,7 +249,7 @@ function ContentField({
                 className="self-start text-danger-600"
               >
                 <Trash2 className="h-4 w-4" aria-hidden="true" />
-                Remove item
+                {t('Remove item', 'آئٹم ہٹائیں')}
               </Button>
             </div>
           ))}
@@ -257,7 +262,7 @@ function ContentField({
             className="self-start"
           >
             <Plus className="h-4 w-4" aria-hidden="true" />
-            Add item
+            {t('Add item', 'آئٹم شامل کریں')}
           </Button>
         </div>
 

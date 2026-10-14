@@ -4,11 +4,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { z } from 'zod';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { useToast } from '@/components/ui/Toast';
+import { useT } from '@/components/i18n/LocaleProvider';
 import { ApiError } from '@/lib/api/client';
 import { useAuthStore } from '@/stores/auth';
 import { cn } from '@/lib/utils/cn';
@@ -21,14 +22,18 @@ import { cn } from '@/lib/utils/cn';
  * the credentials are right, whether the account is suspended, rate limiting
  * -- is decided by the API, and its errors are shown as-is.
  */
-const schema = z.object({
-  login: z.string().min(1, 'Enter your email address or phone number.'),
-  password: z.string().min(1, 'Enter your password.'),
-});
+function makeSchema(t: (english: string, urdu?: string) => string) {
+  return z.object({
+    login: z.string().min(1, t('Enter your email address or phone number.', 'اپنا ای میل پتہ یا فون نمبر درج کریں۔')),
+    password: z.string().min(1, t('Enter your password.', 'اپنا پاس ورڈ درج کریں۔')),
+  });
+}
 
-type LoginValues = z.infer<typeof schema>;
+type LoginValues = z.infer<ReturnType<typeof makeSchema>>;
 
 export function LoginForm({ className }: { className?: string }) {
+  const t = useT();
+  const schema = useMemo(() => makeSchema(t), [t]);
   const router = useRouter();
   const searchParams = useSearchParams();
   const toast = useToast();
@@ -52,7 +57,7 @@ export function LoginForm({ className }: { className?: string }) {
     try {
       const user = await login(values);
 
-      toast.success(`Signed in as ${user.name}.`);
+      toast.success(t(`Signed in as ${user.name}.`, `بطور ${user.name} سائن ان ہو گئے۔`));
 
       // Honour where the user was heading before the guard bounced them,
       // but only within this site.
@@ -80,7 +85,7 @@ export function LoginForm({ className }: { className?: string }) {
         return;
       }
 
-      setFormError('Something went wrong. Please try again.');
+      setFormError(t('Something went wrong. Please try again.', 'کچھ غلط ہو گیا۔ دوبارہ کوشش کریں۔'));
     }
   }
 
@@ -96,10 +101,10 @@ export function LoginForm({ className }: { className?: string }) {
       ) : null}
 
       <Input
-        label="Email or phone"
+        label={t('Email or phone', 'ای میل یا فون')}
         autoComplete="username"
         inputMode="email"
-        placeholder="you@example.com or 0300 1234567"
+        placeholder={t('you@example.com or 0300 1234567', 'you@example.com یا 0300 1234567')}
         error={errors.login?.message}
         required
         {...register('login')}
@@ -107,25 +112,25 @@ export function LoginForm({ className }: { className?: string }) {
 
       <div>
         <Input
-          label="Password"
+          label={t('Password', 'پاس ورڈ')}
           type="password"
           autoComplete="current-password"
           error={errors.password?.message}
           required
           {...register('password')}
         />
-        <div className="mt-2 text-right">
+        <div className="mt-2 text-end">
           <Link
             href="/forgot-password"
             className="text-sm font-medium text-brand-600 hover:text-brand-700"
           >
-            Forgot your password?
+            {t('Forgot your password?', 'پاس ورڈ بھول گئے؟')}
           </Link>
         </div>
       </div>
 
       <Button type="submit" size="lg" block loading={isSubmitting}>
-        Sign in
+        {t('Sign in', 'سائن اِن')}
       </Button>
     </form>
   );

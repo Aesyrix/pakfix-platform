@@ -3,6 +3,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { AdminPageHeader } from '@/components/admin/AdminShell';
+import { useT } from '@/components/i18n/LocaleProvider';
 import { Button } from '@/components/ui/Button';
 import { Card, CardBody } from '@/components/ui/Card';
 import { ErrorState } from '@/components/ui/ErrorState';
@@ -13,10 +14,10 @@ import { ApiError } from '@/lib/api/client';
 import { adminApi } from '@/lib/api/endpoints';
 import type { AdminSetting } from '@/lib/api/types';
 
-const GROUP_LABELS: Record<string, { title: string; description: string }> = {
-  general: { title: 'Brand and contact', description: 'Shown in the header, the footer and on the contact page.' },
-  social: { title: 'Social links', description: 'Leave a field empty to hide that network.' },
-  seo: { title: 'Search engines', description: 'Defaults used where a page has no title or description of its own.' },
+const GROUP_LABELS: Record<string, { title: string; titleUr: string; description: string; descriptionUr: string }> = {
+  general: { title: 'Brand and contact', titleUr: 'برانڈ اور رابطہ', description: 'Shown in the header, the footer and on the contact page.', descriptionUr: 'ہیڈر، فوٹر اور رابطہ صفحے پر دکھایا جاتا ہے۔' },
+  social: { title: 'Social links', titleUr: 'سوشل لنکس', description: 'Leave a field empty to hide that network.', descriptionUr: 'اس نیٹ ورک کو چھپانے کے لیے خانہ خالی چھوڑیں۔' },
+  seo: { title: 'Search engines', titleUr: 'سرچ انجن', description: 'Defaults used where a page has no title or description of its own.', descriptionUr: 'وہ ڈیفالٹس جو ایسے صفحات پر استعمال ہوتے ہیں جن کا اپنا عنوان یا تفصیل نہ ہو۔' },
 };
 
 /**
@@ -27,6 +28,7 @@ const GROUP_LABELS: Record<string, { title: string; description: string }> = {
  * permissions in a later phase.
  */
 export default function AdminSettingsPage() {
+  const t = useT();
   const query = useQuery({ queryKey: ['admin-settings'], queryFn: adminApi.settings, staleTime: 30_000 });
 
   if (query.isPending) {
@@ -40,7 +42,7 @@ export default function AdminSettingsPage() {
   }
 
   if (query.isError || !query.data) {
-    return <ErrorState description="Settings could not be loaded." onRetry={() => query.refetch()} />;
+    return <ErrorState description={t('Settings could not be loaded.', 'ترتیبات لوڈ نہیں ہو سکیں۔')} onRetry={() => query.refetch()} />;
   }
 
   // Keyed on the saved values: a background refresh brings newer values in by
@@ -51,6 +53,7 @@ export default function AdminSettingsPage() {
 }
 
 function SettingsForm({ settings }: { settings: AdminSetting[] }) {
+  const t = useT();
   const toast = useToast();
   const queryClient = useQueryClient();
 
@@ -73,12 +76,12 @@ function SettingsForm({ settings }: { settings: AdminSetting[] }) {
             Object.entries(error.errors).map(([field, messages]) => [field.replace(/^values\./, ''), messages[0]])
           )
         );
-        toast.error('Check the highlighted fields.');
+        toast.error(t('Check the highlighted fields.', 'نمایاں کیے گئے خانے چیک کریں۔'));
 
         return;
       }
 
-      toast.error(error instanceof ApiError ? error.message : 'Could not save.');
+      toast.error(error instanceof ApiError ? error.message : t('Could not save.', 'محفوظ نہیں ہو سکا۔'));
     },
   });
 
@@ -90,7 +93,7 @@ function SettingsForm({ settings }: { settings: AdminSetting[] }) {
 
   return (
     <>
-      <AdminPageHeader title="Settings" description="Brand details and defaults used across the public site." />
+      <AdminPageHeader title={t('Settings', 'ترتیبات')} description={t('Brand details and defaults used across the public site.', 'برانڈ کی تفصیلات اور پوری عوامی سائٹ پر استعمال ہونے والے ڈیفالٹس۔')} />
 
       <form
         className="flex flex-col gap-6"
@@ -103,9 +106,9 @@ function SettingsForm({ settings }: { settings: AdminSetting[] }) {
           <Card key={group}>
             <CardBody className="flex flex-col gap-4">
               <div>
-                <h2 className="font-semibold">{GROUP_LABELS[group]?.title ?? group}</h2>
+                <h2 className="font-semibold">{t(GROUP_LABELS[group]?.title ?? group, GROUP_LABELS[group]?.titleUr)}</h2>
                 {GROUP_LABELS[group]?.description ? (
-                  <p className="mt-1 text-sm text-ink-600">{GROUP_LABELS[group].description}</p>
+                  <p className="mt-1 text-sm text-ink-600">{t(GROUP_LABELS[group].description, GROUP_LABELS[group].descriptionUr)}</p>
                 ) : null}
               </div>
 
@@ -128,9 +131,9 @@ function SettingsForm({ settings }: { settings: AdminSetting[] }) {
 
         <div className="flex items-center gap-3">
           <Button type="submit" loading={save.isPending}>
-            Save settings
+            {t('Save settings', 'ترتیبات محفوظ کریں')}
           </Button>
-          <p className="text-sm text-ink-500">Changes appear on the site immediately.</p>
+          <p className="text-sm text-ink-500">{t('Changes appear on the site immediately.', 'تبدیلیاں فوراً سائٹ پر ظاہر ہو جاتی ہیں۔')}</p>
         </div>
       </form>
     </>

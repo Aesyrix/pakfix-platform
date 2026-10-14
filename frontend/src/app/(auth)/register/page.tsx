@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import { AuthIntro } from '@/components/auth/AuthIntro';
+import { AuthSwitch } from '@/components/auth/AuthSwitch';
 import { RegisterForm } from '@/components/auth/RegisterForm';
 import { Card, CardBody } from '@/components/ui/Card';
 import { locationApi } from '@/lib/api/endpoints';
@@ -20,19 +21,22 @@ export default async function RegisterPage() {
   return (
     <Card>
       <CardBody className="sm:p-8">
-        <h1 className="text-2xl font-bold tracking-tight">Create your account</h1>
-        <p className="mt-2 text-sm text-ink-600">
-          One account for repairs, maintenance and your property history.
-        </p>
+        <AuthIntro
+          title="Create your account"
+          titleUr="اپنا اکاؤنٹ بنائیں"
+          description="One account for repairs, maintenance and your property history."
+          descriptionUr="مرمت، دیکھ بھال اور آپ کی پراپرٹی کی تاریخ کے لیے ایک اکاؤنٹ۔"
+        />
 
         <RegisterForm cities={cities} className="mt-6" />
 
-        <p className="mt-6 text-center text-sm text-ink-600">
-          Already have an account?{' '}
-          <Link href="/login" className="font-semibold text-brand-600 hover:text-brand-700">
-            Sign in
-          </Link>
-        </p>
+        <AuthSwitch
+          prompt="Already have an account?"
+          promptUr="پہلے سے اکاؤنٹ ہے؟"
+          href="/login"
+          linkLabel="Sign in"
+          linkLabelUr="سائن اِن"
+        />
       </CardBody>
     </Card>
   );

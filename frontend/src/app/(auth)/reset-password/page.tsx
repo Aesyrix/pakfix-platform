@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
+import { AuthIntro } from '@/components/auth/AuthIntro';
 import { Card, CardBody } from '@/components/ui/Card';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { ResetPasswordForm } from '@/components/auth/ResetPasswordForm';
@@ -16,7 +17,7 @@ export default function ResetPasswordPage() {
   return (
     <Card>
       <CardBody className="sm:p-8">
-        <h1 className="text-2xl font-bold tracking-tight">Set a new password</h1>
+        <AuthIntro title="Set a new password" titleUr="نیا پاس ورڈ مقرر کریں" />
 
         {/* The form reads the token from the link, so it renders in the browser. */}
         <Suspense

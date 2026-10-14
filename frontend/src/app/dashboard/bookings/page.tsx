@@ -7,6 +7,7 @@ import { Badge, VerifiedBadge } from '@/components/ui/Badge';
 import { Button, ButtonLink } from '@/components/ui/Button';
 import { Card, CardBody, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Container } from '@/components/ui/Container';
+import { useT } from '@/components/i18n/LocaleProvider';
 
 interface TrackingStep {
   title: string;
@@ -67,7 +68,39 @@ const SAMPLE_BOOKINGS = [
   },
 ];
 
+/** Urdu for the sample booking copy; person and city names stay as written. */
+const BOOKING_UR: Record<string, string> = {
+  'AC Inverter Jet Servicing & Gas Check': 'اے سی انورٹر جیٹ سروسنگ اور گیس چیک',
+  'HVAC & Cooling': 'HVAC اور کولنگ',
+  'Technician On The Way': 'ٹیکنیشن راستے میں ہے',
+  'Today, 2:30 PM': 'آج، 2:30 PM',
+  'Booking Submitted': 'بکنگ جمع کرائی گئی',
+  'Quote Approved': 'کوٹ منظور ہو گیا',
+  'Technician Assigned': 'ٹیکنیشن مقرر ہوا',
+  'En Route to Location': 'مقام کی طرف روانہ',
+  'Service In Progress': 'سروس جاری ہے',
+  'Job Completion & Warranty': 'کام کی تکمیل اور وارنٹی',
+  'Customer requested AC service with photo diagnosis.': 'کسٹمر نے تصویری تشخیص کے ساتھ اے سی سروس کی درخواست کی۔',
+  'Fixed price PKR 2,800 accepted by customer.': 'کسٹمر نے مقررہ قیمت PKR 2,800 قبول کی۔',
+  'Usman (Verified Master Electrician) accepted job.': 'عثمان (تصدیق شدہ ماسٹر الیکٹریشن) نے کام قبول کیا۔',
+  'Technician left Gulberg hub. ETA ~18 minutes.': 'ٹیکنیشن گلبرگ ہب سے روانہ ہو گیا۔ تخمینہ تقریباً 18 منٹ۔',
+  'Physical diagnosis, pressure check & jet wash.': 'بنیادی تشخیص، پریشر چیک اور جیٹ واش۔',
+  '7-day PakFix repair guarantee activated.': '7 دن کی پاک فکس مرمت گارنٹی فعال ہو گئی۔',
+  'Pending': 'زیرِ التوا',
+  'Main DB Breaker Box Repair': 'مین ڈی بی بریکر باکس کی مرمت',
+  'Electrical Work': 'بجلی کا کام',
+  'Completed & Verified': 'مکمل اور تصدیق شدہ',
+  'Completed': 'مکمل',
+  'Yesterday, 4:00 PM': 'کل، 4:00 PM',
+  'Yesterday 02:00 PM': 'کل 02:00 PM',
+  'Breaker tripping issue reported.': 'بریکر ٹرپ ہونے کا مسئلہ رپورٹ کیا گیا۔',
+  'Job Completed': 'کام مکمل ہوا',
+  'Yesterday 05:15 PM': 'کل 05:15 PM',
+  '30A Breaker replaced with Schneider original.': '30A بریکر شنائیڈر اوریجنل سے تبدیل کیا گیا۔',
+};
+
 export default function BookingsDashboardPage() {
+  const t = useT();
   const [selectedBooking, setSelectedBooking] = useState(SAMPLE_BOOKINGS[0]);
 
   return (
@@ -75,24 +108,24 @@ export default function BookingsDashboardPage() {
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-[#00824A]">My Service Portal</span>
+          <span className="text-xs font-bold uppercase tracking-wider text-[#00824A]">{t('My Service Portal', 'میرا سروس پورٹل')}</span>
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground mt-1">
-            Bookings & Live Tracking
+            {t('Bookings & Live Tracking', 'بکنگ اور لائیو ٹریکنگ')}
           </h1>
           <p className="text-sm text-ink-600 mt-1">
-            Track technician dispatch, view job history, and communicate in real time.
+            {t('Track technician dispatch, view job history, and communicate in real time.', 'ٹیکنیشن کی روانگی ٹریک کریں، کام کی تاریخ دیکھیں اور حقیقی وقت میں رابطہ کریں۔')}
           </p>
         </div>
 
         <ButtonLink href="/ai" variant="primary" size="md">
-          + Book New Repair
+          {t('+ Book New Repair', '+ نئی مرمت بک کریں')}
         </ButtonLink>
       </div>
 
       <div className="grid gap-8 lg:grid-cols-12">
         {/* Left Column: Booking List */}
         <div className="lg:col-span-5 space-y-4">
-          <h2 className="text-sm font-bold uppercase tracking-wide text-ink-500">Active & Recent Bookings</h2>
+          <h2 className="text-sm font-bold uppercase tracking-wide text-ink-500">{t('Active & Recent Bookings', 'فعال اور حالیہ بکنگ')}</h2>
 
           {SAMPLE_BOOKINGS.map((booking) => {
             const isSelected = selectedBooking.id === booking.id;
@@ -109,12 +142,12 @@ export default function BookingsDashboardPage() {
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-mono font-bold text-ink-500">{booking.id}</span>
                     <Badge tone={booking.status === 'on_the_way' ? 'brand' : 'safe'}>
-                      {booking.statusLabel}
+                      {t(booking.statusLabel, BOOKING_UR[booking.statusLabel])}
                     </Badge>
                   </div>
 
                   <div>
-                    <h3 className="font-bold text-foreground text-sm">{booking.service}</h3>
+                    <h3 className="font-bold text-foreground text-sm">{t(booking.service, BOOKING_UR[booking.service])}</h3>
                     <p className="text-xs text-ink-500 flex items-center gap-1 mt-1">
                       <MapPin className="h-3.5 w-3.5 text-ink-400" />
                       {booking.city}
@@ -122,7 +155,7 @@ export default function BookingsDashboardPage() {
                   </div>
 
                   <div className="flex items-center justify-between pt-2 border-t border-[var(--border)] text-xs">
-                    <span className="text-ink-600 font-medium">{booking.date}</span>
+                    <span className="text-ink-600 font-medium">{t(booking.date, BOOKING_UR[booking.date])}</span>
                     <span className="font-extrabold text-[#00824A]">PKR {booking.totalPkr}</span>
                   </div>
                 </CardBody>
@@ -137,11 +170,11 @@ export default function BookingsDashboardPage() {
             <CardHeader className="border-b border-[var(--border)] pb-4">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div>
-                  <span className="text-xs font-mono text-ink-400">Order ID: {selectedBooking.id}</span>
-                  <CardTitle className="text-lg font-extrabold">{selectedBooking.service}</CardTitle>
+                  <span className="text-xs font-mono text-ink-400">{t(`Order ID: ${selectedBooking.id}`, `آرڈر آئی ڈی: ${selectedBooking.id}`)}</span>
+                  <CardTitle className="text-lg font-extrabold">{t(selectedBooking.service, BOOKING_UR[selectedBooking.service])}</CardTitle>
                 </div>
                 <Badge tone={selectedBooking.status === 'on_the_way' ? 'brand' : 'safe'}>
-                  {selectedBooking.statusLabel}
+                  {t(selectedBooking.statusLabel, BOOKING_UR[selectedBooking.statusLabel])}
                 </Badge>
               </div>
             </CardHeader>
@@ -159,7 +192,10 @@ export default function BookingsDashboardPage() {
                       <VerifiedBadge showText={false} />
                     </div>
                     <p className="text-xs text-ink-500">
-                      ★ {selectedBooking.technician.rating} rating &bull; {selectedBooking.technician.jobs} jobs completed
+                      {t(
+                        `★ ${selectedBooking.technician.rating} rating • ${selectedBooking.technician.jobs} jobs completed`,
+                        `★ ${selectedBooking.technician.rating} ریٹنگ • ${selectedBooking.technician.jobs} جابز مکمل`
+                      )}
                     </p>
                   </div>
                 </div>
@@ -169,10 +205,10 @@ export default function BookingsDashboardPage() {
                     href={`tel:${selectedBooking.technician.phone}`}
                     className="inline-flex h-9 items-center gap-1.5 rounded-xl bg-[#DCFCE7] px-3 text-xs font-bold text-[#15803D] hover:bg-[#BBF7D0]"
                   >
-                    <Phone className="h-3.5 w-3.5" /> Call
+                    <Phone className="h-3.5 w-3.5" /> {t('Call', 'کال کریں')}
                   </a>
                   <Button variant="accent" size="sm" className="h-9 px-3 text-xs">
-                    <MessageSquare className="h-3.5 w-3.5 mr-1" /> Chat
+                    <MessageSquare className="h-3.5 w-3.5 mr-1" /> {t('Chat', 'چیٹ کریں')}
                   </Button>
                 </div>
               </div>
@@ -180,7 +216,7 @@ export default function BookingsDashboardPage() {
               {/* Vertical Tracking Timeline */}
               <div>
                 <h4 className="text-xs font-bold uppercase tracking-wider text-ink-500 mb-4">
-                  Job Execution Timeline
+                  {t('Job Execution Timeline', 'کام کی تکمیل کا ٹائم لائن')}
                 </h4>
 
                 <div className="relative pl-6 space-y-6 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-ink-200">
@@ -202,11 +238,11 @@ export default function BookingsDashboardPage() {
                       <div className="flex-1">
                         <div className="flex items-center justify-between">
                           <p className={`text-sm font-bold ${step.active ? 'text-[#00824A]' : 'text-foreground'}`}>
-                            {step.title}
+                            {t(step.title, BOOKING_UR[step.title])}
                           </p>
-                          <span className="text-xs font-mono text-ink-400">{step.timestamp}</span>
+                          <span className="text-xs font-mono text-ink-400">{t(step.timestamp, BOOKING_UR[step.timestamp])}</span>
                         </div>
-                        <p className="text-xs text-ink-500 mt-0.5">{step.description}</p>
+                        <p className="text-xs text-ink-500 mt-0.5">{t(step.description, BOOKING_UR[step.description])}</p>
                       </div>
                     </div>
                   ))}
@@ -216,10 +252,10 @@ export default function BookingsDashboardPage() {
               {/* Price & Guarantee Notice */}
               <div className="pt-4 border-t border-[var(--border)] flex flex-wrap items-center justify-between gap-2 text-xs">
                 <div className="flex items-center gap-1.5 text-[#15803D] font-semibold bg-[#DCFCE7] px-3 py-1.5 rounded-xl">
-                  <CheckCircle2 className="h-4 w-4" /> 7-Day PakFix Quality Warranty Included
+                  <CheckCircle2 className="h-4 w-4" /> {t('7-Day PakFix Quality Warranty Included', '7 دن کی پاک فکس معیاری وارنٹی شامل')}
                 </div>
                 <div className="text-right">
-                  <span className="text-ink-500">Agreed Price: </span>
+                  <span className="text-ink-500">{t('Agreed Price: ', 'طے شدہ قیمت: ')}</span>
                   <span className="font-extrabold text-[#00824A] text-sm">PKR {selectedBooking.totalPkr}</span>
                 </div>
               </div>

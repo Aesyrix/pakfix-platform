@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import { AuthIntro } from '@/components/auth/AuthIntro';
+import { AuthSwitch } from '@/components/auth/AuthSwitch';
 import { Card, CardBody } from '@/components/ui/Card';
 import { ForgotPasswordForm } from '@/components/auth/ForgotPasswordForm';
 import { pageMetadata } from '@/lib/seo';
@@ -15,19 +16,22 @@ export default function ForgotPasswordPage() {
   return (
     <Card>
       <CardBody className="sm:p-8">
-        <h1 className="text-2xl font-bold tracking-tight">Forgot your password?</h1>
-        <p className="mt-2 text-sm text-ink-600">
-          Enter the email address on your account and we will send you a link to set a new password.
-        </p>
+        <AuthIntro
+          title="Forgot your password?"
+          titleUr="پاس ورڈ بھول گئے؟"
+          description="Enter the email address on your account and we will send you a link to set a new password."
+          descriptionUr="اپنے اکاؤنٹ کا ای میل پتہ درج کریں اور ہم نیا پاس ورڈ مقرر کرنے کا لنک بھیج دیں گے۔"
+        />
 
         <ForgotPasswordForm />
 
-        <p className="mt-6 text-center text-sm text-ink-600">
-          Remembered it?{' '}
-          <Link href="/login" className="font-semibold text-[#00824A] hover:text-[#15803D]">
-            Sign in
-          </Link>
-        </p>
+        <AuthSwitch
+          prompt="Remembered it?"
+          promptUr="یاد آ گیا؟"
+          href="/login"
+          linkLabel="Sign in"
+          linkLabelUr="سائن اِن"
+        />
       </CardBody>
     </Card>
   );

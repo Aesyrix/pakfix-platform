@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ExternalLink, Lock, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { AdminPageHeader } from '@/components/admin/AdminShell';
+import { useT } from '@/components/i18n/LocaleProvider';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card, CardBody } from '@/components/ui/Card';
@@ -17,6 +18,7 @@ import type { AdminPage } from '@/lib/api/types';
 
 /** Terms, Privacy, Refunds, Safety, About, and any page the team adds. */
 export default function AdminPagesPage() {
+  const t = useT();
   const toast = useToast();
   const queryClient = useQueryClient();
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -37,18 +39,18 @@ export default function AdminPagesPage() {
       setSelectedId(response.data.id);
       void queryClient.invalidateQueries({ queryKey: ['admin-pages'] });
     },
-    onError: (error) => toast.error(error instanceof ApiError ? error.message : 'Could not create the page.'),
+    onError: (error) => toast.error(error instanceof ApiError ? error.message : t('Could not create the page.', 'صفحہ بنایا نہیں جا سکا۔')),
   });
 
   return (
     <>
       <AdminPageHeader
-        title="Pages"
-        description="Written in Markdown. Legal pages can be edited but not deleted or taken offline."
+        title={t('Pages', 'صفحات')}
+        description={t('Written in Markdown. Legal pages can be edited but not deleted or taken offline.', 'مارک ڈاؤن میں لکھا گیا۔ قانونی صفحات میں ترمیم کی جا سکتی ہے مگر انہیں حذف یا آف لائن نہیں کیا جا سکتا۔')}
         action={
           <Button onClick={() => { setCreating(true); setSelectedId(null); }}>
             <Plus className="h-4 w-4" aria-hidden="true" />
-            New page
+            {t('New page', 'نیا صفحہ')}
           </Button>
         }
       />
@@ -58,7 +60,7 @@ export default function AdminPagesPage() {
           {list.isPending ? (
             <SkeletonCard />
           ) : list.isError || !list.data ? (
-            <ErrorState description="Pages could not be loaded." onRetry={() => list.refetch()} />
+            <ErrorState description={t('Pages could not be loaded.', 'صفحات لوڈ نہیں ہو سکے۔')} onRetry={() => list.refetch()} />
           ) : (
             <ul className="flex flex-col gap-2">
               {list.data.map((page) => (
@@ -75,7 +77,7 @@ export default function AdminPagesPage() {
                       <span className="block truncate font-medium">{page.title}</span>
                       <span className="block truncate text-xs text-ink-500">/{page.slug}</span>
                     </span>
-                    {page.is_system ? <Lock className="h-3.5 w-3.5 shrink-0 text-ink-400" aria-label="System page" /> : null}
+                    {page.is_system ? <Lock className="h-3.5 w-3.5 shrink-0 text-ink-400" aria-label={t('System page', 'سسٹم صفحہ')} /> : null}
                   </button>
                 </li>
               ))}
@@ -87,7 +89,7 @@ export default function AdminPagesPage() {
           {creating ? (
             <Card>
               <CardBody>
-                <h2 className="mb-4 font-semibold">New page</h2>
+                <h2 className="mb-4 font-semibold">{t('New page', 'نیا صفحہ')}</h2>
                 <form
                   className="flex flex-col gap-4"
                   onSubmit={(event) => {
@@ -100,14 +102,14 @@ export default function AdminPagesPage() {
                     });
                   }}
                 >
-                  <Input name="title" label="Title" required minLength={2} />
-                  <Textarea name="body" label="Content (Markdown)" rows={12} />
+                  <Input name="title" label={t('Title', 'عنوان')} required minLength={2} />
+                  <Textarea name="body" label={t('Content (Markdown)', 'مواد (مارک ڈاؤن)')} rows={12} />
                   <div className="flex gap-2">
                     <Button type="submit" loading={create.isPending}>
-                      Create page
+                      {t('Create page', 'صفحہ بنائیں')}
                     </Button>
                     <Button type="button" variant="ghost" onClick={() => setCreating(false)}>
-                      Cancel
+                      {t('Cancel', 'منسوخ کریں')}
                     </Button>
                   </div>
                 </form>
@@ -120,7 +122,7 @@ export default function AdminPagesPage() {
           ) : (
             <Card>
               <CardBody>
-                <p className="text-sm text-ink-600">Choose a page on the left to edit it.</p>
+                <p className="text-sm text-ink-600">{t('Choose a page on the left to edit it.', 'ترمیم کے لیے بائیں جانب سے ایک صفحہ منتخب کریں۔')}</p>
               </CardBody>
             </Card>
           )}
@@ -131,6 +133,7 @@ export default function AdminPagesPage() {
 }
 
 function PageEditor({ page }: { page: AdminPage }) {
+  const t = useT();
   const toast = useToast();
   const queryClient = useQueryClient();
   const [title, setTitle] = useState(page.title);
@@ -151,7 +154,7 @@ function PageEditor({ page }: { page: AdminPage }) {
       void queryClient.invalidateQueries({ queryKey: ['admin-pages'] });
       void queryClient.invalidateQueries({ queryKey: ['admin-page', page.id] });
     },
-    onError: (error) => toast.error(error instanceof ApiError ? error.message : 'Could not save.'),
+    onError: (error) => toast.error(error instanceof ApiError ? error.message : t('Could not save.', 'محفوظ نہیں ہو سکا۔')),
   });
 
   const publicPath = page.is_system ? `/${page.slug}` : `/pages/${page.slug}`;
@@ -161,9 +164,9 @@ function PageEditor({ page }: { page: AdminPage }) {
       <CardBody className="flex flex-col gap-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <h2 className="font-semibold">Editing {page.title}</h2>
-            {page.is_system ? <Badge tone="neutral">System page</Badge> : null}
-            <Badge tone={page.is_published ? 'safe' : 'warn'}>{page.is_published ? 'Live' : 'Draft'}</Badge>
+            <h2 className="font-semibold">{t(`Editing ${page.title}`, `${page.title} میں ترمیم`)}</h2>
+            {page.is_system ? <Badge tone="neutral">{t('System page', 'سسٹم صفحہ')}</Badge> : null}
+            <Badge tone={page.is_published ? 'safe' : 'warn'}>{page.is_published ? t('Live', 'لائیو') : t('Draft', 'ڈرافٹ')}</Badge>
           </div>
           <a
             href={publicPath}
@@ -171,22 +174,22 @@ function PageEditor({ page }: { page: AdminPage }) {
             rel="noreferrer"
             className="inline-flex items-center gap-1.5 text-sm font-medium text-[#00824A] hover:text-[#15803D]"
           >
-            View page
+            {t('View page', 'صفحہ دیکھیں')}
             <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
           </a>
         </div>
 
-        <Input label="Title" value={title} onChange={(event) => setTitle(event.target.value)} />
+        <Input label={t('Title', 'عنوان')} value={title} onChange={(event) => setTitle(event.target.value)} />
         <Textarea
-          label="Content (Markdown)"
+          label={t('Content (Markdown)', 'مواد (مارک ڈاؤن)')}
           rows={18}
           value={body}
           onChange={(event) => setBody(event.target.value)}
-          hint="Markdown only. HTML is stripped before the page is shown."
+          hint={t('Markdown only. HTML is stripped before the page is shown.', 'صرف مارک ڈاؤن۔ صفحہ دکھانے سے پہلے HTML ہٹا دیا جاتا ہے۔')}
         />
-        <Input label="Search engine title" value={seoTitle} onChange={(event) => setSeoTitle(event.target.value)} />
+        <Input label={t('Search engine title', 'سرچ انجن عنوان')} value={seoTitle} onChange={(event) => setSeoTitle(event.target.value)} />
         <Textarea
-          label="Search engine description"
+          label={t('Search engine description', 'سرچ انجن تفصیل')}
           rows={2}
           value={seoDescription}
           onChange={(event) => setSeoDescription(event.target.value)}
@@ -194,11 +197,11 @@ function PageEditor({ page }: { page: AdminPage }) {
 
         <div className="flex items-center gap-3">
           <Button onClick={() => save.mutate()} loading={save.isPending}>
-            Save page
+            {t('Save page', 'صفحہ محفوظ کریں')}
           </Button>
           {page.updated_at ? (
             <span className="text-xs text-ink-500">
-              Last saved {new Intl.DateTimeFormat('en-PK', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(page.updated_at))}
+              {t('Last saved', 'آخری بار محفوظ')} {new Intl.DateTimeFormat('en-PK', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(page.updated_at))}
             </span>
           ) : null}
         </div>

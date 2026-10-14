@@ -19,6 +19,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Container } from '@/components/ui/Container';
 import { PakFixLogo } from '@/components/layout/PakFixLogo';
 import { useToast } from '@/components/ui/Toast';
+import { useT } from '@/components/i18n/LocaleProvider';
 import { adminApi } from '@/lib/api/endpoints';
 import { useAuthStore } from '@/stores/auth';
 import { cn } from '@/lib/utils/cn';
@@ -33,24 +34,26 @@ import { cn } from '@/lib/utils/cn';
 interface AdminLink {
   href: string;
   label: string;
+  labelUr: string;
   icon: typeof LayoutDashboard;
   permission: 'content' | 'blog' | 'services' | 'settings' | 'inbox' | null;
   exact?: boolean;
 }
 
 const LINKS: AdminLink[] = [
-  { href: '/admin', label: 'Overview', icon: LayoutDashboard, permission: null, exact: true },
-  { href: '/admin/content', label: 'Homepage', icon: LayoutDashboard, permission: 'content' },
-  { href: '/admin/faqs', label: 'FAQs', icon: MessageCircleQuestion, permission: 'content' },
-  { href: '/admin/testimonials', label: 'Testimonials', icon: Quote, permission: 'content' },
-  { href: '/admin/pages', label: 'Pages', icon: FileText, permission: 'content' },
-  { href: '/admin/blog', label: 'Guides', icon: Newspaper, permission: 'blog' },
-  { href: '/admin/services', label: 'Services', icon: Wrench, permission: 'services' },
-  { href: '/admin/inbox', label: 'Contact inbox', icon: Inbox, permission: 'inbox' },
-  { href: '/admin/settings', label: 'Settings', icon: Settings, permission: 'settings' },
+  { href: '/admin', label: 'Overview', labelUr: 'جائزہ', icon: LayoutDashboard, permission: null, exact: true },
+  { href: '/admin/content', label: 'Homepage', labelUr: 'ہوم پیج', icon: LayoutDashboard, permission: 'content' },
+  { href: '/admin/faqs', label: 'FAQs', labelUr: 'عام سوالات', icon: MessageCircleQuestion, permission: 'content' },
+  { href: '/admin/testimonials', label: 'Testimonials', labelUr: 'تاثرات', icon: Quote, permission: 'content' },
+  { href: '/admin/pages', label: 'Pages', labelUr: 'صفحات', icon: FileText, permission: 'content' },
+  { href: '/admin/blog', label: 'Guides', labelUr: 'گائیڈز', icon: Newspaper, permission: 'blog' },
+  { href: '/admin/services', label: 'Services', labelUr: 'خدمات', icon: Wrench, permission: 'services' },
+  { href: '/admin/inbox', label: 'Contact inbox', labelUr: 'رابطہ ان باکس', icon: Inbox, permission: 'inbox' },
+  { href: '/admin/settings', label: 'Settings', labelUr: 'ترتیبات', icon: Settings, permission: 'settings' },
 ];
 
 export function AdminShell({ children }: { children: ReactNode }) {
+  const t = useT();
   const pathname = usePathname();
   const router = useRouter();
   const toast = useToast();
@@ -65,7 +68,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
 
   async function signOut() {
     await logout();
-    toast.success('Signed out.');
+    toast.success(t('Signed out.', 'سائن آؤٹ ہو گئے۔'));
     router.push('/');
   }
 
@@ -75,10 +78,10 @@ export function AdminShell({ children }: { children: ReactNode }) {
         <Container size="wide">
           <div className="flex h-16 items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <Link href="/" aria-label="PakFix home">
+              <Link href="/" aria-label={t('PakFix home', 'پاک فکس ہوم')}>
                 <PakFixLogo className="h-8" />
               </Link>
-              <Badge tone="neutral">Admin</Badge>
+              <Badge tone="neutral">{t('Admin', 'ایڈمن')}</Badge>
             </div>
 
             <div className="flex items-center gap-3">
@@ -89,7 +92,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
                 className="inline-flex min-h-11 items-center gap-2 rounded-[var(--radius-control)] px-3 text-sm font-medium text-ink-600 hover:bg-surface-muted hover:text-danger-600"
               >
                 <LogOut className="h-4 w-4" aria-hidden="true" />
-                Sign out
+                {t('Sign out', 'سائن آؤٹ')}
               </button>
             </div>
           </div>
@@ -97,7 +100,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
       </header>
 
       <Container size="wide" className="flex flex-col gap-6 py-6 lg:flex-row">
-        <nav aria-label="Admin sections" className="lg:w-56 lg:shrink-0">
+        <nav aria-label={t('Admin sections', 'ایڈمن کے حصے')} className="lg:w-56 lg:shrink-0">
           <ul className="flex gap-1 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible lg:pb-0">
             {visible.map((link) => {
               const active = link.exact ? pathname === link.href : pathname.startsWith(link.href);
@@ -114,7 +117,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
                     )}
                   >
                     <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
-                    {link.label}
+                    {t(link.label, link.labelUr)}
                     {link.permission === 'inbox' && unhandled > 0 ? (
                       <span className="ml-auto rounded-full bg-[#DC2626] px-1.5 py-0.5 text-[0.6875rem] font-bold text-white">
                         {unhandled}
@@ -145,11 +148,13 @@ export function AdminPageHeader({
   description?: string;
   action?: ReactNode;
 }) {
+  const t = useT();
+
   return (
     <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
-        {description ? <p className="mt-1 max-w-2xl text-sm text-ink-600">{description}</p> : null}
+        <h1 className="text-2xl font-bold tracking-tight">{t(title)}</h1>
+        {description ? <p className="mt-1 max-w-2xl text-sm text-ink-600">{t(description)}</p> : null}
       </div>
       {action}
     </div>
