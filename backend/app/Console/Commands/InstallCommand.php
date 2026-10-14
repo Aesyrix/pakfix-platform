@@ -56,7 +56,19 @@ class InstallCommand extends Command
         $this->seedIfEmpty($production);
 
         if (! is_link(public_path('storage')) && ! is_dir(public_path('storage'))) {
-            $this->components->task('Linking public storage', fn () => Artisan::call('storage:link') === 0);
+            $this->components->task('Linking public storage', function () {
+                // Shared hosts often disable symlink() and exec(), which makes
+                // the command throw. That must not abort the whole install: the
+                // deploy script creates the link from the shell beforehand.
+                try {
+                    return Artisan::call('storage:link') === 0;
+                } catch (Throwable $exception) {
+                    $this->components->warn('Could not link public storage: ' . $exception->getMessage());
+                    $this->line('  Create it from the shell instead: <info>ln -s ../storage/app/public ' . public_path('storage') . '</info>');
+
+                    return true;
+                }
+            });
         }
 
         if (! $this->option('skip-build')) {

@@ -123,6 +123,17 @@ mkdir -p \
   "$APP_DIR/storage/framework/views" \
   "$APP_DIR/bootstrap/cache"
 
+# Some shared hosts disable PHP's symlink() and exec(), which makes
+# `php artisan storage:link` fail outright. Create the link from the shell
+# instead; pakfix:install then sees it and skips that step.
+if [ -L "$APP_DIR/public/storage" ]; then
+  :
+elif [ -e "$APP_DIR/public/storage" ]; then
+  echo "    public/storage exists but is not a symlink; leaving it as it is."
+else
+  ln -s ../storage/app/public "$APP_DIR/public/storage"
+fi
+
 # ---------------------------------------------------------------------------
 # Web root -> app/public
 # ---------------------------------------------------------------------------
