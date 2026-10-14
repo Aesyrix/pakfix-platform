@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { PakFixLogo } from '@/components/layout/PakFixLogo';
 import { useToast } from '@/components/ui/Toast';
+import { LocaleToggle } from '@/components/i18n/LocaleToggle';
 import { useT } from '@/components/i18n/LocaleProvider';
 import { useAuthStore } from '@/stores/auth';
 import { cn } from '@/lib/utils/cn';
@@ -105,6 +106,10 @@ export function AppSidebar({
           <LogOut className="h-4.5 w-4.5" aria-hidden="true" />
           {t('Sign out', 'سائن آؤٹ')}
         </button>
+
+        <div className="mt-1 flex justify-end border-t border-[var(--border)] px-1 pt-2">
+          <LocaleToggle />
+        </div>
       </div>
     </aside>
   );

@@ -9,6 +9,7 @@ import { ButtonLink } from '@/components/ui/Button';
 import { PakFixLogo } from '@/components/layout/PakFixLogo';
 import { TopUtilityBar } from '@/components/layout/TopUtilityBar';
 import { MegaMenu } from '@/components/layout/MegaMenu';
+import { LocaleToggle } from '@/components/i18n/LocaleToggle';
 import { useAuthStore } from '@/stores/auth';
 import { cn } from '@/lib/utils/cn';
 
@@ -210,13 +211,14 @@ export function SiteHeader() {
                 </ButtonLink>
               )}
 
+              <LocaleToggle className="sm:hidden" />
+
               <button
                 type="button"
                 onClick={() => setMobileOpen(!mobileOpen)}
                 className="p-2 rounded-xl text-[#161616] hover:bg-[#F8FAF9] cursor-pointer"
                 aria-label={mobileOpen ? t('Close menu', 'مینو بند کریں') : t('Open menu', 'مینو کھولیں')}
-              >
-                {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              >                {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
             </div>
           </div>

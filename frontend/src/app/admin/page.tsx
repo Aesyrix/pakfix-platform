@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ArrowRight, FileText, Inbox, MapPin, Newspaper, Users, Wrench } from 'lucide-react';
 import Link from 'next/link';
 import { AdminPageHeader } from '@/components/admin/AdminShell';
-import { useT } from '@/components/i18n/LocaleProvider';
+import { useFormatDate, useT } from '@/components/i18n/LocaleProvider';
 import { Card, CardBody } from '@/components/ui/Card';
 import { ErrorState } from '@/components/ui/ErrorState';
 import { Skeleton, SkeletonCard } from '@/components/ui/Skeleton';
@@ -13,6 +13,7 @@ import { adminApi } from '@/lib/api/endpoints';
 /** What exists, what needs attention, and who changed what. All live data. */
 export default function AdminOverviewPage() {
   const t = useT();
+  const formatDate = useFormatDate();
   const query = useQuery({ queryKey: ['admin-overview'], queryFn: adminApi.overview, staleTime: 30_000 });
 
   if (query.isPending) {
@@ -100,7 +101,7 @@ export default function AdminOverviewPage() {
                   </span>
                   {entry.created_at ? (
                     <time dateTime={entry.created_at} className="text-xs text-ink-500">
-                      {new Intl.DateTimeFormat('en-PK', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(entry.created_at))}
+                      {formatDate(entry.created_at, { dateStyle: 'medium', timeStyle: 'short' })}
                     </time>
                   ) : null}
                 </li>

@@ -1,4 +1,7 @@
+'use client';
+
 import { cn } from '@/lib/utils/cn';
+import { useT } from '@/components/i18n/LocaleProvider';
 
 interface PakFixLogoProps {
   className?: string;
@@ -14,6 +17,8 @@ interface PakFixLogoProps {
  * - Crescent / star Pakistan visual identity element
  */
 export function PakFixLogo({ className, showWordmark = true, isDarkBackground = false }: PakFixLogoProps) {
+  const t = useT();
+
   return (
     <span className={cn('inline-flex items-center gap-2.5 select-none', className)}>
       <svg
@@ -21,7 +26,7 @@ export function PakFixLogo({ className, showWordmark = true, isDarkBackground = 
         fill="none"
         className="h-9 w-auto shrink-0 drop-shadow-xs"
         role="img"
-        aria-label="PakFix Logo"
+        aria-label={t('PakFix logo', 'پاک فکس لوگو')}
       >
         {/* Rounded Container Box */}
         <rect width="36" height="36" rx="10" className="fill-[#00824A]" />

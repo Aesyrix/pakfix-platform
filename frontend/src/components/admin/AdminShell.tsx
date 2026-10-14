@@ -19,6 +19,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Container } from '@/components/ui/Container';
 import { PakFixLogo } from '@/components/layout/PakFixLogo';
 import { useToast } from '@/components/ui/Toast';
+import { LocaleToggle } from '@/components/i18n/LocaleToggle';
 import { useT } from '@/components/i18n/LocaleProvider';
 import { adminApi } from '@/lib/api/endpoints';
 import { useAuthStore } from '@/stores/auth';
@@ -86,6 +87,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
 
             <div className="flex items-center gap-3">
               <span className="hidden text-sm text-ink-600 sm:inline">{user?.name}</span>
+              <LocaleToggle />
               <button
                 type="button"
                 onClick={signOut}

@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { PakFixLogo } from '@/components/layout/PakFixLogo';
+import { LocaleToggle } from '@/components/i18n/LocaleToggle';
 import { useT } from '@/components/i18n/LocaleProvider';
 import { ShieldCheck, Sparkles, CheckCircle2 } from 'lucide-react';
 
@@ -9,7 +10,10 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
   const t = useT();
 
   return (
-    <div className="flex min-h-dvh flex-col lg:flex-row bg-background">
+    <div className="relative flex min-h-dvh flex-col lg:flex-row bg-background">
+      <div className="absolute end-3 top-3 z-30">
+        <LocaleToggle />
+      </div>
       {/* Left Marketing/Branding Panel (Desktop Split) */}
       <div className="hidden lg:flex lg:w-5/12 bg-gradient-to-br from-[#052E16] via-[#0F172A] to-[#1E3A8A] text-white p-12 flex-col justify-between relative overflow-hidden">
         {/* Background Subtle Pattern */}

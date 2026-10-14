@@ -10,6 +10,7 @@ import {
   type ReactNode,
 } from 'react';
 import { cn } from '@/lib/utils/cn';
+import { useT } from '@/components/i18n/LocaleProvider';
 
 /**
  * Transient feedback. Toasts confirm that something happened; they never carry
@@ -39,6 +40,7 @@ const ToastContext = createContext<ToastContextValue | null>(null);
 const AUTO_DISMISS_MS = 5000;
 
 export function ToastProvider({ children }: { children: ReactNode }) {
+  const t = useT();
   const [toasts, setToasts] = useState<Toast[]>([]);
 
   const dismiss = useCallback((id: number) => {
@@ -92,7 +94,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             <button
               type="button"
               onClick={() => dismiss(item.id)}
-              aria-label="Dismiss"
+              aria-label={t('Dismiss', 'بند کریں')}
               className="rounded p-0.5 text-ink-400 hover:text-ink-600"
             >
               <X className="h-4 w-4" aria-hidden="true" />

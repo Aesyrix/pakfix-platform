@@ -1,7 +1,10 @@
+'use client';
+
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { Container } from '@/components/ui/Container';
+import { useT } from '@/components/i18n/LocaleProvider';
 import { cn } from '@/lib/utils/cn';
 
 export interface Crumb {
@@ -11,8 +14,10 @@ export interface Crumb {
 
 /** Visible breadcrumbs. Pair with breadcrumbSchema() for the structured-data version. */
 export function Breadcrumbs({ items, className }: { items: Crumb[]; className?: string }) {
+  const t = useT();
+
   return (
-    <nav aria-label="Breadcrumb" className={cn('text-sm', className)}>
+    <nav aria-label={t('Breadcrumb', 'بریڈ کرمب')} className={cn('text-sm', className)}>
       <ol className="flex flex-wrap items-center gap-1 text-ink-500">
         {items.map((item, index) => {
           const last = index === items.length - 1;

@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { LocaleToggle } from '@/components/i18n/LocaleToggle';
 import { useT } from '@/components/i18n/LocaleProvider';
 import { cn } from '@/lib/utils/cn';
 import type { NavItem } from '@/lib/dashboard/nav';
@@ -31,7 +32,7 @@ export function AppBottomNav({
         'pb-[env(safe-area-inset-bottom,0px)] lg:hidden'
       )}
     >
-      <ul className="grid" style={{ gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))` }}>
+      <ul className="grid" style={{ gridTemplateColumns: `repeat(${items.length + 1}, minmax(0, 1fr))` }}>
         {items.map((item) => {
           const active = item.exact ? pathname === item.href : pathname.startsWith(item.href);
           const Icon = item.icon;
@@ -59,6 +60,10 @@ export function AppBottomNav({
             </li>
           );
         })}
+
+        <li>
+          <LocaleToggle className="h-full min-h-[60px] w-full flex-col justify-center gap-1 rounded-none px-1 text-[0.6875rem] font-semibold" />
+        </li>
       </ul>
     </nav>
   );
