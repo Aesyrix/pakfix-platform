@@ -64,6 +64,14 @@ jobs:
         working-directory: backend
         run: composer install --no-interaction --no-progress --prefer-dist --optimize-autoloader
 
+      # A lockfile generated on another OS can miss platform-specific optional
+      # deps (e.g. sharp's @emnapi wasm fallback) and make `npm ci` refuse to
+      # run. Installing here, on the build platform, keeps the build reliable;
+      # `pakfix build` then sees node_modules and skips its own install.
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm install --no-audit --no-fund
+
       - name: Prepare a build-time environment (SQLite, no secrets)
         working-directory: backend
         run: |
