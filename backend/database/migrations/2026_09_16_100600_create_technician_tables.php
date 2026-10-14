@@ -60,7 +60,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index(['city_id', 'verification_status', 'is_available']);
+            $table->index(['city_id', 'verification_status', 'is_available'], 'tech_profile_match_index');
             $table->index(['latitude', 'longitude']);
         });
 
