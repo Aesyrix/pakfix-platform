@@ -1,0 +1,5 @@
+# Keep shell scripts and workflow files LF everywhere, so they run on the
+# Linux runner and the Linux host even when the repository is edited on Windows.
+*.sh text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf

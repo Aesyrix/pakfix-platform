@@ -1,0 +1,134 @@
+name: Deploy to Hostinger
+
+# Builds the website, packages the whole platform, uploads it to the Hostinger
+# host and runs the release there. The server only needs PHP and MySQL -- Node
+# and Composer run here, in the runner.
+#
+# Required repository secrets (Settings -> Secrets and variables -> Actions):
+#   SSH_HOST            e.g. 187.124.252.21
+#   SSH_PORT            e.g. 65002
+#   SSH_USER            e.g. u867057961
+#   SSH_PASSWORD        the account/SSH password        (or SSH_PRIVATE_KEY instead)
+#   SSH_PRIVATE_KEY     a deploy private key            (or SSH_PASSWORD instead)
+#
+# Optional secrets (used once, to create the server's .env on the first run):
+#   APP_KEY  APP_URL  DB_HOST  DB_PORT  DB_DATABASE  DB_USERNAME  DB_PASSWORD
+#
+# Optional variables (Settings -> ... -> Variables):
+#   PAKFIX_APP_DIR      where the app lives   (default: $HOME/pakfix)
+#   PAKFIX_PUBLIC_DIR   the web root          (default: $HOME/public_html)
+#   SITE_URL            public URL            (default: https://pakfix.pk)
+
+on:
+  push:
+    branches: [master, main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    env:
+      SITE_URL: ${{ vars.SITE_URL || 'https://pakfix.pk' }}
+      PHP_VERSION: '8.3'
+      NODE_VERSION: '22'
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, pdo_sqlite, pdo_mysql, gd, zip, bcmath, intl, curl, fileinfo, xml, tokenizer, ctype, openssl
+          coverage: none
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: composer install --no-interaction --no-progress --prefer-dist --optimize-autoloader
+
+      - name: Prepare a build-time environment (SQLite, no secrets)
+        working-directory: backend
+        run: |
+          cp .env.example .env
+          sed -i 's/^APP_ENV=.*/APP_ENV=production/'            .env
+          sed -i 's/^APP_DEBUG=.*/APP_DEBUG=false/'             .env
+          sed -i "s#^APP_URL=.*#APP_URL=${SITE_URL}#"          .env
+          sed -i 's#^DB_CONNECTION=.*#DB_CONNECTION=sqlite#'    .env
+          sed -i "s#^DB_DATABASE=.*#DB_DATABASE=$PWD/database/database.sqlite#" .env
+          sed -i 's/^CACHE_STORE=.*/CACHE_STORE=array/'         .env
+          sed -i 's/^QUEUE_CONNECTION=.*/QUEUE_CONNECTION=sync/' .env
+          sed -i 's/^SESSION_DRIVER=.*/SESSION_DRIVER=array/'   .env
+          touch database/database.sqlite
+          php artisan key:generate --force
+          php artisan migrate --force
+          php artisan db:seed --force
+
+      - name: Build the website into the API's public folder
+        run: php pakfix build --url="$SITE_URL"
+
+      - name: Package the release (app + production vendor + built website)
+        run: php pakfix package --output=dist
+
+      - name: Stage the release artifacts
+        run: |
+          mkdir -p release-artifacts
+          cp dist/pakfix-release-*.zip release-artifacts/
+          cp deploy/hostinger/deploy.sh release-artifacts/
+
+      - name: Upload artifacts to the server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: release-artifacts/*
+          target: /home/${{ secrets.SSH_USER }}/pakfix-releases
+          strip_components: 1
+          overwrite: true
+          timeout: 120s
+
+      - name: Run the release on the server
+        uses: appleboy/ssh-action@v1.2.0
+        env:
+          PAKFIX_APP_DIR: ${{ vars.PAKFIX_APP_DIR }}
+          PAKFIX_PUBLIC_DIR: ${{ vars.PAKFIX_PUBLIC_DIR }}
+          APP_KEY: ${{ secrets.APP_KEY }}
+          APP_URL: ${{ secrets.APP_URL }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          timeout: 120s
+          command_timeout: 10m
+          envs: PAKFIX_APP_DIR,PAKFIX_PUBLIC_DIR,APP_KEY,APP_URL,DB_HOST,DB_PORT,DB_DATABASE,DB_USERNAME,DB_PASSWORD
+          script: |
+            set -e
+            mkdir -p ~/pakfix-releases
+            bash ~/pakfix-releases/deploy.sh

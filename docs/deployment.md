@@ -1,10 +1,168 @@
 # Deployment
 
-Two shapes, both supported:
+Three shapes, all supported:
 
-- **One VPS.** Nginx in front of both Laravel and Next.js. Simplest to reason about, cheapest,
-  and the default recommendation for launch.
+- **Shared hosting (one PHP app).** The website is pre-compiled to static files and served by
+  Laravel itself, so the whole platform runs on PHP + MySQL + cron alone — no Node, no Nginx,
+  no Redis, no supervisor. This is the default for Hostinger and the simplest way to launch.
+- **One VPS.** Nginx in front of both Laravel and Next.js. Simplest to reason about, and the
+  default recommendation for full control.
 - **Split.** Next.js on Vercel, Laravel on a VPS. Better edge performance, more moving parts.
+
+---
+
+## Shared hosting (Hostinger) — single PHP app
+
+Because the marketing site is exported to plain HTML/CSS/JS and copied into the API's `public/`
+folder, there is only one application to host. Hostinger's Web/Cloud hosting is enough: PHP, one
+MySQL database, and cron. Everything that needs Node or Composer (the build) runs in CI, not on
+the server.
+
+### Layout
+
+```
+/home/<user>/pakfix/            the application (vendor, storage, .env) — outside the web root
+/home/<user>/public_html        a symlink -> pakfix/public  (the only web-exposed folder)
+```
+
+`public_html` is fixed as the primary domain's document root by hPanel, so it cannot be moved to
+`pakfix/public`. A symlink solves this without changing application code: `FrontendController`
+already resolves files through `public_path()`, which follows the link.
+
+### What the server needs
+
+| Component | Requirement |
+|---|---|
+| PHP | 8.2+ (8.3 recommended), with `pdo_mysql`, `mbstring`, `gd`, `zip`, `bcmath`, `intl`, `curl`, `fileinfo` |
+| Database | MySQL (a single database and user) |
+| Files/CLI | `unzip`, `rsync` (optional), `php` CLI, `cron`, SSH access |
+| SSL | Free Let's Encrypt certificate from hPanel |
+
+No `redis` extension is required: the shared-hosting `.env` uses the database cache, queue and
+session drivers (the migrations create the `cache`, `jobs` and `sessions` tables).
+
+### 1. Create the site (hPanel)
+
+1. **Websites → Add website**, enter `pakfix.pk` (and `www`), accept the planned doc root
+   `public_html`.
+2. **Databases → MySQL Databases**: create a database and a user, grant the user all privileges
+   on it, and note the host (usually `localhost`), name, user and password.
+3. **Advanced → PHP Configuration**: select PHP 8.3 (or 8.2) and enable the extensions listed
+   above.
+4. **Advanced → SSH Access**: enable it and note the host, port (often `65002`), username and
+   password. This is the account the deploy connects as.
+5. **Security → SSL**: issue the free certificate for both hostnames.
+
+### 2. Deploy
+
+Deployment is driven by **[`.github/workflows/deploy.yml`](../.github/workflows/deploy.yml)** on
+every push to `master`. The runner:
+
+1. installs Composer and Node dependencies,
+2. writes a throwaway SQLite `.env` and migrates + seeds it, so the static export has data to
+   render,
+3. runs `php pakfix build --url="https://pakfix.pk"` and `php pakfix package --output=dist`,
+4. uploads the release zip and
+   **[`deploy/hostinger/deploy.sh`](../deploy/hostinger/deploy.sh)** to `~/pakfix-releases/`,
+5. runs the script over SSH.
+
+The script is idempotent: it keeps the server's `.env` and `storage/apps`, replaces every other
+file with the release, points `public_html` at `pakfix/public`, writes the `.env` on the first
+run, and finishes with `php artisan pakfix:deploy` (migrate, seed-if-empty, cache).
+
+### 3. Repository secrets
+
+Settings → Secrets and variables → Actions:
+
+| Secret | Value |
+|---|---|
+| `SSH_HOST` | the SSH host from hPanel (e.g. `187.124.252.21`) |
+| `SSH_PORT` | the SSH port from hPanel (e.g. `65002`) |
+| `SSH_USER` | the account username (e.g. `u867057961`) |
+| `SSH_PASSWORD` | the account password — **or** `SSH_PRIVATE_KEY` with a deploy key |
+| `APP_KEY` | a pre-generated key (`php artisan key:generate --show`); optional but recommended |
+| `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` | the MySQL details from hPanel |
+
+`DB_*` and `APP_KEY` are only read when the server's `.env` does not exist yet. Optional
+**variables** `PAKFIX_APP_DIR`, `PAKFIX_PUBLIC_DIR` and `SITE_URL` override the defaults
+(`$HOME/pakfix`, `$HOME/public_html`, `https://pakfix.pk`).
+
+### 4. Server `.env`
+
+Created on the first deploy. The important values:
+
+```ini
+APP_ENV=production
+APP_DEBUG=false
+APP_KEY=base64:...            # from the APP_KEY secret, or generated on first run
+APP_URL=https://pakfix.pk
+
+DB_CONNECTION=mysql
+DB_HOST=localhost
+DB_PORT=3306
+DB_DATABASE=<database>
+DB_USERNAME=<user>
+DB_PASSWORD=<password>
+
+CACHE_STORE=database
+QUEUE_CONNECTION=database
+SESSION_DRIVER=database
+SESSION_DOMAIN=null
+SESSION_SECURE_COOKIE=true
+
+SANCTUM_STATEFUL_DOMAINS=pakfix.pk,www.pakfix.pk
+```
+
+There is no Redis on shared hosting, so the database drivers above are required — do not copy the
+VPS `.env`, which uses `redis` and `pgsql`. If `pakfix.pk` is on a dedicated IP, point the domain
+at it in hPanel and skip the nameserver wait.
+
+### 5. Cron
+
+Add once in **Advanced → Cron Jobs** (or `crontab -e`). Shared hosting has no supervisor, so the
+queue is drained by a one-shot worker:
+
+```cron
+* * * * * cd /home/<user>/pakfix && php artisan schedule:run >> /dev/null 2>&1
+* * * * * cd /home/<user>/pakfix && php artisan queue:work --stop-when-empty --tries=3 --max-time=55 >> /dev/null 2>&1
+```
+
+### 6. Building in the data
+
+The export is static: any content it renders is baked into the HTML at build time. Content that
+lives only in the production database (services, professionals, published posts, blog bodies, CMS
+pages) is **not** in the export unless the CI seed produces it. The seeders handle the launch set
+of categories, provinces and cities. To change marketing copy, edit it in the repo and push; to
+change data the export depends on, update the seeder (or add it to `DatabaseSeeder` for
+production) and push — the next build picks it up.
+
+Live, per-request data (search, profiles, booking) is fetched by the browser from the same-origin
+`/api/v1`, so it always reflects the production database and needs no rebuild.
+
+### 7. Updating
+
+Push to `master`. The workflow rebuilds and redeploys. To do it by hand:
+
+```bash
+# locally
+php pakfix package --build --url="https://pakfix.pk" --output=dist
+
+# upload dist/pakfix-release-*.zip and deploy/hostinger/deploy.sh to ~/pakfix-releases, then:
+ssh -p <port> <user>@<host> 'bash ~/pakfix-releases/deploy.sh'
+```
+
+Rolling back is re-uploading a previous `pakfix-release-*.zip` and running the script again. New
+releases do not roll back the database — restore a dump if a migration must be undone.
+
+### Notes and limits
+
+- **`rsync` on the host.** If it is missing, the script falls back to extracting over the existing
+  tree; `rsync` is preferred because it deletes files removed from the release.
+- **Site down during deploy.** The script does not put the app into maintenance mode, so a
+  half-second gap is possible. For a stricter cutover, wrap release in `php artisan down`/`up`.
+- **No supervisor.** Background jobs run only as often as the cron queue worker fires.
+- **Static HTML cache.** The marketing pages are static files; changes to them require a rebuild
+  and redeploy, not just a database edit.
 
 ---
 
@@ -257,6 +415,9 @@ deployments must use bearer tokens, or be given a subdomain of `pakfix.pk`.
 
 ## Deploying an update
 
+On shared hosting, this is simply a push to `master` (see
+[Shared hosting](#shared-hosting-hostinger--single-php-app) above). On a VPS:
+
 ```bash
 cd /var/www/pakfix
 php backend/artisan down --render="errors::503"
@@ -356,9 +517,11 @@ Keep DNS TTL at 300 seconds so step 5 is minutes rather than hours.
 - [ ] HTTPS on every hostname; HSTS on
 - [ ] `SESSION_SECURE_COOKIE=true`
 - [ ] Database user has no superuser rights
-- [ ] Redis bound to localhost, or password-protected
+- [ ] Redis bound to localhost, or password-protected (VPS only; shared hosting uses the database drivers)
 - [ ] `php artisan config:cache route:cache view:cache` run
 - [ ] Queue worker and scheduler running and verified
+- [ ] Shared hosting: `public_html` symlinked to `pakfix/public`, cron entries added
+- [ ] Shared hosting: `.env` uses `mysql` + database cache/queue/session drivers
 - [ ] Backups running, and one restore tested
 - [ ] Real credentials entered through the admin dashboard, not committed
 - [ ] Error tracking wired up
