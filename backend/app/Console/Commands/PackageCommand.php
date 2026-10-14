@@ -40,7 +40,7 @@ class PackageCommand extends Command
         'storage/framework/views', 'storage/framework/testing', 'storage/app/private',
         'storage/app/public', 'public/storage', 'public/hot',
         'database/database.sqlite', 'bootstrap/cache/config.php', 'bootstrap/cache/routes-v7.php',
-        'bootstrap/cache/events.php',
+        'bootstrap/cache/events.php', 'bootstrap/cache/packages.php', 'bootstrap/cache/services.php',
     ];
 
     public function handle(FrontendBuilder $builder): int
