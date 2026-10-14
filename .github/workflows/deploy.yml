@@ -93,13 +93,14 @@ jobs:
         run: php pakfix build --url="$SITE_URL"
 
       - name: Package the release (app + production vendor + built website)
-        run: php pakfix package --output=dist
+        run: php pakfix package --output="$GITHUB_WORKSPACE/dist"
 
       - name: Stage the release artifacts
         run: |
           mkdir -p release-artifacts
-          cp dist/pakfix-release-*.zip release-artifacts/
+          cp "$GITHUB_WORKSPACE"/dist/pakfix-release-*.zip release-artifacts/
           cp deploy/hostinger/deploy.sh release-artifacts/
+          ls -la release-artifacts/
 
       - name: Upload artifacts to the server
         uses: appleboy/scp-action@v0.1.7
