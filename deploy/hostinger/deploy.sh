@@ -15,6 +15,12 @@
 #   PAKFIX_APP_DIR      where the application lives     $HOME/pakfix
 #   PAKFIX_PUBLIC_DIR   this site's document root       $HOME/public_html
 #   PAKFIX_PHP_BIN      the php binary                  php
+#   PAKFIX_DB_RESET     drop and rebuild the database   0 (off)
+#
+# PAKFIX_DB_RESET=1 migrates with --fresh before the release. Use it once to
+# recover a database left half-migrated by a failed deploy: MySQL does not roll
+# DDL back, so a table created before a later statement failed makes every
+# subsequent migrate stop with "table already exists". It deletes all data.
 #
 # PAKFIX_PUBLIC_DIR must be set on an account that hosts more than one site:
 # the script refuses to replace a non-empty $HOME/public_html unless it has been
@@ -243,6 +249,13 @@ set_env QUEUE_CONNECTION "${QUEUE_CONNECTION:-database}"
 # ---------------------------------------------------------------------------
 # Release
 # ---------------------------------------------------------------------------
+
+# Opt-in, one-time recovery for a database that an earlier failed deploy left
+# half-migrated. Off unless explicitly asked for, because it deletes all data.
+if [ "${PAKFIX_DB_RESET:-0}" = "1" ] || [ "${PAKFIX_DB_RESET:-0}" = "true" ]; then
+  echo "==> Rebuilding the database from scratch (PAKFIX_DB_RESET is set)"
+  ( cd "$APP_DIR" && "$PHP" artisan migrate:fresh --force )
+fi
 
 echo "==> Running the release"
 ( cd "$APP_DIR" && "$PHP" artisan pakfix:deploy )

@@ -23,6 +23,11 @@ on:
   push:
     branches: [master, main]
   workflow_dispatch:
+    inputs:
+      reset_database:
+        description: 'Drop and rebuild the database before deploying (use once to recover a half-migrated database)'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -121,6 +126,7 @@ jobs:
         env:
           PAKFIX_APP_DIR: ${{ vars.PAKFIX_APP_DIR }}
           PAKFIX_PUBLIC_DIR: ${{ vars.PAKFIX_PUBLIC_DIR }}
+          PAKFIX_DB_RESET: ${{ inputs.reset_database }}
           APP_KEY: ${{ secrets.APP_KEY }}
           APP_URL: ${{ secrets.APP_URL }}
           DB_HOST: ${{ secrets.DB_HOST }}
@@ -136,7 +142,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           timeout: 120s
           command_timeout: 10m
-          envs: PAKFIX_APP_DIR,PAKFIX_PUBLIC_DIR,APP_KEY,APP_URL,DB_HOST,DB_PORT,DB_DATABASE,DB_USERNAME,DB_PASSWORD
+          envs: PAKFIX_APP_DIR,PAKFIX_PUBLIC_DIR,PAKFIX_DB_RESET,APP_KEY,APP_URL,DB_HOST,DB_PORT,DB_DATABASE,DB_USERNAME,DB_PASSWORD
           script: |
             set -e
             mkdir -p ~/pakfix-releases
