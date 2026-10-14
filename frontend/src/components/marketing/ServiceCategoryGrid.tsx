@@ -1,8 +1,11 @@
+'use client';
+
 import Link from 'next/link';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { CategoryIcon } from '@/components/marketing/CategoryIcon';
+import { useT } from '@/components/i18n/LocaleProvider';
 import type { ServiceCategory } from '@/lib/api/types';
 
 /**
@@ -16,11 +19,13 @@ export function ServiceCategoryGrid({
   categories: ServiceCategory[];
   limit?: number;
 }) {
+  const t = useT();
+
   if (categories.length === 0) {
     return (
       <EmptyState
-        title="Services are being updated"
-        description="Our service list is not available right now. Please try again shortly."
+        title={t('Services are being updated', 'خدمات کو اپ ڈیٹ کیا جا رہا ہے')}
+        description={t('Our service list is not available right now. Please try again shortly.', 'ہماری سروس کی فہرست اس وقت دستیاب نہیں۔ براہ کرم تھوڑی دیر بعد دوبارہ کوشش کریں۔')}
       />
     );
   }
@@ -49,7 +54,7 @@ export function ServiceCategoryGrid({
 
               {category.is_emergency ? (
                 <Badge tone="danger" className="self-start">
-                  Emergency
+                  {t('Emergency', 'ہنگامی')}
                 </Badge>
               ) : null}
             </Card>

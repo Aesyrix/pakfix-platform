@@ -1,10 +1,14 @@
+'use client';
+
 import { BadgeCheck, CalendarDays, Clock, MapPin, Siren, Star } from 'lucide-react';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { Badge } from '@/components/ui/Badge';
 import { Card, CardBody } from '@/components/ui/Card';
 import { EmptyState } from '@/components/ui/EmptyState';
+import { useFormatDate, useT } from '@/components/i18n/LocaleProvider';
 import type { BlogPostCard, PublicReview, QuestionAnswer, TechnicianCard } from '@/lib/api/types';
+import { blogImage, professionalImage } from '@/lib/images';
 import { cn } from '@/lib/utils/cn';
 
 // ---------------------------------------------------------------------------
@@ -12,11 +16,12 @@ import { cn } from '@/lib/utils/cn';
 // ---------------------------------------------------------------------------
 
 export function StarRating({ value, className, size = 'sm' }: { value: number; className?: string; size?: 'sm' | 'md' }) {
+  const t = useT();
   const rounded = Math.round(value);
   const icon = size === 'md' ? 'h-5 w-5' : 'h-4 w-4';
 
   return (
-    <span className={cn('inline-flex items-center gap-0.5', className)} role="img" aria-label={`${value.toFixed(1)} out of 5 stars`}>
+    <span className={cn('inline-flex items-center gap-0.5', className)} role="img" aria-label={t(`${value.toFixed(1)} out of 5 stars`, `5 میں سے ${value.toFixed(1)} ستارے`)}>
       {Array.from({ length: 5 }).map((_, index) => (
         <Star
           key={index}
@@ -54,13 +59,15 @@ export function Initials({ name, className }: { name: string; className?: string
 }
 
 export function ProfessionalCard({ professional }: { professional: TechnicianCard }) {
+  const t = useT();
+  const avatar = professional.avatar_url ?? professionalImage(professional.slug);
   return (
     <Card interactive className="h-full">
       <CardBody className="flex h-full flex-col gap-3">
         <div className="flex items-start gap-3">
-          {professional.avatar_url ? (
+          {avatar ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={professional.avatar_url} alt="" className="h-12 w-12 rounded-full object-cover" />
+            <img src={avatar} alt="" className="h-12 w-12 rounded-full object-cover" />
           ) : (
             <Initials name={professional.name} className="h-12 w-12 text-sm" />
           )}
@@ -71,7 +78,7 @@ export function ProfessionalCard({ professional }: { professional: TechnicianCar
                 {professional.name}
               </Link>
               {professional.is_verified ? (
-                <BadgeCheck className="h-4 w-4 shrink-0 text-brand-600" aria-label="Verified professional" />
+                <BadgeCheck className="h-4 w-4 shrink-0 text-brand-600" aria-label={t('Verified professional', 'تصدیق شدہ پروفیشنل')} />
               ) : null}
             </h3>
             {professional.city ? (
@@ -89,20 +96,20 @@ export function ProfessionalCard({ professional }: { professional: TechnicianCar
             <span className="font-semibold">{professional.rating_average.toFixed(1)}</span>
             <span className="text-ink-500">({professional.rating_count})</span>
           </span>
-          <span className="text-ink-500">{professional.completed_jobs_count} jobs</span>
+          <span className="text-ink-500">{t(`${professional.completed_jobs_count} ${professional.completed_jobs_count === 1 ? 'job' : 'jobs'}`, `${professional.completed_jobs_count} کام`)}</span>
         </div>
 
         <p className="line-clamp-2 flex-1 text-sm text-ink-600">{professional.headline}</p>
 
         <div className="flex flex-wrap items-center gap-1.5">
-          <Badge tone="neutral">{professional.years_experience} yrs experience</Badge>
+          <Badge tone="neutral">{t(`${professional.years_experience} ${professional.years_experience === 1 ? 'yr' : 'yrs'} experience`, `${professional.years_experience} سال تجربہ`)}</Badge>
           {professional.offers_emergency_service ? (
             <Badge tone="danger">
               <Siren className="h-3 w-3" aria-hidden="true" />
-              Emergencies
+              {t('Emergencies', 'ہنگامی')}
             </Badge>
           ) : null}
-          {professional.visit_fee ? <Badge tone="accent">Visit {professional.visit_fee.display}</Badge> : null}
+          {professional.visit_fee ? <Badge tone="accent">{t(`Visit ${professional.visit_fee.display}`, `وزٹ ${professional.visit_fee.display}`)}</Badge> : null}
         </div>
       </CardBody>
     </Card>
@@ -112,15 +119,22 @@ export function ProfessionalCard({ professional }: { professional: TechnicianCar
 /** A grid of professionals with a relative-positioned card so the whole card is clickable. */
 export function ProfessionalGrid({
   professionals,
-  emptyTitle = 'No professionals here yet',
-  emptyDescription = 'We are onboarding verified professionals. Check back soon, or ask the assistant which service you need.',
+  emptyTitle,
+  emptyDescription,
 }: {
   professionals: TechnicianCard[];
   emptyTitle?: string;
   emptyDescription?: string;
 }) {
+  const t = useT();
+
   if (professionals.length === 0) {
-    return <EmptyState title={emptyTitle} description={emptyDescription} />;
+    return (
+      <EmptyState
+        title={emptyTitle ?? t('No professionals here yet', 'ابھی یہاں کوئی پروفیشنل نہیں')}
+        description={emptyDescription ?? t('We are onboarding verified professionals. Check back soon, or ask the assistant which service you need.', 'ہم تصدیق شدہ پروفیشنلز شامل کر رہے ہیں۔ جلد دوبارہ چیک کریں، یا اسسٹنٹ سے پوچھیں کہ آپ کو کون سی خدمت چاہیے۔')}
+      />
+    );
   }
 
   return (
@@ -138,21 +152,18 @@ export function ProfessionalGrid({
 // Articles
 // ---------------------------------------------------------------------------
 
-export function formatDate(iso: string | null): string {
-  if (!iso) return '';
-
-  return new Intl.DateTimeFormat('en-PK', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(iso));
-}
-
 export function PostCard({ post }: { post: BlogPostCard }) {
+  const t = useT();
+  const formatDate = useFormatDate();
+  const image = post.featured_image_url ?? blogImage(post.slug);
   return (
     <Card interactive className="relative h-full overflow-hidden">
-      {post.featured_image_url ? (
+      {image ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={post.featured_image_url} alt={post.featured_image_alt ?? ''} className="aspect-[16/9] w-full object-cover" />
+        <img src={image} alt={post.featured_image_alt ?? ''} className="aspect-[16/9] w-full object-cover" />
       ) : (
         <div className="flex aspect-[16/9] w-full items-end bg-gradient-to-br from-brand-600 to-brand-900 p-4" aria-hidden="true">
-          <span className="text-sm font-semibold text-brand-50">{post.category?.name ?? 'Guide'}</span>
+          <span className="text-sm font-semibold text-brand-50">{post.category?.name ?? t('Guide', 'گائیڈ')}</span>
         </div>
       )}
       <CardBody className="flex flex-col gap-2">
@@ -173,7 +184,7 @@ export function PostCard({ post }: { post: BlogPostCard }) {
           {post.reading_minutes ? (
             <span className="inline-flex items-center gap-1">
               <Clock className="h-3.5 w-3.5" aria-hidden="true" />
-              {post.reading_minutes} min read
+              {t(`${post.reading_minutes} min read`, `${post.reading_minutes} منٹ کا مطالعہ`)}
             </span>
           ) : null}
         </p>
@@ -199,8 +210,11 @@ export function PostGrid({ posts }: { posts: BlogPostCard[] }) {
 // ---------------------------------------------------------------------------
 
 export function ReviewList({ reviews }: { reviews: PublicReview[] }) {
+  const t = useT();
+  const formatDate = useFormatDate();
+
   if (reviews.length === 0) {
-    return <EmptyState title="No reviews yet" description="Reviews appear here after customers complete a job." />;
+    return <EmptyState title={t('No reviews yet', 'ابھی کوئی ریویو نہیں')} description={t('Reviews appear here after customers complete a job.', 'گاہک کام مکمل کرنے کے بعد ریویوز یہاں ظاہر ہوتے ہیں۔')} />;
   }
 
   return (
@@ -211,7 +225,7 @@ export function ReviewList({ reviews }: { reviews: PublicReview[] }) {
             <CardBody className="flex h-full flex-col gap-2">
               <div className="flex items-center justify-between gap-3">
                 <StarRating value={review.rating} />
-                {review.is_verified ? <Badge tone="safe">Verified booking</Badge> : null}
+                {review.is_verified ? <Badge tone="safe">{t('Verified booking', 'تصدیق شدہ بکنگ')}</Badge> : null}
               </div>
               {review.comment ? <p className="flex-1 text-sm leading-relaxed text-ink-700">{review.comment}</p> : null}
               <p className="text-xs text-ink-500">
@@ -220,7 +234,7 @@ export function ReviewList({ reviews }: { reviews: PublicReview[] }) {
               </p>
               {review.response ? (
                 <p className="rounded-[var(--radius-control)] bg-surface-muted p-3 text-sm text-ink-600">
-                  <span className="font-semibold">Reply: </span>
+                  <span className="font-semibold">{t('Reply:', 'جواب:')} </span>
                   {review.response}
                 </p>
               ) : null}

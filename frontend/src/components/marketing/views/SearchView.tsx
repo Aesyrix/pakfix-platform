@@ -13,9 +13,11 @@ import { CategoryIcon } from '@/components/marketing/CategoryIcon';
 import { FaqList, PostGrid, ProfessionalGrid } from '@/components/marketing/Cards';
 import { PageHeader, Section } from '@/components/marketing/PageHeader';
 import { SiteSearchBox } from '@/components/marketing/SiteSearchBox';
+import { useT } from '@/components/i18n/LocaleProvider';
 import { searchApi } from '@/lib/api/endpoints';
 
 export function SearchView() {
+  const t = useT();
   const q = (useSearchParams().get('q') ?? '').trim();
   const enabled = q.length >= 2;
 
@@ -34,35 +36,35 @@ export function SearchView() {
   return (
     <>
       <PageHeader
-        breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Search' }]}
-        title={enabled ? `Results for “${q}”` : 'Search PakFix'}
+        breadcrumbs={[{ name: t('Home', 'ہوم'), href: '/' }, { name: t('Search', 'تلاش') }]}
+        title={enabled ? t(`Results for “${q}”`, `“${q}” کے نتائج`) : t('Search PakFix', 'پاک فکس تلاش کریں')}
       >
         <SiteSearchBox key={q} defaultValue={q} />
       </PageHeader>
 
       {!enabled ? (
         <Container className="py-12">
-          <EmptyState icon={<Search className="h-5 w-5" />} title="What are you looking for?" description="Type at least two letters: a service, a problem, or a professional's name." />
+          <EmptyState icon={<Search className="h-5 w-5" />} title={t('What are you looking for?', 'آپ کیا تلاش کر رہے ہیں؟')} description={t("Type at least two letters: a service, a problem, or a professional's name.", 'کم از کم دو حروف لکھیں: کوئی سروس، مسئلہ یا پروفیشنل کا نام۔')} />
         </Container>
       ) : query.isPending ? (
-        <Container className="grid gap-4 py-12 sm:grid-cols-2 lg:grid-cols-3" role="status" aria-label="Searching">
+        <Container className="grid gap-4 py-12 sm:grid-cols-2 lg:grid-cols-3" role="status" aria-label={t('Searching', 'تلاش جاری')}>
           {Array.from({ length: 6 }).map((_, index) => (
             <SkeletonCard key={index} />
           ))}
         </Container>
       ) : query.isError ? (
         <Container className="py-12">
-          <ErrorState description="Search is not available right now." onRetry={() => query.refetch()} />
+          <ErrorState description={t('Search is not available right now.', 'تلاش اس وقت دستیاب نہیں۔')} onRetry={() => query.refetch()} />
         </Container>
       ) : total === 0 ? (
         <Container className="py-12">
           <EmptyState
             icon={<Search className="h-5 w-5" />}
-            title="Nothing matched"
-            description="Try a simpler word, or describe the problem and let PakFix suggest a service."
+            title={t('Nothing matched', 'کچھ مطابقت نہیں ملا')}
+            description={t('Try a simpler word, or describe the problem and let PakFix suggest a service.', 'آسان لفظ آزمائیں، یا مسئلہ بیان کریں اور پاک فکس سروس تجویز کرے۔')}
             action={
               <Link href={`/ai?q=${encodeURIComponent(q)}`} className="font-semibold text-brand-600 hover:text-brand-700">
-                Describe “{q}” instead &rarr;
+                {t(`Describe “${q}” instead`, `اس کے بجائے “${q}” بیان کریں`)} &rarr;
               </Link>
             }
           />
@@ -70,11 +72,11 @@ export function SearchView() {
       ) : results ? (
         <>
           <p className="sr-only" role="status">
-            {total} results
+            {t(`${total} results`, `${total} نتائج`)}
           </p>
 
           {results.categories.length > 0 || results.services.length > 0 ? (
-            <Section title="Services">
+            <Section title={t('Services', 'خدمات')}>
               <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {results.categories.map((category) => (
                   <li key={category.id}>
@@ -112,19 +114,19 @@ export function SearchView() {
           ) : null}
 
           {results.professionals.length > 0 ? (
-            <Section title="Professionals" muted>
+            <Section title={t('Professionals', 'پروفیشنلز')} muted>
               <ProfessionalGrid professionals={results.professionals} />
             </Section>
           ) : null}
 
           {results.posts.length > 0 ? (
-            <Section title="Guides">
+            <Section title={t('Guides', 'گائیڈز')}>
               <PostGrid posts={results.posts} />
             </Section>
           ) : null}
 
           {results.faqs.length > 0 ? (
-            <Section title="Questions" muted>
+            <Section title={t('Questions', 'سوالات')} muted>
               <div className="max-w-3xl">
                 <FaqList faqs={results.faqs} />
               </div>

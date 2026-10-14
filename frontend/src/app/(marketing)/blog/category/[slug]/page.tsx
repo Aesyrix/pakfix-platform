@@ -1,11 +1,10 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { breadcrumbSchema, JsonLd } from '@/components/marketing/JsonLd';
-import { PageHeader } from '@/components/marketing/PageHeader';
-import { BlogIndexView } from '@/components/marketing/views/BlogIndexView';
 import { blogApi } from '@/lib/api/endpoints';
 import { safeFetch } from '@/lib/api/safe';
 import { absoluteUrl, pageMetadata } from '@/lib/seo';
+import { BlogListContent } from '../../BlogListContent';
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -52,17 +51,14 @@ export default async function BlogCategoryPage({ params }: Params) {
         ])}
       />
 
-      <PageHeader
-        breadcrumbs={[
-          { name: 'Home', href: '/' },
-          { name: 'Guides', href: '/blog' },
-          { name: category?.name ?? slug },
-        ]}
-        title={`${category?.name ?? 'Guides'}`}
+      <BlogListContent
+        categories={categories}
+        categorySlug={slug}
+        initialPosts={posts}
+        title={category?.name ?? 'Guides'}
         subtitle={category?.description ?? undefined}
+        trailingCrumb={category?.name ?? slug}
       />
-
-      <BlogIndexView categories={categories} categorySlug={slug} initialPosts={posts} />
     </>
   );
 }

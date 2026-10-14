@@ -12,24 +12,28 @@ import { MegaMenu } from '@/components/layout/MegaMenu';
 import { useAuthStore } from '@/stores/auth';
 import { cn } from '@/lib/utils/cn';
 
+import { useT } from '@/components/i18n/LocaleProvider';
+
 interface NavLinkItem {
   href: string;
-  label: string;
+  en: string;
+  ur: string;
   isMega?: boolean;
   highlight?: boolean;
 }
 
 const NAV_LINKS: NavLinkItem[] = [
-  { href: '/services', label: 'Services', isMega: true },
-  { href: '/ai', label: 'AI Diagnosis', highlight: true },
-  { href: '/how-it-works', label: 'How It Works' },
-  { href: '/find-a-technician', label: 'Find a Pro' },
-  { href: '/home-maintenance', label: 'Home Maintenance' },
-  { href: '/become-a-technician', label: 'For Professionals' },
-  { href: '/resources', label: 'Resources' },
+  { href: '/services', en: 'Services', ur: 'خدمات', isMega: true },
+  { href: '/ai', en: 'AI Diagnosis', ur: 'اے آئی تشخیص', highlight: true },
+  { href: '/how-it-works', en: 'How It Works', ur: 'یہ کیسے کام کرتا ہے' },
+  { href: '/find-a-technician', en: 'Find a Pro', ur: 'پروفیشنل تلاش کریں' },
+  { href: '/home-maintenance', en: 'Home Maintenance', ur: 'گھر کی دیکھ بھال' },
+  { href: '/become-a-technician', en: 'For Professionals', ur: 'پروفیشنلز کے لیے' },
+  { href: '/blog', en: 'Resources', ur: 'رہنمائی' },
 ];
 
 export function SiteHeader() {
+  const t = useT();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
   const pathname = usePathname();
@@ -66,40 +70,43 @@ export function SiteHeader() {
 
       {/* Main Header Navigation Bar */}
       <div className="border-b border-[#E5E7EB] bg-white/95 backdrop-blur-md shadow-xs relative">
-        <Container>
+        <Container size="wide">
           <div className="flex h-[74px] items-center justify-between gap-4">
             {/* LEFT: PakFix Brand Logo */}
             <Link
               href="/"
               className="flex items-center gap-2 group shrink-0"
-              aria-label="PakFix home page"
+              aria-label={t('PakFix home page', 'پاک فکس ہوم پیج')}
             >
               <PakFixLogo className="h-9 w-auto transition-transform group-hover:scale-[1.02]" />
             </Link>
 
             {/* CENTER NAVIGATION (Desktop) */}
             <nav
-              aria-label="Main Navigation"
-              className="hidden lg:flex items-center gap-1 xl:gap-2"
+              aria-label={t('Main Navigation', 'مرکزی نیویگیشن')}
+              className="hidden xl:flex items-center gap-0.5"
               ref={megaMenuRef}
             >
               {NAV_LINKS.map((link) => {
                 if (link.isMega) {
                   return (
-                    <div key={link.href} className="relative">
+                    <div
+                      key={link.href}
+                      onMouseLeave={() => setMegaOpen(false)}
+                    >
                       <button
                         type="button"
                         onClick={() => setMegaOpen(!megaOpen)}
                         onMouseEnter={() => setMegaOpen(true)}
                         className={cn(
-                          'inline-flex items-center gap-1 rounded-xl px-3 py-2 text-sm font-semibold transition-all cursor-pointer',
+                          'inline-flex items-center gap-1 rounded-xl px-2.5 py-2 text-[13px] font-semibold whitespace-nowrap transition-all cursor-pointer',
                           megaOpen || pathname.startsWith('/services')
                             ? 'bg-[#EAF7F0] text-[#006838]'
                             : 'text-[#475467] hover:bg-[#F8FAF9] hover:text-[#161616]'
                         )}
                         aria-expanded={megaOpen}
                       >
-                        <span>{link.label}</span>
+                        <span>{t(link.en, link.ur)}</span>
                         <ChevronDown
                           className={cn(
                             'h-4 w-4 transition-transform duration-200',
@@ -120,7 +127,7 @@ export function SiteHeader() {
                     key={link.href}
                     href={link.href}
                     className={cn(
-                      'inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-semibold transition-all',
+                      'inline-flex items-center gap-1.5 rounded-xl px-2.5 py-2 text-[13px] font-semibold whitespace-nowrap transition-all',
                       isActive
                         ? 'bg-[#EAF7F0] text-[#006838]'
                         : link.highlight
@@ -129,19 +136,19 @@ export function SiteHeader() {
                     )}
                   >
                     {link.highlight ? <Sparkles className="h-3.5 w-3.5 text-[#2563EB]" /> : null}
-                    <span>{link.label}</span>
+                    <span>{t(link.en, link.ur)}</span>
                   </Link>
                 );
               })}
             </nav>
 
             {/* RIGHT CTAs (Desktop) */}
-            <div className="hidden lg:flex items-center gap-3">
+            <div className="hidden xl:flex items-center gap-3 shrink-0">
               {initialising ? (
                 <div className="skeleton h-10 w-36" />
               ) : user ? (
                 <ButtonLink href={user.home_path ?? '/dashboard'} variant="primary" size="sm">
-                  Dashboard
+                  {t('Dashboard', 'ڈیش بورڈ')}
                 </ButtonLink>
               ) : (
                 <>
@@ -151,28 +158,28 @@ export function SiteHeader() {
                     size="sm"
                     className="text-[#475467] hover:text-[#161616] font-semibold"
                   >
-                    Sign In
+                    {t('Sign In', 'سائن اِن')}
                   </ButtonLink>
                   <ButtonLink
                     href="/ai"
                     size="sm"
                     className="bg-[#00824A] hover:bg-[#006B3C] text-white font-semibold rounded-xl px-5 py-2.5 shadow-xs"
                   >
-                    Get Started
+                    {t('Get Started', 'شروع کریں')}
                   </ButtonLink>
                 </>
               )}
             </div>
 
             {/* MOBILE HAMBURGER BUTTON */}
-            <div className="flex items-center gap-2 lg:hidden">
+            <div className="flex items-center gap-2 xl:hidden">
               {!user && (
                 <ButtonLink
                   href="/ai"
                   size="sm"
                   className="bg-[#00824A] text-white px-3.5 py-1.5 text-xs font-semibold rounded-lg"
                 >
-                  Get Started
+                  {t('Get Started', 'شروع کریں')}
                 </ButtonLink>
               )}
 
@@ -180,7 +187,7 @@ export function SiteHeader() {
                 type="button"
                 onClick={() => setMobileOpen(!mobileOpen)}
                 className="p-2 rounded-xl text-[#161616] hover:bg-[#F8FAF9] cursor-pointer"
-                aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+                aria-label={mobileOpen ? t('Close menu', 'مینو بند کریں') : t('Open menu', 'مینو کھولیں')}
               >
                 {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
@@ -190,7 +197,7 @@ export function SiteHeader() {
 
         {/* MOBILE NAVIGATION DRAWER */}
         {mobileOpen ? (
-          <div className="border-t border-[#E5E7EB] bg-white shadow-2xl lg:hidden animate-in slide-in-from-top-2 duration-200">
+          <div className="border-t border-[#E5E7EB] bg-white shadow-2xl xl:hidden max-h-[calc(100dvh-74px)] overflow-y-auto">
             <Container className="py-4 space-y-1">
               {NAV_LINKS.map((link) => (
                 <Link
@@ -203,10 +210,10 @@ export function SiteHeader() {
                       : 'text-[#161616] hover:bg-[#F8FAF9]'
                   )}
                 >
-                  <span>{link.label}</span>
+                  <span>{t(link.en, link.ur)}</span>
                   {link.highlight ? (
                     <span className="text-xs font-bold px-2 py-0.5 rounded bg-[#DBEAFE] text-[#2563EB]">
-                      AI Diagnostic
+                      {t('AI Diagnostic', 'اے آئی تشخیص')}
                     </span>
                   ) : null}
                 </Link>
@@ -215,7 +222,7 @@ export function SiteHeader() {
               <div className="pt-4 border-t border-[#E5E7EB] flex flex-col gap-2.5">
                 {user ? (
                   <ButtonLink href={user.home_path ?? '/dashboard'} block>
-                    Go to Dashboard
+                    {t('Go to Dashboard', 'ڈیش بورڈ پر جائیں')}
                   </ButtonLink>
                 ) : (
                   <>
@@ -224,7 +231,7 @@ export function SiteHeader() {
                       block
                       className="bg-[#00824A] text-white font-bold py-3 text-center rounded-xl"
                     >
-                      Diagnose My Problem
+                      {t('Diagnose My Problem', 'میرا مسئلہ تشخیص کریں')}
                     </ButtonLink>
                     <ButtonLink
                       href="/login"
@@ -232,7 +239,7 @@ export function SiteHeader() {
                       block
                       className="border-[#E5E7EB] text-[#161616] font-semibold py-3 text-center rounded-xl"
                     >
-                      Sign In
+                      {t('Sign In', 'سائن اِن')}
                     </ButtonLink>
                   </>
                 )}

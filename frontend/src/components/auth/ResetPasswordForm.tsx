@@ -2,33 +2,38 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button, ButtonLink } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { useToast } from '@/components/ui/Toast';
+import { useT } from '@/components/i18n/LocaleProvider';
 import { ApiError } from '@/lib/api/client';
 import { authApi } from '@/lib/api/endpoints';
 
-const schema = z
-  .object({
-    password: z
-      .string()
-      .min(8, 'Use at least 8 characters.')
-      .regex(/[a-zA-Z]/, 'Include at least one letter.')
-      .regex(/\d/, 'Include at least one number.'),
-    password_confirmation: z.string(),
-  })
-  .refine((values) => values.password === values.password_confirmation, {
-    message: 'Both passwords must match.',
-    path: ['password_confirmation'],
-  });
+function makeSchema(t: (english: string, urdu?: string) => string) {
+  return z
+    .object({
+      password: z
+        .string()
+        .min(8, t('Use at least 8 characters.', 'کم از کم 8 حروف استعمال کریں۔'))
+        .regex(/[a-zA-Z]/, t('Include at least one letter.', 'کم از کم ایک حرف شامل کریں۔'))
+        .regex(/\d/, t('Include at least one number.', 'کم از کم ایک نمبر شامل کریں۔')),
+      password_confirmation: z.string(),
+    })
+    .refine((values) => values.password === values.password_confirmation, {
+      message: t('Both passwords must match.', 'دونوں پاس ورڈ یکساں ہونے چاہئیں۔'),
+      path: ['password_confirmation'],
+    });
+}
 
-type Values = z.infer<typeof schema>;
+type Values = z.infer<ReturnType<typeof makeSchema>>;
 
 /** Token and email arrive in the link from the reset email. */
 export function ResetPasswordForm() {
+  const t = useT();
+  const schema = useMemo(() => makeSchema(t), [t]);
   const params = useSearchParams();
   const router = useRouter();
   const toast = useToast();
@@ -48,10 +53,10 @@ export function ResetPasswordForm() {
     return (
       <div className="mt-6 flex flex-col gap-4">
         <p role="alert" className="rounded-[var(--radius-control)] border border-danger-500/40 bg-danger-500/10 px-3.5 py-3 text-sm text-danger-600">
-          This reset link is incomplete. Request a new one and open the link straight from the email.
+          {t('This reset link is incomplete. Request a new one and open the link straight from the email.', 'یہ ری سیٹ لنک نامکمل ہے۔ نیا لنک طلب کریں اور ای میل سے براہِ راست کھولیں۔')}
         </p>
         <ButtonLink href="/forgot-password" block>
-          Request a new link
+          {t('Request a new link', 'نیا لنک طلب کریں')}
         </ButtonLink>
       </div>
     );
@@ -63,7 +68,7 @@ export function ResetPasswordForm() {
     try {
       const message = await authApi.resetPassword({ token, email, ...values });
 
-      toast.success(message || 'Password updated.');
+      toast.success(message || t('Password updated.', 'پاس ورڈ اپ ڈیٹ ہو گیا۔'));
       router.push('/login');
     } catch (error) {
       if (error instanceof ApiError) {
@@ -80,7 +85,7 @@ export function ResetPasswordForm() {
         return;
       }
 
-      setFormError('Something went wrong. Please try again.');
+      setFormError(t('Something went wrong. Please try again.', 'کچھ غلط ہو گیا۔ دوبارہ کوشش کریں۔'));
     }
   }
 
@@ -93,21 +98,21 @@ export function ResetPasswordForm() {
       ) : null}
 
       <p className="text-sm text-ink-600">
-        Setting a new password for <strong>{email}</strong>.
+        {t('Setting a new password for', 'نیا پاس ورڈ سیٹ کیا جا رہا ہے برائے')} <strong>{email}</strong>.
       </p>
 
       <Input
-        label="New password"
+        label={t('New password', 'نیا پاس ورڈ')}
         type="password"
         autoComplete="new-password"
-        hint="At least 8 characters, with a letter and a number."
+        hint={t('At least 8 characters, with a letter and a number.', 'کم از کم 8 حروف، ایک حرف اور ایک نمبر کے ساتھ۔')}
         error={errors.password?.message}
         required
         {...register('password')}
       />
 
       <Input
-        label="Confirm new password"
+        label={t('Confirm new password', 'نئے پاس ورڈ کی تصدیق')}
         type="password"
         autoComplete="new-password"
         error={errors.password_confirmation?.message}
@@ -115,10 +120,10 @@ export function ResetPasswordForm() {
         {...register('password_confirmation')}
       />
 
-      <p className="text-sm text-ink-500">Changing your password signs you out everywhere else.</p>
+      <p className="text-sm text-ink-500">{t('Changing your password signs you out everywhere else.', 'پاس ورڈ تبدیل کرنے سے آپ ہر جگہ سے سائن آؤٹ ہو جائیں گے۔')}</p>
 
       <Button type="submit" size="lg" block loading={isSubmitting}>
-        Save new password
+        {t('Save new password', 'نیا پاس ورڈ محفوظ کریں')}
       </Button>
     </form>
   );

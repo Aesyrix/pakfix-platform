@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { ApiError } from '@/lib/api/client';
 import { useAuthStore } from '@/stores/auth';
+import { LocaleReady } from '@/components/i18n/LocaleProvider';
 import { ToastProvider } from '@/components/ui/Toast';
 
 /**
@@ -35,6 +36,7 @@ export function Providers({ children }: { children: ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <ToastProvider>
+        <LocaleReady />
         <SessionRestorer />
         {children}
       </ToastProvider>

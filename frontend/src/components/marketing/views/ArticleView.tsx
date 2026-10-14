@@ -6,14 +6,18 @@ import { Badge } from '@/components/ui/Badge';
 import { ButtonLink } from '@/components/ui/Button';
 import { Card, CardBody } from '@/components/ui/Card';
 import { Container } from '@/components/ui/Container';
-import { formatDate, PostGrid, RichText } from '@/components/marketing/Cards';
+import { PostGrid, RichText } from '@/components/marketing/Cards';
 import { Breadcrumbs, Section } from '@/components/marketing/PageHeader';
 import { PageLoadError, PageSkeleton } from '@/components/marketing/PageStates';
+import { useFormatDate, useT } from '@/components/i18n/LocaleProvider';
+import { blogImage } from '@/lib/images';
 import { usePublicData, useResolvedSlug } from '@/hooks/usePublicData';
 import { blogApi } from '@/lib/api/endpoints';
 import type { BlogPostPayload } from '@/lib/api/types';
 
 export function ArticleView({ slug: builtSlug, initial }: { slug: string | null; initial: BlogPostPayload | null }) {
+  const t = useT();
+  const formatDate = useFormatDate();
   const slug = useResolvedSlug(builtSlug, 1);
   const query = usePublicData(['article', slug], () => blogApi.post(slug as string), initial, Boolean(slug));
 
@@ -22,8 +26,8 @@ export function ArticleView({ slug: builtSlug, initial }: { slug: string | null;
       <PageLoadError
         error={query.error}
         onRetry={() => query.refetch()}
-        notFoundTitle="That guide is not available"
-        notFoundDescription="It may have been unpublished. Browse the other home maintenance guides instead."
+        notFoundTitle={t('That guide is not available', 'وہ گائیڈ دستیاب نہیں')}
+        notFoundDescription={t('It may have been unpublished. Browse the other home maintenance guides instead.', 'اسے غیر شائع کیا گیا ہو سکتا ہے۔ اس کے بجائے دیگر ہوم مینٹیننس گائیڈز دیکھیں۔')}
       />
     ) : (
       <PageSkeleton />
@@ -39,8 +43,8 @@ export function ArticleView({ slug: builtSlug, initial }: { slug: string | null;
           <Container size="narrow" className="py-10 sm:py-14">
             <Breadcrumbs
               items={[
-                { name: 'Home', href: '/' },
-                { name: 'Guides', href: '/blog' },
+                { name: t('Home', 'ہوم'), href: '/' },
+                { name: t('Guides', 'گائیڈز'), href: '/blog' },
                 ...(post.category ? [{ name: post.category.name, href: `/blog/category/${post.category.slug}` }] : []),
                 { name: post.title },
               ]}
@@ -60,7 +64,7 @@ export function ArticleView({ slug: builtSlug, initial }: { slug: string | null;
             {post.excerpt ? <p className="mt-4 text-pretty text-lg text-ink-600">{post.excerpt}</p> : null}
 
             <p className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-ink-500">
-              {post.author ? <span>By {post.author.name}</span> : null}
+              {post.author ? <span>{t('By', 'از')} {post.author.name}</span> : null}
               {post.published_at ? (
                 <span className="inline-flex items-center gap-1.5">
                   <CalendarDays className="h-4 w-4" aria-hidden="true" />
@@ -70,7 +74,7 @@ export function ArticleView({ slug: builtSlug, initial }: { slug: string | null;
               {post.reading_minutes ? (
                 <span className="inline-flex items-center gap-1.5">
                   <Clock className="h-4 w-4" aria-hidden="true" />
-                  {post.reading_minutes} min read
+                  {t(`${post.reading_minutes} min read`, `${post.reading_minutes} منٹ کا مطالعہ`)}
                 </span>
               ) : null}
             </p>
@@ -78,10 +82,10 @@ export function ArticleView({ slug: builtSlug, initial }: { slug: string | null;
         </header>
 
         <Container size="narrow" className="py-10 sm:py-14">
-          {post.featured_image_url ? (
+          {post.featured_image_url ?? blogImage(post.slug) ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={post.featured_image_url}
+              src={(post.featured_image_url ?? blogImage(post.slug)) as string}
               alt={post.featured_image_alt ?? ''}
               className="mb-8 w-full rounded-[var(--radius-card)] object-cover"
             />
@@ -105,18 +109,20 @@ export function ArticleView({ slug: builtSlug, initial }: { slug: string | null;
               <CardBody className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:p-8">
                 <div>
                   <h2 className="text-lg font-bold">
-                    {post.service_category ? `Need help with ${post.service_category.name.toLowerCase()}?` : 'Need a professional?'}
+                    {post.service_category
+                      ? t(`Need help with ${post.service_category.name.toLowerCase()}?`, `${post.service_category.name} میں مدد چاہیے؟`)
+                      : t('Need a professional?', 'پروفیشنل چاہیے؟')}
                   </h2>
                   <p className="mt-1 text-sm text-brand-100">
-                    Verified professionals, prices agreed before work starts.
+                    {t('Verified professionals, prices agreed before work starts.', 'تصدیق شدہ پروفیشنلز، قیمت کام شروع ہونے سے پہلے طے۔')}
                   </p>
                 </div>
                 <ButtonLink
                   href={post.cta?.url ?? (post.service_category ? `/services/${post.service_category.slug}` : '/find-a-technician')}
                   variant="accent"
                 >
-                  {post.cta?.label ?? 'Find a professional'}
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  {post.cta?.label ?? t('Find a professional', 'پروفیشنل تلاش کریں')}
+                  <ArrowRight className="h-4 w-4 rtl:rotate-180" aria-hidden="true" />
                 </ButtonLink>
               </CardBody>
             </Card>
@@ -125,7 +131,7 @@ export function ArticleView({ slug: builtSlug, initial }: { slug: string | null;
       </article>
 
       {related_posts.length > 0 ? (
-        <Section title="Read next" muted>
+        <Section title={t('Read next', 'آگے پڑھیں')} muted>
           <PostGrid posts={related_posts} />
         </Section>
       ) : null}

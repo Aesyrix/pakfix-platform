@@ -9,12 +9,14 @@ import { CategoryIcon } from '@/components/marketing/CategoryIcon';
 import { FaqList, PostGrid, ProfessionalGrid } from '@/components/marketing/Cards';
 import { PageHeader, Section } from '@/components/marketing/PageHeader';
 import { PageLoadError, PageSkeleton } from '@/components/marketing/PageStates';
+import { useT } from '@/components/i18n/LocaleProvider';
 import { usePublicData, useResolvedSlug } from '@/hooks/usePublicData';
 import { localApi } from '@/lib/api/endpoints';
 import type { CityPagePayload } from '@/lib/api/types';
 
 /** A city landing page, e.g. /lahore. */
 export function CityView({ slug: builtSlug, initial }: { slug: string | null; initial: CityPagePayload | null }) {
+  const t = useT();
   const slug = useResolvedSlug(builtSlug, 0);
   const query = usePublicData(['city-page', slug], () => localApi.city(slug as string), initial, Boolean(slug));
 
@@ -23,8 +25,8 @@ export function CityView({ slug: builtSlug, initial }: { slug: string | null; in
       <PageLoadError
         error={query.error}
         onRetry={() => query.refetch()}
-        notFoundTitle="PakFix is not live in that city yet"
-        notFoundDescription="We are expanding city by city. See where PakFix works today."
+        notFoundTitle={t('PakFix is not live in that city yet', 'پاک فکس ابھی اس شہر میں دستیاب نہیں')}
+        notFoundDescription={t('We are expanding city by city. See where PakFix works today.', 'ہم شہر بہ شہر پھیل رہے ہیں۔ دیکھیں پاک فکس آج کہاں کام کرتا ہے۔')}
       />
     ) : (
       <PageSkeleton />
@@ -36,33 +38,39 @@ export function CityView({ slug: builtSlug, initial }: { slug: string | null; in
   return (
     <>
       <PageHeader
-        breadcrumbs={[{ name: 'Home', href: '/' }, { name: city.name }]}
+        breadcrumbs={[{ name: t('Home', 'ہوم'), href: '/' }, { name: city.name }]}
         eyebrow={
           <Badge tone="brand">
             <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
             {city.province ? `${city.name}, ${city.province}` : city.name}
           </Badge>
         }
-        title={`Home repair and maintenance in ${city.name}`}
+        title={t(`Home repair and maintenance in ${city.name}`, `${city.name} میں گھریلو مرمت اور دیکھ بھال`)}
         subtitle={
           professional_count > 0
-            ? `${professional_count} verified ${professional_count === 1 ? 'professional' : 'professionals'} covering ${city.name}, across ${categories.length} ${categories.length === 1 ? 'service' : 'services'}.`
-            : `PakFix is live in ${city.name}. Describe your problem and we will match you with a professional.`
+            ? t(
+                `${professional_count} verified ${professional_count === 1 ? 'professional' : 'professionals'} covering ${city.name}, across ${categories.length} ${categories.length === 1 ? 'service' : 'services'}.`,
+                `${professional_count} تصدیق شدہ ${professional_count === 1 ? 'پروفیشنل' : 'پروفیشنلز'} ${city.name} میں، ${categories.length} ${categories.length === 1 ? 'خدمت' : 'خدمات'} میں۔`
+              )
+            : t(
+                `PakFix is live in ${city.name}. Describe your problem and we will match you with a professional.`,
+                `پاک فکس ${city.name} میں فعال ہے۔ اپنا مسئلہ بیان کریں اور ہم آپ کو پروفیشنل سے ملائیں گے۔`
+              )
         }
       >
         <div className="flex flex-col gap-3 sm:flex-row">
           <ButtonLink href="/ai" size="lg">
             <Sparkles className="h-4 w-4" aria-hidden="true" />
-            Describe my problem
+            {t('Describe my problem', 'میرا مسئلہ بیان کریں')}
           </ButtonLink>
           <ButtonLink href={`/find-a-technician?city=${city.slug}`} variant="secondary" size="lg">
-            Browse {city.name} professionals
+            {t(`Browse ${city.name} professionals`, `${city.name} کے پروفیشنلز دیکھیں`)}
           </ButtonLink>
         </div>
       </PageHeader>
 
       {categories.length > 0 ? (
-        <Section title={`Services available in ${city.name}`} subtitle="Only services with verified professionals covering this city are listed.">
+        <Section title={t(`Services available in ${city.name}`, `${city.name} میں دستیاب خدمات`)} subtitle={t('Only services with verified professionals covering this city are listed.', 'صرف وہ خدمات جن کے تصدیق شدہ پروفیشنلز اس شہر میں دستیاب ہیں۔')}>
           <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {categories.map((category) => (
               <li key={category.slug}>
@@ -79,7 +87,7 @@ export function CityView({ slug: builtSlug, initial }: { slug: string | null; in
                         {category.name}
                       </Link>
                       <span className="block text-sm text-ink-500">
-                        {category.professional_count} {category.professional_count === 1 ? 'professional' : 'professionals'}
+                        {t(`${category.professional_count} ${category.professional_count === 1 ? 'professional' : 'professionals'}`, `${category.professional_count} ${category.professional_count === 1 ? 'پروفیشنل' : 'پروفیشنلز'}`)}
                       </span>
                     </span>
                   </CardBody>
@@ -92,11 +100,11 @@ export function CityView({ slug: builtSlug, initial }: { slug: string | null; in
 
       {professionals.length > 0 ? (
         <Section
-          title={`Top-rated in ${city.name}`}
+          title={t(`Top-rated in ${city.name}`, `${city.name} کے اعلیٰ درجہ بند`)}
           muted
           action={
             <Link href={`/find-a-technician?city=${city.slug}`} className="text-sm font-semibold text-[#00824A] hover:text-[#15803D]">
-              See all &rarr;
+              {t('See all', 'سب دیکھیں')} &rarr;
             </Link>
           }
         >
@@ -105,7 +113,7 @@ export function CityView({ slug: builtSlug, initial }: { slug: string | null; in
       ) : null}
 
       {areas.length > 0 ? (
-        <Section title={`Areas we cover in ${city.name}`}>
+        <Section title={t(`Areas we cover in ${city.name}`, `${city.name} میں ہمارے علاقے`)}>
           <ul className="flex flex-wrap gap-2">
             {areas.map((area) => (
               <li
@@ -117,19 +125,19 @@ export function CityView({ slug: builtSlug, initial }: { slug: string | null; in
             ))}
           </ul>
           <p className="mt-4 text-sm text-ink-500">
-            Not listed? Professionals often travel further; enter your address when you book and we will tell you.
+            {t('Not listed? Professionals often travel further; enter your address when you book and we will tell you.', 'فہرست میں نہیں؟ پروفیشنلز عموماً آگے تک جاتے ہیں؛ بکنگ کے وقت اپنا پتہ درج کریں اور ہم آپ کو بتائیں گے۔')}
           </p>
         </Section>
       ) : null}
 
       {guides.length > 0 ? (
-        <Section title="Home guides" muted>
+        <Section title={t('Home guides', 'ہوم گائیڈز')} muted>
           <PostGrid posts={guides} />
         </Section>
       ) : null}
 
       {faqs.length > 0 ? (
-        <Section title={`Questions about PakFix in ${city.name}`}>
+        <Section title={t(`Questions about PakFix in ${city.name}`, `${city.name} میں پاک فکس کے بارے میں سوالات`)}>
           <div className="max-w-3xl">
             <FaqList faqs={faqs} />
           </div>

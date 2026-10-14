@@ -63,7 +63,7 @@ export function PakFixLogo({ className, showWordmark = true, isDarkBackground = 
       </svg>
 
       {showWordmark ? (
-        <span className="flex items-baseline">
+        <span className="flex items-baseline" dir="ltr">
           <span
             className={cn(
               'text-xl font-extrabold tracking-tight',

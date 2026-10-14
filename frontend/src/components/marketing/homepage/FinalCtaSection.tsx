@@ -4,8 +4,10 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Sparkles, ArrowRight, Wrench } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
+import { useT } from '@/components/i18n/LocaleProvider';
 
 export function FinalCtaSection() {
+  const t = useT();
   const [text, setText] = useState('');
 
   return (
@@ -14,15 +16,15 @@ export function FinalCtaSection() {
         <div className="text-center space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#00824A]/20 border border-[#00824A]/30 text-[#00A85B] text-xs font-bold">
             <Sparkles className="h-4 w-4" />
-            <span>Ready to Fix It?</span>
+            <span>{t('Ready to Fix It?', 'ٹھیک کرنے کے لیے تیار؟')}</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
-            Something needs fixing?
+            {t('Something needs fixing?', 'کچھ ٹھیک کرنے کی ضرورت ہے؟')}
           </h2>
 
           <p className="text-sm sm:text-base text-gray-300 max-w-lg mx-auto">
-            Show PakFix the problem and get an instant AI diagnosis or book a trusted professional today.
+            {t('Show PakFix the problem and get an instant AI diagnosis or book a trusted professional today.', 'پاک فکس کو مسئلہ دکھائیں اور فوری اے آئی تشخیص حاصل کریں یا آج ہی قابلِ اعتماد پروفیشنل بک کریں۔')}
           </p>
 
           {/* Quick Input Bar inside Dark CTA */}
@@ -31,7 +33,7 @@ export function FinalCtaSection() {
               type="text"
               value={text}
               onChange={(e) => setText(e.target.value)}
-              placeholder="Describe your home problem..."
+              placeholder={t('Describe your home problem...', 'اپنا گھریلو مسئلہ بیان کریں...')}
               className="flex-1 bg-transparent px-4 py-2.5 text-xs text-white placeholder-gray-500 outline-none"
             />
 
@@ -39,7 +41,7 @@ export function FinalCtaSection() {
               href={{ pathname: '/ai', query: { text } }}
               className="px-5 py-2.5 rounded-xl bg-[#00824A] hover:bg-[#006B3C] text-white text-xs font-bold transition-colors shrink-0"
             >
-              Ask PakFix AI
+              {t('Ask PakFix AI', 'پاک فکس اے آئی سے پوچھیں')}
             </Link>
           </div>
 
@@ -48,14 +50,14 @@ export function FinalCtaSection() {
               href="/ai"
               className="px-6 py-3 rounded-xl bg-[#00824A] hover:bg-[#006B3C] text-white text-xs font-bold transition-colors shadow-md"
             >
-              Ask PakFix AI
+              {t('Ask PakFix AI', 'پاک فکس اے آئی سے پوچھیں')}
             </Link>
 
             <Link
               href="/find-a-technician"
               className="px-6 py-3 rounded-xl bg-gray-800 hover:bg-gray-700 text-white text-xs font-bold transition-colors border border-gray-700"
             >
-              Book a Professional
+              {t('Book a Professional', 'پروفیشنل بک کریں')}
             </Link>
           </div>
         </div>

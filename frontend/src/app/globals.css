@@ -139,6 +139,16 @@ body {
   overflow-x: hidden;
 }
 
+/*
+  The static HTML is always English. When the saved language is Urdu, the
+  inline script adds this class before the first paint so the English text is
+  never painted for an Urdu reader; `LocaleReady` clears it as soon as the
+  client render carries the stored locale. English is unaffected.
+*/
+html.i18n-pending body {
+  visibility: hidden;
+}
+
 /* Visible focus accessibility */
 :focus-visible {
   outline: 2px solid #008A4B;

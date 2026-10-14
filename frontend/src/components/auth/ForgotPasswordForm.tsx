@@ -2,17 +2,20 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { MailCheck } from 'lucide-react';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
+import { useT } from '@/components/i18n/LocaleProvider';
 import { ApiError } from '@/lib/api/client';
 import { authApi } from '@/lib/api/endpoints';
 
-const schema = z.object({ email: z.string().email('Enter the email address on your account.') });
+function makeSchema(t: (english: string, urdu?: string) => string) {
+  return z.object({ email: z.string().email(t('Enter the email address on your account.', 'اپنے اکاؤنٹ کا ای میل پتہ درج کریں۔')) });
+}
 
-type Values = z.infer<typeof schema>;
+type Values = z.infer<ReturnType<typeof makeSchema>>;
 
 /**
  * The response is deliberately the same whether or not an account exists, so
@@ -20,6 +23,8 @@ type Values = z.infer<typeof schema>;
  * "if that email belongs to an account" for the same reason.
  */
 export function ForgotPasswordForm() {
+  const t = useT();
+  const schema = useMemo(() => makeSchema(t), [t]);
   const [sentTo, setSentTo] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -46,7 +51,7 @@ export function ForgotPasswordForm() {
         return;
       }
 
-      setFormError('Something went wrong. Please try again.');
+      setFormError(t('Something went wrong. Please try again.', 'کچھ غلط ہو گیا۔ دوبارہ کوشش کریں۔'));
     }
   }
 
@@ -54,12 +59,11 @@ export function ForgotPasswordForm() {
     return (
       <div className="flex flex-col items-center gap-3 rounded-[var(--radius-card)] border border-[#86EFAC] bg-[#DCFCE7] p-6 text-center">
         <MailCheck className="h-8 w-8 text-[#15803D]" aria-hidden="true" />
-        <h2 className="text-lg font-bold">Check your email</h2>
+        <h2 className="text-lg font-bold">{t('Check your email', 'اپنا ای میل چیک کریں')}</h2>
         <p className="text-sm text-ink-700">
-          If <strong>{sentTo}</strong> belongs to a PakFix account, a password reset link is on its way. The link is
-          valid for 60 minutes.
+          {t('If', 'اگر')} <strong>{sentTo}</strong> {t('belongs to a PakFix account, a password reset link is on its way. The link is valid for 60 minutes.', 'پاک فکس اکاؤنٹ سے وابستہ ہے، تو پاس ورڈ ری سیٹ لنک بھیج دیا گیا ہے۔ لنک 60 منٹ کے لیے کارآمد ہے۔')}
         </p>
-        <p className="text-sm text-ink-600">Nothing arrived? Check spam, then try again in a few minutes.</p>
+        <p className="text-sm text-ink-600">{t('Nothing arrived? Check spam, then try again in a few minutes.', 'کچھ نہیں آیا؟ اسپیم چیک کریں، پھر چند منٹ بعد دوبارہ کوشش کریں۔')}</p>
       </div>
     );
   }
@@ -73,7 +77,7 @@ export function ForgotPasswordForm() {
       ) : null}
 
       <Input
-        label="Email address"
+        label={t('Email address', 'ای میل پتہ')}
         type="email"
         autoComplete="email"
         error={errors.email?.message}
@@ -82,7 +86,7 @@ export function ForgotPasswordForm() {
       />
 
       <Button type="submit" size="lg" block loading={isSubmitting}>
-        Send reset link
+        {t('Send reset link', 'ری سیٹ لنک بھیجیں')}
       </Button>
     </form>
   );

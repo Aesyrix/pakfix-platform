@@ -5,36 +5,41 @@ import Link from 'next/link';
 import { Badge } from '@/components/ui/Badge';
 import { ButtonLink } from '@/components/ui/Button';
 import { Card, CardBody } from '@/components/ui/Card';
+import { Container } from '@/components/ui/Container';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { CategoryIcon } from '@/components/marketing/CategoryIcon';
 import { FaqList, PostGrid, ProfessionalGrid } from '@/components/marketing/Cards';
 import { PageHeader, Section } from '@/components/marketing/PageHeader';
 import { PageLoadError, PageSkeleton } from '@/components/marketing/PageStates';
+import { useFormatDuration, useT } from '@/components/i18n/LocaleProvider';
+import { serviceImage } from '@/lib/images';
 import { usePublicData, useResolvedSlug } from '@/hooks/usePublicData';
 import { catalogueApi } from '@/lib/api/endpoints';
 import type { ServicePagePayload } from '@/lib/api/types';
-import { formatDuration } from '@/lib/utils/money';
 
 export function ServicePageView({ slug: builtSlug, initial }: { slug: string | null; initial: ServicePagePayload | null }) {
+  const t = useT();
+  const formatDuration = useFormatDuration();
   const slug = useResolvedSlug(builtSlug, 1);
   const query = usePublicData(['service-page', slug], () => catalogueApi.category(slug as string), initial, Boolean(slug));
 
   if (!query.data) {
     return query.isError ? (
-      <PageLoadError error={query.error} onRetry={() => query.refetch()} notFoundTitle="That service is not available" />
+      <PageLoadError error={query.error} onRetry={() => query.refetch()} notFoundTitle={t('That service is not available', 'وہ خدمت دستیاب نہیں')} />
     ) : (
       <PageSkeleton />
     );
   }
 
   const { category, parent, trade, common_problems, faqs, cities, professionals, related_posts } = query.data;
+  const banner = serviceImage(category.slug);
 
   return (
     <>
       <PageHeader
         breadcrumbs={[
-          { name: 'Home', href: '/' },
-          { name: 'Services', href: '/services' },
+          { name: t('Home', 'ہوم'), href: '/' },
+          { name: t('Services', 'خدمات'), href: '/services' },
           ...(parent ? [{ name: parent.name, href: `/services/${parent.slug}` }] : []),
           { name: category.name },
         ]}
@@ -46,28 +51,39 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
             {category.is_emergency ? (
               <Badge tone="danger">
                 <Siren className="h-3 w-3" aria-hidden="true" />
-                Emergency call-outs available
+                {t('Emergency call-outs available', 'ہنگامی کال آؤٹ دستیاب')}
               </Badge>
             ) : null}
-            {category.typical_price ? <Badge tone="accent">Typically {category.typical_price.display}</Badge> : null}
+            {category.typical_price ? <Badge tone="accent">{t(`Typically ${category.typical_price.display}`, `عموماً ${category.typical_price.display}`)}</Badge> : null}
           </span>
         }
-        title={`${category.name} services`}
+        title={t(`${category.name} services`, `${category.name} خدمات`)}
         subtitle={category.description}
       >
         <div className="flex flex-col gap-3 sm:flex-row">
           <ButtonLink href={`/ai?q=${encodeURIComponent(`${category.name} problem`)}`} size="lg">
             <Sparkles className="h-4 w-4" aria-hidden="true" />
-            Describe my problem
+            {t('Describe my problem', 'میرا مسئلہ بیان کریں')}
           </ButtonLink>
           <ButtonLink href={`/find-a-technician?category=${category.slug}`} variant="secondary" size="lg">
-            Find a {trade?.name ?? 'professional'}
+            {t(`Find a ${trade?.name ?? 'professional'}`, `${trade?.name ?? 'پروفیشنل'} تلاش کریں`)}
           </ButtonLink>
         </div>
       </PageHeader>
 
+      {banner ? (
+        <Container className="pt-10">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={banner}
+            alt=""
+            className="aspect-[21/9] w-full rounded-[var(--radius-card)] object-cover"
+          />
+        </Container>
+      ) : null}
+
       {common_problems.length > 0 ? (
-        <Section title="Common problems we fix" subtitle="Tap a problem to get a safety check and the right professional.">
+        <Section title={t('Common problems we fix', 'عام مسائل جو ہم ٹھیک کرتے ہیں')} subtitle={t('Tap a problem to get a safety check and the right professional.', 'حفاظتی جانچ اور صحیح پروفیشنل کے لیے کسی مسئلے پر ٹیپ کریں۔')}>
           <ul className="grid gap-3 sm:grid-cols-2">
             {common_problems.map((problem) => (
               <li key={problem}>
@@ -79,7 +95,7 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
                     <Wrench className="h-4 w-4 shrink-0 text-brand-600" aria-hidden="true" />
                     {problem}
                   </span>
-                  <ArrowRight className="h-4 w-4 shrink-0 text-ink-400" aria-hidden="true" />
+                  <ArrowRight className="h-4 w-4 shrink-0 text-ink-400 rtl:rotate-180" aria-hidden="true" />
                 </Link>
               </li>
             ))}
@@ -88,7 +104,7 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
       ) : null}
 
       {category.services.length > 0 || category.children.length > 0 ? (
-        <Section title="Services and prices" subtitle="Fixed prices are what you pay for that job. Everything else is quoted after inspection, before work starts." muted>
+        <Section title={t('Services and prices', 'خدمات اور قیمتیں')} subtitle={t('Fixed prices are what you pay for that job. Everything else is quoted after inspection, before work starts.', 'مقررہ قیمت وہ ہے جو آپ اس کام کے لیے ادا کرتے ہیں۔ باقی سب معائنے کے بعد، کام شروع ہونے سے پہلے کوٹ کیا جاتا ہے۔')} muted>
           {category.services.length > 0 ? (
             <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {category.services.map((service) => (
@@ -100,11 +116,11 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
                       <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-3">
                         <span className="text-lg font-bold text-foreground">{service.price_display}</span>
                         {service.estimated_minutes ? (
-                          <span className="text-xs text-ink-500">About {formatDuration(service.estimated_minutes)}</span>
+                          <span className="text-xs text-ink-500">{t(`About ${formatDuration(service.estimated_minutes)}`, `تقریباً ${formatDuration(service.estimated_minutes)}`)}</span>
                         ) : null}
                       </div>
                       {service.pricing_model === 'visit_fee' ? (
-                        <p className="text-xs text-ink-500">Inspection visit; repair quoted on site.</p>
+                        <p className="text-xs text-ink-500">{t('Inspection visit; repair quoted on site.', 'معائنہ وزٹ؛ مرمت موقع پر کوٹ کی جائے گی۔')}</p>
                       ) : null}
                     </CardBody>
                   </Card>
@@ -115,7 +131,7 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
 
           {category.children.length > 0 ? (
             <div className={category.services.length > 0 ? 'mt-8' : undefined}>
-              <h3 className="mb-3 text-base font-semibold">Specialist services</h3>
+              <h3 className="mb-3 text-base font-semibold">{t('Specialist services', 'ماہر خدمات')}</h3>
               <ul className="flex flex-wrap gap-2">
                 {category.children.map((child) => (
                   <li key={child.id}>
@@ -133,13 +149,13 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
         </Section>
       ) : null}
 
-      <Section title="How booking works">
+      <Section title={t('How booking works', 'بکنگ کیسے کام کرتی ہے')}>
         <ol className="grid gap-4 md:grid-cols-3">
           {[
-            ['Tell us what is wrong', 'Describe the problem or send a photo. Dangerous problems are flagged straight away.'],
-            ['Choose a verified professional', 'Compare ratings, experience and visit fees for professionals who serve your area.'],
-            ['Agree the price, then the work', 'You approve the quote before any work starts, and the job stays on your home record.'],
-          ].map(([title, body], index) => (
+            { title: t('Tell us what is wrong', 'بتائیں کیا خراب ہے'), body: t('Describe the problem or send a photo. Dangerous problems are flagged straight away.', 'مسئلہ بیان کریں یا تصویر بھیجیں۔ خطرناک مسائل فوراً نشان زد کیے جاتے ہیں۔') },
+            { title: t('Choose a verified professional', 'تصدیق شدہ پروفیشنل منتخب کریں'), body: t('Compare ratings, experience and visit fees for professionals who serve your area.', 'اپنے علاقے میں خدمات دینے والے پروفیشنلز کی ریٹنگز، تجربہ اور وزٹ فیس کا موازنہ کریں۔') },
+            { title: t('Agree the price, then the work', 'قیمت طے کریں، پھر کام'), body: t('You approve the quote before any work starts, and the job stays on your home record.', 'کام شروع ہونے سے پہلے آپ کوٹ منظور کرتے ہیں، اور کام آپ کے ہوم ریکارڈ میں محفوظ رہتا ہے۔') },
+          ].map(({ title, body }, index) => (
             <li key={title} className="flex gap-4">
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-600 text-sm font-bold text-white" aria-hidden="true">
                 {index + 1}
@@ -154,8 +170,8 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
       </Section>
 
       <Section
-        title={`${category.name} near you`}
-        subtitle={cities.length > 0 ? 'Cities with verified professionals for this service today.' : undefined}
+        title={t(`${category.name} near you`, `${category.name} آپ کے قریب`)}
+        subtitle={cities.length > 0 ? t('Cities with verified professionals for this service today.', 'آج اس خدمت کے لیے تصدیق شدہ پروفیشنلز والے شہر۔') : undefined}
         muted
       >
         {cities.length > 0 ? (
@@ -175,19 +191,19 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
           </ul>
         ) : (
           <EmptyState
-            title="No professionals for this service yet"
-            description="We are onboarding verified professionals for this service. If you offer it, join PakFix."
-            action={<ButtonLink href="/become-a-technician">Become a professional</ButtonLink>}
+            title={t('No professionals for this service yet', 'اس خدمت کے لیے ابھی کوئی پروفیشنل نہیں')}
+            description={t('We are onboarding verified professionals for this service. If you offer it, join PakFix.', 'ہم اس خدمت کے لیے تصدیق شدہ پروفیشنلز شامل کر رہے ہیں۔ اگر آپ یہ پیش کرتے ہیں تو پاک فکس جوائن کریں۔')}
+            action={<ButtonLink href="/become-a-technician">{t('Become a professional', 'پروفیشنل بنیں')}</ButtonLink>}
           />
         )}
       </Section>
 
       {professionals.length > 0 ? (
         <Section
-          title="Top-rated professionals"
+          title={t('Top-rated professionals', 'اعلیٰ درجہ بند پروفیشنلز')}
           action={
             <Link href={`/find-a-technician?category=${category.slug}`} className="text-sm font-semibold text-brand-600 hover:text-brand-700">
-              See all &rarr;
+              {t('See all', 'سب دیکھیں')} &rarr;
             </Link>
           }
         >
@@ -196,7 +212,7 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
       ) : null}
 
       {faqs.length > 0 ? (
-        <Section title={`${category.name} questions`} muted>
+        <Section title={t(`${category.name} questions`, `${category.name} سوالات`)} muted>
           <div className="max-w-3xl">
             <FaqList faqs={faqs} />
           </div>
@@ -204,7 +220,7 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
       ) : null}
 
       {related_posts.length > 0 ? (
-        <Section title="Guides">
+        <Section title={t('Guides', 'گائیڈز')}>
           <PostGrid posts={related_posts} />
         </Section>
       ) : null}
@@ -213,14 +229,14 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
         <Card className="bg-brand-950 text-white">
           <CardBody className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between sm:p-8">
             <div>
-              <h2 className="text-xl font-bold">Not sure it is a {category.name.toLowerCase()} problem?</h2>
+              <h2 className="text-xl font-bold">{t(`Not sure it is a ${category.name.toLowerCase()} problem?`, `یقین نہیں کہ یہ ${category.name} کا مسئلہ ہے؟`)}</h2>
               <p className="mt-1 flex items-center gap-2 text-sm text-brand-100">
                 <CircleCheck className="h-4 w-4 text-accent-400" aria-hidden="true" />
-                Describe it and PakFix points you to the right service.
+                {t('Describe it and PakFix points you to the right service.', 'اسے بیان کریں اور پاک فکس آپ کو صحیح سروس کی طرف رہنمائی کرے گا۔')}
               </p>
             </div>
             <ButtonLink href="/ai" variant="accent">
-              Ask PakFix
+              {t('Ask PakFix', 'پاک فکس سے پوچھیں')}
             </ButtonLink>
           </CardBody>
         </Card>

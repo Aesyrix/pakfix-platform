@@ -3,6 +3,7 @@
 import { CalendarCheck, Home, MessageCircle, Sparkles, User } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useT } from '@/components/i18n/LocaleProvider';
 import { cn } from '@/lib/utils/cn';
 
 /**
@@ -13,19 +14,20 @@ import { cn } from '@/lib/utils/cn';
  * Hidden from large screens, where the sidebar takes over.
  */
 const ITEMS = [
-  { href: '/dashboard', label: 'Home', icon: Home },
-  { href: '/ai', label: 'Ask AI', icon: Sparkles },
-  { href: '/dashboard/bookings', label: 'Bookings', icon: CalendarCheck },
-  { href: '/dashboard/messages', label: 'Messages', icon: MessageCircle },
-  { href: '/dashboard/profile', label: 'Profile', icon: User },
+  { href: '/dashboard', label: 'Home', labelUr: 'ہوم', icon: Home },
+  { href: '/ai', label: 'Ask AI', labelUr: 'اے آئی سے پوچھیں', icon: Sparkles },
+  { href: '/dashboard/bookings', label: 'Bookings', labelUr: 'بکنگ', icon: CalendarCheck },
+  { href: '/dashboard/messages', label: 'Messages', labelUr: 'پیغامات', icon: MessageCircle },
+  { href: '/dashboard/profile', label: 'Profile', labelUr: 'پروفائل', icon: User },
 ] as const;
 
 export function BottomNav() {
+  const t = useT();
   const pathname = usePathname();
 
   return (
     <nav
-      aria-label="Primary"
+      aria-label={t('Primary', 'بنیادی')}
       className={cn(
         'fixed inset-x-0 bottom-0 z-40 border-t border-[var(--border)] bg-surface/95 backdrop-blur-md shadow-lg',
         'pb-[env(safe-area-inset-bottom,0px)] lg:hidden'
@@ -57,7 +59,7 @@ export function BottomNav() {
                   className={cn('h-5 w-5 transition-transform', active ? 'scale-110 stroke-[2.4]' : 'scale-100')}
                   aria-hidden="true"
                 />
-                <span className="leading-none">{item.label}</span>
+                <span className="leading-none">{t(item.label, item.labelUr)}</span>
               </Link>
             </li>
           );

@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import { Plus_Jakarta_Sans } from 'next/font/google';
 import { Providers } from '@/components/providers/Providers';
+import { SkipLink } from '@/components/layout/SkipLink';
+import { localeInitScript } from '@/lib/i18n';
 import './globals.css';
 
 const jakarta = Plus_Jakarta_Sans({
@@ -75,15 +77,12 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={jakarta.variable}>
+    <html lang="en" dir="ltr" suppressHydrationWarning className={jakarta.variable}>
       <body className="antialiased">
+        {/* Applies the saved English/اردو choice before the first paint. */}
+        <script dangerouslySetInnerHTML={{ __html: localeInitScript() }} />
         {/* First stop for a keyboard user on every page. */}
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-[var(--radius-control)] focus:bg-brand-600 focus:px-4 focus:py-2 focus:text-white"
-        >
-          Skip to content
-        </a>
+        <SkipLink />
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -1,10 +1,9 @@
 import type { Metadata } from 'next';
 import { breadcrumbSchema, JsonLd } from '@/components/marketing/JsonLd';
-import { PageHeader } from '@/components/marketing/PageHeader';
-import { BlogIndexView } from '@/components/marketing/views/BlogIndexView';
 import { blogApi } from '@/lib/api/endpoints';
 import { safeFetch } from '@/lib/api/safe';
 import { absoluteUrl, pageMetadata } from '@/lib/seo';
+import { BlogListContent } from './BlogListContent';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Home Maintenance Guides for Pakistan',
@@ -41,13 +40,14 @@ export default async function BlogPage() {
         ]}
       />
 
-      <PageHeader
-        breadcrumbs={[{ name: 'Home', href: '/' }, { name: 'Guides' }]}
+      <BlogListContent
+        categories={categories}
+        initialPosts={posts}
         title="Home maintenance guides"
+        titleUr="گھر کی دیکھ بھال کے رہنما"
         subtitle="What goes wrong in Pakistani homes, what you can safely check yourself, and when to call a professional."
+        subtitleUr="پاکستانی گھروں میں کیا خراب ہوتا ہے، آپ خود کیا محفوظ طریقے سے چیک کر سکتے ہیں، اور پروفیشنل کو کب بلانا چاہیے۔"
       />
-
-      <BlogIndexView categories={categories} initialPosts={posts} />
     </>
   );
 }

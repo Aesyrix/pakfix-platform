@@ -2,6 +2,7 @@
 
 import { RotateCw, TriangleAlert } from 'lucide-react';
 import { Button } from './Button';
+import { useT } from '@/components/i18n/LocaleProvider';
 import { cn } from '@/lib/utils/cn';
 
 /**
@@ -9,8 +10,8 @@ import { cn } from '@/lib/utils/cn';
  * most failures here are a flaky mobile connection rather than a real fault.
  */
 export function ErrorState({
-  title = 'That did not load',
-  description = 'Something went wrong on our side. Try again in a moment.',
+  title,
+  description,
   onRetry,
   className,
 }: {
@@ -19,6 +20,7 @@ export function ErrorState({
   onRetry?: () => void;
   className?: string;
 }) {
+  const t = useT();
   return (
     <div
       role="alert"
@@ -31,12 +33,12 @@ export function ErrorState({
       <div className="flex h-12 w-12 items-center justify-center rounded-full bg-danger-500/12 text-danger-600">
         <TriangleAlert className="h-6 w-6" aria-hidden="true" />
       </div>
-      <h3 className="text-base font-semibold">{title}</h3>
-      <p className="max-w-sm text-sm text-ink-500">{description}</p>
+      <h3 className="text-base font-semibold">{title ?? t('That did not load', 'وہ لوڈ نہیں ہوا')}</h3>
+      <p className="max-w-sm text-sm text-ink-500">{description ?? t('Something went wrong on our side. Try again in a moment.', 'ہماری طرف سے کچھ غلط ہو گیا۔ تھوڑی دیر بعد دوبارہ کوشش کریں۔')}</p>
       {onRetry ? (
         <Button variant="secondary" size="sm" onClick={onRetry} className="mt-1">
           <RotateCw className="h-4 w-4" aria-hidden="true" />
-          Try again
+          {t('Try again', 'دوبارہ کوشش کریں')}
         </Button>
       ) : null}
     </div>

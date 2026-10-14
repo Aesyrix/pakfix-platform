@@ -1,31 +1,43 @@
+'use client';
+
 import { MessageSquareText, SlidersHorizontal, UserCheck, CheckCircle2 } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
+import { useT } from '@/components/i18n/LocaleProvider';
 
 export function HowItWorksSection() {
+  const t = useT();
   const steps = [
     {
       num: '01',
       icon: MessageSquareText,
-      title: "Tell Us What's Wrong",
-      desc: 'Describe the issue using simple text, upload a photo or video, or use PakFix AI diagnosis.',
+      en: "Tell Us What's Wrong",
+      ur: 'ہمیں بتائیں کیا مسئلہ ہے',
+      den: 'Describe the issue using simple text, upload a photo or video, or use PakFix AI diagnosis.',
+      dur: 'سادہ الفاظ میں مسئلہ بیان کریں، تصویر یا ویڈیو اپلوڈ کریں، یا پاک فکس اے آئی تشخیص استعمال کریں۔',
     },
     {
       num: '02',
       icon: SlidersHorizontal,
-      title: 'Choose How to Proceed',
-      desc: 'Review AI cost estimate in PKR, request quotes from multiple pros, or book a service directly.',
+      en: 'Choose How to Proceed',
+      ur: 'آگے بڑھنے کا طریقہ منتخب کریں',
+      den: 'Review AI cost estimate in PKR, request quotes from multiple pros, or book a service directly.',
+      dur: 'روپے میں اے آئی لاگت کا تخمینہ دیکھیں، متعدد پروفیشنلز سے تخمینے طلب کریں، یا براہِ راست سروس بک کریں۔',
     },
     {
       num: '03',
       icon: UserCheck,
-      title: 'Connect With a Professional',
-      desc: 'Match with top-rated, identity-verified local technicians in your city.',
+      en: 'Connect With a Professional',
+      ur: 'پروفیشنل سے رابطہ کریں',
+      den: 'Match with top-rated, identity-verified local technicians in your city.',
+      dur: 'اپنے شہر میں اعلیٰ درجہ بندی والے، شناخت سے تصدیق شدہ مقامی ٹیکنیشنز سے میچ کریں۔',
     },
     {
       num: '04',
       icon: CheckCircle2,
-      title: 'Get It Fixed & Track',
-      desc: 'Track arrival in real time, inspect the work, pay securely, and store repair history.',
+      en: 'Get It Fixed & Track',
+      ur: 'ٹھیک کروائیں اور ٹریک کریں',
+      den: 'Track arrival in real time, inspect the work, pay securely, and store repair history.',
+      dur: 'حقیقی وقت میں آمد ٹریک کریں، کام کا معائنہ کریں، محفوظ ادائیگی کریں، اور مرمت کی تاریخ محفوظ کریں۔',
     },
   ];
 
@@ -33,12 +45,12 @@ export function HowItWorksSection() {
     <section className="py-16 sm:py-24 bg-[#F8FAF9] border-b border-[#E5E7EB]">
       <Container>
         <div className="max-w-2xl mx-auto text-center space-y-2 mb-12">
-          <span className="text-xs font-bold text-[#00824A] uppercase tracking-wider">Simple Process</span>
+          <span className="text-xs font-bold text-[#00824A] uppercase tracking-wider">{t('Simple Process', 'آسان طریقہ')}</span>
           <h2 className="text-2xl sm:text-4xl font-extrabold text-[#161616]">
-            From problem to fixed.
+            {t('From problem to fixed.', 'مسئلے سے حل تک۔')}
           </h2>
           <p className="text-sm text-[#475467]">
-            Four easy steps to get any home repair done with complete transparency and trust.
+            {t('Four easy steps to get any home repair done with complete transparency and trust.', 'مکمل شفافیت اور اعتماد کے ساتھ کوئی بھی گھریلو مرمت کرانے کے چار آسان مراحل۔')}
           </p>
         </div>
 
@@ -61,8 +73,8 @@ export function HowItWorksSection() {
                     </span>
                   </div>
 
-                  <h3 className="text-base font-bold text-[#161616] mb-2">{step.title}</h3>
-                  <p className="text-xs text-[#667085] leading-relaxed">{step.desc}</p>
+                  <h3 className="text-base font-bold text-[#161616] mb-2">{t(step.en, step.ur)}</h3>
+                  <p className="text-xs text-[#667085] leading-relaxed">{t(step.den, step.dur)}</p>
                 </div>
 
                 {idx < 3 ? (

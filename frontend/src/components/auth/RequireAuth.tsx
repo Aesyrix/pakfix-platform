@@ -4,6 +4,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { useEffect, type ReactNode } from 'react';
 import { Container } from '@/components/ui/Container';
 import { Skeleton, SkeletonCard } from '@/components/ui/Skeleton';
+import { useT } from '@/components/i18n/LocaleProvider';
 import { useAuthStore } from '@/stores/auth';
 import type { UserRole } from '@/lib/api/types';
 
@@ -53,10 +54,11 @@ export function RequireAuth({
 
 /** Shown while the session is being restored, so nothing flashes. */
 function DashboardSkeleton() {
+  const t = useT();
   return (
     <Container className="py-8">
       <span className="sr-only" role="status">
-        Loading your dashboard
+        {t('Loading your dashboard', 'آپ کا ڈیش بورڈ لوڈ ہو رہا ہے')}
       </span>
       <Skeleton className="h-8 w-56" />
       <Skeleton className="mt-3 h-4 w-72" />
