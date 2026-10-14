@@ -16,6 +16,21 @@ import { useToast } from '@/components/ui/Toast';
 import { adminApi } from '@/lib/api/endpoints';
 import type { AdminContactMessage } from '@/lib/api/types';
 
+const STATUS_URDU: Record<AdminContactMessage['status'], string> = {
+  new: 'نیا',
+  in_progress: 'جاری',
+  handled: 'نمٹا گیا',
+};
+
+const TOPIC_URDU: Record<string, string> = {
+  general: 'عمومی',
+  booking: 'بکنگ',
+  professional: 'پروفیشنل',
+  partnership: 'شراکت داری',
+  press: 'پریس',
+  other: 'دیگر',
+};
+
 /** Messages from the public contact form. */
 export default function AdminInboxPage() {
   const t = useT();
@@ -96,9 +111,9 @@ function MessageCard({ message }: { message: AdminContactMessage }) {
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <Badge tone="neutral">{message.topic}</Badge>
+            <Badge tone="neutral">{t(message.topic, TOPIC_URDU[message.topic])}</Badge>
             <Badge tone={message.status === 'handled' ? 'safe' : message.status === 'in_progress' ? 'info' : 'warn'}>
-              {message.status.replace('_', ' ')}
+              {t(message.status.replace('_', ' '), STATUS_URDU[message.status])}
             </Badge>
           </div>
         </div>

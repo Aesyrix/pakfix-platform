@@ -19,6 +19,15 @@ import type { AdminFaq } from '@/lib/api/types';
 
 const GROUPS = ['general', 'safety', 'payments', 'service', 'professionals', 'city'] as const;
 
+const GROUP_URDU: Record<string, string> = {
+  general: 'عمومی',
+  safety: 'حفاظت',
+  payments: 'ادائیگیاں',
+  service: 'سروس',
+  professionals: 'پروفیشنلز',
+  city: 'شہر',
+};
+
 /** Questions shown on the homepage, /faq, service pages and city pages. */
 export default function AdminFaqsPage() {
   const t = useT();
@@ -81,7 +90,7 @@ export default function AdminFaqsPage() {
               <Select name="group" label={t('Where it appears', 'یہ کہاں ظاہر ہوتا ہے')} defaultValue="general">
                 {GROUPS.map((group) => (
                   <option key={group} value={group}>
-                    {group}
+                    {t(group, GROUP_URDU[group])}
                   </option>
                 ))}
               </Select>
@@ -148,7 +157,7 @@ function FaqRow({ faq, onDeleted, deleting }: { faq: AdminFaq; onDeleted: () => 
             {faq.question}
           </button>
           <div className="flex shrink-0 items-center gap-2">
-            <Badge tone="neutral">{faq.group}</Badge>
+            <Badge tone="neutral">{t(faq.group, GROUP_URDU[faq.group])}</Badge>
             {faq.service_category ? <Badge tone="brand">{faq.service_category.name}</Badge> : null}
             {faq.city ? <Badge tone="accent">{faq.city.name}</Badge> : null}
             <Badge tone={faq.is_active ? 'safe' : 'warn'}>{faq.is_active ? t('Live', 'لائیو') : t('Hidden', 'پوشیدہ')}</Badge>

@@ -149,7 +149,7 @@ export default function AdminTestimonialsPage() {
                       loading={update.isPending}
                       onClick={() => update.mutate({ id: testimonial.id, input: { is_published: !testimonial.is_published } })}
                     >
-                      {testimonial.is_published ? 'Hide' : 'Publish'}
+                      {testimonial.is_published ? t('Hide', 'چھپائیں') : t('Publish', 'شائع کریں')}
                     </Button>
                     <Button
                       variant="ghost"
@@ -159,7 +159,7 @@ export default function AdminTestimonialsPage() {
                       onClick={() => remove.mutate(testimonial.id)}
                     >
                       <Trash2 className="h-4 w-4" aria-hidden="true" />
-                      Delete
+                      {t('Delete', 'حذف کریں')}
                     </Button>
                   </div>
                 </CardBody>

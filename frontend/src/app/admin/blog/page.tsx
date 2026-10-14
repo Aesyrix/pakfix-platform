@@ -17,6 +17,12 @@ import { ApiError } from '@/lib/api/client';
 import { adminApi } from '@/lib/api/endpoints';
 import type { AdminBlogPost } from '@/lib/api/types';
 
+const STATUS_URDU: Record<AdminBlogPost['status'], string> = {
+  draft: 'ڈرافٹ',
+  published: 'شائع شدہ',
+  scheduled: 'شیڈول شدہ',
+};
+
 const BLANK = {
   title: '',
   body: '',
@@ -132,7 +138,7 @@ export default function AdminBlogPage() {
                   </div>
                   <div className="flex shrink-0 items-center gap-2">
                     <Badge tone={post.status === 'published' ? 'safe' : post.status === 'scheduled' ? 'info' : 'warn'}>
-                      {post.status}
+                      {t(post.status, STATUS_URDU[post.status])}
                     </Badge>
                     {post.status === 'published' ? (
                       <a
