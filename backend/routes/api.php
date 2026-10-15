@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\V1\ContentController;
 use App\Http\Controllers\Api\V1\EmailVerificationController;
 use App\Http\Controllers\Api\V1\LocalPageController;
 use App\Http\Controllers\Api\V1\LocationController;
+use App\Http\Controllers\Api\V1\Marketplace;
 use App\Http\Controllers\Api\V1\SearchController;
 use App\Http\Controllers\Api\V1\ServiceCategoryController;
 use App\Http\Controllers\Api\V1\TechnicianController;
@@ -121,6 +122,40 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
             Route::post('logout-all', [AuthController::class, 'logoutAll'])->name('logout.all');
             Route::get('devices', [AuthController::class, 'devices'])->name('devices');
             Route::delete('devices/{tokenId}', [AuthController::class, 'revokeDevice'])->name('devices.revoke');
+        });
+    });
+
+    // -----------------------------------------------------------------
+    // Marketplace — requests and bids
+    //
+    // Customers post a request and choose an offer; verified professionals
+    // within reach bid on it. Ownership is checked in the controllers, so a
+    // request or offer that is not yours answers 404.
+    // -----------------------------------------------------------------
+
+    Route::middleware(['auth:sanctum', 'active'])->group(function (): void {
+        Route::middleware('permission:quotes.view.own')->group(function (): void {
+            Route::get('requests', [Marketplace\CustomerRequestController::class, 'index'])->name('requests.index');
+            Route::get('requests/{uuid}', [Marketplace\CustomerRequestController::class, 'show'])->name('requests.show');
+        });
+
+        Route::middleware(['permission:bookings.create', 'throttle:20,1'])->group(function (): void {
+            Route::post('requests', [Marketplace\CustomerRequestController::class, 'store'])->name('requests.store');
+            Route::post('requests/{uuid}/cancel', [Marketplace\CustomerRequestController::class, 'cancel'])->name('requests.cancel');
+        });
+
+        Route::middleware(['permission:quotes.respond', 'throttle:30,1'])->group(function (): void {
+            Route::post('quotes/{uuid}/accept', [Marketplace\CustomerRequestController::class, 'accept'])->name('quotes.accept');
+            Route::post('quotes/{uuid}/reject', [Marketplace\CustomerRequestController::class, 'reject'])->name('quotes.reject');
+        });
+
+        Route::prefix('pro')->name('pro.')->middleware('permission:quotes.create')->group(function (): void {
+            Route::get('requests', [Marketplace\ProRequestController::class, 'nearby'])->name('requests.nearby');
+            Route::get('requests/{uuid}', [Marketplace\ProRequestController::class, 'show'])->name('requests.show');
+            Route::post('requests/{uuid}/quotes', [Marketplace\ProRequestController::class, 'quote'])
+                ->middleware('throttle:30,1')->name('requests.quote');
+            Route::get('quotes', [Marketplace\ProRequestController::class, 'myQuotes'])->name('quotes.index');
+            Route::post('quotes/{uuid}/withdraw', [Marketplace\ProRequestController::class, 'withdraw'])->name('quotes.withdraw');
         });
     });
 
