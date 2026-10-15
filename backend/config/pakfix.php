@@ -65,6 +65,32 @@ return [
         ],
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Marketplace — requests and bids
+    |--------------------------------------------------------------------------
+    |
+    | A customer posts a request; verified professionals within reach bid on
+    | it. The bidding window depends on urgency. After it closes no new bids
+    | arrive, but the customer keeps a grace period to accept one already sent.
+    |
+    */
+    'marketplace' => [
+        'bidding_minutes' => [
+            'flexible' => 120,
+            'standard' => 120,
+            'urgent' => 120,
+            'emergency' => 15,
+        ],
+        'accept_grace_hours' => 24,
+        // Used when a professional has not set their own service radius.
+        'default_radius_km' => 20,
+        'max_open_requests_per_customer' => 5,
+        // Commission is off during the launch period; when it is switched on
+        // the percentage comes from 'commission' above.
+        'commission_enabled' => (bool) env('PAKFIX_COMMISSION_ENABLED', false),
+    ],
+
     'uploads' => [
         'image_mimes' => ['jpg', 'jpeg', 'png', 'webp'],
         'video_mimes' => ['mp4', 'webm', 'mov'],

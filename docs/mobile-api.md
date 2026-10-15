@@ -230,6 +230,67 @@ arrives with Phase 6.
 
 ---
 
+## Requests and bids
+
+The marketplace is inDrive-style: the customer posts a request, verified professionals within reach
+send offers, and the customer accepts one, which creates the booking.
+
+### Customer
+
+```http
+POST /requests
+{
+  "service_category_id": "uuid",          // from /services/categories
+  "description": "Water leaking under the kitchen sink",
+  "city_id": 2, "area_id": null,
+  "address_line": "House 12, Street 4, Saddar", "landmark": null,
+  "latitude": 33.5973, "longitude": 73.0479,   // must be inside Pakistan
+  "urgency": "standard",                  // flexible | standard | urgent | emergency
+  "customer_offer_minor": 250000,         // optional: the customer's own price
+  "preferred_date": null, "preferred_time_slot": null
+}
+```
+
+| Endpoint | Does |
+|---|---|
+| `GET /requests` | The customer's requests, newest first (paginated) |
+| `GET /requests/{uuid}` | One request with every offer, cheapest first, each with a professional card |
+| `POST /requests/{uuid}/cancel` | Cancel; waiting offers are declined |
+| `POST /quotes/{uuid}/accept` | Accept an offer: returns `data.booking` (`id`, `reference`, `status`, `total`) |
+| `POST /quotes/{uuid}/reject` | Decline an offer (`reason` optional) |
+
+A request's `state` is what to show: `accepting_bids` → `choosing` → `booked`, or `cancelled` /
+`expired`. Bidding closes at `expires_at` (2 hours, or 15 minutes for an emergency); the customer
+can still accept an offer already received until `accept_until` (24 hours later). Poll
+`GET /requests/{uuid}` every few seconds while the offers screen is open, until push lands.
+
+### Professional
+
+Only verified professionals get past these endpoints; a pending one receives 403 with a message to
+show. A request is in reach when it is in one of the professional's trades (or a sub-trade of one)
+and within their service radius, 20 km by default.
+
+| Endpoint | Does |
+|---|---|
+| `GET /pro/requests` | Open requests in reach, nearest first, with `distance_km`, `my_quote`, and `meta.radius_km` |
+| `GET /pro/requests/{uuid}` | One request |
+| `POST /pro/requests/{uuid}/quotes` | Send an offer (below) |
+| `GET /pro/quotes` | The professional's offers, newest first (`?status=sent` to filter) |
+| `POST /pro/quotes/{uuid}/withdraw` | Withdraw an offer still waiting |
+
+```http
+POST /pro/requests/{uuid}/quotes
+{ "visit_fee_minor": 50000, "labour_minor": 200000, "materials_minor": 150000,
+  "arrival_minutes": 45, "estimated_minutes": 60, "notes": "I can replace the trap today." }
+```
+
+Send `{ "accept_offer": true }` instead of the three amounts to take the customer's price. The total
+is always computed by the server. A professional never sees the exact address, the pin or who posted
+a request; those reach them on the booking, once their offer is accepted. Commission is zero during
+the launch period (`PAKFIX_COMMISSION_ENABLED=false`).
+
+---
+
 ## Endpoints available today
 
 ```
