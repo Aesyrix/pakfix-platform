@@ -77,9 +77,9 @@ Settings → Secrets and variables → Actions:
 
 | Secret | Value |
 |---|---|
-| `SSH_HOST` | the SSH host from hPanel (e.g. `187.124.252.21`) |
+| `SSH_HOST` | the SSH host from hPanel (e.g. `203.0.113.10`) |
 | `SSH_PORT` | the SSH port from hPanel (e.g. `65002`) |
-| `SSH_USER` | the account username (e.g. `u867057961`) |
+| `SSH_USER` | the account username (e.g. `u123456789`) |
 | `SSH_PASSWORD` | the account password — **or** `SSH_PRIVATE_KEY` with a deploy key |
 | `APP_KEY` | a pre-generated key (`php artisan key:generate --show`); optional but recommended |
 | `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` | the MySQL details from hPanel |
