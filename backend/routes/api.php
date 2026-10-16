@@ -162,6 +162,14 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
             Route::post('bookings/{uuid}/revised-quote/reject', [Marketplace\CustomerBookingController::class, 'rejectQuote'])->name('bookings.quote.reject');
         });
 
+        // A professional's own profile and verification (open while pending).
+        Route::prefix('pro')->name('pro.')->middleware('permission:technicians.manage.own')->group(function (): void {
+            Route::get('profile', [Marketplace\ProProfileController::class, 'show'])->name('profile.show');
+            Route::put('profile', [Marketplace\ProProfileController::class, 'update'])->middleware('throttle:30,1')->name('profile.update');
+            Route::post('verification/documents', [Marketplace\ProProfileController::class, 'upload'])->middleware('throttle:20,1')->name('verification.upload');
+            Route::post('verification/submit', [Marketplace\ProProfileController::class, 'submit'])->middleware('throttle:10,1')->name('verification.submit');
+        });
+
         Route::prefix('pro')->name('pro.')->group(function (): void {
             Route::middleware('permission:bookings.view.assigned')->group(function (): void {
                 Route::get('bookings', [Marketplace\ProBookingController::class, 'index'])->name('bookings.index');
@@ -236,6 +244,15 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
         Route::middleware('permission:settings.manage')->group(function (): void {
             Route::get('settings', [Admin\SettingController::class, 'index'])->name('settings.index');
             Route::patch('settings', [Admin\SettingController::class, 'update'])->name('settings.update');
+        });
+
+        Route::middleware('permission:technicians.verify')->group(function (): void {
+            Route::get('verifications', [Admin\VerificationController::class, 'index'])->name('verifications.index');
+            Route::get('verifications/{profile}', [Admin\VerificationController::class, 'show'])->name('verifications.show');
+            Route::get('verifications/{profile}/documents/{id}', [Admin\VerificationController::class, 'document'])
+                ->whereNumber('id')->name('verifications.document');
+            Route::post('verifications/{profile}/approve', [Admin\VerificationController::class, 'approve'])->name('verifications.approve');
+            Route::post('verifications/{profile}/reject', [Admin\VerificationController::class, 'reject'])->name('verifications.reject');
         });
 
         Route::middleware('permission:support.tickets.view.any')->group(function (): void {

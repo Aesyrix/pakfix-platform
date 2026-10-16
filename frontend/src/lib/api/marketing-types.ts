@@ -245,7 +245,15 @@ export interface AdminOverview {
   };
   inbox: { unhandled_contact_messages: number };
   recent_activity: Array<{ action: string; description: string | null; actor: string | null; created_at: string | null }>;
-  permissions: { content: boolean; blog: boolean; services: boolean; settings: boolean; inbox: boolean };
+  permissions: {
+    content: boolean;
+    blog: boolean;
+    services: boolean;
+    settings: boolean;
+    inbox: boolean;
+    /** Can review professionals' CNIC submissions. */
+    verifications?: boolean;
+  };
 }
 
 export type ContentListItem = { title: string; body: string };
@@ -364,4 +372,39 @@ export interface AdminContactMessage {
   handled_by: string | null;
   handled_at: string | null;
   created_at: string | null;
+}
+
+/** A professional in the verification queue (`/admin/verifications`). */
+export interface AdminVerification {
+  id: string;
+  name: string;
+  phone: string | null;
+  email: string | null;
+  city: string | null;
+  years_experience: number;
+  trades: string[];
+  status: 'not_submitted' | 'pending' | 'more_info_requested' | 'verified' | 'rejected' | 'suspended';
+  /** Last four digits only, to compare with the card in the photo. */
+  cnic_masked: string | null;
+  submitted_at: string | null;
+  reviewed_at: string | null;
+  rejection_reason: string | null;
+  is_verified: boolean;
+}
+
+export interface AdminVerificationDocument {
+  id: number;
+  type: 'cnic_front' | 'cnic_back' | 'photo' | 'certificate' | string;
+  mime_type: string | null;
+  uploaded_at: string | null;
+  /** Streamed by the API to signed-in reviewers only; never cached. */
+  url: string;
+}
+
+export interface AdminVerificationDetail extends AdminVerification {
+  bio: string | null;
+  base_address: string | null;
+  service_radius_km: number;
+  reviewer_notes: string | null;
+  documents: AdminVerificationDocument[];
 }

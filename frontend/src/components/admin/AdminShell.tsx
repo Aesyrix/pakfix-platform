@@ -10,6 +10,7 @@ import {
   Newspaper,
   Quote,
   Settings,
+  ShieldCheck,
   Wrench,
 } from 'lucide-react';
 import Link from 'next/link';
@@ -37,7 +38,7 @@ interface AdminLink {
   label: string;
   labelUr: string;
   icon: typeof LayoutDashboard;
-  permission: 'content' | 'blog' | 'services' | 'settings' | 'inbox' | null;
+  permission: 'content' | 'blog' | 'services' | 'settings' | 'inbox' | 'verifications' | null;
   exact?: boolean;
 }
 
@@ -49,6 +50,7 @@ const LINKS: AdminLink[] = [
   { href: '/admin/pages', label: 'Pages', labelUr: 'صفحات', icon: FileText, permission: 'content' },
   { href: '/admin/blog', label: 'Guides', labelUr: 'گائیڈز', icon: Newspaper, permission: 'blog' },
   { href: '/admin/services', label: 'Services', labelUr: 'خدمات', icon: Wrench, permission: 'services' },
+  { href: '/admin/verifications', label: 'Verifications', labelUr: 'تصدیق', icon: ShieldCheck, permission: 'verifications' },
   { href: '/admin/inbox', label: 'Contact inbox', labelUr: 'رابطہ ان باکس', icon: Inbox, permission: 'inbox' },
   { href: '/admin/settings', label: 'Settings', labelUr: 'ترتیبات', icon: Settings, permission: 'settings' },
 ];
@@ -64,6 +66,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
   const overview = useQuery({ queryKey: ['admin-overview'], queryFn: adminApi.overview, staleTime: 30_000 });
   const permissions = overview.data?.permissions;
   const unhandled = overview.data?.inbox.unhandled_contact_messages ?? 0;
+  const pendingPros = overview.data?.marketplace.pending_professionals ?? 0;
 
   const visible = LINKS.filter((link) => !link.permission || permissions?.[link.permission]);
 
@@ -123,6 +126,11 @@ export function AdminShell({ children }: { children: ReactNode }) {
                     {link.permission === 'inbox' && unhandled > 0 ? (
                       <span className="ml-auto rounded-full bg-[#DC2626] px-1.5 py-0.5 text-[0.6875rem] font-bold text-white">
                         {unhandled}
+                      </span>
+                    ) : null}
+                    {link.permission === 'verifications' && pendingPros > 0 ? (
+                      <span className="ml-auto rounded-full bg-[#D97706] px-1.5 py-0.5 text-[0.6875rem] font-bold text-white">
+                        {pendingPros}
                       </span>
                     ) : null}
                   </Link>
