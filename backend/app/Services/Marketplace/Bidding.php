@@ -235,7 +235,7 @@ class Bidding
             }
 
             $profile = TechnicianProfile::findOrFail($quote->technician_profile_id);
-            $commission = $this->commissionOn($quote->total_minor);
+            $commission = Commission::on($quote->total_minor);
 
             $booking = new Booking([
                 'customer_id' => $customer->id,
@@ -300,15 +300,5 @@ class Bidding
 
             return $booking;
         });
-    }
-
-    /** Zero during the launch period; the configured percentage afterwards. */
-    private function commissionOn(int $totalMinor): int
-    {
-        if (! config('pakfix.marketplace.commission_enabled', false)) {
-            return 0;
-        }
-
-        return (int) round($totalMinor * (float) config('pakfix.commission.percentage', 10) / 100);
     }
 }

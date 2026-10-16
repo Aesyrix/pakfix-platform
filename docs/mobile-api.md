@@ -291,6 +291,35 @@ the launch period (`PAKFIX_COMMISSION_ENABLED=false`).
 
 ---
 
+## Job tracking (bookings)
+
+Accepting an offer creates a booking. From there:
+
+| Who | Endpoint | Does |
+|---|---|---|
+| Customer | `GET /bookings`, `GET /bookings/{uuid}` | Their jobs (active first) and one job with its timeline |
+| Customer | `POST /bookings/{uuid}/cancel` | Free until the professional sets off; afterwards 422 "contact support" |
+| Customer | `POST /bookings/{uuid}/revised-quote/accept` | Approve a revised price; the booking takes its money |
+| Customer | `POST /bookings/{uuid}/revised-quote/reject` | Decline it; the job is cancelled and only the visit fee is due |
+| Customer | `POST /bookings/{uuid}/confirm` | Work done and paid in cash (marks payment paid) |
+| Professional | `GET /pro/bookings`, `GET /pro/bookings/{uuid}` | Assigned jobs, with address and pin |
+| Professional | `POST /pro/bookings/{uuid}/status` `{ "step": "on_way" }` | Next step: `on_way`, `arrived`, `inspecting`, `working`, `completed` |
+| Professional | `POST /pro/bookings/{uuid}/revised-quote` | While inspecting: `labour_minor`, `materials_minor`, `notes` (visit fee is kept) |
+| Professional | `POST /pro/bookings/{uuid}/cancel` | Until arrival, with a `reason`; counts against the professional |
+
+Every booking carries `actions`: what the viewer may do right now (for example `["on_way", "cancel"]`
+or `["accept_quote", "reject_quote"]`). Offer exactly those and grey out the rest; the server
+refuses anything else. `timeline` is the append-only status history, oldest first, and
+`pending_quote` is a revised price waiting for the customer. Phone numbers are never included.
+
+```
+accepted → (scheduled) → technician_on_way → arrived → inspection_started → repair_started → completed → customer_confirmed
+inspection_started → quote_created → quote_accepted → repair_started
+                                   ↘ cancelled (visit fee only)
+```
+
+---
+
 ## Endpoints available today
 
 ```

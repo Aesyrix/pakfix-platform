@@ -149,6 +149,31 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
             Route::post('quotes/{uuid}/reject', [Marketplace\CustomerRequestController::class, 'reject'])->name('quotes.reject');
         });
 
+        // Bookings: following and finishing a job once an offer is accepted.
+        Route::middleware('permission:bookings.view.own')->group(function (): void {
+            Route::get('bookings', [Marketplace\CustomerBookingController::class, 'index'])->name('bookings.index');
+            Route::get('bookings/{uuid}', [Marketplace\CustomerBookingController::class, 'show'])->name('bookings.show');
+        });
+        Route::post('bookings/{uuid}/cancel', [Marketplace\CustomerBookingController::class, 'cancel'])
+            ->middleware(['permission:bookings.cancel', 'throttle:20,1'])->name('bookings.cancel');
+        Route::middleware(['permission:bookings.update', 'throttle:30,1'])->group(function (): void {
+            Route::post('bookings/{uuid}/confirm', [Marketplace\CustomerBookingController::class, 'confirm'])->name('bookings.confirm');
+            Route::post('bookings/{uuid}/revised-quote/accept', [Marketplace\CustomerBookingController::class, 'acceptQuote'])->name('bookings.quote.accept');
+            Route::post('bookings/{uuid}/revised-quote/reject', [Marketplace\CustomerBookingController::class, 'rejectQuote'])->name('bookings.quote.reject');
+        });
+
+        Route::prefix('pro')->name('pro.')->group(function (): void {
+            Route::middleware('permission:bookings.view.assigned')->group(function (): void {
+                Route::get('bookings', [Marketplace\ProBookingController::class, 'index'])->name('bookings.index');
+                Route::get('bookings/{uuid}', [Marketplace\ProBookingController::class, 'show'])->name('bookings.show');
+            });
+            Route::middleware(['permission:bookings.update.status', 'throttle:60,1'])->group(function (): void {
+                Route::post('bookings/{uuid}/status', [Marketplace\ProBookingController::class, 'advance'])->name('bookings.status');
+                Route::post('bookings/{uuid}/revised-quote', [Marketplace\ProBookingController::class, 'revisedQuote'])->name('bookings.quote');
+                Route::post('bookings/{uuid}/cancel', [Marketplace\ProBookingController::class, 'cancel'])->name('bookings.cancel');
+            });
+        });
+
         Route::prefix('pro')->name('pro.')->middleware('permission:quotes.create')->group(function (): void {
             Route::get('requests', [Marketplace\ProRequestController::class, 'nearby'])->name('requests.nearby');
             Route::get('requests/{uuid}', [Marketplace\ProRequestController::class, 'show'])->name('requests.show');
