@@ -9,6 +9,7 @@ use App\Http\Resources\V1\BookingResource;
 use App\Models\Booking;
 use App\Models\TechnicianProfile;
 use App\Services\Marketplace\BookingFlow;
+use App\Services\Marketplace\Reviews;
 use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -21,9 +22,9 @@ use Illuminate\Validation\Rule;
  */
 class ProBookingController extends Controller
 {
-    private const WITH = ['category', 'city', 'customer', 'statusHistory', 'quotes'];
+    private const WITH = ['category', 'city', 'customer', 'statusHistory', 'quotes', 'review'];
 
-    public function __construct(private readonly BookingFlow $flow)
+    public function __construct(private readonly BookingFlow $flow, private readonly Reviews $reviews)
     {
     }
 
@@ -90,6 +91,17 @@ class ProBookingController extends Controller
         $booking = $this->flow->cancel($this->assigned($request, $uuid), $request->user(), 'technician', $data['reason']);
 
         return $this->respond($booking, 'Job cancelled.');
+    }
+
+    /** `POST /pro/bookings/{uuid}/review-response` — one public reply to the customer's review. */
+    public function respondToReview(Request $request, string $uuid): JsonResponse
+    {
+        $data = $request->validate(['response' => ['required', 'string', 'min:2', 'max:1000']]);
+        $booking = $this->assigned($request, $uuid);
+        $review = $booking->review ?? abort(404, 'This job has no review yet.');
+        $this->reviews->respond($review, $data['response']);
+
+        return $this->respond($booking, 'Reply posted.');
     }
 
     private function profile(Request $request): TechnicianProfile

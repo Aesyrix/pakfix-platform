@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\BookingResource;
 use App\Models\Booking;
 use App\Services\Marketplace\BookingFlow;
+use App\Services\Marketplace\Reviews;
 use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -19,9 +20,9 @@ use Illuminate\Http\Request;
  */
 class CustomerBookingController extends Controller
 {
-    private const WITH = ['category', 'city', 'technicianProfile.user', 'statusHistory', 'quotes'];
+    private const WITH = ['category', 'city', 'technicianProfile.user', 'statusHistory', 'quotes', 'review'];
 
-    public function __construct(private readonly BookingFlow $flow)
+    public function __construct(private readonly BookingFlow $flow, private readonly Reviews $reviews)
     {
     }
 
@@ -78,6 +79,27 @@ class CustomerBookingController extends Controller
         $booking = $this->flow->rejectRevisedQuote($this->own($request, $uuid), $request->user(), $request->input('reason'));
 
         return $this->respond($booking, 'Revised price declined. Only the visit fee is due.');
+    }
+
+    /** `POST /bookings/{uuid}/review` — once, after confirming the job. */
+    public function review(Request $request, string $uuid): JsonResponse
+    {
+        $score = ['nullable', 'integer', 'between:1,5'];
+        $data = $request->validate([
+            'rating' => ['required', 'integer', 'between:1,5'],
+            'quality_rating' => $score,
+            'professionalism_rating' => $score,
+            'communication_rating' => $score,
+            'value_rating' => $score,
+            'timeliness_rating' => $score,
+            'comment' => ['nullable', 'string', 'max:2000'],
+            'would_recommend' => ['nullable', 'boolean'],
+        ], ['rating.required' => 'Choose a star rating.']);
+
+        $booking = $this->own($request, $uuid);
+        $this->reviews->create($booking, $request->user(), $data);
+
+        return $this->respond($booking, 'Thanks for your review.');
     }
 
     private function own(Request $request, string $uuid): Booking

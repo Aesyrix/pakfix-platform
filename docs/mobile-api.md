@@ -307,6 +307,13 @@ Accepting an offer creates a booking. From there:
 | Professional | `POST /pro/bookings/{uuid}/revised-quote` | While inspecting: `labour_minor`, `materials_minor`, `notes` (visit fee is kept) |
 | Professional | `POST /pro/bookings/{uuid}/cancel` | Until arrival, with a `reason`; counts against the professional |
 
+| Customer | `POST /bookings/{uuid}/review` | After confirming: `rating` 1–5 (required), optional `comment`, `would_recommend`, and `quality_rating`, `professionalism_rating`, `communication_rating`, `value_rating`, `timeliness_rating` |
+| Professional | `POST /pro/bookings/{uuid}/review-response` | One public reply to the customer's review (`response`) |
+
+A confirmed, unreviewed booking offers the customer the `review` action; the booking's `review` field holds
+the review and any reply. The professional's `rating_average`/`rating_count` are recomputed from published
+reviews.
+
 Every booking carries `actions`: what the viewer may do right now (for example `["on_way", "cancel"]`
 or `["accept_quote", "reject_quote"]`). Offer exactly those and grey out the rest; the server
 refuses anything else. `timeline` is the append-only status history, oldest first, and

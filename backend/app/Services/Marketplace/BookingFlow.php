@@ -80,6 +80,7 @@ class BookingFlow
         }
 
         return match (true) {
+            $status === BookingStatus::CustomerConfirmed && ! $booking->is_reviewed => ['review'],
             $status === BookingStatus::Completed => ['confirm'],
             $status === BookingStatus::QuoteCreated => ['accept_quote', 'reject_quote'],
             in_array($status, self::CUSTOMER_CANCELLABLE, true) => ['cancel'],
