@@ -109,6 +109,15 @@ class BookingResource extends JsonResource
                 ];
             }),
 
+            'review' => $this->whenLoaded('review', fn () => $this->review === null ? null : [
+                'id' => $this->review->uuid,
+                'rating' => (int) $this->review->rating,
+                'comment' => $this->review->comment,
+                'would_recommend' => $this->review->would_recommend,
+                'response' => $this->review->response,
+                'created_at' => $this->review->created_at?->toIso8601String(),
+            ]),
+
             $this->mergeWhen(! $isPro, fn () => [
                 'professional' => $this->whenLoaded('technicianProfile', function () {
                     $p = $this->technicianProfile;
