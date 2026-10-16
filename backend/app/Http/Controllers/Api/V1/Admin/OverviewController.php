@@ -69,6 +69,7 @@ class OverviewController extends Controller
                 'services' => $user->can('services.manage'),
                 'settings' => $user->can('settings.manage'),
                 'inbox' => $user->can('support.tickets.view.any'),
+                'verifications' => $user->can('technicians.verify'),
             ],
         ]);
     }

@@ -9,6 +9,8 @@ import type {
   AdminServiceCategory,
   AdminSetting,
   AdminTestimonial,
+  AdminVerification,
+  AdminVerificationDetail,
   AuthPayload,
   BlogCategory,
   BlogPostCard,
@@ -243,4 +245,12 @@ export const adminApi = {
     apiRequest<AdminContactMessage[]>('admin/contact-messages', { query: { ...filters } }),
   updateContactMessage: (id: string, input: Record<string, unknown>) =>
     apiRequest<AdminContactMessage>(`admin/contact-messages/${id}`, { method: 'PATCH', body: input }),
+
+  verifications: (filters: { status?: string; page?: number } = {}) =>
+    apiRequest<AdminVerification[]>('admin/verifications', { query: { ...filters } }),
+  verification: (id: string) => api.get<AdminVerificationDetail>(`admin/verifications/${id}`),
+  approveVerification: (id: string, notes?: string) =>
+    apiRequest<AdminVerification>(`admin/verifications/${id}/approve`, { method: 'POST', body: { notes } }),
+  rejectVerification: (id: string, reason: string) =>
+    apiRequest<AdminVerification>(`admin/verifications/${id}/reject`, { method: 'POST', body: { reason } }),
 };

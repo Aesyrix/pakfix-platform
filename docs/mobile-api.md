@@ -320,6 +320,24 @@ inspection_started → quote_created → quote_accepted → repair_started
 
 ---
 
+## Professional verification
+
+A technician registers as `pending` and cannot see jobs until a person at PakFix verifies them.
+
+| Endpoint | Does |
+|---|---|
+| `GET /pro/profile` | Profile, `verification.status`, `rejection_reason`, and a `checklist` (`profile_complete`, `missing_documents`, `can_submit`) |
+| `PUT /pro/profile` | `category_ids` (UUIDs, 1–10), `city_id` (served city), optional `latitude`/`longitude` (defaults to the city centre), `service_radius_km` (5–50, default 20), `years_experience`, `business_name`, `bio`, `offers_emergency_service` |
+| `POST /pro/verification/documents` | Multipart `type` (`cnic_front`, `cnic_back`, `photo`, `certificate`) + `file` (JPG/PNG/WebP up to 8 MB; a certificate may be a PDF). A new upload replaces the old one of that type |
+| `POST /pro/verification/submit` | `{ "cnic": "35202-1234567-1" }` once the profile and the three required photos are in |
+
+Statuses: `not_submitted` → `pending` → `verified`, or `rejected` with a reason, after which the
+professional fixes and resubmits. Uploads are locked while `pending`. Documents are stored privately
+and are only ever shown to reviewers in the admin panel (`/admin/verifications`); the CNIC number is
+never returned to the app.
+
+---
+
 ## Endpoints available today
 
 ```
