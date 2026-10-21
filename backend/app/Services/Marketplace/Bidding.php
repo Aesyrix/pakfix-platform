@@ -14,6 +14,7 @@ use App\Models\QuoteRequest;
 use App\Models\ServiceCategory;
 use App\Models\TechnicianProfile;
 use App\Models\User;
+use App\Services\Notifications\Notifier;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
@@ -65,6 +66,7 @@ class Bidding
         ]);
         $request->expires_at = now()->addMinutes($request->biddingMinutesFor($urgency));
         $request->save();
+        app(Notifier::class)->newRequest($request);
 
         return $request->load(['category', 'city', 'area']);
     }
@@ -182,6 +184,7 @@ class Bidding
             }
 
             $request->increment('quotes_count');
+            app(Notifier::class)->newOffer($quote, $request);
 
             return $quote->load(['technicianProfile.user', 'technicianProfile.city']);
         });
@@ -300,6 +303,7 @@ class Bidding
                 ]);
 
             $request->forceFill(['status' => QuoteRequest::STATUS_CLOSED, 'booking_id' => $booking->id])->save();
+            app(Notifier::class)->offerAccepted($booking);
 
             return $booking;
         });

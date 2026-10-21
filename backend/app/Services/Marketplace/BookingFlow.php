@@ -11,6 +11,7 @@ use App\Models\Booking;
 use App\Models\Quote;
 use App\Models\TechnicianProfile;
 use App\Models\User;
+use App\Services\Notifications\Notifier;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
@@ -163,6 +164,7 @@ class BookingFlow
                 'quote' => $quote->reference,
                 'total_minor' => $quote->total_minor,
             ]);
+            app(Notifier::class)->revisedPrice($booking);
 
             return $quote;
         });
@@ -300,6 +302,7 @@ class BookingFlow
             'note' => $note,
             'meta' => $meta === [] ? null : $meta,
         ]);
+        app(Notifier::class)->bookingChanged($booking, $to, $role);
 
         return $booking;
     }

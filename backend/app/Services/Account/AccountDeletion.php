@@ -8,6 +8,7 @@ use App\Enums\BookingStatus;
 use App\Enums\QuoteStatus;
 use App\Enums\VerificationStatus;
 use App\Models\Booking;
+use App\Models\DeviceToken;
 use App\Models\Property;
 use App\Models\Quote;
 use App\Models\QuoteRequest;
@@ -115,6 +116,7 @@ class AccountDeletion
             $this->audit->record('account.deleted', $user, [], ['reason' => $reason], 'A user deleted their account.', $user);
 
             $user->tokens()->delete();
+            DeviceToken::query()->where('user_id', $user->id)->delete();
             $user->forceFill([
                 'name' => self::DELETED_NAME,
                 'email' => 'deleted-'.($user->uuid ?? Str::uuid()).'@deleted.pakfix.invalid',
