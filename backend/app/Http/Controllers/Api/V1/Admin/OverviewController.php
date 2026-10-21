@@ -15,6 +15,7 @@ use App\Models\ServiceCategory;
 use App\Models\TechnicianProfile;
 use App\Models\Testimonial;
 use App\Models\User;
+use App\Models\UserReport;
 use App\Services\Marketplace\CoverageMap;
 use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
@@ -48,6 +49,7 @@ class OverviewController extends Controller
             ],
             'inbox' => [
                 'unhandled_contact_messages' => ContactMessage::unhandled()->count(),
+                'open_reports' => $user->can('messages.moderate') ? UserReport::query()->unresolved()->count() : 0,
             ],
             // Only people who can read the audit log see who did what.
             'recent_activity' => $user->can('audit.view')
@@ -70,6 +72,7 @@ class OverviewController extends Controller
                 'settings' => $user->can('settings.manage'),
                 'inbox' => $user->can('support.tickets.view.any'),
                 'verifications' => $user->can('technicians.verify'),
+                'reports' => $user->can('messages.moderate'),
             ],
         ]);
     }

@@ -235,6 +235,9 @@ class Bidding
             }
 
             $profile = TechnicianProfile::findOrFail($quote->technician_profile_id);
+            if (app(Safety::class)->blockedBetween((int) $customer->id, (int) $profile->user_id)) {
+                throw ValidationException::withMessages(['quote' => 'You cannot book this professional.']);
+            }
             $commission = Commission::on($quote->total_minor);
 
             $booking = new Booking([

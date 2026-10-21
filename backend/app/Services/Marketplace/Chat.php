@@ -76,11 +76,42 @@ class Chat
     {
         $closes = $this->closesAt($booking);
 
-        return $booking->technician_profile_id !== null && ($closes === null || $closes->isFuture());
+        return $booking->technician_profile_id !== null
+            && ($closes === null || $closes->isFuture())
+            && ! $this->isBlocked($booking);
+    }
+
+    /** Either person on the job has blocked the other. */
+    public function isBlocked(Booking $booking): bool
+    {
+        $proUserId = $this->proUserId($booking);
+
+        return $proUserId !== null && app(Safety::class)->blockedBetween((int) $booking->customer_id, $proUserId);
+    }
+
+    /** The other person on the job, from `$viewer`'s side. */
+    public function otherParty(Booking $booking, User $viewer): ?User
+    {
+        $booking->loadMissing(['technicianProfile.user', 'customer']);
+
+        return $this->roleOf($booking, $viewer) === 'customer' ? $booking->technicianProfile?->user : $booking->customer;
+    }
+
+    private function proUserId(Booking $booking): ?int
+    {
+        if ($booking->technician_profile_id === null) {
+            return null;
+        }
+        $booking->loadMissing('technicianProfile');
+
+        return $booking->technicianProfile?->user_id;
     }
 
     public function send(Booking $booking, User $sender, ?string $body, ?UploadedFile $photo): BookingMessage
     {
+        if ($this->isBlocked($booking)) {
+            throw ValidationException::withMessages(['body' => 'You cannot message this person.']);
+        }
         if (! $this->canSend($booking)) {
             throw ValidationException::withMessages(['body' => 'This chat is closed.']);
         }

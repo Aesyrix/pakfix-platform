@@ -170,6 +170,14 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
         Route::get('conversations/unread', [Marketplace\ChatController::class, 'unread'])->name('conversations.unread');
         Route::get('bookings/{uuid}/messages', [Marketplace\ChatController::class, 'messages'])->name('bookings.messages');
         Route::get('bookings/{uuid}/messages/{id}/photo', [Marketplace\ChatController::class, 'photo'])->name('bookings.messages.photo');
+        // Safety: report or block the other person on a job.
+        Route::middleware('throttle:20,1')->group(function (): void {
+            Route::post('bookings/{uuid}/report', [Marketplace\SafetyController::class, 'report'])->name('bookings.report');
+            Route::post('bookings/{uuid}/block', [Marketplace\SafetyController::class, 'block'])->name('bookings.block');
+            Route::delete('bookings/{uuid}/block', [Marketplace\SafetyController::class, 'unblock'])->name('bookings.unblock');
+            Route::delete('blocks/{userUuid}', [Marketplace\SafetyController::class, 'destroy'])->name('blocks.destroy');
+        });
+        Route::get('blocks', [Marketplace\SafetyController::class, 'index'])->name('blocks.index');
         Route::post('bookings/{uuid}/messages', [Marketplace\ChatController::class, 'store'])
             ->middleware('throttle:40,1')->name('bookings.messages.store');
 
@@ -256,6 +264,11 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
         Route::middleware('permission:settings.manage')->group(function (): void {
             Route::get('settings', [Admin\SettingController::class, 'index'])->name('settings.index');
             Route::patch('settings', [Admin\SettingController::class, 'update'])->name('settings.update');
+        });
+
+        Route::middleware('permission:messages.moderate')->group(function (): void {
+            Route::get('reports', [Admin\ReportController::class, 'index'])->name('reports.index');
+            Route::patch('reports/{uuid}', [Admin\ReportController::class, 'update'])->name('reports.update');
         });
 
         Route::middleware('permission:technicians.verify')->group(function (): void {

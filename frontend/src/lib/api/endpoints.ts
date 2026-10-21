@@ -9,6 +9,7 @@ import type {
   AdminServiceCategory,
   AdminSetting,
   AdminTestimonial,
+  AdminReport,
   AdminVerification,
   AdminVerificationDetail,
   AuthPayload,
@@ -253,4 +254,9 @@ export const adminApi = {
     apiRequest<AdminVerification>(`admin/verifications/${id}/approve`, { method: 'POST', body: { notes } }),
   rejectVerification: (id: string, reason: string) =>
     apiRequest<AdminVerification>(`admin/verifications/${id}/reject`, { method: 'POST', body: { reason } }),
+
+  reports: (filters: { status?: string; page?: number } = {}) =>
+    apiRequest<AdminReport[]>('admin/reports', { query: { ...filters } }),
+  updateReport: (id: string, input: { status: AdminReport['status']; resolution?: string }) =>
+    apiRequest<AdminReport>(`admin/reports/${id}`, { method: 'PATCH', body: input }),
 };

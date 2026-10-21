@@ -61,6 +61,7 @@ class RequestMatcher
         return QuoteRequest::query()
             ->acceptingBids()
             ->where('customer_id', '!=', $profile->user_id)
+            ->whereNotIn('customer_id', app(Safety::class)->blockedIds((int) $profile->user_id))
             ->where(fn ($q) => $q
                 ->whereIn('service_category_id', $categoryIds)
                 ->orWhereHas('category', fn ($c) => $c->whereIn('parent_id', $categoryIds)))
@@ -85,6 +86,9 @@ class RequestMatcher
     public function canBid(TechnicianProfile $profile, QuoteRequest $request): bool
     {
         if (! $profile->isVerified() || (int) $request->customer_id === (int) $profile->user_id || ! $request->isAcceptingBids()) {
+            return false;
+        }
+        if (app(Safety::class)->blockedBetween((int) $request->customer_id, (int) $profile->user_id)) {
             return false;
         }
 
