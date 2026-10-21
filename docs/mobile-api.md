@@ -418,3 +418,12 @@ Between the customer and the professional on a booking (others get 404).
 A block works both ways: chat becomes read-only (`meta.chat.blocked`, `conversations[].blocked`), the professional stops seeing the customer's requests and cannot bid, and the customer cannot accept that professional's offers.
 
 Admin (permission `messages.moderate`): `GET /admin/reports?status=unresolved|open|reviewing|actioned|dismissed`, `PATCH /admin/reports/{uuid}` `{ status, resolution? }`. `GET /admin/overview` → `inbox.open_reports`, `permissions.reports`.
+
+## Account deletion
+
+| Method | Path | Notes |
+|---|---|---|
+| GET | `/account/deletion` | `{ can_delete, active_bookings }` — refused while a job is in progress. |
+| DELETE | `/account` | `{ password, reason? }`. Erases name, email, phone, photo, CNIC number and files, saved addresses; cancels open requests and offers; signs out every device. Past jobs, reviews and chat stay, shown as "Deleted user". Throttled 5/min. |
+
+Web: `https://pakfix.pk/delete-account` (Google Play's account-deletion link; also in the site footer).

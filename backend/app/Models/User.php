@@ -38,6 +38,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public const STATUS_SUSPENDED = 'suspended';
     public const STATUS_BANNED = 'banned';
 
+    /** Deleted by the person themselves; personal details have been erased. */
+    public const STATUS_DELETED = 'deleted';
+
     protected $fillable = [
         'name',
         'email',
