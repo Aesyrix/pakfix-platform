@@ -243,7 +243,7 @@ export interface AdminOverview {
     verified_professionals: number;
     pending_professionals: number;
   };
-  inbox: { unhandled_contact_messages: number };
+  inbox: { unhandled_contact_messages: number; open_reports?: number };
   recent_activity: Array<{ action: string; description: string | null; actor: string | null; created_at: string | null }>;
   permissions: {
     content: boolean;
@@ -253,6 +253,8 @@ export interface AdminOverview {
     inbox: boolean;
     /** Can review professionals' CNIC submissions. */
     verifications?: boolean;
+    /** Can handle reports from customers and professionals. */
+    reports?: boolean;
   };
 }
 
@@ -372,6 +374,32 @@ export interface AdminContactMessage {
   handled_by: string | null;
   handled_at: string | null;
   created_at: string | null;
+}
+
+export interface AdminReportPerson {
+  id: string;
+  name: string;
+  email: string | null;
+  phone: string | null;
+  role: string | null;
+}
+
+/** A report in the moderation queue (`/admin/reports`). */
+export interface AdminReport {
+  id: string;
+  reason: 'harassment' | 'inappropriate' | 'spam' | 'fraud' | 'safety' | 'off_platform' | 'other';
+  details: string | null;
+  /** The reported message, copied when the report was made. */
+  snapshot: string | null;
+  status: 'open' | 'reviewing' | 'actioned' | 'dismissed';
+  resolution: string | null;
+  reporter: AdminReportPerson | null;
+  reported: AdminReportPerson | null;
+  booking: { id: string; reference: string; status: string } | null;
+  reports_against_user: number;
+  handled_by: string | null;
+  handled_at: string | null;
+  created_at: string;
 }
 
 /** A professional in the verification queue (`/admin/verifications`). */
