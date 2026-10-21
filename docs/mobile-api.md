@@ -387,3 +387,19 @@ DELETE /auth/devices/{tokenId}
 
 Their tables, enums and business rules already exist — see [database.md](database.md). Build the
 app against the contract in this document and the endpoints will match when they land.
+
+## Booking chat
+
+Chat between a booking's customer and its professional. Same routes for both sides; anyone else gets 404.
+Open from assignment until 7 days after the customer confirms the job; a cancelled job is read-only.
+Phone numbers (10+ digits) and email addresses in a message are replaced with `[number hidden]` / `[email hidden]`.
+
+| Method | Path | Notes |
+|---|---|---|
+| GET | `/conversations` | One row per booking: `booking_id`, `reference`, `status`, `category`, `role`, `with {name, avatar_url}`, `last_message {preview, has_photo, mine, created_at}`, `unread_count`, `can_send`. `meta.unread_total`. |
+| GET | `/conversations/unread` | `{ unread_total }` for the tab badge. |
+| GET | `/bookings/{uuid}/messages?after=<id>\|before=<id>` | Oldest first (latest 50, or newer than `after` for polling, or older than `before`). Marks the other side's messages read. `meta.chat {role, with, can_send, closes_at, status}`. |
+| POST | `/bookings/{uuid}/messages` | Multipart `body` (≤2000) and/or `photo` (jpg/png/webp/heic ≤8 MB). Throttled 40/min. |
+| GET | `/bookings/{uuid}/messages/{id}/photo` | The photo, participants only. Message JSON gives it as `photo.path` (relative to `/api/v1/`). |
+
+Message: `{ id, body, mine, from: customer|technician, photo: {path, mime}|null, read: bool|null (own messages only), created_at }`.

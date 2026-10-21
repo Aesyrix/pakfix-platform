@@ -164,6 +164,15 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
         });
 
         // A professional's own profile and verification (open while pending).
+        // Booking chat: the customer and the professional on a job. Who you
+        // are on the booking is checked in the service (anyone else: 404).
+        Route::get('conversations', [Marketplace\ChatController::class, 'index'])->name('conversations.index');
+        Route::get('conversations/unread', [Marketplace\ChatController::class, 'unread'])->name('conversations.unread');
+        Route::get('bookings/{uuid}/messages', [Marketplace\ChatController::class, 'messages'])->name('bookings.messages');
+        Route::get('bookings/{uuid}/messages/{id}/photo', [Marketplace\ChatController::class, 'photo'])->name('bookings.messages.photo');
+        Route::post('bookings/{uuid}/messages', [Marketplace\ChatController::class, 'store'])
+            ->middleware('throttle:40,1')->name('bookings.messages.store');
+
         Route::prefix('pro')->name('pro.')->middleware('permission:technicians.manage.own')->group(function (): void {
             Route::get('profile', [Marketplace\ProProfileController::class, 'show'])->name('profile.show');
             Route::put('profile', [Marketplace\ProProfileController::class, 'update'])->middleware('throttle:30,1')->name('profile.update');
