@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Api\V1\Admin;
+use App\Http\Controllers\Api\V1\AccountController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\BlogController;
 use App\Http\Controllers\Api\V1\ContactController;
@@ -164,6 +165,10 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
         });
 
         // A professional's own profile and verification (open while pending).
+        // Deleting your own account (App Store / Play requirement).
+        Route::get('account/deletion', [AccountController::class, 'deletionCheck'])->name('account.deletion');
+        Route::delete('account', [AccountController::class, 'destroy'])->middleware('throttle:5,1,account')->name('account.destroy');
+
         // Booking chat: the customer and the professional on a job. Who you
         // are on the booking is checked in the service (anyone else: 404).
         Route::get('conversations', [Marketplace\ChatController::class, 'index'])->name('conversations.index');
@@ -171,7 +176,7 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
         Route::get('bookings/{uuid}/messages', [Marketplace\ChatController::class, 'messages'])->name('bookings.messages');
         Route::get('bookings/{uuid}/messages/{id}/photo', [Marketplace\ChatController::class, 'photo'])->name('bookings.messages.photo');
         // Safety: report or block the other person on a job.
-        Route::middleware('throttle:20,1')->group(function (): void {
+        Route::middleware('throttle:20,1,safety')->group(function (): void {
             Route::post('bookings/{uuid}/report', [Marketplace\SafetyController::class, 'report'])->name('bookings.report');
             Route::post('bookings/{uuid}/block', [Marketplace\SafetyController::class, 'block'])->name('bookings.block');
             Route::delete('bookings/{uuid}/block', [Marketplace\SafetyController::class, 'unblock'])->name('bookings.unblock');
@@ -179,7 +184,7 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
         });
         Route::get('blocks', [Marketplace\SafetyController::class, 'index'])->name('blocks.index');
         Route::post('bookings/{uuid}/messages', [Marketplace\ChatController::class, 'store'])
-            ->middleware('throttle:40,1')->name('bookings.messages.store');
+            ->middleware('throttle:40,1,chat')->name('bookings.messages.store');
 
         Route::prefix('pro')->name('pro.')->middleware('permission:technicians.manage.own')->group(function (): void {
             Route::get('profile', [Marketplace\ProProfileController::class, 'show'])->name('profile.show');
