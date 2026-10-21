@@ -135,6 +135,11 @@ class Booking extends Model
         return $this->hasMany(BookingInvitation::class);
     }
 
+    public function messages(): HasMany
+    {
+        return $this->hasMany(BookingMessage::class)->orderBy('id');
+    }
+
     public function quotes(): HasMany
     {
         return $this->hasMany(Quote::class);
