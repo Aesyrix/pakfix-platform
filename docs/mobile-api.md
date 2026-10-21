@@ -403,3 +403,18 @@ Phone numbers (10+ digits) and email addresses in a message are replaced with `[
 | GET | `/bookings/{uuid}/messages/{id}/photo` | The photo, participants only. Message JSON gives it as `photo.path` (relative to `/api/v1/`). |
 
 Message: `{ id, body, mine, from: customer|technician, photo: {path, mime}|null, read: bool|null (own messages only), created_at }`.
+
+## Report and block
+
+Between the customer and the professional on a booking (others get 404).
+
+| Method | Path | Notes |
+|---|---|---|
+| POST | `/bookings/{uuid}/report` | `{ reason: harassment\|inappropriate\|spam\|fraud\|safety\|off_platform\|other, details?, message_id? }` — reports the other person, or one of their messages (its text is copied as evidence). |
+| POST / DELETE | `/bookings/{uuid}/block` | Block / unblock the other person. Response `{ blocked: by_me\|by_them\|null }`. |
+| GET | `/blocks` | People you blocked: `[{ user_id, name, blocked_at }]`. |
+| DELETE | `/blocks/{userUuid}` | Unblock. |
+
+A block works both ways: chat becomes read-only (`meta.chat.blocked`, `conversations[].blocked`), the professional stops seeing the customer's requests and cannot bid, and the customer cannot accept that professional's offers.
+
+Admin (permission `messages.moderate`): `GET /admin/reports?status=unresolved|open|reviewing|actioned|dismissed`, `PATCH /admin/reports/{uuid}` `{ status, resolution? }`. `GET /admin/overview` → `inbox.open_reports`, `permissions.reports`.

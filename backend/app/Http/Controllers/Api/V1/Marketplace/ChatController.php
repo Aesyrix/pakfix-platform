@@ -9,6 +9,7 @@ use App\Models\Booking;
 use App\Models\BookingMessage;
 use App\Models\User;
 use App\Services\Marketplace\Chat;
+use App\Services\Marketplace\Safety;
 use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -51,6 +52,7 @@ class ChatController extends Controller
                     'created_at' => $message->created_at->toIso8601String(),
                 ],
                 'unread_count' => (int) $b->getAttribute('unread_count'),
+                'blocked' => $this->blockState($b, $user),
                 'can_send' => $this->chat->canSend($b),
                 'updated_at' => $b->updated_at->toIso8601String(),
             ];
@@ -156,8 +158,17 @@ class ChatController extends Controller
                 'with' => $this->party($booking, $role),
                 'can_send' => $this->chat->canSend($booking),
                 'closes_at' => $closes?->toIso8601String(),
+                // `by_me`, `by_them` or null: a blocked chat is read-only.
+                'blocked' => $this->blockState($booking, $viewer),
             ],
         ];
+    }
+
+    private function blockState(Booking $booking, User $viewer): ?string
+    {
+        $other = $this->chat->otherParty($booking, $viewer);
+
+        return $other === null ? null : app(Safety::class)->blockState($viewer->id, $other->id);
     }
 
     /**
