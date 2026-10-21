@@ -120,5 +120,17 @@ return [
         ],
     ],
 
+    /*
+    | Push notifications (Firebase Cloud Messaging). The service-account file
+    | is a secret: the deploy writes it from the FIREBASE_CREDENTIALS GitHub
+    | secret into storage/app/private, which git ignores and deploys keep.
+    */
+    'push' => [
+        'enabled' => (bool) env('PUSH_ENABLED', true),
+        'credentials_path' => env('FIREBASE_CREDENTIALS_PATH') ?: storage_path('app/private/firebase-credentials.json'),
+        // How far to look for professionals to tell about a new request.
+        'new_job_max_pros' => 50,
+    ],
+
     'frontend_url' => env('FRONTEND_URL', 'http://localhost:3000'),
 ];

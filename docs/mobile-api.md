@@ -427,3 +427,26 @@ Admin (permission `messages.moderate`): `GET /admin/reports?status=unresolved|op
 | DELETE | `/account` | `{ password, reason? }`. Erases name, email, phone, photo, CNIC number and files, saved addresses; cancels open requests and offers; signs out every device. Past jobs, reviews and chat stay, shown as "Deleted user". Throttled 5/min. |
 
 Web: `https://pakfix.pk/delete-account` (Google Play's account-deletion link; also in the site footer).
+
+## Push notifications
+
+| Method | Path | Notes |
+|---|---|---|
+| POST | `/push-tokens` | `{ token, platform: android\|ios, device_name?, app_version? }` after sign-in. A token moves to whoever signed in last on that phone. |
+| DELETE | `/push-tokens` | `{ token }` on sign-out. |
+| GET | `/` (API root) | `data.push`: `ready` \| `not_configured` \| `rejected` — whether the server can send. |
+
+Every notification carries `data.type` and `data.route` (the screen to open):
+
+| type | Who | When | route |
+|---|---|---|---|
+| `new_job` | Verified pros who can bid | A request is posted | `/pro/jobs/{requestId}` |
+| `new_offer` | Customer | A pro sends an offer | `/requests/{requestId}` |
+| `offer_accepted` | Pro | Customer accepts | `/pro/bookings/{bookingId}` |
+| `job_update` | Customer | Pro on the way / arrived / done / cancelled, revised price | `/bookings/{bookingId}` |
+| `job_update` | Pro | Customer confirmed / approved price / cancelled | `/pro/bookings/{bookingId}` |
+| `message` | The other person | New chat message | `/chat/{bookingId}` |
+| `verification` | Pro | Approved / sent back | `/verification` |
+| `review` | Pro | New review | `/pro/bookings/{bookingId}` |
+
+Titles and bodies follow the user's `locale` (en/ur). `notification_preferences` (type, push=false) turns a type off. Sent after the response (`defer`), never failing the request. Server key: GitHub secret `FIREBASE_CREDENTIALS` → `storage/app/private/firebase-credentials.json` (600) on deploy.

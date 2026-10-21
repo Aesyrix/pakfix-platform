@@ -8,6 +8,7 @@ use App\Enums\BookingStatus;
 use App\Models\Booking;
 use App\Models\BookingMessage;
 use App\Models\User;
+use App\Services\Notifications\Notifier;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
@@ -138,6 +139,7 @@ class Chat
                 ...$attachment,
             ]);
             $booking->touch();
+            app(Notifier::class)->newMessage($booking, $message, $sender);
 
             return $message;
         });

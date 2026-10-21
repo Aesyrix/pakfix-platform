@@ -277,6 +277,21 @@ set_env SESSION_DOMAIN "null"
 set_env SESSION_SECURE_COOKIE "true"
 set_env QUEUE_CONNECTION "${QUEUE_CONNECTION:-database}"
 
+# Push notifications: the Firebase service account arrives base64-encoded from
+# the FIREBASE_CREDENTIALS GitHub secret. It is written owner-only into
+# storage/app/private (kept across deploys, ignored by git) and never echoed.
+if [ -n "${FIREBASE_CREDENTIALS_B64:-}" ]; then
+  echo "==> Installing the push-notification key"
+  mkdir -p "$APP_DIR/storage/app/private"
+  (
+    umask 077
+    printf '%s' "$FIREBASE_CREDENTIALS_B64" | base64 -d > "$APP_DIR/storage/app/private/firebase-credentials.json.tmp"
+  )
+  mv -f "$APP_DIR/storage/app/private/firebase-credentials.json.tmp" "$APP_DIR/storage/app/private/firebase-credentials.json"
+  chmod 600 "$APP_DIR/storage/app/private/firebase-credentials.json"
+  set_env PUSH_ENABLED "true"
+fi
+
 # ---------------------------------------------------------------------------
 # Release
 # ---------------------------------------------------------------------------

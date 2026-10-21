@@ -7,6 +7,7 @@ namespace App\Services\Marketplace;
 use App\Enums\VerificationStatus;
 use App\Models\TechnicianProfile;
 use App\Models\User;
+use App\Services\Notifications\Notifier;
 use App\Services\Audit\AuditLogger;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -48,6 +49,7 @@ class VerificationReview
             }
 
             $this->audit->record('technician.verified', $profile, ['status' => 'pending'], ['status' => 'verified'], "Verified {$profile->displayName()}.", $reviewer);
+            app(Notifier::class)->verificationDecided($profile, true);
 
             return $profile->refresh();
         });
@@ -68,6 +70,7 @@ class VerificationReview
             $profile->forceFill(['verification_status' => VerificationStatus::Rejected])->save();
 
             $this->audit->record('technician.verification.rejected', $profile, ['status' => 'pending'], ['status' => 'rejected'], "Rejected {$profile->displayName()}: {$reason}", $reviewer);
+            app(Notifier::class)->verificationDecided($profile, false, $reason);
 
             return $profile->refresh();
         });

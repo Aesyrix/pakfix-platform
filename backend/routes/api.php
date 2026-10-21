@@ -5,6 +5,8 @@ declare(strict_types=1);
 use App\Http\Controllers\Api\V1\Admin;
 use App\Http\Controllers\Api\V1\AccountController;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\PushTokenController;
+use App\Services\Notifications\Fcm;
 use App\Http\Controllers\Api\V1\BlogController;
 use App\Http\Controllers\Api\V1\ContactController;
 use App\Http\Controllers\Api\V1\ContentController;
@@ -35,9 +37,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->name('api.v1.')->group(function (): void {
 
-    Route::get('/', fn () => ApiResponse::success([
+    Route::get('/', fn (Fcm $fcm) => ApiResponse::success([
         'name' => 'PakFix API',
         'version' => 'v1',
+        'push' => PushTokenController::status($fcm),
     ]))->name('index');
 
     // -----------------------------------------------------------------
@@ -165,6 +168,10 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
         });
 
         // A professional's own profile and verification (open while pending).
+        // Push notifications: the app registers this phone's Firebase token.
+        Route::post('push-tokens', [PushTokenController::class, 'store'])->middleware('throttle:20,1,push')->name('push-tokens.store');
+        Route::delete('push-tokens', [PushTokenController::class, 'destroy'])->name('push-tokens.destroy');
+
         // Deleting your own account (App Store / Play requirement).
         Route::get('account/deletion', [AccountController::class, 'deletionCheck'])->name('account.deletion');
         Route::delete('account', [AccountController::class, 'destroy'])->middleware('throttle:5,1,account')->name('account.destroy');

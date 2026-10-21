@@ -9,6 +9,7 @@ use App\Models\Booking;
 use App\Models\Review;
 use App\Models\TechnicianProfile;
 use App\Models\User;
+use App\Services\Notifications\Notifier;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
@@ -49,6 +50,7 @@ class Reviews
 
             $booking->forceFill(['is_reviewed' => true])->save();
             $this->recalculate($booking->technician_profile_id);
+            app(Notifier::class)->newReview($booking, $review);
 
             return $review;
         });
