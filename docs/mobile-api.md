@@ -426,4 +426,4 @@ Admin (permission `messages.moderate`): `GET /admin/reports?status=unresolved|op
 | GET | `/account/deletion` | `{ can_delete, active_bookings }` — refused while a job is in progress. |
 | DELETE | `/account` | `{ password, reason? }`. Erases name, email, phone, photo, CNIC number and files, saved addresses; cancels open requests and offers; signs out every device. Past jobs, reviews and chat stay, shown as "Deleted user". Throttled 5/min. |
 
-Web: `/account/delete` on pakfix.pk (Google Play's deletion link).
+Web: `https://pakfix.pk/delete-account` (Google Play's account-deletion link; also in the site footer).

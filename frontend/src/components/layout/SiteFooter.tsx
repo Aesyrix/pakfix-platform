@@ -111,6 +111,7 @@ export function SiteFooter({ popularCategories }: SiteFooterProps) {
               <li><Link href="/faq" className="hover:text-white transition-colors">{t('FAQs', 'عام سوالات')}</Link></li>
               <li><Link href="/privacy-policy" className="hover:text-white transition-colors">{t('Privacy Policy', 'پرائیویسی پالیسی')}</Link></li>
               <li><Link href="/terms-of-service" className="hover:text-white transition-colors">{t('Terms of Service', 'شرائطِ خدمت')}</Link></li>
+              <li><Link href="/delete-account" className="hover:text-white transition-colors">{t('Delete account', 'اکاؤنٹ حذف کریں')}</Link></li>
             </ul>
           </div>
         </div>
