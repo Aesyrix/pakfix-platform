@@ -11,6 +11,9 @@ import type {
   AdminTestimonial,
   AdminReport,
   AdminVerification,
+  MarketplaceBooking,
+  MarketplaceRequest,
+  ProProfileSummary,
   AdminVerificationDetail,
   AuthPayload,
   BlogCategory,
@@ -189,6 +192,15 @@ export const contactApi = {
 // ---------------------------------------------------------------------------
 // Admin — content management
 // ---------------------------------------------------------------------------
+
+/** Read-only views of the marketplace; acting on a job happens in the mobile app. */
+export const accountApi = {
+  bookings: () => apiRequest<MarketplaceBooking[]>('bookings', { query: { per_page: 50 } }),
+  requests: () => apiRequest<MarketplaceRequest[]>('requests', { query: { per_page: 50 } }),
+  proBookings: () => apiRequest<MarketplaceBooking[]>('pro/bookings', { query: { per_page: 50 } }),
+  proNearby: () => apiRequest<MarketplaceRequest[]>('pro/requests'),
+  proProfile: () => api.get<ProProfileSummary>('pro/profile'),
+};
 
 export const adminApi = {
   overview: () => api.get<AdminOverview>('admin/overview'),

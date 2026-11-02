@@ -376,6 +376,46 @@ export interface AdminContactMessage {
   created_at: string | null;
 }
 
+export interface MarketplaceBooking {
+  id: string;
+  reference: string;
+  status: string;
+  status_label: string;
+  is_active: boolean;
+  category?: { name: string };
+  problem_description: string;
+  address_line: string | null;
+  city?: { name: string };
+  total: { minor: number; display: string };
+  created_at: string | null;
+}
+
+export interface MarketplaceRequest {
+  id: string;
+  reference: string;
+  state: string;
+  category?: { name: string };
+  description: string;
+  city?: { name: string };
+  area?: { name: string } | null;
+  quotes_count: number;
+  distance_km?: number | null;
+  customer_offer: { minor: number; display: string } | null;
+  created_at: string | null;
+}
+
+export interface ProProfileSummary {
+  business_name: string | null;
+  bio: string | null;
+  years_experience: number;
+  city: { name: string } | null;
+  service_radius_km: number;
+  categories: Array<{ id: string; name: string }>;
+  onboarding_percent: number;
+  verification: { status: string; rejection_reason: string | null };
+  checklist: { profile_complete: boolean; documents: string[]; missing_documents: string[]; can_submit: boolean };
+}
+
 export interface AdminReportPerson {
   id: string;
   name: string;
