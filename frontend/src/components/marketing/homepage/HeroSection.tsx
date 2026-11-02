@@ -11,7 +11,6 @@ import {
   Mic,
   ArrowRight,
   ShieldCheck,
-  Star,
   CheckCircle2,
   AlertTriangle,
   Clock,
@@ -177,7 +176,7 @@ export function HeroSection() {
                   <span className="text-xs font-extrabold text-[#161616] tracking-wide">{t('PAKFIX AI DIAGNOSIS', 'پاک فکس اے آئی تشخیص')}</span>
                 </div>
                 <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-[#EAF7F0] text-[#006838]">
-                  {t('Instant AI Result', 'فوری اے آئی نتیجہ')}
+                  {t('Example Result', 'مثالی نتیجہ')}
                 </span>
               </div>
 
@@ -240,22 +239,18 @@ export function HeroSection() {
               <div className="mt-4 pt-3 border-t border-[#E5E7EB] flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
                   <div className="h-8 w-8 rounded-full bg-[#00824A] text-white font-bold text-xs flex items-center justify-center">
-                    AR
+                    PF
                   </div>
                   <div>
                     <div className="flex items-center gap-1">
-                      <span className="text-xs font-bold text-[#161616]">Ali Raza</span>
+                      <span className="text-xs font-bold text-[#161616]">{t('Verified professional', 'تصدیق شدہ پروفیشنل')}</span>
                       <CheckCircle2 className="h-3.5 w-3.5 text-[#00824A] fill-[#00824A]" />
                     </div>
-                    <span className="text-[10px] text-[#667085]">{t('Master Plumber', 'ماہر پلمبر')} &bull; Lahore</span>
+                    <span className="text-[10px] text-[#667085]">{t('Plumber', 'پلمبر')}</span>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="flex items-center gap-1 text-xs font-bold text-[#161616]">
-                    <Star className="h-3.5 w-3.5 text-amber-500 fill-amber-500" />
-                    <span>4.9 (120+)</span>
-                  </div>
-                  <span className="text-[10px] text-[#00824A] font-bold">{t('Available Today', 'آج دستیاب')}</span>
+                  <span className="text-[10px] text-[#00824A] font-bold">{t('Example', 'مثال')}</span>
                 </div>
               </div>
             </div>

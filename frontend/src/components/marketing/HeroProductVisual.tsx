@@ -105,7 +105,7 @@ export function HeroProductVisual() {
                 </span>
               </div>
               <p className="text-[11px] text-ink-500 flex items-center gap-1">
-                <span>{t('★ 4.9 (128 jobs)', '★ 4.9 (128 جابز)')}</span>
+                <span>{t('Example', 'مثال')}</span>
                 <span>•</span>
                 <span>{t('Gulberg, Lahore', 'گلبرگ، لاہور')}</span>
               </p>

@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Phone, Mail, MessageSquare, ShieldCheck, Heart } from 'lucide-react';
+import { Mail, ShieldCheck, Heart } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { PakFixLogo } from '@/components/layout/PakFixLogo';
 import { useT } from '@/components/i18n/LocaleProvider';
@@ -33,16 +33,8 @@ export function SiteFooter({ popularCategories }: SiteFooterProps) {
             {/* Direct Contact Handles */}
             <div className="pt-2 space-y-2 text-xs text-gray-300 font-medium">
               <div className="flex items-center gap-2">
-                <Phone className="h-3.5 w-3.5 text-[#4ADE80]" />
-                <span>{t('Call Us:', 'کال کریں:')} <bdi dir="ltr">+92 300 123 4567</bdi></span>
-              </div>
-              <div className="flex items-center gap-2">
                 <Mail className="h-3.5 w-3.5 text-[#4ADE80]" />
                 <span>{t('Email:', 'ای میل:')} <bdi dir="ltr">support@pakfix.pk</bdi></span>
-              </div>
-              <div className="flex items-center gap-2">
-                <MessageSquare className="h-3.5 w-3.5 text-[#00A85B]" />
-                <span>{t('WhatsApp:', 'واٹس ایپ:')} <bdi dir="ltr">+92 345 987 6543</bdi></span>
               </div>
             </div>
           </div>

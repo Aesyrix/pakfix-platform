@@ -31,13 +31,13 @@ export function AboutContent() {
               </div>
               <div className="p-6 rounded-2xl bg-[#F8FAF9] border border-[#E5E7EB] space-y-2">
                 <ShieldCheck className="h-8 w-8 text-[#00824A] mx-auto" />
-                <h3 className="font-bold text-[#161616] text-sm">{t('100% Verification', '100% تصدیق')}</h3>
-                <p className="text-xs text-[#667085]">{t('CNIC checked & skill-audited local technicians.', 'شناختی کارڈ سے جانچے گئے اور مہارت جانچے گئے مقامی ٹیکنیشن۔')}</p>
+                <h3 className="font-bold text-[#161616] text-sm">{t('Verified Professionals', 'تصدیق شدہ پروفیشنلز')}</h3>
+                <p className="text-xs text-[#667085]">{t('CNIC and selfie reviewed by our team before any job.', 'کسی بھی کام سے پہلے ہماری ٹیم شناختی کارڈ اور سیلفی جانچتی ہے۔')}</p>
               </div>
               <div className="p-6 rounded-2xl bg-[#F8FAF9] border border-[#E5E7EB] space-y-2">
                 <Heart className="h-8 w-8 text-[#00824A] mx-auto" />
                 <h3 className="font-bold text-[#161616] text-sm">{t('Made for Pakistan', 'پاکستان کے لیے بنایا گیا')}</h3>
-                <p className="text-xs text-[#667085]">{t('Serving Islamabad, Rawalpindi, Lahore, Karachi & beyond.', 'اسلام آباد، راولپنڈی، لاہور، کراچی اور اس سے آگے خدمات۔')}</p>
+                <p className="text-xs text-[#667085]">{t('Starting in Islamabad and Rawalpindi, growing city by city.', 'اسلام آباد اور راولپنڈی سے آغاز، پھر شہر بہ شہر توسیع۔')}</p>
               </div>
             </div>
           </div>

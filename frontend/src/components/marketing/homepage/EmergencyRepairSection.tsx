@@ -41,13 +41,13 @@ export function EmergencyRepairSection() {
                 >
                   {t('Request Urgent Service', 'ہنگامی سروس کی درخواست کریں')}
                 </Link>
-                <a
-                  href="tel:+923001234567"
+                <Link
+                  href="/contact"
                   className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-white text-xs font-bold transition-colors"
                 >
                   <Phone className="h-3.5 w-3.5 text-[#00824A]" />
-                  <span>{t('Call Support', 'سپورٹ کو کال کریں')}</span>
-                </a>
+                  <span>{t('Contact Support', 'سپورٹ سے رابطہ کریں')}</span>
+                </Link>
               </div>
             </div>
 

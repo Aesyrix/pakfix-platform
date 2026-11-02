@@ -31,8 +31,8 @@ export function FaqAccordionSection() {
     {
       q: 'Can I upload photos or videos?',
       qur: 'کیا میں تصاویر یا ویڈیوز اپلوڈ کر سکتا ہوں؟',
-      a: 'Yes. You can upload photos (JPG, PNG, WEBP) or short video clips showing the issue directly inside the AI box or booking forms.',
-      aur: 'جی ہاں۔ آپ اے آئی باکس یا بکنگ فارم میں براہِ راست مسئلہ دکھاتے ہوئے تصاویر (JPG, PNG, WEBP) یا مختصر ویڈیو کلپس اپلوڈ کر سکتے ہیں۔',
+      a: 'Yes. You can add photos in the AI assistant and when you post a request in the app.',
+      aur: 'جی ہاں۔ آپ اے آئی اسسٹنٹ میں اور ایپ میں درخواست بھیجتے وقت تصاویر شامل کر سکتے ہیں۔',
     },
     {
       q: 'Can I request multiple quotes?',
@@ -43,32 +43,32 @@ export function FaqAccordionSection() {
     {
       q: 'How are professionals verified?',
       qur: 'پروفیشنلز کی تصدیق کیسے ہوتی ہے؟',
-      a: 'Every PakFix service professional undergoes identity verification (CNIC check), criminal record checks, skill review, and ongoing customer rating evaluations.',
-      aur: 'پاک فکس کا ہر سروس پروفیشنل شناخت کی تصدیق (شناختی کارڈ چیک)، مجرمانہ ریکارڈ کی جانچ، مہارت کا جائزہ، اور مسلسل گاہک ریٹنگ جانچ سے گزرتا ہے۔',
+      a: 'Every professional submits their CNIC (front and back) and a selfie. Our team reviews them by hand before the professional can offer on jobs, and customers rate every completed job.',
+      aur: 'ہر پروفیشنل اپنا شناختی کارڈ (دونوں طرف) اور سیلفی جمع کراتا ہے۔ آفر دینے سے پہلے ہماری ٹیم انہیں خود جانچتی ہے، اور گاہک ہر مکمل کام کی ریٹنگ دیتے ہیں۔',
     },
     {
       q: 'Which cities do you serve?',
       qur: 'آپ کون سے شہروں میں خدمات دیتے ہیں؟',
-      a: 'PakFix currently operates across Islamabad, Rawalpindi, Lahore, Karachi, Faisalabad, Peshawar, Multan, Gujranwala, Sialkot, and Quetta.',
-      aur: 'پاک فکس فی الحال اسلام آباد، راولپنڈی، لاہور، کراچی، فیصل آباد، پشاور، ملتان، گوجرانوالہ، سیالکوت اور کوئٹہ میں کام کرتا ہے۔',
+      a: 'We are starting in Islamabad and Rawalpindi, and will add more cities step by step.',
+      aur: 'ہم اسلام آباد اور راولپنڈی سے آغاز کر رہے ہیں اور مرحلہ وار مزید شہر شامل کریں گے۔',
     },
     {
       q: 'How do payments work?',
       qur: 'ادائیگی کیسے ہوتی ہے؟',
-      a: 'You can pay cash on service completion, or pay digitally via bank transfer, JazzCash, EasyPaisa, or credit card directly in the PakFix app.',
-      aur: 'آپ سروس مکمل ہونے پر نقد ادائیگی کر سکتے ہیں، یا پاک فکس ایپ میں براہِ راست بینک ٹرانسفر، جاز کیش، ایزی پیسہ یا کریڈٹ کارڈ سے ڈیجیٹل ادائیگی کر سکتے ہیں۔',
+      a: 'You pay the professional in cash after you confirm the job is done. Online payments are not available yet.',
+      aur: 'کام مکمل ہونے کی تصدیق کے بعد آپ پروفیشنل کو نقد ادائیگی کرتے ہیں۔ آن لائن ادائیگی ابھی دستیاب نہیں۔',
     },
     {
       q: 'Can I book emergency repairs?',
       qur: 'کیا میں ہنگامی مرمت بک کر سکتا ہوں؟',
-      a: 'Yes. Select the Emergency urgency option for major plumbing leaks, electrical shorts, or severe breakdowns to receive urgent technician dispatch.',
-      aur: 'جی ہاں۔ شدید پلمبنگ رساؤ، الیکٹریکل شارٹ، یا سنگین خرابی کے لیے "ہنگامی" آپشن منتخب کریں تاکہ فوری ٹیکنیشن بھیجا جا سکے۔',
+      a: 'Yes. Choose Emergency when you post a request. Nearby professionals get a shorter 15-minute window to respond.',
+      aur: 'جی ہاں۔ درخواست بھیجتے وقت ایمرجنسی چنیں۔ قریبی پروفیشنلز کو جواب کے لیے 15 منٹ کا مختصر وقت ملتا ہے۔',
     },
     {
       q: 'Can I manage more than one property?',
       qur: 'کیا میں ایک سے زیادہ پراپرٹی سنبھال سکتا ہوں؟',
-      a: 'Yes. Homeowners and property managers can add multiple homes or rental units to track appliances and maintenance history under a single account.',
-      aur: 'جی ہاں۔ گھر مالکان اور پراپرٹی مینیجر ایک ہی اکاؤنٹ میں متعدد گھر یا کرائے کی یونٹس شامل کر کے آلات اور دیکھ بھال کی تاریخ ٹریک کر سکتے ہیں۔',
+      a: 'Not yet. Managing several properties is planned for a later version.',
+      aur: 'ابھی نہیں۔ کئی پراپرٹیز کا انتظام بعد کے ورژن میں آئے گا۔',
     },
     {
       q: 'Can professionals register with PakFix?',

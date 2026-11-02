@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Globe, HelpCircle, UserPlus, PhoneCall } from 'lucide-react';
+import { Globe, HelpCircle, UserPlus } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { useLocale, useT } from '@/components/i18n/LocaleProvider';
 import { localeLabel } from '@/lib/i18n';
@@ -19,11 +19,6 @@ export function TopUtilityBar() {
             <span className="inline-block h-2 w-2 shrink-0 rounded-full bg-[#4ADE80] animate-pulse" />
             <span className="truncate">
               {t("Pakistan's Smart Home Repair Platform", 'پاکستان کا سمارٹ ہوم ریپیئر پلیٹ فارم')}
-            </span>
-            <span className="hidden md:inline text-gray-400">|</span>
-            <span className="text-[#00A85B] font-semibold hidden md:flex items-center gap-1 whitespace-nowrap">
-              <PhoneCall className="h-3 w-3" />
-              {t('24/7 Support:', '24/7 مدد:')} <bdi dir="ltr">+92 300 123 4567</bdi>
             </span>
           </div>
 

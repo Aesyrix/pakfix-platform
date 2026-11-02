@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Star, CheckCircle2, ArrowRight, Calculator } from 'lucide-react';
+import { CheckCircle2, ArrowRight, Calculator } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { useT } from '@/components/i18n/LocaleProvider';
 
@@ -9,9 +9,7 @@ export function QuoteComparisonSection() {
   const t = useT();
   const quotes = [
     {
-      pro: 'TechFix Services',
-      rating: 4.9,
-      reviews: 110,
+      pro: 'Professional A',
       visitFee: 'PKR 500',
       labour: 'PKR 2,000',
       materials: 'PKR 1,500',
@@ -22,9 +20,7 @@ export function QuoteComparisonSection() {
       bur: 'تجویز کردہ',
     },
     {
-      pro: 'HomeCare Pros',
-      rating: 4.8,
-      reviews: 95,
+      pro: 'Professional B',
       visitFee: 'PKR 500',
       labour: 'PKR 2,500',
       materials: 'PKR 1,500',
@@ -35,9 +31,7 @@ export function QuoteComparisonSection() {
       bur: 'فوری آمد',
     },
     {
-      pro: 'Lahore Repairs',
-      rating: 4.7,
-      reviews: 78,
+      pro: 'Professional C',
       visitFee: 'PKR 700',
       labour: 'PKR 2,000',
       materials: 'PKR 1,000',
@@ -58,7 +52,7 @@ export function QuoteComparisonSection() {
             {t('Compare before you choose.', 'انتخاب سے پہلے موازنہ کریں۔')}
           </h2>
           <p className="text-sm text-[#475467]">
-            {t('Receive multiple itemized quotes for labor and materials. Pick the offer that matches your budget and timeline.', 'مزدوری اور مواد کے لیے متعدد تفصیلی تخمینے موصول کریں۔ وہ آفر چنیں جو آپ کے بجٹ اور وقت سے میل کھائے۔')}
+            {t('Example offers: get itemized prices for labour and materials, then pick the one that fits your budget and timeline.', 'مثالی آفرز: مزدوری اور سامان کی تفصیلی قیمتیں لیں، پھر اپنے بجٹ اور وقت کے مطابق چنیں۔')}
           </p>
         </div>
 
@@ -74,10 +68,7 @@ export function QuoteComparisonSection() {
                   <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-[#EAF7F0] text-[#006838]">
                     {t(q.ben, q.bur)}
                   </span>
-                  <div className="flex items-center gap-1 text-xs font-bold text-[#161616]">
-                    <Star className="h-3.5 w-3.5 text-amber-500 fill-amber-500" />
-                    <span>{q.rating} ({q.reviews})</span>
-                  </div>
+                  <span className="text-xs font-bold text-[#667085]">{t('Example', 'مثال')}</span>
                 </div>
 
                 <h3 className="text-lg font-bold text-[#161616] mb-4">{q.pro}</h3>
@@ -112,7 +103,7 @@ export function QuoteComparisonSection() {
                 href="#quick-booking"
                 className="mt-6 w-full py-2.5 rounded-xl bg-[#00824A] hover:bg-[#006B3C] text-white text-xs font-bold text-center transition-colors block shadow-2xs"
               >
-                {t('Accept Quote & Book', 'تخمینہ قبول کریں اور بک کریں')}
+                {t('Request a Professional', 'پروفیشنل کی درخواست کریں')}
               </Link>
             </div>
           ))}

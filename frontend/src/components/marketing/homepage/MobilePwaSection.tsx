@@ -74,7 +74,7 @@ export function MobilePwaSection() {
                 </div>
                 <div className="bg-[#F8FAF9] p-3 rounded-xl border space-y-1">
                   <span className="text-[10px] text-[#667085]">{t('Technician Assigned', 'ٹیکنیشن تفویض ہو گیا')}</span>
-                  <p className="font-bold text-[#161616]">{t('Ali Raza', 'علی رضا')} &bull; {t('Arriving in 15 mins', '15 منٹ میں پہنچ رہے ہیں')}</p>
+                  <p className="font-bold text-[#161616]">{t('Your professional', 'آپ کا پروفیشنل')} &bull; {t('On the way', 'راستے میں')}</p>
                 </div>
                 <div className="bg-[#00824A] text-white p-3 rounded-xl font-bold text-center">
                   {t('Book Professional', 'پروفیشنل بک کریں')}

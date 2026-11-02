@@ -9,10 +9,10 @@ export function SafetyContent() {
   const t = useT();
   const protocols = [
     {
-      title: { en: '1. CNIC & Background Checks', ur: '1. شناختی کارڈ اور پس منظر کی جانچ' },
+      title: { en: '1. CNIC & Selfie Review', ur: '1. شناختی کارڈ اور سیلفی کی جانچ' },
       desc: {
-        en: 'Every technician on PakFix submits verified Pakistani CNIC credentials and undergoes background checks.',
-        ur: 'پاک فکس پر ہر ٹیکنیشن تصدیق شدہ پاکستانی شناختی کارڈ جمع کرواتا ہے اور پس منظر کی جانچ سے گزرتا ہے۔',
+        en: 'Every professional submits their CNIC and a selfie, and our team reviews them by hand before they can take jobs.',
+        ur: 'ہر پروفیشنل اپنا شناختی کارڈ اور سیلفی جمع کراتا ہے، اور کام لینے سے پہلے ہماری ٹیم انہیں خود جانچتی ہے۔',
       },
     },
     {
