@@ -29,16 +29,10 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
               {t('Trusted Home Services Platform', 'قابلِ اعتماد ہوم سروسز پلیٹ فارم')}
             </span>
             <h2 className="text-3xl font-extrabold leading-tight">
-              {t(
-                "Pakistan's #1 AI-Powered Repair & Maintenance Platform",
-                'پاکستان کا نمبر 1 اے آئی سے چلنے والا ریپیئر اور مینٹیننس پلیٹ فارم'
-              )}
+              {t("Pakistan's smarter way to fix your home", 'اپنے گھر کی مرمت کا پاکستان کا زیادہ سمجھدار طریقہ')}
             </h2>
             <p className="text-slate-300 text-sm leading-relaxed">
-              {t(
-                'Join thousands of Pakistani homeowners and verified service professionals. Book repairs with upfront PKR estimates and complete safety audits.',
-                'ہزاروں پاکستانی گھر مالکان اور تصدیق شدہ سروس پروفیشنلز میں شامل ہوں۔ پہلے سے PKR تخمینے اور مکمل سیفٹی آڈٹ کے ساتھ مرمت بک کریں۔'
-              )}
+              {t('Get offers from verified professionals, compare them, and approve every price before work starts.', 'تصدیق شدہ پروفیشنلز سے آفرز لیں، موازنہ کریں، اور کام سے پہلے ہر قیمت کی منظوری دیں۔')}
             </p>
           </div>
         </div>
@@ -46,7 +40,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         <div className="relative z-10 space-y-4 pt-8 border-t border-slate-700/60">
           <div className="flex items-center gap-3 text-xs font-medium text-slate-200">
             <CheckCircle2 className="h-4 w-4 text-[#4ADE80]" />
-            <span>{t('100% Identity Verified Professionals', '100% تصدیق شدہ شناخت والے پروفیشنلز')}</span>
+            <span>{t('Every professional checked by our team', 'ہر پروفیشنل کی جانچ ہماری ٹیم کرتی ہے')}</span>
           </div>
           <div className="flex items-center gap-3 text-xs font-medium text-slate-200">
             <CheckCircle2 className="h-4 w-4 text-[#4ADE80]" />
@@ -54,7 +48,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
           </div>
           <div className="flex items-center gap-3 text-xs font-medium text-slate-200">
             <ShieldCheck className="h-4 w-4 text-[#4ADE80]" />
-            <span>{t('Complete Repair Guarantee', 'مکمل مرمت کی ضمانت')}</span>
+            <span>{t('Price changes only with your approval', 'قیمت میں تبدیلی صرف آپ کی منظوری سے')}</span>
           </div>
         </div>
       </div>

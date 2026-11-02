@@ -24,12 +24,12 @@ export function CitiesSection() {
     <section className="py-16 sm:py-24 bg-white border-b border-[#E5E7EB]">
       <Container>
         <div className="max-w-2xl mx-auto text-center space-y-2 mb-10">
-          <span className="text-xs font-bold text-[#00824A] uppercase tracking-wider">{t('Nationwide Coverage', 'ملک گیر کوریج')}</span>
+          <span className="text-xs font-bold text-[#00824A] uppercase tracking-wider">{t('Our Cities', 'ہمارے شہر')}</span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#161616]">
-            {t('Home services across Pakistan.', 'پورے پاکستان میں گھریلو خدمات۔')}
+            {t('Starting in Islamabad and Rawalpindi.', 'اسلام آباد اور راولپنڈی سے آغاز۔')}
           </h2>
           <p className="text-sm text-[#475467]">
-            {t('Connecting homeowners with verified local repair professionals in major metropolitan cities.', 'بڑے شہروں میں گھر مالکان کو تصدیق شدہ مقامی مرمت پروفیشنلز سے جوڑ رہے ہیں۔')}
+            {t('More major cities across Pakistan are on the way.', 'پاکستان کے مزید بڑے شہر جلد شامل ہوں گے۔')}
           </p>
         </div>
 

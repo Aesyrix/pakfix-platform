@@ -1,15 +1,20 @@
 'use client';
 
 import { useState } from 'react';
-import { Calendar, Clock, MapPin, Upload, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { Calendar, Clock, MapPin, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { contactApi } from '@/lib/api/endpoints';
+import { ApiError } from '@/lib/api/client';
 import { Container } from '@/components/ui/Container';
 import { useT } from '@/components/i18n/LocaleProvider';
 
 export function QuickBookingFormSection() {
   const t = useT();
   const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
     service: 'Plumbing',
-    city: 'Lahore',
+    city: 'Islamabad',
     address: '',
     preferred_date: '',
     preferred_time: 'Morning (9 AM - 12 PM)',
@@ -36,14 +41,6 @@ export function QuickBookingFormSection() {
   const cities = [
     { en: 'Islamabad', ur: 'اسلام آباد' },
     { en: 'Rawalpindi', ur: 'راولپنڈی' },
-    { en: 'Lahore', ur: 'لاہور' },
-    { en: 'Karachi', ur: 'کراچی' },
-    { en: 'Faisalabad', ur: 'فیصل آباد' },
-    { en: 'Peshawar', ur: 'پشاور' },
-    { en: 'Multan', ur: 'ملتان' },
-    { en: 'Gujranwala', ur: 'گوجرانوالہ' },
-    { en: 'Sialkot', ur: 'سیالکوت' },
-    { en: 'Quetta', ur: 'کوئٹہ' },
   ];
 
   const times = [
@@ -66,19 +63,29 @@ export function QuickBookingFormSection() {
     setSuccess(false);
 
     try {
-      // Simulate real API dispatch to /api/v1/service-requests
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setSuccess(true);
-      setFormData({
-        service: 'Plumbing',
-        city: 'Lahore',
-        address: '',
-        preferred_date: '',
-        preferred_time: 'Morning (9 AM - 12 PM)',
-        description: '',
-        urgency: 'Normal',
+      await contactApi.send({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
+        topic: 'booking',
+        subject: `Service request: ${formData.service} in ${formData.city}`,
+        message: [
+          `Service: ${formData.service}`,
+          `City: ${formData.city}`,
+          `Address: ${formData.address}`,
+          `Preferred: ${formData.preferred_date || 'Any date'}, ${formData.preferred_time}`,
+          `Urgency: ${formData.urgency}`,
+          `Problem: ${formData.description}`,
+        ].join('\n'),
       });
-    } catch {
+      setSuccess(true);
+      setFormData({ ...formData, address: '', preferred_date: '', description: '', urgency: 'Normal' });
+    } catch (e) {
+      const first = e instanceof ApiError ? Object.values(e.errors)[0]?.[0] : undefined;
+      if (first) {
+        setError(first);
+        return;
+      }
       setError(t('Could not submit booking request. Please check your details and try again.', 'بکنگ درخواست جمع نہیں ہو سکی۔ براہ کرم اپنی تفصیلات چیک کریں اور دوبارہ کوشش کریں۔'));
     } finally {
       setLoading(false);
@@ -97,7 +104,7 @@ export function QuickBookingFormSection() {
               <span className="text-[#00824A]">{t('Book a service.', 'سروس بک کریں۔')}</span>
             </h2>
             <p className="text-sm text-[#475467] leading-relaxed">
-              {t('Fill out the details below to receive instant upfront estimates and connect with available verified service professionals in your area.', 'فوری پیشگی تخمینے حاصل کرنے اور اپنے علاقے میں دستیاب تصدیق شدہ سروس پروفیشنلز سے جڑنے کے لیے نیچے تفصیلات بھریں۔')}
+              {t('Tell us what you need and the PakFix team will help you get it sorted by a verified professional.', 'بتائیں کیا چاہیے، پاک فکس ٹیم تصدیق شدہ پروفیشنل کے ذریعے آپ کا کام کروانے میں مدد کرے گی۔')}
             </p>
 
             <div className="pt-4 space-y-3">
@@ -111,13 +118,13 @@ export function QuickBookingFormSection() {
                 <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#EAF7F0] text-[#00532C]">
                   <CheckCircle2 className="h-4 w-4" />
                 </div>
-                <span>{t('Transparent PKR pricing with no surprises', 'بغیر کسی حیرت کے شفاف روپے قیمت')}</span>
+                <span>{t('Clear PKR prices you approve first', 'روپے میں واضح قیمت، پہلے آپ کی منظوری')}</span>
               </div>
               <div className="flex items-center gap-3 text-xs font-semibold text-[#161616]">
                 <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#EAF7F0] text-[#00532C]">
                   <CheckCircle2 className="h-4 w-4" />
                 </div>
-                <span>{t('On-time arrival & job tracking', 'وقت پر آمد اور جاب ٹریکنگ')}</span>
+                <span>{t('Follow your job step by step', 'اپنے کام کا ہر مرحلہ دیکھیں')}</span>
               </div>
             </div>
           </div>
@@ -134,8 +141,8 @@ export function QuickBookingFormSection() {
                 <div className="p-4 rounded-xl bg-[#EAF7F0] border border-[#C2ECCF] text-[#006838] text-xs font-semibold flex items-start gap-2">
                   <CheckCircle2 className="h-5 w-5 shrink-0 text-[#00824A]" />
                   <div>
-                    <p className="font-bold text-sm">{t('Booking Request Sent Successfully!', 'بکنگ درخواست کامیابی سے بھیج دی گئی!')}</p>
-                    <p className="mt-0.5">{t('Verified service professionals in your city will review your request and send upfront quotes shortly.', 'آپ کے شہر کے تصدیق شدہ سروس پروفیشنلز آپ کی درخواست کا جائزہ لے کر جلد پیشگی تخمینے بھیجیں گے۔')}</p>
+                    <p className="font-bold text-sm">{t('Request received!', 'درخواست موصول ہو گئی!')}</p>
+                    <p className="mt-0.5">{t('The PakFix team will contact you about your request.', 'پاک فکس ٹیم آپ کی درخواست کے بارے میں آپ سے رابطہ کرے گی۔')}</p>
                   </div>
                 </div>
               ) : null}
@@ -146,6 +153,26 @@ export function QuickBookingFormSection() {
                   <span>{error}</span>
                 </div>
               ) : null}
+
+              <div className="grid sm:grid-cols-3 gap-4">
+                {[
+                  { key: 'name', type: 'text', en: 'Your Name', ur: 'آپ کا نام', hint: '' },
+                  { key: 'phone', type: 'tel', en: 'Phone', ur: 'فون', hint: '0300 1234567' },
+                  { key: 'email', type: 'email', en: 'Email', ur: 'ای میل', hint: 'you@example.com' },
+                ].map((field) => (
+                  <div key={field.key}>
+                    <label className="block text-xs font-bold text-[#161616] mb-1.5">{t(field.en, field.ur)}</label>
+                    <input
+                      type={field.type}
+                      required
+                      placeholder={field.hint}
+                      value={formData[field.key as 'name' | 'phone' | 'email']}
+                      onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
+                      className="w-full rounded-xl border border-[#E5E7EB] bg-white p-3 text-xs text-[#161616] outline-none focus:border-[#00824A]"
+                    />
+                  </div>
+                ))}
+              </div>
 
               <div className="grid sm:grid-cols-2 gap-4">
                 {/* Service Selection */}
@@ -200,7 +227,6 @@ export function QuickBookingFormSection() {
                   <div className="relative">
                     <input
                       type="date"
-                      required
                       value={formData.preferred_date}
                       onChange={(e) => setFormData({ ...formData, preferred_date: e.target.value })}
                       className="w-full rounded-xl border border-[#E5E7EB] bg-white p-3 text-xs text-[#161616] outline-none focus:border-[#00824A]"
@@ -265,7 +291,7 @@ export function QuickBookingFormSection() {
                 className="w-full py-3 rounded-xl bg-[#00824A] hover:bg-[#006B3C] text-white text-xs font-bold shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-                <span>{t('Find Available Professionals', 'دستیاب پروفیشنلز تلاش کریں')}</span>
+                <span>{t('Request a Professional', 'پروفیشنل کی درخواست کریں')}</span>
               </button>
             </form>
           </div>

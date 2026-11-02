@@ -51,7 +51,7 @@ export function CustomerDashboardPreviewSection() {
               <span className="h-3 w-3 rounded-full bg-red-500" />
               <span className="h-3 w-3 rounded-full bg-amber-500" />
               <span className="h-3 w-3 rounded-full bg-green-500" />
-              <span className="ml-2 font-mono text-[11px] text-gray-400">app.pakfix.pk/dashboard</span>
+              <span className="ml-2 font-mono text-[11px] text-gray-400">pakfix.pk/dashboard</span>
             </div>
             <span className="text-[#00A85B] font-bold">{t('Customer Portal', 'کسٹمر پورٹل')}</span>
           </div>
@@ -91,11 +91,11 @@ export function CustomerDashboardPreviewSection() {
               {/* Header banner inside app */}
               <div className="flex items-center justify-between bg-white p-4 rounded-2xl border border-[#E5E7EB]">
                 <div>
-                  <h3 className="text-base font-extrabold text-[#161616]">{t('Welcome back, Ahmed!', 'خوش آمدید، احمد!')}</h3>
-                  <p className="text-xs text-[#667085]">{t('Here is the live status for your property in Islamabad.', 'یہ اسلام آباد میں آپ کی پراپرٹی کی لائیو صورتحال ہے۔')}</p>
+                  <h3 className="text-base font-extrabold text-[#161616]">{t('How your dashboard looks', 'آپ کا ڈیش بورڈ ایسا نظر آتا ہے')}</h3>
+                  <p className="text-xs text-[#667085]">{t('An example, to show the idea.', 'یہ ایک مثال ہے، بات سمجھانے کے لیے۔')}</p>
                 </div>
                 <span className="text-xs font-bold px-3 py-1 rounded-full bg-[#EAF7F0] text-[#006838]">
-                  {t('Verified Account', 'تصدیق شدہ اکاؤنٹ')}
+                  {t('Example', 'مثال')}
                 </span>
               </div>
 
@@ -109,7 +109,7 @@ export function CustomerDashboardPreviewSection() {
                   </div>
                   <div className="text-xs">
                     <p className="font-bold text-[#161616]">{t('AC Master Service & Gas Refill', 'اے سی ماسٹر سروس اور گیس ری فل')}</p>
-                    <p className="text-[#667085]">{t('Technician:', 'ٹیکنیشن:')} {t('Ali Raza', 'علی رضا')} &bull; {t('Arriving Today 3 PM', 'آج 3 بجے دن پہنچیں گے')}</p>
+                    <p className="text-[#667085]">{t('Technician:', 'ٹیکنیشن:')} {t('Your professional', 'آپ کا پروفیشنل')} &bull; {t('Arriving Today 3 PM', 'آج 3 بجے دن پہنچیں گے')}</p>
                   </div>
                 </div>
 
@@ -121,7 +121,7 @@ export function CustomerDashboardPreviewSection() {
                   </div>
                   <div className="text-xs">
                     <p className="font-bold text-[#161616]">{t('Plumbing Leak Repair', 'پلمبنگ رساؤ کی مرمت')}</p>
-                    <p className="text-[#667085]">{t('TechFix Quote: PKR 3,500 (Labour + Pipe)', 'ٹیک فکس تخمینہ: PKR 3,500 (مزدوری + پائپ)')}</p>
+                    <p className="text-[#667085]">{t('Offer: PKR 3,500 (Labour + Pipe)', 'آفر: PKR 3,500 (مزدوری + پائپ)')}</p>
                   </div>
                 </div>
 

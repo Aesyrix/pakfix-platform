@@ -7,12 +7,32 @@ import {
   Briefcase,
   UserCheck,
 } from 'lucide-react';
+import { type FormEvent } from 'react';
 import { Container } from '@/components/ui/Container';
+import { useLeadForm } from '@/components/marketing/useLeadForm';
 import { PageHeader } from '@/components/marketing/PageHeader';
 import { useT } from '@/components/i18n/LocaleProvider';
 
 export function BecomeTechnicianContent() {
   const t = useT();
+  const lead = useLeadForm(t('Could not send your details. Please try again.', 'آپ کی تفصیلات نہیں بھیجی جا سکیں۔ دوبارہ کوشش کریں۔'));
+
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const value = (key: string) => String(data.get(key) ?? '').trim();
+    const ok = await lead.send({
+      name: value('name'),
+      email: value('email'),
+      phone: value('phone'),
+      topic: 'professional',
+      subject: `Professional registration: ${value('trade')}`,
+      message: `Wants to join PakFix as a professional.\nTrade: ${value('trade')}\nCity: ${value('city')}\nPhone: ${value('phone')}`,
+    });
+    if (ok) form.reset();
+  }
+
   const benefits = [
     {
       icon: Briefcase,
@@ -26,16 +46,16 @@ export function BecomeTechnicianContent() {
       icon: DollarSign,
       title: { en: 'Transparent Earnings', ur: 'شفاف آمدنی' },
       desc: {
-        en: 'Set your rates, quote labor & materials, and get paid promptly with zero hidden commission.',
-        ur: 'اپنے ریٹ مقرر کریں، مزدوری اور سامان کا کوٹ دیں، اور بغیر کسی چھپی کمیشن کے فوری ادائیگی پائیں۔',
+        en: 'Set your own prices, quote labour and materials, and keep your earnings. Free to join at launch.',
+        ur: 'اپنی قیمت خود طے کریں، مزدوری اور سامان کا کوٹ دیں اور اپنی کمائی رکھیں۔ آغاز میں شمولیت مفت ہے۔',
       },
     },
     {
       icon: ShieldCheck,
       title: { en: 'Verified Pro Badge', ur: 'تصدیق شدہ پروفیشنل بیج' },
       desc: {
-        en: 'Build trust with verified CNIC verification and accumulate 5-star customer reviews.',
-        ur: 'تصدیق شدہ شناختی کارڈ سے اعتماد بنائیں اور 5 ستارہ گاہک ریویوز جمع کریں۔',
+        en: 'Build trust with a verified badge and reviews from real customers.',
+        ur: 'تصدیق شدہ بیج اور حقیقی گاہکوں کے ریویوز سے اعتماد بنائیں۔',
       },
     },
     {
@@ -111,16 +131,24 @@ export function BecomeTechnicianContent() {
               <div className="bg-[#161616] text-white rounded-3xl p-8 border border-gray-800 shadow-card space-y-6">
                 <div>
                   <span className="text-xs font-bold text-[#00A85B] uppercase tracking-wider">{t('Fast Onboarding', 'تیز آن بورڈنگ')}</span>
-                  <h3 className="text-2xl font-extrabold text-white mt-1">{t('Register in 3 Minutes', '3 منٹ میں رجسٹر کریں')}</h3>
-                  <p className="text-xs text-gray-400 mt-1">{t('Submit your details to start receiving job leads.', 'جاب لیڈز وصول کرنا شروع کرنے کے لیے اپنی تفصیلات جمع کروائیں۔')}</p>
+                  <h3 className="text-2xl font-extrabold text-white mt-1">{t('Register Your Interest', 'اپنی دلچسپی درج کریں')}</h3>
+                  <p className="text-xs text-gray-400 mt-1">{t('Send your details and the PakFix team will contact you about getting verified.', 'اپنی تفصیلات بھیجیں، پاک فکس ٹیم تصدیق کے لیے آپ سے رابطہ کرے گی۔')}</p>
                 </div>
 
-                <form className="space-y-4">
+                <form className="space-y-4" onSubmit={submit}>
+                  {lead.sent ? (
+                    <p role="status" className="rounded-xl bg-[#EAF7F0] p-3 text-xs font-semibold text-[#006838]">
+                      {t('Thank you! Your details have reached the PakFix team.', 'شکریہ! آپ کی تفصیلات پاک فکس ٹیم تک پہنچ گئی ہیں۔')}
+                    </p>
+                  ) : null}
+                  {lead.error ? <p role="alert" className="rounded-xl bg-red-50 p-3 text-xs font-medium text-red-700">{lead.error}</p> : null}
                   <div>
                     <label className="block text-xs font-bold text-gray-300 mb-1">{t('Full Name', 'پورا نام')}</label>
                     <input
+                      name="name"
                       type="text"
                       required
+                      minLength={2}
                       placeholder={t('e.g. Muhammad Ali', 'مثلاً محمد علی')}
                       className="w-full rounded-xl bg-gray-900 border border-gray-700 p-3 text-xs text-white placeholder-gray-500 outline-none focus:border-[#00824A]"
                     />
@@ -130,6 +158,7 @@ export function BecomeTechnicianContent() {
                     <div>
                       <label className="block text-xs font-bold text-gray-300 mb-1">{t('Phone / WhatsApp', 'فون / واٹس ایپ')}</label>
                       <input
+                        name="phone"
                         type="tel"
                         required
                         placeholder="0300 1234567"
@@ -138,7 +167,7 @@ export function BecomeTechnicianContent() {
                     </div>
                     <div>
                       <label className="block text-xs font-bold text-gray-300 mb-1">{t('City', 'شہر')}</label>
-                      <select className="w-full rounded-xl bg-gray-900 border border-gray-700 p-3 text-xs text-white outline-none focus:border-[#00824A]">
+                      <select name="city" className="w-full rounded-xl bg-gray-900 border border-gray-700 p-3 text-xs text-white outline-none focus:border-[#00824A]">
                         {cities.map((c) => (
                           <option key={c.en} value={c.en}>{t(c.en, c.ur)}</option>
                         ))}
@@ -147,8 +176,19 @@ export function BecomeTechnicianContent() {
                   </div>
 
                   <div>
+                    <label className="block text-xs font-bold text-gray-300 mb-1">{t('Email', 'ای میل')}</label>
+                    <input
+                      name="email"
+                      type="email"
+                      required
+                      placeholder="you@example.com"
+                      className="w-full rounded-xl bg-gray-900 border border-gray-700 p-3 text-xs text-white placeholder-gray-500 outline-none focus:border-[#00824A]"
+                    />
+                  </div>
+
+                  <div>
                     <label className="block text-xs font-bold text-gray-300 mb-1">{t('Primary Skill Trade', 'بنیادی ہنر')}</label>
-                    <select className="w-full rounded-xl bg-gray-900 border border-gray-700 p-3 text-xs text-white outline-none focus:border-[#00824A]">
+                    <select name="trade" className="w-full rounded-xl bg-gray-900 border border-gray-700 p-3 text-xs text-white outline-none focus:border-[#00824A]">
                       {trades.map((tr) => (
                         <option key={tr.value} value={tr.value}>{t(tr.en, tr.ur)}</option>
                       ))}
@@ -157,18 +197,12 @@ export function BecomeTechnicianContent() {
 
                   <button
                     type="submit"
+                    disabled={lead.sending}
                     className="w-full py-3.5 rounded-xl bg-[#00824A] hover:bg-[#006B3C] text-white text-xs font-bold shadow-md transition-colors cursor-pointer"
                   >
                     {t('Submit Registration', 'رجسٹریشن جمع کروائیں')} &rarr;
                   </button>
                 </form>
-
-                <div className="pt-4 border-t border-gray-800 text-center text-xs text-gray-400">
-                  <span>{t('Questions? Call Pro Onboarding Helpline:', 'سوالات؟ پروفیشنل آن بورڈنگ ہیلپ لائن پر کال کریں:')} </span>
-                  <a href="tel:+923001234567" dir="ltr" className="text-[#00A85B] font-bold hover:underline">
-                    +92 300 123 4567
-                  </a>
-                </div>
               </div>
             </div>
           </div>

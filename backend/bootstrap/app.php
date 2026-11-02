@@ -37,6 +37,10 @@ return Application::configure(basePath: dirname(__DIR__))
         // routes and the same controllers.
         $middleware->statefulApi();
 
+        // API guests get a 401, never a redirect to a login route that does
+        // not exist on the server (the website has its own /login page).
+        $middleware->redirectGuestsTo(fn (Request $request) => $request->is('api/*') ? null : '/login');
+
         $middleware->alias([
             'active' => EnsureUserIsActive::class,
             'role' => Spatie\Permission\Middleware\RoleMiddleware::class,

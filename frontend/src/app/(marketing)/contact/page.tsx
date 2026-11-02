@@ -5,7 +5,7 @@ import { ContactContent } from './ContactContent';
 export const metadata: Metadata = pageMetadata({
   title: 'Contact Us | PakFix Support & Customer Care',
   description:
-    'Get in touch with PakFix support team. Call +92 300 123 4567 or email support@pakfix.pk for help with bookings, AI diagnosis or technician onboarding.',
+    'Get in touch with PakFix support team. Email support@pakfix.pk or send us a message for help with bookings, AI diagnosis or technician onboarding.',
   path: '/contact',
 });
 

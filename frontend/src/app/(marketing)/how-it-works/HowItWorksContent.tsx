@@ -55,9 +55,9 @@ export function HowItWorksContent() {
         ur: 'پاک فکس آپ کے کام کو آپ کے شہر کے اعلیٰ درجہ بند، شناخت جانچے گئے مقامی ٹیکنیشنز سے میچ کرتا ہے۔',
       },
       details: [
-        { en: '100% CNIC identity & criminal record verification', ur: '100% شناختی کارڈ اور مجرمانہ ریکارڈ کی تصدیق' },
+        { en: 'CNIC and selfie reviewed by our team', ur: 'شناختی کارڈ اور سیلفی کی جانچ ہماری ٹیم کرتی ہے' },
         { en: 'Real customer ratings & completed job history', ur: 'حقیقی گاہک ریٹنگز اور مکمل شدہ کاموں کی تاریخ' },
-        { en: 'Licensed plumbers, electricians, AC & appliance specialists', ur: 'لائسنس یافتہ پلمبر، الیکٹریشن، اے سی اور آلات کے ماہرین' },
+        { en: 'Plumbers, electricians, AC and appliance specialists', ur: 'پلمبر، الیکٹریشن، اے سی اور آلات کے ماہرین' },
       ],
     },
     {
@@ -65,13 +65,13 @@ export function HowItWorksContent() {
       icon: CheckCircle2,
       title: { en: '4. Get It Fixed & Track Work', ur: '4. کام کروائیں اور ٹریک کریں' },
       desc: {
-        en: 'Track arrival times in real time, inspect the completed job, pay via cash or digital transfer, and save repair history.',
-        ur: 'حقیقی وقت میں آمد کے اوقات ٹریک کریں، مکمل شدہ کام کا معائنہ کریں، نقد یا ڈیجیٹل ٹرانسفر سے ادائیگی کریں، اور مرمت کی تاریخ محفوظ رکھیں۔',
+        en: 'Follow each step of the job, check the finished work, pay in cash, and keep your job history.',
+        ur: 'کام کا ہر مرحلہ دیکھیں، مکمل کام چیک کریں، نقد ادائیگی کریں اور اپنے کاموں کی تاریخ رکھیں۔',
       },
       details: [
         { en: 'Real-time job tracking and arrival updates', ur: 'حقیقی وقت میں جاب ٹریکنگ اور آمد کی اپڈیٹس' },
-        { en: 'Cash, JazzCash, EasyPaisa or card payments', ur: 'نقد، جاز کیش، ایزی پیسہ یا کارڈ ادائیگیاں' },
-        { en: 'Lifetime digital repair history for your property', ur: 'آپ کی جائیداد کے لیے تاحیات ڈیجیٹل مرمت کی تاریخ' },
+        { en: 'Pay cash once you confirm the job is done', ur: 'کام کی تصدیق کے بعد نقد ادائیگی' },
+        { en: 'Your job history in one place', ur: 'آپ کے کاموں کی تاریخ ایک جگہ' },
       ],
     },
   ];
@@ -147,14 +147,14 @@ export function HowItWorksContent() {
         </Container>
       </section>
 
-      {/* Trust & Guarantee Banner */}
+      {/* Trust banner */}
       <section className="py-12 bg-[#EAF7F0] border-t border-b border-[#E5E7EB]">
         <Container>
           <div className="grid md:grid-cols-3 gap-6 text-center">
             <div className="bg-white p-6 rounded-2xl border border-[#E5E7EB] space-y-2">
               <ShieldCheck className="h-8 w-8 text-[#00824A] mx-auto" />
               <h3 className="text-sm font-bold text-[#161616]">{t('Verified Technicians', 'تصدیق شدہ ٹیکنیشن')}</h3>
-              <p className="text-xs text-[#667085]">{t('CNIC checked, background audited & skilled.', 'شناختی کارڈ جانچا گیا، پس منظر آڈٹ شدہ اور ہنرمند۔')}</p>
+              <p className="text-xs text-[#667085]">{t('CNIC and selfie checked by our team.', 'شناختی کارڈ اور سیلفی کی جانچ ہماری ٹیم کرتی ہے۔')}</p>
             </div>
             <div className="bg-white p-6 rounded-2xl border border-[#E5E7EB] space-y-2">
               <Sparkles className="h-8 w-8 text-[#00824A] mx-auto" />
@@ -163,8 +163,8 @@ export function HowItWorksContent() {
             </div>
             <div className="bg-white p-6 rounded-2xl border border-[#E5E7EB] space-y-2">
               <PhoneCall className="h-8 w-8 text-[#00824A] mx-auto" />
-              <h3 className="text-sm font-bold text-[#161616]">{t('24/7 Customer Care', '24/7 گاہک کی دیکھ بھال')}</h3>
-              <p className="text-xs text-[#667085]">{t('Live phone and WhatsApp support across Pakistan.', 'پورے پاکستان میں لائیو فون اور واٹس ایپ معاونت۔')}</p>
+              <h3 className="text-sm font-bold text-[#161616]">{t('Help When You Need It', 'جب ضرورت ہو مدد')}</h3>
+              <p className="text-xs text-[#667085]">{t('Message our support team any time.', 'ہماری سپورٹ ٹیم کو کسی بھی وقت پیغام بھیجیں۔')}</p>
             </div>
           </div>
 
