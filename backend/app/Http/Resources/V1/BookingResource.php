@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Resources\V1;
 
+use App\Enums\BookingStatus;
 use App\Enums\QuoteStatus;
 use App\Models\Booking;
 use App\Services\Marketplace\BookingFlow;
+use App\Services\Marketplace\JobCompletion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
@@ -79,6 +81,28 @@ class BookingResource extends JsonResource
                 'cancelled_at' => $this->cancelled_at?->toIso8601String(),
             ],
             'created_at' => $this->created_at?->toIso8601String(),
+
+            // Only the customer sees the code, and only until the job is finished.
+            'completion_code' => ! $isPro && $this->status->isActive() && $this->status !== BookingStatus::Completed
+                ? $this->completion_code
+                : null,
+            'completed_via' => $this->completed_via,
+            'deadlines' => app(JobCompletion::class)->deadlines($this->resource),
+            'dispute' => $this->whenLoaded('disputes', function () {
+                $d = $this->disputes->sortByDesc('id')->first();
+
+                return $d === null ? null : [
+                    'id' => $d->uuid,
+                    'reference' => $d->reference,
+                    'kind' => $d->kind,
+                    'raised_by_role' => $d->raised_by_role,
+                    'status' => $d->status->value,
+                    'outcome' => $d->outcome,
+                    'resolution_note' => $d->resolution_note,
+                    'created_at' => $d->created_at?->toIso8601String(),
+                    'resolved_at' => $d->resolved_at?->toIso8601String(),
+                ];
+            }),
 
             'timeline' => $this->whenLoaded('statusHistory', fn () => $this->statusHistory
                 ->sortBy('id')

@@ -143,6 +143,12 @@ class TechnicianProfile extends Model
     // State
     // ---------------------------------------------------------------------
 
+    /** Too many strikes: the professional can no longer send or win offers. */
+    public function isSuspendedByStrikes(): bool
+    {
+        return (int) $this->strikes_count >= (int) config('pakfix.marketplace.completion.max_strikes', 3);
+    }
+
     public function isVerified(): bool
     {
         return $this->verification_status === VerificationStatus::Verified;

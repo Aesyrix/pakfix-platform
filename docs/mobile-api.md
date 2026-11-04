@@ -325,6 +325,32 @@ inspection_started → quote_created → quote_accepted → repair_started
                                    ↘ cancelled (visit fee only)
 ```
 
+### Finishing a job (nobody can dodge it)
+
+Once the professional sets off, the customer can no longer cancel and the professional can only cancel
+until arrival (with a strike). The job ends as confirmed, or through a dispute PakFix decides.
+
+| Who | Endpoint | Does |
+|---|---|---|
+| Customer | `GET /bookings/{uuid}` | `completion_code`: 4 digits, shown to the customer only, until the job is finished |
+| Professional | `POST /pro/bookings/{uuid}/status` `{ "step": "completed", "code": "1234" }` | With the customer's code the job is confirmed at once (`completed_via: "code"`). Without it, it waits for the customer. 5 wrong codes per hour, then 422 on `code` |
+| Professional | `…/status` with `latitude`, `longitude` | Send with `arrived` and `completed`; recorded and shown to PakFix if far from the address |
+| Customer | `POST /bookings/{uuid}/done` | Action `mark_done` (from "on the way" until done): work done and paid, confirmed at once |
+| Customer | `POST /bookings/{uuid}/dispute` `{ kind, description }` | `kind` = `problem` (action `dispute`) or `no_show` (action `no_show`, offered 3 h after "on the way") |
+| Professional | `POST /pro/bookings/{uuid}/dispute` `{ kind, description }` | `kind` = `not_paid` or `problem`, while the job waits for the customer (action `dispute`) |
+
+Every booking also carries:
+
+- `deadlines`: `auto_complete_at` (a job in progress for 72 h is marked done), `auto_confirm_at` (a job marked
+  done is confirmed after 72 h), `dispute_until` (72 h after confirmation), `no_show_from`. Show them as
+  "this will happen on …".
+- `dispute`: the latest dispute (`kind`, `status`, `outcome` = `complete`/`cancel`, `resolution_note`), or null.
+  While one is open the booking status is `disputed` and nothing happens on its own.
+- `completed_via`: `code`, `customer`, `professional`, `auto` or `admin`.
+
+A professional with 3 strikes sees no nearby jobs and cannot send offers (422 on `quote`).
+Deadlines are applied hourly (`pakfix:settle-jobs`) and whenever a job is opened or listed.
+
 ---
 
 ## Professional verification

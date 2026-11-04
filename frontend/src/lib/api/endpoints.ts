@@ -9,6 +9,7 @@ import type {
   AdminServiceCategory,
   AdminSetting,
   AdminTestimonial,
+  AdminDispute,
   AdminReport,
   AdminVerification,
   MarketplaceBooking,
@@ -271,4 +272,8 @@ export const adminApi = {
     apiRequest<AdminReport[]>('admin/reports', { query: { ...filters } }),
   updateReport: (id: string, input: { status: AdminReport['status']; resolution?: string }) =>
     apiRequest<AdminReport>(`admin/reports/${id}`, { method: 'PATCH', body: input }),
+  disputes: (filters: { status?: string; page?: number } = {}) =>
+    apiRequest<AdminDispute[]>('admin/disputes', { query: { ...filters } }),
+  decideDispute: (id: string, input: { outcome: 'complete' | 'cancel'; strike: boolean; note: string }) =>
+    apiRequest<AdminDispute>(`admin/disputes/${id}`, { method: 'PATCH', body: input }),
 };

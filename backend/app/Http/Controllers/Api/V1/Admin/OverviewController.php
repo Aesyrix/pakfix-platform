@@ -10,6 +10,7 @@ use App\Models\AuditLog;
 use App\Models\BlogPost;
 use App\Models\CmsPage;
 use App\Models\ContactMessage;
+use App\Models\Dispute;
 use App\Models\Faq;
 use App\Models\ServiceCategory;
 use App\Models\TechnicianProfile;
@@ -50,6 +51,7 @@ class OverviewController extends Controller
             'inbox' => [
                 'unhandled_contact_messages' => ContactMessage::unhandled()->count(),
                 'open_reports' => $user->can('messages.moderate') ? UserReport::query()->unresolved()->count() : 0,
+                'open_disputes' => $user->can('disputes.view.any') ? Dispute::query()->open()->count() : 0,
             ],
             // Only people who can read the audit log see who did what.
             'recent_activity' => $user->can('audit.view')
@@ -73,6 +75,7 @@ class OverviewController extends Controller
                 'inbox' => $user->can('support.tickets.view.any'),
                 'verifications' => $user->can('technicians.verify'),
                 'reports' => $user->can('messages.moderate'),
+                'disputes' => $user->can('disputes.view.any'),
             ],
         ]);
     }

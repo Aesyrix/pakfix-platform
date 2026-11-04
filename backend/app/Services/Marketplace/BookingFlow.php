@@ -27,6 +27,9 @@ use Illuminate\Validation\ValidationException;
  *     → repair_started → completed → customer_confirmed
  *   inspection_started → quote_created → quote_accepted → repair_started
  *                                      ↘ cancelled (visit fee only)
+ *
+ * How a job is finished, and the deadlines that make sure it always is, live
+ * in {@see JobCompletion}.
  */
 class BookingFlow
 {
@@ -76,29 +79,60 @@ class BookingFlow
             if (in_array($status, self::PRO_CANCELLABLE, true)) {
                 $actions[] = 'cancel';
             }
+            if ($this->completion()->canDispute($booking, 'technician')) {
+                $actions[] = 'dispute';
+            }
 
             return $actions;
         }
 
-        return match (true) {
-            $status === BookingStatus::CustomerConfirmed && ! $booking->is_reviewed => ['review'],
+        $actions = match (true) {
+            $status === BookingStatus::CustomerConfirmed => $booking->is_reviewed ? [] : ['review'],
             $status === BookingStatus::Completed => ['confirm'],
             $status === BookingStatus::QuoteCreated => ['accept_quote', 'reject_quote'],
+            in_array($status, JobCompletion::IN_PROGRESS, true) => ['mark_done'],
             in_array($status, self::CUSTOMER_CANCELLABLE, true) => ['cancel'],
             default => [],
         };
+        if ($this->completion()->canReportNoShow($booking)) {
+            $actions[] = 'no_show';
+        }
+        if ($this->completion()->canDispute($booking, 'customer')) {
+            $actions[] = 'dispute';
+        }
+
+        return $actions;
     }
 
-    /** A professional's step: on_way, arrived, inspecting, working or completed. */
-    public function advance(Booking $booking, TechnicianProfile $profile, User $actor, string $step, ?string $note = null): Booking
-    {
+    /**
+     * A professional's step: on_way, arrived, inspecting, working or completed.
+     *
+     * "arrived" and "completed" record where the professional was, when the
+     * app sends it. "completed" with the customer's code confirms the job at
+     * once; without it, the customer confirms (or it confirms after a wait).
+     */
+    public function advance(
+        Booking $booking,
+        TechnicianProfile $profile,
+        User $actor,
+        string $step,
+        ?string $note = null,
+        ?string $code = null,
+        ?float $latitude = null,
+        ?float $longitude = null,
+    ): Booking {
         if (! in_array($step, $this->actionsFor($booking, 'technician'), true) || ! isset(self::PRO_STEPS[$step])) {
             throw ValidationException::withMessages([
                 'status' => 'That step is not available for this job right now.',
             ]);
         }
 
-        return DB::transaction(function () use ($booking, $actor, $step, $note): Booking {
+        $withCode = $step === 'completed' && $code !== null && trim($code) !== '';
+        if ($withCode) {
+            CompletionCode::verify($booking, (string) $code);
+        }
+
+        return DB::transaction(function () use ($booking, $actor, $step, $note, $withCode, $latitude, $longitude): Booking {
             $booking = $this->lock($booking);
             $target = self::PRO_STEPS[$step];
 
@@ -107,7 +141,39 @@ class BookingFlow
                 $this->transition($booking, BookingStatus::Scheduled, $actor, 'technician', 'Professional confirmed the visit.');
             }
 
-            return $this->transition($booking, $target, $actor, 'technician', $note);
+            if ($step === 'arrived' || $step === 'completed') {
+                $this->completion()->recordLocation($booking, $step, $latitude, $longitude);
+            }
+
+            if ($target === BookingStatus::Completed) {
+                $booking->forceFill(['completed_via' => $withCode ? 'code' : 'professional']);
+            }
+            $this->transition($booking, $target, $actor, 'technician', $note);
+
+            if ($withCode) {
+                $this->finishConfirmed($booking, $actor, 'technician', 'The customer\'s completion code was entered.');
+            }
+
+            return $booking;
+        });
+    }
+
+    /**
+     * The customer says the work is done and paid, even if the professional
+     * has not tapped "done". The job is confirmed straight away.
+     */
+    public function markDone(Booking $booking, User $customer): Booking
+    {
+        if (! in_array('mark_done', $this->actionsFor($booking, 'customer'), true)) {
+            throw ValidationException::withMessages(['status' => 'This job cannot be marked done right now.']);
+        }
+
+        return DB::transaction(function () use ($booking, $customer): Booking {
+            $booking = $this->lock($booking);
+            $booking->forceFill(['completed_via' => 'customer']);
+            $this->transition($booking, BookingStatus::Completed, $customer, 'customer', 'Customer said the work is done.');
+
+            return $this->finishConfirmed($booking, $customer, 'customer', 'Customer confirmed the job and the cash payment.');
         });
     }
 
@@ -224,14 +290,25 @@ class BookingFlow
         }
 
         return DB::transaction(function () use ($booking, $customer): Booking {
-            $booking = $this->lock($booking);
-            $booking->forceFill(['payment_status' => PaymentStatus::Paid]);
-            $this->transition($booking, BookingStatus::CustomerConfirmed, $customer, 'customer', 'Customer confirmed the job and the cash payment.');
-
-            TechnicianProfile::whereKey($booking->technician_profile_id)->increment('completed_jobs_count');
-
-            return $booking;
+            return $this->finishConfirmed($this->lock($booking), $customer, 'customer', 'Customer confirmed the job and the cash payment.');
         });
+    }
+
+    /**
+     * The one place a job becomes confirmed: paid, counted on the
+     * professional's record, and from then on reviewable. Call inside a
+     * transaction with the booking locked.
+     */
+    public function finishConfirmed(Booking $booking, ?User $actor, string $role, string $note, bool $countJob = true): Booking
+    {
+        $booking->forceFill(['payment_status' => PaymentStatus::Paid]);
+        $this->transition($booking, BookingStatus::CustomerConfirmed, $actor, $role, $note);
+
+        if ($countJob && $booking->technician_profile_id) {
+            TechnicianProfile::whereKey($booking->technician_profile_id)->increment('completed_jobs_count');
+        }
+
+        return $booking;
     }
 
     public function cancel(Booking $booking, User $actor, string $role, ?string $reason = null): Booking
@@ -247,6 +324,7 @@ class BookingFlow
 
         return DB::transaction(function () use ($booking, $actor, $role, $reason): Booking {
             $booking = $this->lock($booking);
+            $wasOnTheWay = $booking->status === BookingStatus::TechnicianOnWay;
             $booking->forceFill([
                 'cancelled_by_user_id' => $actor->id,
                 'cancellation_reason' => $reason,
@@ -254,9 +332,13 @@ class BookingFlow
             ]);
             $this->transition($booking, BookingStatus::Cancelled, $actor, $role, $reason);
 
-            // A professional backing out after accepting counts against them.
+            // A professional backing out after accepting counts against them;
+            // backing out once on the way also earns a strike.
             if ($role === 'technician') {
                 TechnicianProfile::whereKey($booking->technician_profile_id)->increment('cancelled_jobs_count');
+                if ($wasOnTheWay) {
+                    $this->completion()->strike((int) $booking->technician_profile_id);
+                }
             }
 
             return $booking;
@@ -269,7 +351,7 @@ class BookingFlow
      *
      * @param array<string, mixed> $meta
      */
-    public function transition(Booking $booking, BookingStatus $to, User $actor, string $role, ?string $note = null, array $meta = []): Booking
+    public function transition(Booking $booking, BookingStatus $to, ?User $actor, string $role, ?string $note = null, array $meta = []): Booking
     {
         $from = $booking->status;
         if (! $from->canTransitionTo($to)) {
@@ -297,7 +379,7 @@ class BookingFlow
         $booking->statusHistory()->create([
             'from_status' => $from->value,
             'to_status' => $to->value,
-            'changed_by_user_id' => $actor->id,
+            'changed_by_user_id' => $actor?->id,
             'actor_role' => $role,
             'note' => $note,
             'meta' => $meta === [] ? null : $meta,
@@ -305,6 +387,11 @@ class BookingFlow
         app(Notifier::class)->bookingChanged($booking, $to, $role);
 
         return $booking;
+    }
+
+    private function completion(): JobCompletion
+    {
+        return app(JobCompletion::class);
     }
 
     private function lock(Booking $booking): Booking

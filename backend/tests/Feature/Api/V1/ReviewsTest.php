@@ -47,7 +47,7 @@ class ReviewsTest extends TestCase
     {
         $booking = $this->confirmedJob();
 
-        $this->actingAs($this->customer)->getJson("/api/v1/bookings/{$booking->uuid}")->assertJsonPath('data.actions', ['review']);
+        $this->actingAs($this->customer)->getJson("/api/v1/bookings/{$booking->uuid}")->assertJsonPath('data.actions', ['review', 'dispute']);
 
         $this->actingAs($this->customer)->postJson("/api/v1/bookings/{$booking->uuid}/review", [
             'rating' => 5,
@@ -56,7 +56,7 @@ class ReviewsTest extends TestCase
         ])
             ->assertOk()
             ->assertJsonPath('data.review.rating', 5)
-            ->assertJsonPath('data.actions', []);
+            ->assertJsonPath('data.actions', ['dispute']);
 
         $this->profile->refresh();
         $this->assertSame(1, (int) $this->profile->rating_count);
