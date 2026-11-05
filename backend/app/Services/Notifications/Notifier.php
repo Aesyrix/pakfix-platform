@@ -150,8 +150,9 @@ class Notifier
                 return;
             }
 
-            // The customer marking it done passes through "completed"; only the confirmation is news.
             $text = match ($to) {
+                // The customer says it is done: the professional must agree or object.
+                BookingStatus::Completed => ['en' => ['Customer says the job is done', "Confirm {$booking->reference}, or report a problem if you did not do it."], 'ur' => ['کسٹمر کے مطابق کام مکمل', "{$booking->reference} کی تصدیق کریں، یا اگر آپ نے یہ کام نہیں کیا تو مسئلہ بتائیں۔"]],
                 BookingStatus::CustomerConfirmed => ['en' => ['Job confirmed', "The customer confirmed {$booking->reference} and the cash payment."], 'ur' => ['کام کی تصدیق', "کسٹمر نے {$booking->reference} اور نقد ادائیگی کی تصدیق کر دی۔"]],
                 BookingStatus::QuoteAccepted => ['en' => ['New price approved', "You can carry on with {$booking->reference}."], 'ur' => ['نئی قیمت منظور', "آپ {$booking->reference} پر کام جاری رکھ سکتے ہیں۔"]],
                 BookingStatus::Cancelled => ['en' => ['Job cancelled', "The customer cancelled {$booking->reference}."], 'ur' => ['کام منسوخ', "کسٹمر نے {$booking->reference} منسوخ کر دیا۔"]],

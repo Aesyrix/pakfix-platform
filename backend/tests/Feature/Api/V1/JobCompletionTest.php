@@ -116,12 +116,58 @@ class JobCompletionTest extends TestCase
         $this->actingAs($this->customer)->getJson("/api/v1/bookings/{$booking->uuid}")
             ->assertJsonPath('data.actions', ['mark_done']);
 
+        // Marked done, but not confirmed: the professional must agree first.
         $this->actingAs($this->customer)->postJson("/api/v1/bookings/{$booking->uuid}/done")
             ->assertOk()
-            ->assertJsonPath('data.status', 'customer_confirmed')
-            ->assertJsonPath('data.completed_via', 'customer');
+            ->assertJsonPath('data.status', 'completed')
+            ->assertJsonPath('data.completed_via', 'customer')
+            ->assertJsonPath('data.actions', []);
+        $this->assertSame(0, (int) $this->profile->fresh()->completed_jobs_count);
 
+        $this->actingAs($this->pro)->getJson("/api/v1/pro/bookings/{$booking->uuid}")
+            ->assertJsonPath('data.actions', ['confirm_done', 'dispute']);
+
+        $this->actingAs($this->pro)->postJson("/api/v1/pro/bookings/{$booking->uuid}/confirm")
+            ->assertOk()
+            ->assertJsonPath('data.status', 'customer_confirmed');
         $this->assertSame(1, (int) $this->profile->fresh()->completed_jobs_count);
+    }
+
+    public function test_a_professional_can_object_to_a_job_they_never_did(): void
+    {
+        $booking = $this->bookedJob();
+        $this->walkTo($booking, 'on_way');
+        $this->actingAs($this->customer)->postJson("/api/v1/bookings/{$booking->uuid}/done")->assertOk();
+
+        $this->actingAs($this->pro)->postJson("/api/v1/pro/bookings/{$booking->uuid}/dispute", [
+            'kind' => 'not_done', 'description' => 'I never reached the house; my bike broke down.',
+        ])->assertOk()->assertJsonPath('data.status', 'disputed')->assertJsonPath('data.dispute.kind', 'not_done');
+
+        // Nothing confirms on its own while PakFix decides.
+        $this->travel(10)->days();
+        $this->artisan('pakfix:settle-jobs')->assertSuccessful();
+        $this->assertSame('disputed', $booking->fresh()->status->value);
+        $this->assertSame(0, (int) $this->profile->fresh()->completed_jobs_count);
+    }
+
+    public function test_if_the_professional_says_nothing_the_customers_word_stands_after_the_wait(): void
+    {
+        $booking = $this->bookedJob();
+        $this->walkTo($booking, 'working');
+        $this->actingAs($this->customer)->postJson("/api/v1/bookings/{$booking->uuid}/done")->assertOk();
+
+        $this->travel(73)->hours();
+        $this->artisan('pakfix:settle-jobs')->assertSuccessful();
+        $this->assertSame('customer_confirmed', $booking->fresh()->status->value);
+    }
+
+    public function test_only_the_professional_can_confirm_what_the_customer_marked_done(): void
+    {
+        $booking = $this->bookedJob();
+        $this->walkTo($booking, 'working');
+
+        // Not marked done by the customer: nothing for the professional to confirm.
+        $this->actingAs($this->pro)->postJson("/api/v1/pro/bookings/{$booking->uuid}/confirm")->assertUnprocessable();
     }
 
     public function test_a_job_cannot_be_marked_done_before_the_professional_sets_off(): void

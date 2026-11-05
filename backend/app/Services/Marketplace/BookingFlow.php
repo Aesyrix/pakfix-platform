@@ -79,11 +79,20 @@ class BookingFlow
             if (in_array($status, self::PRO_CANCELLABLE, true)) {
                 $actions[] = 'cancel';
             }
+            // The customer said it is done: the professional agrees or objects.
+            if ($status === BookingStatus::Completed && $booking->completed_via === 'customer') {
+                $actions[] = 'confirm_done';
+            }
             if ($this->completion()->canDispute($booking, 'technician')) {
                 $actions[] = 'dispute';
             }
 
             return $actions;
+        }
+
+        // Having said it is done, the customer waits for the professional.
+        if ($status === BookingStatus::Completed && $booking->completed_via === 'customer') {
+            return [];
         }
 
         $actions = match (true) {
@@ -159,8 +168,11 @@ class BookingFlow
     }
 
     /**
-     * The customer says the work is done and paid, even if the professional
-     * has not tapped "done". The job is confirmed straight away.
+     * The customer says the work is done and paid, for when the professional
+     * has not tapped "done". It is not confirmed yet: the professional agrees
+     * ({@see confirmByProfessional()}) or reports a problem, and if they do
+     * neither it is confirmed after the usual wait. So a customer cannot
+     * close a job the professional never did.
      */
     public function markDone(Booking $booking, User $customer): Booking
     {
@@ -170,10 +182,21 @@ class BookingFlow
 
         return DB::transaction(function () use ($booking, $customer): Booking {
             $booking = $this->lock($booking);
-            $booking->forceFill(['completed_via' => 'customer']);
-            $this->transition($booking, BookingStatus::Completed, $customer, 'customer', 'Customer said the work is done.');
+            $booking->forceFill(['completed_via' => 'customer', 'payment_status' => PaymentStatus::Paid]);
 
-            return $this->finishConfirmed($booking, $customer, 'customer', 'Customer confirmed the job and the cash payment.');
+            return $this->transition($booking, BookingStatus::Completed, $customer, 'customer', 'Customer said the work is done and paid.');
+        });
+    }
+
+    /** The professional agrees with the customer that the job is done. */
+    public function confirmByProfessional(Booking $booking, User $pro): Booking
+    {
+        if (! in_array('confirm_done', $this->actionsFor($booking, 'technician'), true)) {
+            throw ValidationException::withMessages(['status' => 'This job is not waiting for you to confirm it.']);
+        }
+
+        return DB::transaction(function () use ($booking, $pro): Booking {
+            return $this->finishConfirmed($this->lock($booking), $pro, 'technician', 'Professional agreed the job is done.');
         });
     }
 

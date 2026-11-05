@@ -77,7 +77,7 @@ class CustomerBookingController extends Controller
     {
         $booking = $this->flow->markDone($this->own($request, $uuid), $request->user());
 
-        return $this->respond($booking, 'Thanks for confirming. The job is complete.');
+        return $this->respond($booking, 'Thanks. We have asked the professional to confirm.');
     }
 
     /** `POST /bookings/{uuid}/dispute` — `{ kind: problem|no_show, description }`; PakFix decides. */

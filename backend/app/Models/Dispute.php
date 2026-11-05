@@ -40,7 +40,8 @@ class Dispute extends Model
     use HasUuid;
     use SoftDeletes;
 
-    public const KINDS = ['problem', 'no_show', 'not_paid'];
+    /** not_done: the customer said a job is done that the professional says they never did. */
+    public const KINDS = ['problem', 'no_show', 'not_paid', 'not_done'];
 
     public const OUTCOMES = ['complete', 'cancel'];
 

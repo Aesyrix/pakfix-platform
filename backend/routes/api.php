@@ -212,6 +212,7 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
                 Route::post('bookings/{uuid}/status', [Marketplace\ProBookingController::class, 'advance'])->name('bookings.status');
                 Route::post('bookings/{uuid}/revised-quote', [Marketplace\ProBookingController::class, 'revisedQuote'])->name('bookings.quote');
                 Route::post('bookings/{uuid}/cancel', [Marketplace\ProBookingController::class, 'cancel'])->name('bookings.cancel');
+                Route::post('bookings/{uuid}/confirm', [Marketplace\ProBookingController::class, 'confirm'])->name('bookings.confirm');
                 Route::post('bookings/{uuid}/dispute', [Marketplace\ProBookingController::class, 'dispute'])
                     ->middleware('throttle:10,60,dispute')->name('bookings.dispute');
                 Route::post('bookings/{uuid}/review-response', [Marketplace\ProBookingController::class, 'respondToReview'])

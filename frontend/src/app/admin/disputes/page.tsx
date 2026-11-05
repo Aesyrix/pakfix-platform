@@ -21,6 +21,7 @@ const KINDS: Record<AdminDispute['kind'], [string, string]> = {
   problem: ['Problem with the job', 'کام میں مسئلہ'],
   no_show: ['Professional did not come', 'پروفیشنل نہیں آئے'],
   not_paid: ['Customer has not paid', 'کسٹمر نے ادائیگی نہیں کی'],
+  not_done: ['Customer marked a job done the professional says they never did', 'کسٹمر نے وہ کام مکمل قرار دیا جو پروفیشنل کے مطابق انہوں نے کیا ہی نہیں'],
 };
 
 const VIA: Record<string, [string, string]> = {

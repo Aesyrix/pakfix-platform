@@ -88,11 +88,19 @@ class ProBookingController extends Controller
         return $this->respond($booking, $message);
     }
 
-    /** `POST /pro/bookings/{uuid}/dispute` — `{ kind: not_paid|problem, description }`; PakFix decides. */
+    /** `POST /pro/bookings/{uuid}/confirm` — agree with the customer that the job is done. */
+    public function confirm(Request $request, string $uuid): JsonResponse
+    {
+        $booking = $this->flow->confirmByProfessional($this->assigned($request, $uuid), $request->user());
+
+        return $this->respond($booking, 'Job complete. Well done!');
+    }
+
+    /** `POST /pro/bookings/{uuid}/dispute` — `{ kind: not_paid|not_done|problem, description }`; PakFix decides. */
     public function dispute(Request $request, string $uuid): JsonResponse
     {
         $data = $request->validate([
-            'kind' => ['required', Rule::in(['not_paid', 'problem'])],
+            'kind' => ['required', Rule::in(['not_paid', 'not_done', 'problem'])],
             'description' => ['required', 'string', 'min:10', 'max:2000'],
         ], ['description.min' => 'Tell us a little more about what happened.']);
 

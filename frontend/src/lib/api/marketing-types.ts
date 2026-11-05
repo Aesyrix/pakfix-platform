@@ -453,7 +453,7 @@ export interface AdminDisputePerson {
 export interface AdminDispute {
   id: string;
   reference: string;
-  kind: 'problem' | 'no_show' | 'not_paid';
+  kind: 'problem' | 'no_show' | 'not_paid' | 'not_done';
   raised_by_role: 'customer' | 'technician' | null;
   raised_by: AdminDisputePerson | null;
   description: string;
