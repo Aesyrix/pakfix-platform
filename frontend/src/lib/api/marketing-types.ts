@@ -243,7 +243,7 @@ export interface AdminOverview {
     verified_professionals: number;
     pending_professionals: number;
   };
-  inbox: { unhandled_contact_messages: number; open_reports?: number };
+  inbox: { unhandled_contact_messages: number; open_reports?: number; open_disputes?: number };
   recent_activity: Array<{ action: string; description: string | null; actor: string | null; created_at: string | null }>;
   permissions: {
     content: boolean;
@@ -255,6 +255,8 @@ export interface AdminOverview {
     verifications?: boolean;
     /** Can handle reports from customers and professionals. */
     reports?: boolean;
+    /** Can see and decide disputes on booked jobs. */
+    disputes?: boolean;
   };
 }
 
@@ -440,6 +442,45 @@ export interface AdminReport {
   handled_by: string | null;
   handled_at: string | null;
   created_at: string;
+}
+
+export interface AdminDisputePerson {
+  name: string;
+  email: string | null;
+}
+
+/** A dispute on a booked job (`/admin/disputes`). */
+export interface AdminDispute {
+  id: string;
+  reference: string;
+  kind: 'problem' | 'no_show' | 'not_paid' | 'not_done';
+  raised_by_role: 'customer' | 'technician' | null;
+  raised_by: AdminDisputePerson | null;
+  description: string;
+  status: 'open' | 'under_review' | 'resolved' | 'rejected';
+  outcome: 'complete' | 'cancel' | null;
+  strike_given: boolean;
+  resolution_note: string | null;
+  resolved_by: string | null;
+  resolved_at: string | null;
+  created_at: string;
+  booking: {
+    id: string;
+    reference: string;
+    status: string;
+    category: string | null;
+    problem_description: string;
+    address_line: string;
+    total: string;
+    completed_via: string | null;
+    arrived_distance_m: number | null;
+    arrived_far: boolean;
+    completed_distance_m: number | null;
+    completed_far: boolean;
+    customer: AdminDisputePerson | null;
+    professional: { name: string; email: string | null; strikes: number; completed_jobs: number; cancelled_jobs: number } | null;
+    timeline: Array<{ status: string; actor_role: string | null; note: string | null; at: string | null }>;
+  } | null;
 }
 
 /** A professional in the verification queue (`/admin/verifications`). */

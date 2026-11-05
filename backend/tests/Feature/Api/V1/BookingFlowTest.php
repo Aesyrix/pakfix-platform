@@ -65,7 +65,7 @@ class BookingFlowTest extends TestCase
         }
 
         $this->actingAs($this->customer)->getJson("/api/v1/bookings/{$booking->uuid}")
-            ->assertJsonPath('data.actions', ['confirm']);
+            ->assertJsonPath('data.actions', ['confirm', 'dispute']);
 
         $this->actingAs($this->customer)->postJson("/api/v1/bookings/{$booking->uuid}/confirm")
             ->assertOk()
@@ -129,7 +129,7 @@ class BookingFlowTest extends TestCase
         $this->step($booking, 'working')->assertUnprocessable();
 
         $this->actingAs($this->customer)->getJson("/api/v1/bookings/{$booking->uuid}")
-            ->assertJsonPath('data.actions', ['accept_quote', 'reject_quote'])
+            ->assertJsonPath('data.actions', ['accept_quote', 'reject_quote', 'dispute'])
             ->assertJsonPath('data.pending_quote.notes', 'The trap is cracked and needs replacing.');
 
         $this->actingAs($this->customer)->postJson("/api/v1/bookings/{$booking->uuid}/revised-quote/accept")

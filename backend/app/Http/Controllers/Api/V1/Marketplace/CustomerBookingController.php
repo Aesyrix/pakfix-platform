@@ -8,10 +8,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\BookingResource;
 use App\Models\Booking;
 use App\Services\Marketplace\BookingFlow;
+use App\Services\Marketplace\CompletionCode;
+use App\Services\Marketplace\JobCompletion;
 use App\Services\Marketplace\Reviews;
 use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 /**
  * The customer's bookings: follow the job, approve or decline a revised
@@ -20,18 +23,23 @@ use Illuminate\Http\Request;
  */
 class CustomerBookingController extends Controller
 {
-    private const WITH = ['category', 'city', 'technicianProfile.user', 'statusHistory', 'quotes', 'review'];
+    private const WITH = ['category', 'city', 'technicianProfile.user', 'statusHistory', 'quotes', 'review', 'disputes'];
 
-    public function __construct(private readonly BookingFlow $flow, private readonly Reviews $reviews)
-    {
+    public function __construct(
+        private readonly BookingFlow $flow,
+        private readonly Reviews $reviews,
+        private readonly JobCompletion $completion,
+    ) {
     }
 
     /** `GET /bookings` — active jobs first, then the rest, newest first. */
     public function index(Request $request): JsonResponse
     {
+        $this->completion->settleFor(Booking::query()->forCustomer($request->user()->id));
+
         $bookings = Booking::query()
             ->forCustomer($request->user()->id)
-            ->with(['category', 'city', 'technicianProfile.user', 'quotes'])
+            ->with(['category', 'city', 'technicianProfile.user', 'quotes', 'disputes'])
             ->orderByRaw("case when status in ('customer_confirmed','cancelled','refunded') then 1 else 0 end")
             ->latest()
             ->paginate(min($request->integer('per_page', 20), 50));
@@ -62,6 +70,28 @@ class CustomerBookingController extends Controller
         $booking = $this->flow->confirm($this->own($request, $uuid), $request->user());
 
         return $this->respond($booking, 'Thanks for confirming. The job is complete.');
+    }
+
+    /** `POST /bookings/{uuid}/done` — the work is done and paid, even if the professional has not said so. */
+    public function markDone(Request $request, string $uuid): JsonResponse
+    {
+        $booking = $this->flow->markDone($this->own($request, $uuid), $request->user());
+
+        return $this->respond($booking, 'Thanks. We have asked the professional to confirm.');
+    }
+
+    /** `POST /bookings/{uuid}/dispute` — `{ kind: problem|no_show, description }`; PakFix decides. */
+    public function dispute(Request $request, string $uuid): JsonResponse
+    {
+        $data = $request->validate([
+            'kind' => ['required', Rule::in(['problem', 'no_show'])],
+            'description' => ['required', 'string', 'min:10', 'max:2000'],
+        ], ['description.min' => 'Tell us a little more about what went wrong.']);
+
+        $booking = $this->own($request, $uuid);
+        $this->completion->openDispute($booking, $request->user(), 'customer', $data['kind'], $data['description']);
+
+        return $this->respond($booking, 'Thanks. PakFix will look into it and get back to you within 24 hours.');
     }
 
     /** `POST /bookings/{uuid}/revised-quote/accept` */
@@ -104,10 +134,14 @@ class CustomerBookingController extends Controller
 
     private function own(Request $request, string $uuid): Booking
     {
-        return Booking::query()
+        $booking = Booking::query()
             ->where('uuid', $uuid)
             ->where('customer_id', $request->user()->id)
             ->firstOr(fn () => abort(404, 'That booking does not exist.'));
+
+        CompletionCode::ensure($booking);
+
+        return $this->completion->settle($booking);
     }
 
     private function respond(Booking $booking, string $message = 'OK'): JsonResponse

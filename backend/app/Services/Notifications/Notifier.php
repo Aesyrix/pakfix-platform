@@ -105,30 +105,61 @@ class Notifier
     {
         $this->later(function () use ($booking, $to, $byRole): void {
             $pro = $booking->technicianProfile?->displayName() ?? 'Your professional';
+            $toCustomer = fn (array $text) => $this->push(User::find($booking->customer_id), self::JOB_UPDATE, $text, ['route' => "/bookings/{$booking->uuid}"]);
+            $toPro = fn (array $text) => $this->push($this->proUser($booking), self::JOB_UPDATE, $text, ['route' => "/pro/bookings/{$booking->uuid}"]);
 
-            if ($byRole === 'technician') {
+            // Automatic steps and PakFix decisions: both sides hear about them.
+            if ($byRole === 'system' || $byRole === 'admin') {
                 $text = match ($to) {
-                    BookingStatus::TechnicianOnWay => ['en' => ['On the way', "{$pro} is on the way."], 'ur' => ['راستے میں', "{$pro} راستے میں ہیں۔"]],
-                    BookingStatus::Arrived => ['en' => ['Arrived', "{$pro} has arrived."], 'ur' => ['پہنچ گئے', "{$pro} پہنچ گئے ہیں۔"]],
-                    BookingStatus::Completed => ['en' => ['Job done', 'Check the work, then confirm and pay in cash.'], 'ur' => ['کام مکمل', 'کام چیک کریں، پھر تصدیق کر کے نقد ادائیگی کریں۔']],
-                    BookingStatus::Cancelled => ['en' => ['Job cancelled', "{$pro} cancelled job {$booking->reference}."], 'ur' => ['کام منسوخ', "{$pro} نے کام {$booking->reference} منسوخ کر دیا۔"]],
+                    BookingStatus::Completed => ['en' => ['Job marked done', "{$booking->reference} was marked done automatically. Confirm it, or report a problem."], 'ur' => ['کام مکمل قرار', "{$booking->reference} خودبخود مکمل قرار دیا گیا۔ تصدیق کریں یا مسئلہ بتائیں۔"]],
+                    BookingStatus::CustomerConfirmed => ['en' => ['Job complete', "{$booking->reference} is now complete."], 'ur' => ['کام مکمل', "{$booking->reference} اب مکمل ہو گیا ہے۔"]],
+                    BookingStatus::Cancelled => ['en' => ['Job cancelled', "PakFix cancelled {$booking->reference} after reviewing the problem."], 'ur' => ['کام منسوخ', "مسئلے کا جائزہ لینے کے بعد پاک فکس نے {$booking->reference} منسوخ کر دیا۔"]],
                     default => null,
                 };
                 if ($text !== null) {
-                    $this->push(User::find($booking->customer_id), self::JOB_UPDATE, $text, ['route' => "/bookings/{$booking->uuid}"]);
+                    $toCustomer($text);
+                    $toPro($text);
+                }
+
+                return;
+            }
+
+            // A problem was reported: the other side hears that PakFix will look into it.
+            if ($to === BookingStatus::Disputed) {
+                $text = ['en' => ['Problem reported', "A problem was reported on {$booking->reference}. PakFix will review it within 24 hours."], 'ur' => ['مسئلہ رپورٹ ہوا', "{$booking->reference} پر مسئلہ رپورٹ ہوا ہے۔ پاک فکس 24 گھنٹوں میں جائزہ لے گا۔"]];
+                $byRole === 'technician' ? $toCustomer($text) : $toPro($text);
+
+                return;
+            }
+
+            if ($byRole === 'technician') {
+                $text = match (true) {
+                    $to === BookingStatus::TechnicianOnWay => ['en' => ['On the way', "{$pro} is on the way."], 'ur' => ['راستے میں', "{$pro} راستے میں ہیں۔"]],
+                    $to === BookingStatus::Arrived => ['en' => ['Arrived', "{$pro} has arrived."], 'ur' => ['پہنچ گئے', "{$pro} پہنچ گئے ہیں۔"]],
+                    // With the customer's code the job is confirmed straight after; one message is enough.
+                    $to === BookingStatus::Completed && $booking->completed_via === 'code' => null,
+                    $to === BookingStatus::Completed => ['en' => ['Job done', 'Check the work, then confirm and pay in cash.'], 'ur' => ['کام مکمل', 'کام چیک کریں، پھر تصدیق کر کے نقد ادائیگی کریں۔']],
+                    $to === BookingStatus::CustomerConfirmed => ['en' => ['Job complete', "Thanks for using PakFix. Rate {$pro} to help others."], 'ur' => ['کام مکمل', "پاک فکس استعمال کرنے کا شکریہ۔ دوسروں کی مدد کے لیے {$pro} کو ریٹ کریں۔"]],
+                    $to === BookingStatus::Cancelled => ['en' => ['Job cancelled', "{$pro} cancelled job {$booking->reference}."], 'ur' => ['کام منسوخ', "{$pro} نے کام {$booking->reference} منسوخ کر دیا۔"]],
+                    default => null,
+                };
+                if ($text !== null) {
+                    $toCustomer($text);
                 }
 
                 return;
             }
 
             $text = match ($to) {
+                // The customer says it is done: the professional must agree or object.
+                BookingStatus::Completed => ['en' => ['Customer says the job is done', "Confirm {$booking->reference}, or report a problem if you did not do it."], 'ur' => ['کسٹمر کے مطابق کام مکمل', "{$booking->reference} کی تصدیق کریں، یا اگر آپ نے یہ کام نہیں کیا تو مسئلہ بتائیں۔"]],
                 BookingStatus::CustomerConfirmed => ['en' => ['Job confirmed', "The customer confirmed {$booking->reference} and the cash payment."], 'ur' => ['کام کی تصدیق', "کسٹمر نے {$booking->reference} اور نقد ادائیگی کی تصدیق کر دی۔"]],
                 BookingStatus::QuoteAccepted => ['en' => ['New price approved', "You can carry on with {$booking->reference}."], 'ur' => ['نئی قیمت منظور', "آپ {$booking->reference} پر کام جاری رکھ سکتے ہیں۔"]],
                 BookingStatus::Cancelled => ['en' => ['Job cancelled', "The customer cancelled {$booking->reference}."], 'ur' => ['کام منسوخ', "کسٹمر نے {$booking->reference} منسوخ کر دیا۔"]],
                 default => null,
             };
             if ($text !== null) {
-                $this->push($this->proUser($booking), self::JOB_UPDATE, $text, ['route' => "/pro/bookings/{$booking->uuid}"]);
+                $toPro($text);
             }
         });
     }

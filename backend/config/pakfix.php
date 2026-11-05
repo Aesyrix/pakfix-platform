@@ -89,6 +89,26 @@ return [
         // Commission is off during the launch period; when it is switched on
         // the percentage comes from 'commission' above.
         'commission_enabled' => (bool) env('PAKFIX_COMMISSION_ENABLED', false),
+
+        // How a job is finished so that neither side can dodge it. Once the
+        // professional sets off, a job can only end as completed or through
+        // a dispute that PakFix decides.
+        'completion' => [
+            // A job in progress (professional arrived) is marked done after this.
+            'auto_complete_hours' => (int) env('PAKFIX_AUTO_COMPLETE_HOURS', 72),
+            // A job marked done is confirmed after this unless someone disputes it.
+            'auto_confirm_hours' => (int) env('PAKFIX_AUTO_CONFIRM_HOURS', 72),
+            // How long after confirmation either side may still raise a dispute.
+            'dispute_hours' => (int) env('PAKFIX_DISPUTE_HOURS', 72),
+            // The customer may report a no-show this long after "on the way".
+            'no_show_minutes' => (int) env('PAKFIX_NO_SHOW_MINUTES', 180),
+            // "Arrived" or "done" further than this from the address is flagged.
+            'location_radius_m' => (int) env('PAKFIX_LOCATION_RADIUS_M', 1000),
+            // Strikes at which a professional can no longer send offers.
+            'max_strikes' => (int) env('PAKFIX_MAX_STRIKES', 3),
+            // Wrong completion codes allowed per job per hour.
+            'code_attempts' => 5,
+        ],
     ],
 
     'uploads' => [

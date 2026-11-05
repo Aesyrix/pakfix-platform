@@ -48,7 +48,7 @@ class RequestMatcher
     public function nearby(TechnicianProfile $profile, int $limit = 50): Collection
     {
         $categoryIds = $this->categoryIdsFor($profile);
-        if ($categoryIds === [] || $profile->latitude === null || $profile->longitude === null) {
+        if ($categoryIds === [] || $profile->isSuspendedByStrikes() || $profile->latitude === null || $profile->longitude === null) {
             return collect();
         }
 
@@ -85,7 +85,7 @@ class RequestMatcher
     /** Whether this professional is allowed to bid on this request. */
     public function canBid(TechnicianProfile $profile, QuoteRequest $request): bool
     {
-        if (! $profile->isVerified() || (int) $request->customer_id === (int) $profile->user_id || ! $request->isAcceptingBids()) {
+        if (! $profile->isVerified() || $profile->isSuspendedByStrikes() || (int) $request->customer_id === (int) $profile->user_id || ! $request->isAcceptingBids()) {
             return false;
         }
         if (app(Safety::class)->blockedBetween((int) $request->customer_id, (int) $profile->user_id)) {

@@ -73,6 +73,12 @@ class Booking extends Model
             'total_minor' => 'integer',
             'commission_minor' => 'integer',
             'technician_payout_minor' => 'integer',
+            'arrived_latitude' => 'float',
+            'arrived_longitude' => 'float',
+            'arrived_distance_m' => 'integer',
+            'completed_latitude' => 'float',
+            'completed_longitude' => 'float',
+            'completed_distance_m' => 'integer',
         ];
     }
 
@@ -148,6 +154,11 @@ class Booking extends Model
     public function review(): HasOne
     {
         return $this->hasOne(Review::class);
+    }
+
+    public function disputes(): HasMany
+    {
+        return $this->hasMany(Dispute::class);
     }
 
     public function payments(): HasMany

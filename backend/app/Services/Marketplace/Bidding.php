@@ -107,6 +107,12 @@ class Bidding
             ]);
         }
 
+        if ($profile->isSuspendedByStrikes()) {
+            throw ValidationException::withMessages([
+                'quote' => 'Your account has too many strikes to send offers. Contact PakFix support.',
+            ]);
+        }
+
         if (! $this->matcher->canBid($profile, $request)) {
             throw ValidationException::withMessages([
                 'quote' => 'This request is no longer open to you. It may have closed or be outside your area.',
@@ -241,6 +247,9 @@ class Bidding
             if (app(Safety::class)->blockedBetween((int) $customer->id, (int) $profile->user_id)) {
                 throw ValidationException::withMessages(['quote' => 'You cannot book this professional.']);
             }
+            if ($profile->isSuspendedByStrikes()) {
+                throw ValidationException::withMessages(['quote' => 'This professional is not taking jobs right now. Please choose another offer.']);
+            }
             $commission = Commission::on($quote->total_minor);
 
             $booking = new Booking([
@@ -266,6 +275,7 @@ class Bidding
                 'payment_status' => PaymentStatus::Pending,
             ]);
             $booking->forceFill([
+                'completion_code' => CompletionCode::generate(),
                 'labour_minor' => $quote->labour_minor,
                 'materials_minor' => $quote->materials_minor,
                 'visit_fee_minor' => $quote->visit_fee_minor,

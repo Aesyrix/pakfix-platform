@@ -10,6 +10,7 @@ import {
   MessageCircleQuestion,
   Newspaper,
   Quote,
+  Scale,
   Settings,
   ShieldCheck,
   Wrench,
@@ -39,7 +40,7 @@ interface AdminLink {
   label: string;
   labelUr: string;
   icon: typeof LayoutDashboard;
-  permission: 'content' | 'blog' | 'services' | 'settings' | 'inbox' | 'verifications' | 'reports' | null;
+  permission: 'content' | 'blog' | 'services' | 'settings' | 'inbox' | 'verifications' | 'reports' | 'disputes' | null;
   exact?: boolean;
 }
 
@@ -53,6 +54,7 @@ const LINKS: AdminLink[] = [
   { href: '/admin/services', label: 'Services', labelUr: 'خدمات', icon: Wrench, permission: 'services' },
   { href: '/admin/verifications', label: 'Verifications', labelUr: 'تصدیق', icon: ShieldCheck, permission: 'verifications' },
   { href: '/admin/reports', label: 'Reports', labelUr: 'شکایات', icon: Flag, permission: 'reports' },
+  { href: '/admin/disputes', label: 'Disputes', labelUr: 'تنازعات', icon: Scale, permission: 'disputes' },
   { href: '/admin/inbox', label: 'Contact inbox', labelUr: 'رابطہ ان باکس', icon: Inbox, permission: 'inbox' },
   { href: '/admin/settings', label: 'Settings', labelUr: 'ترتیبات', icon: Settings, permission: 'settings' },
 ];
@@ -70,6 +72,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
   const unhandled = overview.data?.inbox.unhandled_contact_messages ?? 0;
   const pendingPros = overview.data?.marketplace.pending_professionals ?? 0;
   const openReports = overview.data?.inbox.open_reports ?? 0;
+  const openDisputes = overview.data?.inbox.open_disputes ?? 0;
 
   const visible = LINKS.filter((link) => !link.permission || permissions?.[link.permission]);
 
@@ -134,6 +137,11 @@ export function AdminShell({ children }: { children: ReactNode }) {
                     {link.permission === 'reports' && openReports > 0 ? (
                       <span className="ml-auto rounded-full bg-[#DC2626] px-1.5 py-0.5 text-[0.6875rem] font-bold text-white">
                         {openReports}
+                      </span>
+                    ) : null}
+                    {link.permission === 'disputes' && openDisputes > 0 ? (
+                      <span className="ml-auto rounded-full bg-[#DC2626] px-1.5 py-0.5 text-[0.6875rem] font-bold text-white">
+                        {openDisputes}
                       </span>
                     ) : null}
                     {link.permission === 'verifications' && pendingPros > 0 ? (

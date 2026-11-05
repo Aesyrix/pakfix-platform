@@ -162,6 +162,9 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
             ->middleware(['permission:bookings.cancel', 'throttle:20,1'])->name('bookings.cancel');
         Route::middleware(['permission:bookings.update', 'throttle:30,1'])->group(function (): void {
             Route::post('bookings/{uuid}/confirm', [Marketplace\CustomerBookingController::class, 'confirm'])->name('bookings.confirm');
+            Route::post('bookings/{uuid}/done', [Marketplace\CustomerBookingController::class, 'markDone'])->name('bookings.done');
+            Route::post('bookings/{uuid}/dispute', [Marketplace\CustomerBookingController::class, 'dispute'])
+                ->middleware('throttle:10,60,dispute')->name('bookings.dispute');
             Route::post('bookings/{uuid}/revised-quote/accept', [Marketplace\CustomerBookingController::class, 'acceptQuote'])->name('bookings.quote.accept');
             Route::post('bookings/{uuid}/revised-quote/reject', [Marketplace\CustomerBookingController::class, 'rejectQuote'])->name('bookings.quote.reject');
             Route::post('bookings/{uuid}/review', [Marketplace\CustomerBookingController::class, 'review'])->name('bookings.review');
@@ -209,6 +212,9 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
                 Route::post('bookings/{uuid}/status', [Marketplace\ProBookingController::class, 'advance'])->name('bookings.status');
                 Route::post('bookings/{uuid}/revised-quote', [Marketplace\ProBookingController::class, 'revisedQuote'])->name('bookings.quote');
                 Route::post('bookings/{uuid}/cancel', [Marketplace\ProBookingController::class, 'cancel'])->name('bookings.cancel');
+                Route::post('bookings/{uuid}/confirm', [Marketplace\ProBookingController::class, 'confirm'])->name('bookings.confirm');
+                Route::post('bookings/{uuid}/dispute', [Marketplace\ProBookingController::class, 'dispute'])
+                    ->middleware('throttle:10,60,dispute')->name('bookings.dispute');
                 Route::post('bookings/{uuid}/review-response', [Marketplace\ProBookingController::class, 'respondToReview'])
                     ->middleware('permission:reviews.respond')->name('bookings.review.respond');
             });
@@ -282,6 +288,9 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
             Route::get('reports', [Admin\ReportController::class, 'index'])->name('reports.index');
             Route::patch('reports/{uuid}', [Admin\ReportController::class, 'update'])->name('reports.update');
         });
+
+        Route::middleware('permission:disputes.view.any')->get('disputes', [Admin\DisputeController::class, 'index'])->name('disputes.index');
+        Route::middleware('permission:disputes.resolve')->patch('disputes/{uuid}', [Admin\DisputeController::class, 'update'])->name('disputes.update');
 
         Route::middleware('permission:technicians.verify')->group(function (): void {
             Route::get('verifications', [Admin\VerificationController::class, 'index'])->name('verifications.index');
