@@ -121,6 +121,7 @@ class ProRequestController extends Controller
             ->where('technician_profile_id', $profile->id)
             ->whereIn('quote_request_id', array_map(fn (QuoteRequest $r) => $r->id, $requests))
             ->whereIn('status', [QuoteStatus::Sent->value, QuoteStatus::Accepted->value, QuoteStatus::Rejected->value])
+            ->with('booking')
             ->latest()
             ->get()
             ->unique('quote_request_id')
