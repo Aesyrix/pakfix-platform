@@ -40,7 +40,8 @@ class BookingController extends Controller
             ->when($search !== '', fn (Builder $q) => $q->where(fn (Builder $w) => $w
                 ->where('reference', 'like', "%{$search}%")
                 ->orWhereHas('customer', fn (Builder $c) => $c->where('name', 'like', "%{$search}%"))
-                ->orWhereHas('technicianProfile.user', fn (Builder $c) => $c->where('name', 'like', "%{$search}%"))))
+                ->orWhereHas('technicianProfile.user', fn (Builder $c) => $c->where('name', 'like', "%{$search}%"))
+                ->orWhereHas('technicianProfile', fn (Builder $c) => $c->where('business_name', 'like', "%{$search}%"))))
             ->latest()
             ->paginate(min($request->integer('per_page', 25), 50));
 

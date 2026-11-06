@@ -55,16 +55,19 @@ class AdminToolsTest extends TestCase
 
     public function test_admins_find_customers_and_professionals_but_not_staff(): void
     {
+        // Two professionals, so a list (not just one row) is exercised.
+        $this->professional();
+
         $this->actingAs($this->admin)->getJson('/api/v1/admin/users')
             ->assertOk()
-            ->assertJsonCount(2, 'data');
+            ->assertJsonCount(3, 'data');
 
         $this->actingAs($this->admin)->getJson('/api/v1/admin/users?search=Ayesha')
             ->assertJsonCount(1, 'data')
             ->assertJsonPath('data.0.role', 'customer');
 
         $this->actingAs($this->admin)->getJson('/api/v1/admin/users?role=technician')
-            ->assertJsonCount(1, 'data')
+            ->assertJsonCount(2, 'data')
             ->assertJsonPath('data.0.professional.strikes', 0);
 
         $this->actingAs($this->customer)->getJson('/api/v1/admin/users')->assertForbidden();

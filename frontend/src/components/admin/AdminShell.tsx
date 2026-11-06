@@ -2,6 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import {
+  CalendarCheck,
   FileText,
   Flag,
   Inbox,
@@ -13,6 +14,7 @@ import {
   Scale,
   Settings,
   ShieldCheck,
+  Users,
   Wrench,
 } from 'lucide-react';
 import Link from 'next/link';
@@ -40,7 +42,7 @@ interface AdminLink {
   label: string;
   labelUr: string;
   icon: typeof LayoutDashboard;
-  permission: 'content' | 'blog' | 'services' | 'settings' | 'inbox' | 'verifications' | 'reports' | 'disputes' | null;
+  permission: 'content' | 'blog' | 'services' | 'settings' | 'inbox' | 'verifications' | 'reports' | 'disputes' | 'users' | 'bookings' | null;
   exact?: boolean;
 }
 
@@ -52,6 +54,8 @@ const LINKS: AdminLink[] = [
   { href: '/admin/pages', label: 'Pages', labelUr: 'صفحات', icon: FileText, permission: 'content' },
   { href: '/admin/blog', label: 'Guides', labelUr: 'گائیڈز', icon: Newspaper, permission: 'blog' },
   { href: '/admin/services', label: 'Services', labelUr: 'خدمات', icon: Wrench, permission: 'services' },
+  { href: '/admin/users', label: 'Users', labelUr: 'صارفین', icon: Users, permission: 'users' },
+  { href: '/admin/bookings', label: 'Bookings', labelUr: 'بکنگز', icon: CalendarCheck, permission: 'bookings' },
   { href: '/admin/verifications', label: 'Verifications', labelUr: 'تصدیق', icon: ShieldCheck, permission: 'verifications' },
   { href: '/admin/reports', label: 'Reports', labelUr: 'شکایات', icon: Flag, permission: 'reports' },
   { href: '/admin/disputes', label: 'Disputes', labelUr: 'تنازعات', icon: Scale, permission: 'disputes' },

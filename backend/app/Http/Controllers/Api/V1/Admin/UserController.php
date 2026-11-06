@@ -41,7 +41,8 @@ class UserController extends Controller
             ->when($search !== '', fn (Builder $q) => $q->where(fn (Builder $w) => $w
                 ->where('name', 'like', "%{$search}%")
                 ->orWhere('email', 'like', "%{$search}%")
-                ->orWhere('phone', 'like', "%{$search}%")))
+                ->orWhere('phone', 'like', "%{$search}%")
+                ->orWhereHas('technicianProfile', fn (Builder $p) => $p->where('business_name', 'like', "%{$search}%"))))
             ->when($data['role'] ?? null, fn (Builder $q, string $role) => $q->role($role))
             ->when(($data['status'] ?? null) === 'suspended', fn (Builder $q) => $q->whereIn('status', [User::STATUS_SUSPENDED, User::STATUS_BANNED]))
             ->when(($data['status'] ?? null) === 'active', fn (Builder $q) => $q->whereIn('status', [User::STATUS_ACTIVE, User::STATUS_PENDING]))
@@ -133,7 +134,8 @@ class UserController extends Controller
     /** @return array<string, mixed> */
     private function summary(User $u): array
     {
-        $p = $u->technicianProfile;
+        // The profile's owner is this user; say so instead of loading it again.
+        $p = $u->technicianProfile?->setRelation('user', $u);
 
         return [
             'id' => $u->uuid,
