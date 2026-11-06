@@ -94,8 +94,11 @@ class AdminToolsTest extends TestCase
         // Sign-in is refused with the reason, and any session in use stops working.
         $this->postJson('/api/v1/auth/login', ['login' => $this->customer->email, 'password' => 'password'])
             ->assertForbidden()
-            ->assertJsonPath('message', 'Abusive messages to professionals.');
-        $this->actingAs($this->customer->fresh())->getJson('/api/v1/bookings')->assertForbidden();
+            ->assertJsonPath('message', 'Abusive messages to professionals.')
+            ->assertJsonPath('errors.account.0', 'suspended');
+        $this->actingAs($this->customer->fresh())->getJson('/api/v1/bookings')
+            ->assertForbidden()
+            ->assertJsonPath('errors.account.0', 'suspended');
     }
 
     public function test_suspending_a_professional_withdraws_their_offers_and_hides_them(): void

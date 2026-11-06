@@ -133,7 +133,13 @@ Check `user.status` after sign-in and on `GET /auth/me`:
 | `suspended` / `banned` | The API returns 403 with a reason; show it and sign out |
 
 Status is re-checked on **every** request, so an account suspended mid-session stops working on
-the next call. Handle a 403 at any moment, not only at sign-in.
+the next call. Handle a 403 at any moment, not only at sign-in. A suspension 403 carries
+`errors.account = ["suspended"]` and `message` is the reason PakFix gave: sign out and show it.
+
+When PakFix suspends an account, every token and session is revoked and push tokens are removed;
+a customer's open requests are closed and a professional's open offers are withdrawn (they also
+disappear from public listings). Booked jobs stay until PakFix cancels them, which both sides are
+told about like any other cancellation.
 
 ---
 

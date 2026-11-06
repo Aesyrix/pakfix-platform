@@ -78,8 +78,10 @@ class AuthController extends Controller
         }
 
         if (! $user->canAuthenticate()) {
-            return ApiResponse::forbidden(
-                $user->status_reason ?: 'This account has been suspended. Contact PakFix support.'
+            return ApiResponse::error(
+                $user->status_reason ?: 'This account has been suspended. Contact PakFix support.',
+                403,
+                ['account' => ['suspended']],
             );
         }
 

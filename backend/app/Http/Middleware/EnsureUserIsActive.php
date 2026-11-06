@@ -28,9 +28,12 @@ class EnsureUserIsActive
             // cannot keep retrying with the same token.
             $user->currentAccessToken()?->delete();
 
-            return ApiResponse::forbidden(
-                $user->status_reason
-                    ?: 'This account has been suspended. Contact PakFix support.'
+            // `errors.account` tells the apps this is a suspension (sign out
+            // and show the reason), not an ordinary "not allowed".
+            return ApiResponse::error(
+                $user->status_reason ?: 'This account has been suspended. Contact PakFix support.',
+                Response::HTTP_FORBIDDEN,
+                ['account' => ['suspended']],
             );
         }
 
