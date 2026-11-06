@@ -111,10 +111,15 @@ class TechnicianProfile extends Model
     // Scopes
     // ---------------------------------------------------------------------
 
-    /** Only verified professionals are ever listed publicly. */
+    /**
+     * Only verified professionals whose account is in good standing are ever
+     * listed publicly or sent new jobs (a suspended or deleted account is not).
+     */
     public function scopePubliclyVisible(Builder $query): Builder
     {
-        return $query->where('verification_status', VerificationStatus::Verified->value);
+        return $query
+            ->where('verification_status', VerificationStatus::Verified->value)
+            ->whereHas('user', fn (Builder $u) => $u->whereIn('status', [User::STATUS_ACTIVE, User::STATUS_PENDING]));
     }
 
     public function scopeBookable(Builder $query): Builder

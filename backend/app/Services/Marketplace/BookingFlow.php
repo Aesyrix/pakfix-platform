@@ -334,6 +334,31 @@ class BookingFlow
         return $booking;
     }
 
+    /**
+     * PakFix cancels a job, for example when one side's account is suspended.
+     * Nobody is charged; a job under dispute is decided on the disputes page.
+     */
+    public function cancelByAdmin(Booking $booking, User $admin, string $reason): Booking
+    {
+        if ($booking->status->isTerminal()) {
+            throw ValidationException::withMessages(['status' => 'This job has already finished.']);
+        }
+        if ($booking->status === BookingStatus::Disputed) {
+            throw ValidationException::withMessages(['status' => 'This job has an open dispute. Decide it on the Disputes page.']);
+        }
+
+        return DB::transaction(function () use ($booking, $admin, $reason): Booking {
+            $booking = $this->lock($booking);
+            $booking->forceFill([
+                'cancelled_by_user_id' => $admin->id,
+                'cancellation_reason' => $reason,
+                'payment_status' => PaymentStatus::Cancelled,
+            ]);
+
+            return $this->transition($booking, BookingStatus::Cancelled, $admin, 'admin', "Cancelled by PakFix: {$reason}");
+        });
+    }
+
     public function cancel(Booking $booking, User $actor, string $role, ?string $reason = null): Booking
     {
         $allowed = in_array('cancel', $this->actionsFor($booking, $role), true);
