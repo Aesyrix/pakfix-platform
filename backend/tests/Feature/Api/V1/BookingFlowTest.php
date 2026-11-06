@@ -178,6 +178,13 @@ class BookingFlowTest extends TestCase
             ->assertOk()
             ->assertJsonPath('data.status', 'cancelled');
 
+        // The request and the winning offer no longer read as booked.
+        $this->actingAs($this->customer)->getJson('/api/v1/requests')->assertJsonPath('data.0.state', 'cancelled');
+        $this->actingAs($this->pro)->getJson('/api/v1/pro/quotes')
+            ->assertJsonPath('data.0.status', 'accepted')
+            ->assertJsonPath('data.0.booking_status', 'cancelled')
+            ->assertJsonPath('data.0.request.state', 'cancelled');
+
         $onTheWay = $this->bookedJob();
         $this->step($onTheWay, 'on_way')->assertOk();
         $this->actingAs($this->customer)->postJson("/api/v1/bookings/{$onTheWay->uuid}/cancel")

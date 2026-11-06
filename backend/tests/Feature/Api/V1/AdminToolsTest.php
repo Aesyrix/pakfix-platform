@@ -136,6 +136,11 @@ class AdminToolsTest extends TestCase
             ->assertJsonPath('data.status', 'cancelled')
             ->assertJsonPath('data.cancellation_reason', 'The professional was suspended.');
 
+        // The customer's request and the professional's offer follow the job.
+        $this->actingAs($this->customer)->getJson('/api/v1/requests')->assertJsonPath('data.0.state', 'cancelled');
+        $this->actingAs($this->admin)->getJson('/api/v1/admin/bookings?status=cancelled')->assertJsonCount(1, 'data');
+        $this->actingAs($this->admin)->getJson('/api/v1/admin/bookings?status=completed')->assertJsonCount(0, 'data');
+
         // A finished job cannot be cancelled again.
         $this->actingAs($this->admin)->postJson("/api/v1/admin/bookings/{$booking->uuid}/cancel", ['reason' => 'Again please.'])
             ->assertUnprocessable();

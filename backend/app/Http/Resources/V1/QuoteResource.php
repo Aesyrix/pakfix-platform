@@ -36,6 +36,10 @@ class QuoteResource extends JsonResource
             'sent_at' => $this->sent_at?->toIso8601String(),
             'responded_at' => $this->responded_at?->toIso8601String(),
             'booking_id' => $this->whenLoaded('booking', fn () => $this->booking?->uuid),
+            // What became of the job this offer won (e.g. "cancelled",
+            // "customer_confirmed"), so an accepted offer is not shown as
+            // booked forever.
+            'booking_status' => $this->whenLoaded('booking', fn () => $this->booking?->status->value),
             'request' => $this->whenLoaded('request', fn () => new JobRequestResource($this->request)),
             'professional' => $this->whenLoaded('technicianProfile', function () {
                 $p = $this->technicianProfile;

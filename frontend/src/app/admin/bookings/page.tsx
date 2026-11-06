@@ -73,7 +73,8 @@ export default function AdminBookingsPage() {
         <Select label={t('Show', 'دکھائیں')} value={status} onChange={(event) => { setStatus(event.target.value); setPage(1); }}>
           <option value="active">{t('In progress', 'جاری')}</option>
           <option value="disputed">{t('Disputed', 'تنازع')}</option>
-          <option value="finished">{t('Finished or cancelled', 'مکمل یا منسوخ')}</option>
+          <option value="completed">{t('Completed', 'مکمل')}</option>
+          <option value="cancelled">{t('Cancelled', 'منسوخ')}</option>
           <option value="all">{t('All', 'سب')}</option>
         </Select>
       </div>
@@ -141,10 +142,21 @@ function BookingDetail({ id }: { id: string }) {
   const cancel = useMutation({
     mutationFn: () => adminApi.cancelBooking(id, reason.trim()),
     onSuccess: (r) => {
-      toast.success(r.message);
+      toast.success(t('Job cancelled. It is now under "Cancelled".', 'کام منسوخ ہو گیا۔ اب یہ "منسوخ" میں ہے۔'));
       setReason('');
-      void queryClient.invalidateQueries({ queryKey: ['admin-bookings'] });
-      void queryClient.invalidateQueries({ queryKey: ['admin-booking', id] });
+      // Keep the job on screen, now marked cancelled, instead of letting it
+      // vanish from the "In progress" list; it moves on the next refresh.
+      queryClient.setQueryData(['admin-booking', id], r.data);
+      queryClient.setQueriesData<{ data: AdminBookingRow[] }>({ queryKey: ['admin-bookings'] }, (old) =>
+        old
+          ? {
+              ...old,
+              data: old.data.map((row) =>
+                row.id === id ? { ...row, status: r.data.status, status_label: r.data.status_label, is_finished: true } : row
+              ),
+            }
+          : old
+      );
       void queryClient.invalidateQueries({ queryKey: ['admin-overview'] });
     },
     onError: (error) => {

@@ -21,11 +21,11 @@ class BookingController extends Controller
 
     public function __construct(private readonly BookingFlow $flow, private readonly JobCompletion $completion) {}
 
-    /** `GET /admin/bookings?status=active|disputed|finished|all&search=` — search by reference or name. */
+    /** `GET /admin/bookings?status=active|disputed|completed|cancelled|finished|all&search=` — search by reference or name. */
     public function index(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'status' => ['nullable', Rule::in(['active', 'disputed', 'finished', 'all'])],
+            'status' => ['nullable', Rule::in(['active', 'disputed', 'completed', 'cancelled', 'finished', 'all'])],
             'search' => ['nullable', 'string', 'max:100'],
         ]);
         $status = $data['status'] ?? 'active';
@@ -36,6 +36,8 @@ class BookingController extends Controller
             ->with(['category', 'customer', 'technicianProfile.user'])
             ->when($status === 'active', fn (Builder $q) => $q->whereNotIn('status', [...$finished, 'disputed']))
             ->when($status === 'disputed', fn (Builder $q) => $q->where('status', 'disputed'))
+            ->when($status === 'completed', fn (Builder $q) => $q->where('status', 'customer_confirmed'))
+            ->when($status === 'cancelled', fn (Builder $q) => $q->whereIn('status', ['cancelled', 'refunded']))
             ->when($status === 'finished', fn (Builder $q) => $q->whereIn('status', $finished))
             ->when($search !== '', fn (Builder $q) => $q->where(fn (Builder $w) => $w
                 ->where('reference', 'like', "%{$search}%")
