@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\BookingStatus;
 use App\Models\Concerns\HasReference;
 use App\Models\Concerns\HasUuid;
 use Illuminate\Database\Eloquent\Builder;
@@ -127,9 +128,19 @@ class QuoteRequest extends Model
             && ($until === null || $until->isFuture());
     }
 
+    /**
+     * A booked request follows its job: if the job was cancelled (by either
+     * side or by PakFix) the request reads "cancelled", not "booked". The
+     * booking must be loaded for that; without it, booked stays booked.
+     */
     public function state(): string
     {
+        $jobCancelled = $this->booking_id !== null
+            && $this->relationLoaded('booking')
+            && in_array($this->booking?->status, [BookingStatus::Cancelled, BookingStatus::Refunded], true);
+
         return match (true) {
+            $jobCancelled => self::STATE_CANCELLED,
             $this->booking_id !== null => self::STATE_BOOKED,
             $this->cancelled_at !== null => self::STATE_CANCELLED,
             $this->status === self::STATUS_EXPIRED, ! $this->canAcceptQuotes() => self::STATE_EXPIRED,

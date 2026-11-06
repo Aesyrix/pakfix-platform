@@ -289,6 +289,24 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
             Route::patch('reports/{uuid}', [Admin\ReportController::class, 'update'])->name('reports.update');
         });
 
+        Route::middleware('permission:users.view')->group(function (): void {
+            Route::get('users', [Admin\UserController::class, 'index'])->name('users.index');
+            Route::get('users/{uuid}', [Admin\UserController::class, 'show'])->name('users.show');
+        });
+        Route::middleware(['permission:users.manage', 'throttle:30,1,admin-users'])->group(function (): void {
+            Route::post('users/{uuid}/suspend', [Admin\UserController::class, 'suspend'])->name('users.suspend');
+            Route::post('users/{uuid}/restore', [Admin\UserController::class, 'restore'])->name('users.restore');
+        });
+        Route::middleware('permission:technicians.suspend')
+            ->post('users/{uuid}/clear-strikes', [Admin\UserController::class, 'clearStrikes'])->name('users.strikes.clear');
+
+        Route::middleware('permission:bookings.view.any')->group(function (): void {
+            Route::get('bookings', [Admin\BookingController::class, 'index'])->name('bookings.index');
+            Route::get('bookings/{uuid}', [Admin\BookingController::class, 'show'])->name('bookings.show');
+        });
+        Route::middleware('permission:bookings.cancel')
+            ->post('bookings/{uuid}/cancel', [Admin\BookingController::class, 'cancel'])->name('bookings.cancel');
+
         Route::middleware('permission:disputes.view.any')->get('disputes', [Admin\DisputeController::class, 'index'])->name('disputes.index');
         Route::middleware('permission:disputes.resolve')->patch('disputes/{uuid}', [Admin\DisputeController::class, 'update'])->name('disputes.update');
 

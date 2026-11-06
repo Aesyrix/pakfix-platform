@@ -113,7 +113,7 @@ class Notifier
                 $text = match ($to) {
                     BookingStatus::Completed => ['en' => ['Job marked done', "{$booking->reference} was marked done automatically. Confirm it, or report a problem."], 'ur' => ['کام مکمل قرار', "{$booking->reference} خودبخود مکمل قرار دیا گیا۔ تصدیق کریں یا مسئلہ بتائیں۔"]],
                     BookingStatus::CustomerConfirmed => ['en' => ['Job complete', "{$booking->reference} is now complete."], 'ur' => ['کام مکمل', "{$booking->reference} اب مکمل ہو گیا ہے۔"]],
-                    BookingStatus::Cancelled => ['en' => ['Job cancelled', "PakFix cancelled {$booking->reference} after reviewing the problem."], 'ur' => ['کام منسوخ', "مسئلے کا جائزہ لینے کے بعد پاک فکس نے {$booking->reference} منسوخ کر دیا۔"]],
+                    BookingStatus::Cancelled => ['en' => ['Job cancelled', "PakFix cancelled {$booking->reference}. Contact support if you have questions."], 'ur' => ['کام منسوخ', "پاک فکس نے {$booking->reference} منسوخ کر دیا۔ سوال ہو تو سپورٹ سے رابطہ کریں۔"]],
                     default => null,
                 };
                 if ($text !== null) {

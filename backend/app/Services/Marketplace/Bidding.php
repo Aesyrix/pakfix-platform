@@ -247,7 +247,7 @@ class Bidding
             if (app(Safety::class)->blockedBetween((int) $customer->id, (int) $profile->user_id)) {
                 throw ValidationException::withMessages(['quote' => 'You cannot book this professional.']);
             }
-            if ($profile->isSuspendedByStrikes()) {
+            if ($profile->isSuspendedByStrikes() || ! $profile->user?->canAuthenticate()) {
                 throw ValidationException::withMessages(['quote' => 'This professional is not taking jobs right now. Please choose another offer.']);
             }
             $commission = Commission::on($quote->total_minor);

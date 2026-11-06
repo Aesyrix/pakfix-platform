@@ -9,8 +9,12 @@ import type {
   AdminServiceCategory,
   AdminSetting,
   AdminTestimonial,
+  AdminBookingDetail,
+  AdminBookingRow,
   AdminDispute,
   AdminReport,
+  AdminUser,
+  AdminUserDetail,
   AdminVerification,
   MarketplaceBooking,
   MarketplaceRequest,
@@ -276,4 +280,17 @@ export const adminApi = {
     apiRequest<AdminDispute[]>('admin/disputes', { query: { ...filters } }),
   decideDispute: (id: string, input: { outcome: 'complete' | 'cancel'; strike: boolean; note: string }) =>
     apiRequest<AdminDispute>(`admin/disputes/${id}`, { method: 'PATCH', body: input }),
+  users: (filters: { search?: string; role?: string; status?: string; page?: number } = {}) =>
+    apiRequest<AdminUser[]>('admin/users', { query: { ...filters } }),
+  user: (id: string) => api.get<AdminUserDetail>(`admin/users/${id}`),
+  suspendUser: (id: string, reason: string) =>
+    apiRequest<AdminUser>(`admin/users/${id}/suspend`, { method: 'POST', body: { reason } }),
+  restoreUser: (id: string) => apiRequest<AdminUser>(`admin/users/${id}/restore`, { method: 'POST' }),
+  clearStrikes: (id: string, note: string) =>
+    apiRequest<AdminUser>(`admin/users/${id}/clear-strikes`, { method: 'POST', body: { note } }),
+  bookings: (filters: { status?: string; search?: string; page?: number } = {}) =>
+    apiRequest<AdminBookingRow[]>('admin/bookings', { query: { ...filters } }),
+  booking: (id: string) => api.get<AdminBookingDetail>(`admin/bookings/${id}`),
+  cancelBooking: (id: string, reason: string) =>
+    apiRequest<AdminBookingDetail>(`admin/bookings/${id}/cancel`, { method: 'POST', body: { reason } }),
 };

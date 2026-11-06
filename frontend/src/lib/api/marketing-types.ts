@@ -242,6 +242,7 @@ export interface AdminOverview {
     customers: number;
     verified_professionals: number;
     pending_professionals: number;
+    active_bookings?: number;
   };
   inbox: { unhandled_contact_messages: number; open_reports?: number; open_disputes?: number };
   recent_activity: Array<{ action: string; description: string | null; actor: string | null; created_at: string | null }>;
@@ -257,7 +258,89 @@ export interface AdminOverview {
     reports?: boolean;
     /** Can see and decide disputes on booked jobs. */
     disputes?: boolean;
+    /** Can find customers and professionals. */
+    users?: boolean;
+    /** Can suspend and restore accounts. */
+    manage_users?: boolean;
+    /** Can see every booked job. */
+    bookings?: boolean;
+    /** Can cancel a booked job. */
+    cancel_bookings?: boolean;
+    /** Can clear a professional's strikes. */
+    clear_strikes?: boolean;
   };
+}
+
+/** A customer or professional on the admin Users page (`/admin/users`). */
+export interface AdminUser {
+  id: string;
+  name: string;
+  email: string | null;
+  phone: string | null;
+  role: string | null;
+  status: string;
+  is_suspended: boolean;
+  city: string | null;
+  joined_at: string | null;
+  last_login_at: string | null;
+  customer_bookings: number;
+  reports_against: number;
+  professional: {
+    business_name: string;
+    verification: string | null;
+    strikes: number;
+    max_strikes: number;
+    completed_jobs: number;
+    cancelled_jobs: number;
+    rating_average: number;
+    rating_count: number;
+  } | null;
+}
+
+/** A booked job in an admin list. */
+export interface AdminBookingRow {
+  id: string;
+  reference: string;
+  status: string;
+  status_label: string;
+  is_finished: boolean;
+  category: string | null;
+  customer: { id: string; name: string } | null;
+  professional: { id: string | null; name: string } | null;
+  total: string;
+  created_at: string | null;
+}
+
+/** One person with their recent jobs and reports. */
+export interface AdminUserDetail extends AdminUser {
+  status_reason: string | null;
+  bookings: AdminBookingRow[];
+  active_bookings: number;
+  reports: Array<{ reason: string; details: string | null; status: string; by: string | null; created_at: string }>;
+  disputes_lost: number;
+}
+
+/** One booked job, as the admin sees it. */
+export interface AdminBookingDetail extends AdminBookingRow {
+  problem_description: string;
+  urgency: string | null;
+  address_line: string;
+  city: string | null;
+  visit_fee: string;
+  labour: string;
+  materials: string;
+  payment_status: string | null;
+  completed_via: string | null;
+  arrived_distance_m: number | null;
+  arrived_far: boolean;
+  completed_distance_m: number | null;
+  completed_far: boolean;
+  cancellation_reason: string | null;
+  deadlines: { auto_complete_at: string | null; auto_confirm_at: string | null; dispute_until: string | null; no_show_from: string | null };
+  can_cancel: boolean;
+  dispute: { id: string; reference: string; kind: string; status: string; outcome: string | null } | null;
+  review: { rating: number; comment: string | null } | null;
+  timeline: Array<{ status: string; actor_role: string | null; note: string | null; at: string | null }>;
 }
 
 export type ContentListItem = { title: string; body: string };

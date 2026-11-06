@@ -8,6 +8,7 @@ use App\Enums\VerificationStatus;
 use App\Http\Controllers\Controller;
 use App\Models\AuditLog;
 use App\Models\BlogPost;
+use App\Models\Booking;
 use App\Models\CmsPage;
 use App\Models\ContactMessage;
 use App\Models\Dispute;
@@ -47,6 +48,9 @@ class OverviewController extends Controller
                 'customers' => User::role('customer')->count(),
                 'verified_professionals' => TechnicianProfile::publiclyVisible()->count(),
                 'pending_professionals' => TechnicianProfile::where('verification_status', VerificationStatus::Pending->value)->count(),
+                'active_bookings' => $user->can('bookings.view.any')
+                    ? Booking::query()->whereNotIn('status', ['customer_confirmed', 'cancelled', 'refunded', 'disputed'])->count()
+                    : 0,
             ],
             'inbox' => [
                 'unhandled_contact_messages' => ContactMessage::unhandled()->count(),
@@ -76,6 +80,11 @@ class OverviewController extends Controller
                 'verifications' => $user->can('technicians.verify'),
                 'reports' => $user->can('messages.moderate'),
                 'disputes' => $user->can('disputes.view.any'),
+                'users' => $user->can('users.view'),
+                'manage_users' => $user->can('users.manage'),
+                'bookings' => $user->can('bookings.view.any'),
+                'cancel_bookings' => $user->can('bookings.cancel'),
+                'clear_strikes' => $user->can('technicians.suspend'),
             ],
         ]);
     }

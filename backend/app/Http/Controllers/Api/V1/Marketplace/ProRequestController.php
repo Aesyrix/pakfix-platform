@@ -46,7 +46,7 @@ class ProRequestController extends Controller
     public function show(Request $request, string $uuid): JsonResponse
     {
         $profile = $this->profile($request);
-        $jobRequest = QuoteRequest::where('uuid', $uuid)->with(['category', 'city', 'area', 'customer'])->firstOrFail();
+        $jobRequest = QuoteRequest::where('uuid', $uuid)->with(['category', 'city', 'area', 'customer', 'booking'])->firstOrFail();
 
         $hasQuoted = $jobRequest->quotes()->where('technician_profile_id', $profile->id)->exists();
         if (! $hasQuoted && ! $this->matcher->canBid($profile, $jobRequest)) {
@@ -79,7 +79,7 @@ class ProRequestController extends Controller
             ->where('technician_profile_id', $profile->id)
             ->whereNotNull('quote_request_id')
             ->when($request->filled('status'), fn ($q) => $q->where('status', $request->string('status')->toString()))
-            ->with(['request.category', 'request.city', 'request.area', 'booking'])
+            ->with(['request.category', 'request.city', 'request.area', 'request.booking', 'booking'])
             ->latest()
             ->paginate(min($request->integer('per_page', 20), 50));
 
@@ -121,6 +121,7 @@ class ProRequestController extends Controller
             ->where('technician_profile_id', $profile->id)
             ->whereIn('quote_request_id', array_map(fn (QuoteRequest $r) => $r->id, $requests))
             ->whereIn('status', [QuoteStatus::Sent->value, QuoteStatus::Accepted->value, QuoteStatus::Rejected->value])
+            ->with('booking')
             ->latest()
             ->get()
             ->unique('quote_request_id')
