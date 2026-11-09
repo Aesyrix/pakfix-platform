@@ -28,7 +28,7 @@ export function AppBottomNav({
     <nav
       aria-label={t(ariaLabel, ariaLabelUr)}
       className={cn(
-        'fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface/95 backdrop-blur-md shadow-lg',
+        'fixed inset-x-0 bottom-0 z-40 border-t border-line/70 bg-white/85 backdrop-blur-xl backdrop-saturate-150 shadow-[0_-8px_24px_rgba(19,25,21,0.06)]',
         'pb-[env(safe-area-inset-bottom,0px)] lg:hidden'
       )}
     >

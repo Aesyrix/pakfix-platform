@@ -28,7 +28,6 @@ import { LocaleToggle } from '@/components/i18n/LocaleToggle';
 import { useT } from '@/components/i18n/LocaleProvider';
 import { adminApi } from '@/lib/api/endpoints';
 import { useAuthStore } from '@/stores/auth';
-import { cn } from '@/lib/utils/cn';
 
 /**
  * The admin shell.
@@ -87,8 +86,8 @@ export function AdminShell({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="min-h-dvh bg-background">
-      <header className="sticky top-0 z-30 border-b border-line bg-surface">
+    <div className="min-h-dvh app-canvas">
+      <header className="sticky top-0 z-30 border-b border-line/70 bg-white/80 backdrop-blur-xl backdrop-saturate-150">
         <Container size="wide">
           <div className="flex h-16 items-center justify-between gap-4">
             <div className="flex items-center gap-3">
@@ -126,10 +125,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
                   <Link
                     href={link.href}
                     aria-current={active ? 'page' : undefined}
-                    className={cn(
-                      'flex min-h-11 items-center gap-2.5 whitespace-nowrap rounded-[var(--radius-control)] px-3 text-sm font-medium transition-colors',
-                      active ? 'bg-brand-100 text-brand-700' : 'text-ink-600 hover:bg-surface-muted hover:text-foreground'
-                    )}
+                    className="nav-link"
                   >
                     <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
                     {t(link.label, link.labelUr)}
@@ -183,7 +179,7 @@ export function AdminPageHeader({
   return (
     <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">{t(title)}</h1>
+        <h1 className="text-2xl font-bold tracking-[-0.02em] text-ink-900 sm:text-3xl">{t(title)}</h1>
         {description ? <p className="mt-1 max-w-2xl text-sm text-ink-600">{t(description)}</p> : null}
       </div>
       {action}

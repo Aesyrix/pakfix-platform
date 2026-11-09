@@ -293,4 +293,40 @@ html.i18n-pending body {
     background-size: 56px 56px;
     mask-image: radial-gradient(ellipse at top, black 30%, transparent 75%);
   }
+
+  /*
+    Sidebar link in the dashboard, pro area and admin. The current page is
+    picked up from aria-current, so the visual state and the accessible state
+    can never disagree.
+  */
+  .nav-link {
+    position: relative;
+    display: flex;
+    min-height: 2.75rem;
+    align-items: center;
+    gap: 0.75rem;
+    border-radius: var(--radius-control);
+    padding-inline: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+    color: var(--color-ink-600);
+    transition: background-color 150ms, color 150ms, box-shadow 150ms;
+  }
+  .nav-link:hover {
+    background: var(--color-surface-muted);
+    color: var(--color-foreground);
+  }
+  .nav-link[aria-current='page'] {
+    background: linear-gradient(90deg, var(--color-brand-50), color-mix(in oklab, var(--color-brand-50) 30%, transparent));
+    color: var(--color-brand-700);
+    font-weight: 600;
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-brand-200) 70%, transparent);
+  }
+
+  /* Background of signed-in areas: a faint canvas so white cards lift off it. */
+  .app-canvas {
+    background-color: var(--color-surface-muted);
+    background-image: radial-gradient(50rem 22rem at 100% 0%, color-mix(in oklab, var(--color-brand-100) 55%, transparent), transparent 70%);
+  }
 }

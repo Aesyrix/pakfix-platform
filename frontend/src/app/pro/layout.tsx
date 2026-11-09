@@ -12,7 +12,7 @@ import { ProSidebar } from '@/components/layout/ProSidebar';
 export default function ProLayout({ children }: { children: React.ReactNode }) {
   return (
     <RequireAuth roles={['technician', 'company']}>
-      <div className="flex min-h-dvh">
+      <div className="flex min-h-dvh app-canvas">
         <ProSidebar />
 
         <div className="flex min-w-0 flex-1 flex-col">
