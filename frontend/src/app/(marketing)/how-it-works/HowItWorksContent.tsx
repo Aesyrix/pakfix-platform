@@ -126,7 +126,7 @@ export function HowItWorksContent() {
                   </div>
 
                   <div className={`lg:col-span-6 ${isEven ? 'lg:order-1' : ''}`}>
-                    <div className="bg-surface-muted rounded-3xl p-8 border border-line shadow-card space-y-4">
+                    <div className="bg-surface rounded-3xl p-8 border border-line shadow-lifted space-y-4">
                       <div className="flex items-center justify-between border-b border-line pb-4">
                         <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-100 text-brand-800">
                           <Icon className="h-6 w-6" />

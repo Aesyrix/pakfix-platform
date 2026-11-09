@@ -5,7 +5,6 @@ import { Globe, HelpCircle, UserPlus } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { useLocale, useT } from '@/components/i18n/LocaleProvider';
 import { localeLabel } from '@/lib/i18n';
-import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher';
 import { ModeToggle } from '@/components/theme/ModeToggle';
 
 export function TopUtilityBar() {
@@ -44,7 +43,6 @@ export function TopUtilityBar() {
 
             <div className="h-3 w-px bg-ink-700" />
 
-            <ThemeSwitcher onDark className="-my-1" />
             <ModeToggle onDark className="-my-1 h-7 w-7" />
 
             {/* Language Selector Switcher */}

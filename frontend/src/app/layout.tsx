@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from 'next';
-import { Fraunces, Inter, Nunito, Plus_Jakarta_Sans } from 'next/font/google';
+import { Inter, Plus_Jakarta_Sans } from 'next/font/google';
 import { Providers } from '@/components/providers/Providers';
 import { SkipLink } from '@/components/layout/SkipLink';
 import { localeInitScript } from '@/lib/i18n';
-import { themeInitScript } from '@/lib/theme';
+import { modeInitScript } from '@/lib/theme';
 import './globals.css';
 
 // Inter for running text, Plus Jakarta Sans for headings. Both are exposed as
@@ -18,22 +18,6 @@ const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
   variable: '--font-jakarta',
   display: 'swap',
-});
-
-// Heading fonts for the Midnight (serif) and Clay (rounded) themes. Not
-// preloaded: the browser only downloads them when that theme is in use.
-const fraunces = Fraunces({
-  subsets: ['latin'],
-  variable: '--font-fraunces',
-  display: 'swap',
-  preload: false,
-});
-
-const nunito = Nunito({
-  subsets: ['latin'],
-  variable: '--font-nunito',
-  display: 'swap',
-  preload: false,
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pakfix.pk';
@@ -102,12 +86,12 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" dir="ltr" suppressHydrationWarning className={`${inter.variable} ${jakarta.variable} ${fraunces.variable} ${nunito.variable}`}>
+    <html lang="en" dir="ltr" suppressHydrationWarning className={`${inter.variable} ${jakarta.variable}`}>
       <body className="antialiased">
         {/* Applies the saved English/اردو choice before the first paint. */}
         <script dangerouslySetInnerHTML={{ __html: localeInitScript() }} />
-        {/* Applies the saved colour theme before the first paint. */}
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript() }} />
+        {/* Applies the saved light/dark choice before the first paint. */}
+        <script dangerouslySetInnerHTML={{ __html: modeInitScript() }} />
         {/* First stop for a keyboard user on every page. */}
         <SkipLink />
         <Providers>{children}</Providers>

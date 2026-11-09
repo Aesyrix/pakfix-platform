@@ -44,27 +44,15 @@ Neutrals carry a faint green tint so greys sit comfortably next to the brand.
 
 ---
 
-### Colour themes
-Three themes share the same tokens, switched by `data-theme` on `<html>`:
-
-| Theme | Brand | Accent | Feel |
-|---|---|---|---|
-| Emerald (default) | `#0A7A48` green | blue | Fresh, trustworthy |
-| Midnight | `#213F8F` navy | gold | Formal, premium |
-| Clay | `#B0432A` terracotta | teal | Warm, friendly |
-
-- Values live in `globals.css` (`[data-theme='midnight']`, `[data-theme='clay']`); the list in `src/lib/theme.ts`.
-- The `ThemeSwitcher` sits in the top bar, footer, phone menu, sign-in pages, dashboard sidebar and admin header. The choice is saved in the browser and applied before first paint.
-- `?theme=midnight` on any URL previews and remembers a theme — handy for sharing a look.
-- Safety and "OK" states use `safe-*`, which stays green in every theme. Use it, not `brand-*`, for anything meaning "safe".
-- **Each theme has its own style, not just colours:** Midnight uses Fraunces serif headings and crisp 8–12px corners; Clay uses Nunito rounded headings, soft 16–34px corners and pill buttons (`--radius-button`). Emerald keeps Plus Jakarta Sans.
-- Solid fills behind white text use `bg-brand-solid` / `bg-accent-solid` (+ `-hover`), never `bg-brand-600`, and cards use `bg-surface`, never `bg-white` — that is what lets dark mode work.
+### Solid fills and surfaces
+- Solid fills behind white text use `bg-brand-solid` / `bg-accent-solid` (+ `-hover`), never `bg-brand-600`; cards use `bg-surface`, never `bg-white`. That is what lets dark mode work.
+- Safety and "OK" states use `safe-*`.
 
 ### Dark mode
-- `data-mode="dark"` on `<html>`, combinable with any theme (`?mode=dark` previews it). Toggle: the sun/moon button in the header, top bar, footer, sign-in pages and dashboards, or Light/Dark in the theme menu.
-- Derived, not hand-written: neutrals mirror the theme's ink scale, tints are mixed from its 500 shade, text shades come from the light end. Light values are kept as `--lt-*` aliases for this.
+- `data-mode="dark"` on `<html>` (`?mode=dark` previews it). Toggle: the sun/moon button in the header, top bar, footer, sign-in pages and dashboards. Saved in the browser and applied before first paint (`src/lib/theme.ts`).
+- Derived, not hand-written: neutrals mirror the ink scale, tints are mixed from the 500 shade, text shades come from the light end. Light values are kept as `--lt-*` aliases for this.
 - Bands that are dark in both modes (`bg-premium-dark`, `bg-ink-800/900/950`, or `.keep-tone`) keep their light-mode tokens, so the hero, footer and dark cards look the same in both modes.
-- To add a theme: add a `[data-theme='x']` block with the full brand / accent / ink scales (check contrast), then add an entry to `THEMES`.
+- Long-form text (articles, CMS and legal pages) uses `.rich-text`; light call-to-action panels use `.bg-brand-glow`.
 
 ---
 

@@ -64,7 +64,7 @@ export function ContactContent() {
 
             {/* Right Contact Form */}
             <div className="lg:col-span-7">
-              <form onSubmit={submit} className="bg-surface-muted rounded-3xl p-6 sm:p-8 border border-line shadow-card space-y-4">
+              <form onSubmit={submit} className="bg-surface rounded-3xl p-6 sm:p-8 border border-line shadow-lifted space-y-4">
                 <h3 className="text-lg font-bold text-ink-900">{t('Send Us a Message', 'ہمیں پیغام بھیجیں')}</h3>
                 {lead.sent ? (
                   <p role="status" className="rounded-xl bg-brand-100 border border-brand-200 p-3 text-xs font-semibold text-brand-700">

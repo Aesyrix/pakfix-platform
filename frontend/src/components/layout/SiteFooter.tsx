@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher';
 import { ModeToggle } from '@/components/theme/ModeToggle';
 import { Mail, ShieldCheck, Heart } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
@@ -121,10 +120,7 @@ export function SiteFooter({ popularCategories }: SiteFooterProps) {
             </span>
           </div>
 
-          <div className="flex items-center gap-1">
-            <ThemeSwitcher onDark placement="above" align="start" />
-            <ModeToggle onDark />
-          </div>
+          <ModeToggle onDark />
 
           <div className="flex items-center gap-1 text-ink-400">
             <span>{t('Made with', 'بنایا گیا')}</span>

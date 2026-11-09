@@ -12,7 +12,7 @@ export function ForProfessionalsSection() {
       <Container>
         <div className="grid md:grid-cols-2 gap-6">
           {/* Card 1: Individual Professionals */}
-          <div className="bg-ink-900 text-white rounded-3xl p-8 space-y-6 flex flex-col justify-between relative overflow-hidden">
+          <div className="bg-premium-dark text-white rounded-3xl p-8 space-y-6 flex flex-col justify-between relative isolate overflow-hidden shadow-floating">
             <div className="space-y-4">
               <div className="h-12 w-12 rounded-2xl bg-brand-solid text-white flex items-center justify-center">
                 <Wrench className="h-6 w-6" />
@@ -51,7 +51,7 @@ export function ForProfessionalsSection() {
           </div>
 
           {/* Card 2: Service Companies */}
-          <div className="bg-surface-muted rounded-3xl p-8 border border-line space-y-6 flex flex-col justify-between">
+          <div className="bg-brand-glow rounded-3xl p-8 border border-brand-200/70 shadow-card space-y-6 flex flex-col justify-between">
             <div className="space-y-4">
               <div className="h-12 w-12 rounded-2xl bg-accent-solid text-white flex items-center justify-center">
                 <Building2 className="h-6 w-6" />

@@ -58,7 +58,7 @@ export function PricingContent() {
         <Container>
           <div className="max-w-4xl mx-auto space-y-12">
             {/* Price Table Card */}
-            <div className="bg-surface-muted rounded-3xl border border-line p-6 sm:p-8 shadow-card space-y-6">
+            <div className="bg-surface rounded-3xl border border-line p-6 sm:p-8 shadow-lifted space-y-6">
               <h2 className="text-xl font-extrabold text-ink-900">{t('Standard Service Rate Card (PKR)', 'معیاری سروس ریٹ کارڈ (روپے)')}</h2>
 
               <div className="overflow-x-auto">

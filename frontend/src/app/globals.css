@@ -106,7 +106,7 @@
   --radius-card: 20px;
   --radius-section: 28px;
   --radius-pill: 9999px;
-  --radius-button: var(--radius-control); /* Clay makes buttons pills */
+  --radius-button: var(--radius-control);
 
   /* Tailwind's own radius steps, pinned to the scale above so rounded-xl,
      rounded-2xl and rounded-3xl agree with controls, cards and sections. */
@@ -133,222 +133,9 @@
 }
 
 /*
-  Alternative themes
-  ------------------
-  Emerald (above) is the default. A theme is nothing but a new set of values
-  for the same tokens, switched with <html data-theme="...">, so every page,
-  component and state follows without any per-component code.
-  Contrast for each set is checked to WCAG AA like the default.
-*/
-
-/* Midnight: deep navy with gold. */
-[data-theme='midnight'] {
-  --color-brand-50: #F1F4FB;
-  --color-brand-100: #E2E8F7;
-  --color-brand-200: #C3CFEE;
-  --color-brand-300: #93A8DE;
-  --color-brand-400: #5F7DC9;
-  --color-brand-500: #6F8FE0;
-  --color-brand-600: #213F8F;
-  --color-brand-700: #1A3274;
-  --color-brand-800: #15295E;
-  --color-brand-900: #11214B;
-  --color-brand-950: #0A1530;
-  --color-brand-on-dark: #F2C14E;
-  --color-brand-wash: #E2E8F7;
-
-  --color-accent-50: #FFF8E6;
-  --color-accent-100: #FDEFC8;
-  --color-accent-200: #F9DC8E;
-  --color-accent-300: #F2C14E;
-  --color-accent-400: #E3A92B;
-  --color-accent-500: #C98E12;
-  --color-accent-600: #8A6106;
-  --color-accent-700: #73510A;
-  --color-accent-800: #5E4208;
-  --color-accent-900: #4A3406;
-
-  --color-ink-50: #F6F7FA;
-  --color-ink-100: #EEF0F5;
-  --color-ink-200: #E1E5EE;
-  --color-ink-300: #C9CFDC;
-  --color-ink-400: #98A1B5;
-  --color-ink-500: #5F6880;
-  --color-ink-600: #464E63;
-  --color-ink-700: #333A4C;
-  --color-ink-800: #1F2433;
-  --color-ink-900: #131826;
-  --color-ink-950: #0C101B;
-
-  --color-safe-500: #0A7A48;
-  --color-foreground: #131826;
-  --color-surface-muted: #F6F7FA;
-  --color-line: #E1E5EE;
-
-  --color-brand-solid: #213F8F;
-  --color-brand-solid-hover: #1A3274;
-  --color-accent-solid: #8A6106;
-  --color-accent-solid-hover: #73510A;
-
-  /* Style: editorial serif headings, crisp tailored corners. */
-  --font-display: var(--font-fraunces), Georgia, 'Times New Roman', serif;
-  --radius-sm: 6px;
-  --radius-control: 8px;
-  --radius-card: 12px;
-  --radius-section: 18px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 8px;
-  --radius-2xl: 12px;
-  --radius-3xl: 18px;
-
-  /* light values for dark-mode derivation */
-  --lt-brand-50: #F1F4FB;
-  --lt-brand-100: #E2E8F7;
-  --lt-brand-200: #C3CFEE;
-  --lt-brand-300: #93A8DE;
-  --lt-brand-400: #5F7DC9;
-  --lt-brand-500: #6F8FE0;
-  --lt-brand-600: #213F8F;
-  --lt-brand-700: #1A3274;
-  --lt-brand-800: #15295E;
-  --lt-brand-900: #11214B;
-  --lt-brand-950: #0A1530;
-  --lt-accent-50: #FFF8E6;
-  --lt-accent-100: #FDEFC8;
-  --lt-accent-200: #F9DC8E;
-  --lt-accent-300: #F2C14E;
-  --lt-accent-400: #E3A92B;
-  --lt-accent-500: #C98E12;
-  --lt-accent-600: #8A6106;
-  --lt-accent-700: #73510A;
-  --lt-accent-800: #5E4208;
-  --lt-accent-900: #4A3406;
-  --lt-ink-50: #F6F7FA;
-  --lt-ink-100: #EEF0F5;
-  --lt-ink-200: #E1E5EE;
-  --lt-ink-300: #C9CFDC;
-  --lt-ink-400: #98A1B5;
-  --lt-ink-500: #5F6880;
-  --lt-ink-600: #464E63;
-  --lt-ink-700: #333A4C;
-  --lt-ink-800: #1F2433;
-  --lt-ink-900: #131826;
-  --lt-ink-950: #0C101B;
-  --lt-foreground: #131826;
-  --lt-surface-muted: #F6F7FA;
-  --lt-line: #E1E5EE;
-  --lt-brand-wash: #E2E8F7;
-  --lt-brand-on-dark: #F2C14E;
-}
-
-/* Clay: warm terracotta with teal. */
-[data-theme='clay'] {
-  --color-brand-50: #FDF5F1;
-  --color-brand-100: #FAE8DF;
-  --color-brand-200: #F3CDBB;
-  --color-brand-300: #E8A68A;
-  --color-brand-400: #D9785A;
-  --color-brand-500: #E58A66;
-  --color-brand-600: #B0432A;
-  --color-brand-700: #933722;
-  --color-brand-800: #7A2F1C;
-  --color-brand-900: #5F2516;
-  --color-brand-950: #36140B;
-  --color-brand-on-dark: #F4A582;
-  --color-brand-wash: #FAE8DF;
-
-  --color-accent-50: #EFFAF9;
-  --color-accent-100: #D6F1EF;
-  --color-accent-200: #ADE2DE;
-  --color-accent-300: #77CBC5;
-  --color-accent-400: #3FAEA8;
-  --color-accent-500: #23928C;
-  --color-accent-600: #187A75;
-  --color-accent-700: #14625E;
-  --color-accent-800: #114E4B;
-  --color-accent-900: #0E3F3D;
-
-  --color-ink-50: #F8F6F4;
-  --color-ink-100: #F1EEEA;
-  --color-ink-200: #E6E1DB;
-  --color-ink-300: #D1CAC1;
-  --color-ink-400: #A39A8F;
-  --color-ink-500: #6B6259;
-  --color-ink-600: #4F4740;
-  --color-ink-700: #3A342F;
-  --color-ink-800: #25211E;
-  --color-ink-900: #171412;
-  --color-ink-950: #100E0C;
-
-  --color-safe-500: #0A7A48;
-  --color-foreground: #171412;
-  --color-surface-muted: #F8F6F4;
-  --color-line: #E6E1DB;
-
-  --color-brand-solid: #B0432A;
-  --color-brand-solid-hover: #933722;
-  --color-accent-solid: #187A75;
-  --color-accent-solid-hover: #14625E;
-
-  /* Style: soft rounded headings, generous pillowy shapes, pill buttons. */
-  --font-display: var(--font-nunito), var(--font-inter), system-ui, sans-serif;
-  --radius-sm: 10px;
-  --radius-control: 16px;
-  --radius-card: 26px;
-  --radius-section: 34px;
-  --radius-button: 9999px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 16px;
-  --radius-2xl: 26px;
-  --radius-3xl: 34px;
-
-  /* light values for dark-mode derivation */
-  --lt-brand-50: #FDF5F1;
-  --lt-brand-100: #FAE8DF;
-  --lt-brand-200: #F3CDBB;
-  --lt-brand-300: #E8A68A;
-  --lt-brand-400: #D9785A;
-  --lt-brand-500: #E58A66;
-  --lt-brand-600: #B0432A;
-  --lt-brand-700: #933722;
-  --lt-brand-800: #7A2F1C;
-  --lt-brand-900: #5F2516;
-  --lt-brand-950: #36140B;
-  --lt-accent-50: #EFFAF9;
-  --lt-accent-100: #D6F1EF;
-  --lt-accent-200: #ADE2DE;
-  --lt-accent-300: #77CBC5;
-  --lt-accent-400: #3FAEA8;
-  --lt-accent-500: #23928C;
-  --lt-accent-600: #187A75;
-  --lt-accent-700: #14625E;
-  --lt-accent-800: #114E4B;
-  --lt-accent-900: #0E3F3D;
-  --lt-ink-50: #F8F6F4;
-  --lt-ink-100: #F1EEEA;
-  --lt-ink-200: #E6E1DB;
-  --lt-ink-300: #D1CAC1;
-  --lt-ink-400: #A39A8F;
-  --lt-ink-500: #6B6259;
-  --lt-ink-600: #4F4740;
-  --lt-ink-700: #3A342F;
-  --lt-ink-800: #25211E;
-  --lt-ink-900: #171412;
-  --lt-ink-950: #100E0C;
-  --lt-foreground: #171412;
-  --lt-surface-muted: #F8F6F4;
-  --lt-line: #E6E1DB;
-  --lt-brand-wash: #FAE8DF;
-  --lt-brand-on-dark: #F4A582;
-}
-
-/*
   Light-mode values kept under --lt-* so dark mode can derive from them and
   dark bands (hero, footer ...) can restore them. Generated alongside the
-  tokens; keep in step when a token changes. :where() keeps this at zero
-  specificity so each theme's own --lt-* values (same element) win.
+  tokens; keep in step when a token changes.
 */
 :where(:root) {
   --lt-brand-50: #F2FAF5;
@@ -408,10 +195,9 @@
 /*
   Dark mode
   ---------
-  <html data-mode="dark"> works with every colour theme: neutrals mirror the
-  theme's own ink scale, tints are mixed from its 500 shade, and text shades
-  come from the light end of its scale, so Midnight-dark is navy and
-  Clay-dark is warm. Solid fills (buttons) keep their colour.
+  <html data-mode="dark">: neutrals mirror the ink scale, tints are mixed
+  from the 500 shade, and text shades come from the light end of each
+  scale. Solid fills (buttons) keep their colour.
 */
 [data-mode='dark'] {
   color-scheme: dark;
@@ -746,5 +532,77 @@ html.i18n-pending body {
   .app-canvas {
     background-color: var(--color-surface-muted);
     background-image: radial-gradient(50rem 22rem at 100% 0%, color-mix(in oklab, var(--color-brand-100) 55%, transparent), transparent 70%);
+  }
+
+  /*
+    Long-form text: blog articles, CMS pages, legal pages. The API sends
+    Markdown rendered to HTML, which has no classes of its own.
+  */
+  .rich-text {
+    color: var(--color-ink-600);
+    font-size: 1.0625rem;
+    line-height: 1.8;
+    max-width: 70ch;
+  }
+  .rich-text > * + * { margin-top: 1.15em; }
+  .rich-text h2 {
+    margin-top: 2.2em;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    color: var(--color-foreground);
+  }
+  .rich-text h3 {
+    margin-top: 1.8em;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--color-foreground);
+  }
+  .rich-text h2:first-child, .rich-text h3:first-child { margin-top: 0; }
+  .rich-text h2 + *, .rich-text h3 + * { margin-top: 0.6em; }
+  .rich-text strong { font-weight: 600; color: var(--color-foreground); }
+  .rich-text a {
+    color: var(--color-brand-600);
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklab, var(--color-brand-600) 35%, transparent);
+    text-underline-offset: 3px;
+  }
+  .rich-text a:hover { text-decoration-color: currentColor; }
+  .rich-text ul, .rich-text ol { padding-inline-start: 1.4em; }
+  .rich-text ul { list-style: disc; }
+  .rich-text ol { list-style: decimal; }
+  .rich-text li + li { margin-top: 0.4em; }
+  .rich-text li::marker { color: var(--color-brand-500); }
+  .rich-text blockquote {
+    border-inline-start: 3px solid var(--color-brand-500);
+    background: var(--color-brand-50);
+    border-radius: 0 var(--radius-control) var(--radius-control) 0;
+    padding: 0.9em 1.2em;
+    color: var(--color-ink-700);
+  }
+  .rich-text hr { border: 0; border-top: 1px solid var(--color-line); margin-block: 2.2em; }
+  .rich-text img { border-radius: var(--radius-card); }
+  .rich-text code {
+    border-radius: 6px;
+    background: var(--color-surface-muted);
+    padding: 0.15em 0.4em;
+    font-size: 0.9em;
+  }
+  .rich-text table { width: 100%; border-collapse: collapse; font-size: 0.95em; }
+  .rich-text th, .rich-text td { border-bottom: 1px solid var(--color-line); padding: 0.6em 0.75em; text-align: start; }
+  .rich-text th { color: var(--color-foreground); font-weight: 600; }
+
+  /* Light call-to-action panel: brand wash with a soft glow. */
+  .bg-brand-glow {
+    background-color: var(--color-surface);
+    background-image:
+      radial-gradient(28rem 16rem at 0% 0%, color-mix(in oklab, var(--color-brand-200) 55%, transparent), transparent 70%),
+      radial-gradient(26rem 16rem at 100% 100%, color-mix(in oklab, var(--color-accent-100) 70%, transparent), transparent 70%),
+      linear-gradient(180deg, var(--color-brand-50), var(--color-surface));
   }
 }

@@ -128,7 +128,7 @@ export function BecomeTechnicianContent() {
 
             {/* Right Registration Card */}
             <div className="lg:col-span-6">
-              <div className="bg-ink-900 text-white rounded-3xl p-8 border border-ink-800 shadow-card space-y-6">
+              <div className="relative isolate overflow-hidden bg-premium-dark text-white rounded-3xl p-8 border border-white/10 shadow-floating space-y-6">
                 <div>
                   <span className="text-xs font-bold text-brand-500 uppercase tracking-wider">{t('Fast Onboarding', 'تیز آن بورڈنگ')}</span>
                   <h3 className="text-2xl font-extrabold text-white mt-1">{t('Register Your Interest', 'اپنی دلچسپی درج کریں')}</h3>

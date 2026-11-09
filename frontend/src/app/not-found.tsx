@@ -29,10 +29,15 @@ export default function NotFound() {
     <div className="flex min-h-dvh flex-col">
       <SiteHeader />
 
-      <main id="main" className="flex flex-1 items-center">
+      <main id="main" className="relative isolate flex flex-1 items-center overflow-hidden">
+        {/* Glow and dot grid; purely decorative. */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute left-1/2 top-10 h-80 w-[36rem] -translate-x-1/2 rounded-full bg-brand-200/50 blur-3xl" />
+          <div className="absolute inset-0 bg-[radial-gradient(var(--color-ink-200)_1px,transparent_1px)] [background-size:22px_22px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]" />
+        </div>
         <Container size="narrow" className="py-16 text-center sm:py-24">
-          <p className="text-sm font-bold uppercase tracking-widest text-brand-600">404</p>
-          <h1 className="mt-3 text-balance text-3xl font-extrabold tracking-tight sm:text-4xl">
+          <p aria-hidden="true" className="text-gradient-brand font-display text-[7rem] font-bold leading-none tracking-[-0.04em] sm:text-[10rem]">404</p>
+          <h1 className="mt-4 text-balance text-3xl font-bold tracking-[-0.02em] sm:text-4xl">
             {t('We could not find that page', 'ہمیں وہ صفحہ نہیں مل سکا')}
           </h1>
           <p className="mx-auto mt-4 max-w-lg text-pretty text-ink-600">
@@ -59,7 +64,7 @@ export default function NotFound() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="inline-flex min-h-11 items-center gap-2 rounded-[var(--radius-pill)] border border-line bg-surface px-4 text-sm font-medium hover:border-brand-600 hover:text-brand-700"
+                    className="inline-flex min-h-11 items-center gap-2 rounded-[var(--radius-pill)] border border-line bg-surface px-4 text-sm font-medium shadow-xs transition-all hover:-translate-y-0.5 hover:border-brand-300 hover:text-brand-700 hover:shadow-md"
                   >
                     <Search className="h-3.5 w-3.5" aria-hidden="true" />
                     {t(link.en, link.ur)}

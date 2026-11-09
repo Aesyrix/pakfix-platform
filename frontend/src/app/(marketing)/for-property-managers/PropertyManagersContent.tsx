@@ -17,7 +17,7 @@ export function PropertyManagersContent() {
       />
       <section className="py-12 sm:py-20 bg-surface">
         <Container>
-          <div className="bg-surface-muted rounded-3xl p-8 sm:p-12 border border-line text-center space-y-6">
+          <div className="bg-brand-glow rounded-3xl p-8 sm:p-14 border border-brand-200/70 shadow-card text-center space-y-6">
             <Home className="h-12 w-12 text-brand-600 mx-auto" />
             <h2 className="section-title text-ink-900">
               {t('Streamline Tenant Repairs & Maintenance', 'کرایہ داروں کی مرمت اور دیکھ بھال کو ہموار کریں')}

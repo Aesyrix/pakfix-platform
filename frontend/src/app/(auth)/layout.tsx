@@ -5,7 +5,6 @@ import { ArrowLeft, Camera, CheckCircle2, ShieldCheck, Sparkles, Users, Wallet }
 import { PakFixLogo } from '@/components/layout/PakFixLogo';
 import { LocaleToggle } from '@/components/i18n/LocaleToggle';
 import { useT } from '@/components/i18n/LocaleProvider';
-import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher';
 import { ModeToggle } from '@/components/theme/ModeToggle';
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
@@ -120,7 +119,6 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             {t('Back to home', 'ہوم پر واپس')}
           </Link>
           <div className="flex items-center gap-1">
-            <ThemeSwitcher />
             <ModeToggle />
             <LocaleToggle />
           </div>

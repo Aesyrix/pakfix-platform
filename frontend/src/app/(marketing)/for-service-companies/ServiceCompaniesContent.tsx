@@ -17,7 +17,7 @@ export function ServiceCompaniesContent() {
       />
       <section className="py-12 sm:py-20 bg-surface">
         <Container>
-          <div className="bg-ink-900 text-white rounded-3xl p-8 sm:p-12 border border-ink-800 text-center space-y-6">
+          <div className="relative isolate overflow-hidden bg-premium-dark text-white rounded-3xl p-8 sm:p-14 border border-white/10 shadow-floating text-center space-y-6">
             <Building2 className="h-12 w-12 text-brand-500 mx-auto" />
             <h2 className="section-title text-white">
               {t('Scale Your Home Service Enterprise', 'اپنا گھریلو سروس انٹرپرائز بڑھائیں')}
