@@ -3,6 +3,7 @@ import { Inter, Plus_Jakarta_Sans } from 'next/font/google';
 import { Providers } from '@/components/providers/Providers';
 import { SkipLink } from '@/components/layout/SkipLink';
 import { localeInitScript } from '@/lib/i18n';
+import { themeInitScript } from '@/lib/theme';
 import './globals.css';
 
 // Inter for running text, Plus Jakarta Sans for headings. Both are exposed as
@@ -89,6 +90,8 @@ export default function RootLayout({
       <body className="antialiased">
         {/* Applies the saved English/اردو choice before the first paint. */}
         <script dangerouslySetInnerHTML={{ __html: localeInitScript() }} />
+        {/* Applies the saved colour theme before the first paint. */}
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript() }} />
         {/* First stop for a keyboard user on every page. */}
         <SkipLink />
         <Providers>{children}</Providers>

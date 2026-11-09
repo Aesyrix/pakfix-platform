@@ -14,7 +14,7 @@ export const metadata: Metadata = pageMetadata({
 
 export default function VerifyEmailPage() {
   return (
-    <Card>
+    <Card className="shadow-lifted">
       <CardBody className="sm:p-8">
         <Suspense
           fallback={

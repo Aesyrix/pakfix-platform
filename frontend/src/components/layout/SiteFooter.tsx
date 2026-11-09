@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher';
 import { Mail, ShieldCheck, Heart } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { PakFixLogo } from '@/components/layout/PakFixLogo';
@@ -118,6 +119,8 @@ export function SiteFooter({ popularCategories }: SiteFooterProps) {
               <ShieldCheck className="h-3.5 w-3.5" /> {t('Verified Platform', 'تصدیق شدہ پلیٹ فارم')}
             </span>
           </div>
+
+          <ThemeSwitcher onDark placement="above" align="start" />
 
           <div className="flex items-center gap-1 text-ink-400">
             <span>{t('Made with', 'بنایا گیا')}</span>

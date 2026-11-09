@@ -19,7 +19,7 @@ export default async function RegisterPage() {
   const cities = await safeFetch(() => locationApi.cities(true), [], 'served cities');
 
   return (
-    <Card>
+    <Card className="shadow-lifted">
       <CardBody className="sm:p-8">
         <AuthIntro
           title="Create your account"

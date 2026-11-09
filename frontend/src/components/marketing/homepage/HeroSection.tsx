@@ -208,12 +208,12 @@ export function HeroSection() {
 
                 <div className="flex items-center justify-between p-2 rounded-lg bg-surface-muted">
                   <span className="text-ink-500">{t('AI Confidence:', 'اے آئی اعتماد:')}</span>
-                  <span className="font-extrabold text-brand-600">{t('95% High Confidence', '95% زیادہ اعتماد')}</span>
+                  <span className="font-extrabold text-safe-500">{t('95% High Confidence', '95% زیادہ اعتماد')}</span>
                 </div>
 
                 <div className="flex items-center justify-between p-2 rounded-lg bg-surface-muted">
                   <span className="text-ink-500">{t('Safety Risk:', 'حفاظتی خطرہ:')}</span>
-                  <span className="font-bold text-brand-600 flex items-center gap-1">
+                  <span className="font-bold text-safe-500 flex items-center gap-1">
                     <ShieldCheck className="h-3.5 w-3.5" /> {t('Low Risk (Generally Safe)', 'کم خطرہ (عام طور پر محفوظ)')}
                   </span>
                 </div>

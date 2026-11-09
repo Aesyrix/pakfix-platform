@@ -113,7 +113,7 @@
   --shadow-card: 0 1px 2px rgba(19, 25, 21, 0.04), 0 4px 16px rgba(19, 25, 21, 0.05);
   --shadow-lifted: 0 2px 4px rgba(19, 25, 21, 0.04), 0 12px 32px rgba(19, 25, 21, 0.09);
   --shadow-floating: 0 4px 8px rgba(19, 25, 21, 0.05), 0 24px 56px rgba(19, 25, 21, 0.14);
-  --shadow-brand: 0 6px 20px rgba(10, 122, 72, 0.25);
+  --shadow-brand: 0 6px 20px color-mix(in oklab, var(--color-brand-600) 28%, transparent);
 
   /* Tailwind's shadow steps, re-tinted so every shadow shares one colour. */
   --shadow-2xs: 0 1px rgba(19, 25, 21, 0.04);
@@ -122,6 +122,105 @@
   --shadow-lg: 0 2px 4px rgba(19, 25, 21, 0.04), 0 12px 28px rgba(19, 25, 21, 0.09);
   --shadow-xl: 0 4px 8px rgba(19, 25, 21, 0.05), 0 20px 44px rgba(19, 25, 21, 0.12);
   --shadow-2xl: 0 8px 16px rgba(19, 25, 21, 0.06), 0 32px 64px rgba(19, 25, 21, 0.18);
+}
+
+/*
+  Alternative themes
+  ------------------
+  Emerald (above) is the default. A theme is nothing but a new set of values
+  for the same tokens, switched with <html data-theme="...">, so every page,
+  component and state follows without any per-component code.
+  Contrast for each set is checked to WCAG AA like the default.
+*/
+
+/* Midnight: deep navy with gold. */
+[data-theme='midnight'] {
+  --color-brand-50: #F1F4FB;
+  --color-brand-100: #E2E8F7;
+  --color-brand-200: #C3CFEE;
+  --color-brand-300: #93A8DE;
+  --color-brand-400: #5F7DC9;
+  --color-brand-500: #6F8FE0;
+  --color-brand-600: #213F8F;
+  --color-brand-700: #1A3274;
+  --color-brand-800: #15295E;
+  --color-brand-900: #11214B;
+  --color-brand-950: #0A1530;
+  --color-brand-on-dark: #F2C14E;
+  --color-brand-wash: #E2E8F7;
+
+  --color-accent-50: #FFF8E6;
+  --color-accent-100: #FDEFC8;
+  --color-accent-200: #F9DC8E;
+  --color-accent-300: #F2C14E;
+  --color-accent-400: #E3A92B;
+  --color-accent-500: #C98E12;
+  --color-accent-600: #8A6106;
+  --color-accent-700: #73510A;
+  --color-accent-800: #5E4208;
+  --color-accent-900: #4A3406;
+
+  --color-ink-50: #F6F7FA;
+  --color-ink-100: #EEF0F5;
+  --color-ink-200: #E1E5EE;
+  --color-ink-300: #C9CFDC;
+  --color-ink-400: #98A1B5;
+  --color-ink-500: #5F6880;
+  --color-ink-600: #464E63;
+  --color-ink-700: #333A4C;
+  --color-ink-800: #1F2433;
+  --color-ink-900: #131826;
+  --color-ink-950: #0C101B;
+
+  --color-safe-500: #0A7A48;
+  --color-foreground: #131826;
+  --color-surface-muted: #F6F7FA;
+  --color-line: #E1E5EE;
+}
+
+/* Clay: warm terracotta with teal. */
+[data-theme='clay'] {
+  --color-brand-50: #FDF5F1;
+  --color-brand-100: #FAE8DF;
+  --color-brand-200: #F3CDBB;
+  --color-brand-300: #E8A68A;
+  --color-brand-400: #D9785A;
+  --color-brand-500: #E58A66;
+  --color-brand-600: #B0432A;
+  --color-brand-700: #933722;
+  --color-brand-800: #7A2F1C;
+  --color-brand-900: #5F2516;
+  --color-brand-950: #36140B;
+  --color-brand-on-dark: #F4A582;
+  --color-brand-wash: #FAE8DF;
+
+  --color-accent-50: #EFFAF9;
+  --color-accent-100: #D6F1EF;
+  --color-accent-200: #ADE2DE;
+  --color-accent-300: #77CBC5;
+  --color-accent-400: #3FAEA8;
+  --color-accent-500: #23928C;
+  --color-accent-600: #187A75;
+  --color-accent-700: #14625E;
+  --color-accent-800: #114E4B;
+  --color-accent-900: #0E3F3D;
+
+  --color-ink-50: #F8F6F4;
+  --color-ink-100: #F1EEEA;
+  --color-ink-200: #E6E1DB;
+  --color-ink-300: #D1CAC1;
+  --color-ink-400: #A39A8F;
+  --color-ink-500: #6B6259;
+  --color-ink-600: #4F4740;
+  --color-ink-700: #3A342F;
+  --color-ink-800: #25211E;
+  --color-ink-900: #171412;
+  --color-ink-950: #100E0C;
+
+  --color-safe-500: #0A7A48;
+  --color-foreground: #171412;
+  --color-surface-muted: #F8F6F4;
+  --color-line: #E6E1DB;
 }
 
 :root {

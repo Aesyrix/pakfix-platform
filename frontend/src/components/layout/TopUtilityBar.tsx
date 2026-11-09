@@ -5,6 +5,7 @@ import { Globe, HelpCircle, UserPlus } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { useLocale, useT } from '@/components/i18n/LocaleProvider';
 import { localeLabel } from '@/lib/i18n';
+import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher';
 
 export function TopUtilityBar() {
   const t = useT();
@@ -34,13 +35,15 @@ export function TopUtilityBar() {
 
             <Link
               href="/become-a-technician"
-              className="hover:text-brand-500 transition-colors flex items-center gap-1 font-semibold"
+              className="hover:text-white transition-colors flex items-center gap-1 font-semibold"
             >
               <UserPlus className="h-3.5 w-3.5 text-brand-on-dark" />
               <span>{t('Become a Pro', 'پروفیشنل بنیں')}</span>
             </Link>
 
             <div className="h-3 w-px bg-ink-700" />
+
+            <ThemeSwitcher onDark className="-my-1" />
 
             {/* Language Selector Switcher */}
             <button

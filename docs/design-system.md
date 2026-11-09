@@ -44,6 +44,23 @@ Neutrals carry a faint green tint so greys sit comfortably next to the brand.
 
 ---
 
+### Colour themes
+Three themes share the same tokens, switched by `data-theme` on `<html>`:
+
+| Theme | Brand | Accent | Feel |
+|---|---|---|---|
+| Emerald (default) | `#0A7A48` green | blue | Fresh, trustworthy |
+| Midnight | `#213F8F` navy | gold | Formal, premium |
+| Clay | `#B0432A` terracotta | teal | Warm, friendly |
+
+- Values live in `globals.css` (`[data-theme='midnight']`, `[data-theme='clay']`); the list in `src/lib/theme.ts`.
+- The `ThemeSwitcher` sits in the top bar, footer, phone menu, sign-in pages, dashboard sidebar and admin header. The choice is saved in the browser and applied before first paint.
+- `?theme=midnight` on any URL previews and remembers a theme — handy for sharing a look.
+- Safety and "OK" states use `safe-*`, which stays green in every theme. Use it, not `brand-*`, for anything meaning "safe".
+- To add a theme: add a `[data-theme='x']` block with the full brand / accent / ink scales (check contrast), then add an entry to `THEMES`.
+
+---
+
 ## 3. Core UI Components
 
 ### Buttons (`Button.tsx`)

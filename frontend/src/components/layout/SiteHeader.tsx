@@ -10,6 +10,7 @@ import { PakFixLogo } from '@/components/layout/PakFixLogo';
 import { TopUtilityBar } from '@/components/layout/TopUtilityBar';
 import { MegaMenu } from '@/components/layout/MegaMenu';
 import { LocaleToggle } from '@/components/i18n/LocaleToggle';
+import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher';
 import { useAuthStore } from '@/stores/auth';
 import { cn } from '@/lib/utils/cn';
 
@@ -247,6 +248,11 @@ export function SiteHeader() {
                   ) : null}
                 </Link>
               ))}
+
+              <div className="flex items-center justify-between rounded-xl px-4 py-2">
+                <span className="text-sm text-ink-500">{t('Colour theme', 'رنگوں کا انداز')}</span>
+                <ThemeSwitcher placement="above" />
+              </div>
 
               <div className="pt-4 border-t border-line flex flex-col gap-2.5">
                 {user ? (
