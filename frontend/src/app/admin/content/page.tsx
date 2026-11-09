@@ -125,7 +125,7 @@ function BlockEditor({ block }: { block: AdminContentBlock }) {
               href={block.page === 'home' ? '/' : `/${block.page}`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-[#00824A] hover:text-[#15803D]"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-brand-600 hover:text-brand-700"
             >
               {t('View page', 'صفحہ دیکھیں')}
               <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
@@ -172,7 +172,7 @@ function BlockEditor({ block }: { block: AdminContentBlock }) {
           <Button onClick={() => save.mutate()} loading={save.isPending}>
             {t('Save section', 'سیکشن محفوظ کریں')}
           </Button>
-          {save.isSuccess ? <span className="text-sm text-[#15803D]">{t('Saved and live.', 'محفوظ اور لائیو۔')}</span> : null}
+          {save.isSuccess ? <span className="text-sm text-brand-700">{t('Saved and live.', 'محفوظ اور لائیو۔')}</span> : null}
         </div>
       </CardBody>
     </Card>
@@ -220,12 +220,12 @@ function ContentField({
     const items = value as ContentListItem[];
 
     return (
-      <fieldset className="rounded-[var(--radius-control)] border border-[var(--border)] p-4">
+      <fieldset className="rounded-[var(--radius-control)] border border-line p-4">
         <legend className="px-1 text-sm font-medium">{humanise(name)}</legend>
 
         <div className="flex flex-col gap-4">
           {items.map((item, index) => (
-            <div key={index} className="flex flex-col gap-2 border-l-2 border-[var(--border)] pl-3">
+            <div key={index} className="flex flex-col gap-2 border-l-2 border-line pl-3">
               <Input
                 label={t(`Item ${index + 1} title`, `آئٹم ${index + 1} کا عنوان`)}
                 value={item.title ?? ''}
@@ -279,7 +279,7 @@ function ContentField({
   const entries = Object.entries(value as Record<string, string>);
 
   return (
-    <fieldset className="rounded-[var(--radius-control)] border border-[var(--border)] p-4">
+    <fieldset className="rounded-[var(--radius-control)] border border-line p-4">
       <legend className="px-1 text-sm font-medium">{humanise(name)}</legend>
       <div className="grid gap-3 sm:grid-cols-2">
         {entries.map(([key, entryValue]) => (

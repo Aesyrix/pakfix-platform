@@ -48,8 +48,8 @@ export function HomeMaintenanceContent() {
       <PageHeader
         breadcrumbs={[{ name: t('Home', 'ہوم'), href: '/' }, { name: t('Home Maintenance', 'ہوم مینٹیننس') }]}
         eyebrow={
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EAF7F0] text-[#006838] text-xs font-bold">
-            <Home className="h-3.5 w-3.5 text-[#00824A]" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-100 text-brand-700 text-xs font-bold">
+            <Home className="h-3.5 w-3.5 text-brand-600" />
             {t('Property Care System', 'جائیداد کی دیکھ بھال کا نظام')}
           </div>
         }
@@ -63,28 +63,28 @@ export function HomeMaintenanceContent() {
             {features.map((f) => {
               const Icon = f.icon;
               return (
-                <div key={f.title.en} className="bg-[#F8FAF9] rounded-2xl p-6 border border-[#E5E7EB] space-y-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white border border-[#E5E7EB] text-[#00824A]">
+                <div key={f.title.en} className="bg-surface-muted rounded-2xl p-6 border border-line space-y-3">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white border border-line text-brand-600">
                     <Icon className="h-5 w-5" />
                   </div>
-                  <h3 className="text-base font-bold text-[#161616]">{t(f.title.en, f.title.ur)}</h3>
-                  <p className="text-xs text-[#667085] leading-relaxed">{t(f.desc.en, f.desc.ur)}</p>
+                  <h3 className="text-base font-bold text-ink-900">{t(f.title.en, f.title.ur)}</h3>
+                  <p className="text-xs text-ink-500 leading-relaxed">{t(f.desc.en, f.desc.ur)}</p>
                 </div>
               );
             })}
           </div>
 
-          <div className="bg-[#161616] text-white rounded-3xl p-8 sm:p-12 border border-gray-800 text-center space-y-6">
+          <div className="bg-ink-900 text-white rounded-3xl p-8 sm:p-12 border border-ink-800 text-center space-y-6">
             <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
               {t('Ready to organize your home care?', 'اپنے گھر کی دیکھ بھال منظم کرنے کے لیے تیار ہیں؟')}
             </h2>
-            <p className="text-sm text-gray-300 max-w-xl mx-auto">
+            <p className="text-sm text-ink-300 max-w-xl mx-auto">
               {t('Add your property in seconds to begin logging appliances, viewing repair receipts, and scheduling tune-ups.', 'آلات درج کرنے، مرمت کی رسیدیں دیکھنے اور ٹیون اپ شیڈول کرنے کے لیے سیکنڈوں میں اپنی جائیداد شامل کریں۔')}
             </p>
             <div>
               <Link
                 href="/login"
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-[#00824A] hover:bg-[#006B3C] text-white text-sm font-bold shadow-md transition-all"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold shadow-md transition-all"
               >
                 <span>{t('Open Customer Dashboard', 'کسٹمر ڈیش بورڈ کھولیں')}</span>
                 <ArrowRight className="h-4 w-4 rtl:rotate-180" />

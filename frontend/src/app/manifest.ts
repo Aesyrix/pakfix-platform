@@ -22,7 +22,7 @@ export default function manifest(): MetadataRoute.Manifest {
     display: 'standalone',
     orientation: 'portrait',
     background_color: '#ffffff',
-    theme_color: '#0f766e',
+    theme_color: '#0a7a48',
     lang: 'en-PK',
     dir: 'ltr',
     categories: ['utilities', 'lifestyle', 'productivity'],

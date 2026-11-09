@@ -76,13 +76,13 @@ export function CityView({ slug: builtSlug, initial }: { slug: string | null; in
               <li key={category.slug}>
                 <Card interactive className="relative h-full">
                   <CardBody className="flex items-center gap-3">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[var(--radius-control)] bg-brand-50 text-[#15803D]">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[var(--radius-control)] bg-brand-50 text-brand-700">
                       <CategoryIcon name={category.icon} className="h-5 w-5" />
                     </span>
                     <span className="min-w-0">
                       <Link
                         href={category.local_path ?? `/find-a-technician?category=${category.slug}&city=${city.slug}`}
-                        className="font-semibold after:absolute after:inset-0 hover:text-[#15803D]"
+                        className="font-semibold after:absolute after:inset-0 hover:text-brand-700"
                       >
                         {category.name}
                       </Link>
@@ -103,7 +103,7 @@ export function CityView({ slug: builtSlug, initial }: { slug: string | null; in
           title={t(`Top-rated in ${city.name}`, `${city.name} کے اعلیٰ درجہ بند`)}
           muted
           action={
-            <Link href={`/find-a-technician?city=${city.slug}`} className="text-sm font-semibold text-[#00824A] hover:text-[#15803D]">
+            <Link href={`/find-a-technician?city=${city.slug}`} className="text-sm font-semibold text-brand-600 hover:text-brand-700">
               {t('See all', 'سب دیکھیں')} &rarr;
             </Link>
           }
@@ -118,7 +118,7 @@ export function CityView({ slug: builtSlug, initial }: { slug: string | null; in
             {areas.map((area) => (
               <li
                 key={area.id}
-                className="inline-flex min-h-10 items-center rounded-[var(--radius-pill)] border border-[var(--border)] bg-surface px-3.5 text-sm text-ink-600"
+                className="inline-flex min-h-10 items-center rounded-[var(--radius-pill)] border border-line bg-surface px-3.5 text-sm text-ink-600"
               >
                 {area.name}
               </li>

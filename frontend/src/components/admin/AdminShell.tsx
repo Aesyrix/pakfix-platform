@@ -88,7 +88,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-dvh bg-background">
-      <header className="sticky top-0 z-30 border-b border-[var(--border)] bg-surface">
+      <header className="sticky top-0 z-30 border-b border-line bg-surface">
         <Container size="wide">
           <div className="flex h-16 items-center justify-between gap-4">
             <div className="flex items-center gap-3">
@@ -128,28 +128,28 @@ export function AdminShell({ children }: { children: ReactNode }) {
                     aria-current={active ? 'page' : undefined}
                     className={cn(
                       'flex min-h-11 items-center gap-2.5 whitespace-nowrap rounded-[var(--radius-control)] px-3 text-sm font-medium transition-colors',
-                      active ? 'bg-[#DCFCE7] text-[#15803D]' : 'text-ink-600 hover:bg-surface-muted hover:text-foreground'
+                      active ? 'bg-brand-100 text-brand-700' : 'text-ink-600 hover:bg-surface-muted hover:text-foreground'
                     )}
                   >
                     <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
                     {t(link.label, link.labelUr)}
                     {link.permission === 'inbox' && unhandled > 0 ? (
-                      <span className="ml-auto rounded-full bg-[#DC2626] px-1.5 py-0.5 text-[0.6875rem] font-bold text-white">
+                      <span className="ml-auto rounded-full bg-danger-500 px-1.5 py-0.5 text-[0.6875rem] font-bold text-white">
                         {unhandled}
                       </span>
                     ) : null}
                     {link.permission === 'reports' && openReports > 0 ? (
-                      <span className="ml-auto rounded-full bg-[#DC2626] px-1.5 py-0.5 text-[0.6875rem] font-bold text-white">
+                      <span className="ml-auto rounded-full bg-danger-500 px-1.5 py-0.5 text-[0.6875rem] font-bold text-white">
                         {openReports}
                       </span>
                     ) : null}
                     {link.permission === 'disputes' && openDisputes > 0 ? (
-                      <span className="ml-auto rounded-full bg-[#DC2626] px-1.5 py-0.5 text-[0.6875rem] font-bold text-white">
+                      <span className="ml-auto rounded-full bg-danger-500 px-1.5 py-0.5 text-[0.6875rem] font-bold text-white">
                         {openDisputes}
                       </span>
                     ) : null}
                     {link.permission === 'verifications' && pendingPros > 0 ? (
-                      <span className="ml-auto rounded-full bg-[#D97706] px-1.5 py-0.5 text-[0.6875rem] font-bold text-white">
+                      <span className="ml-auto rounded-full bg-warn-600 px-1.5 py-0.5 text-[0.6875rem] font-bold text-white">
                         {pendingPros}
                       </span>
                     ) : null}

@@ -45,7 +45,7 @@ export function SiteSearchBox({
           onChange={(event) => setValue(event.target.value)}
           placeholder={effectivePlaceholder}
           minLength={2}
-          className="min-h-12 w-full rounded-[var(--radius-control)] border border-[var(--border)] bg-surface ps-10 pe-3.5 text-base outline-none focus:border-brand-500"
+          className="min-h-12 w-full rounded-[var(--radius-control)] border border-line bg-surface ps-10 pe-3.5 text-base outline-none focus:border-brand-500"
         />
       </div>
       <Button type="submit">{t('Search', 'تلاش کریں')}</Button>

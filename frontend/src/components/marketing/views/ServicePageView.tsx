@@ -89,7 +89,7 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
               <li key={problem}>
                 <Link
                   href={`/ai?q=${encodeURIComponent(problem)}`}
-                  className="flex min-h-14 items-center justify-between gap-3 rounded-[var(--radius-control)] border border-[var(--border)] bg-surface px-4 py-3 text-sm font-medium transition-colors hover:border-brand-400"
+                  className="flex min-h-14 items-center justify-between gap-3 rounded-[var(--radius-control)] border border-line bg-surface px-4 py-3 text-sm font-medium transition-colors hover:border-brand-400"
                 >
                   <span className="flex items-center gap-3">
                     <Wrench className="h-4 w-4 shrink-0 text-brand-600" aria-hidden="true" />
@@ -137,7 +137,7 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
                   <li key={child.id}>
                     <Link
                       href={`/services/${child.slug}`}
-                      className="inline-flex min-h-11 items-center rounded-[var(--radius-pill)] border border-[var(--border)] bg-background px-4 text-sm font-medium hover:border-brand-400 hover:text-brand-700"
+                      className="inline-flex min-h-11 items-center rounded-[var(--radius-pill)] border border-line bg-background px-4 text-sm font-medium hover:border-brand-400 hover:text-brand-700"
                     >
                       {child.name}
                     </Link>
@@ -180,7 +180,7 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
               <li key={city.slug}>
                 <Link
                   href={city.local_path ?? `/find-a-technician?category=${category.slug}&city=${city.slug}`}
-                  className="inline-flex min-h-11 items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--border)] bg-background px-4 text-sm font-medium hover:border-brand-400 hover:text-brand-700"
+                  className="inline-flex min-h-11 items-center gap-2 rounded-[var(--radius-pill)] border border-line bg-background px-4 text-sm font-medium hover:border-brand-400 hover:text-brand-700"
                 >
                   <MapPin className="h-4 w-4 text-brand-600" aria-hidden="true" />
                   {city.name}

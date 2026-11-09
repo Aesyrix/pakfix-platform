@@ -172,7 +172,7 @@ function BookingDetail({ id }: { id: string }) {
   const b = detail.data;
 
   return (
-    <div className="flex flex-col gap-4 border-t border-[var(--border)] pt-3 text-sm">
+    <div className="flex flex-col gap-4 border-t border-line pt-3 text-sm">
       <div className="grid gap-3 sm:grid-cols-2">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-ink-500">{t('Customer', 'کسٹمر')}</p>
@@ -226,7 +226,7 @@ function BookingDetail({ id }: { id: string }) {
       ) : null}
 
       {b.dispute ? (
-        <p className="rounded-[var(--radius-control)] bg-[#FEF3C7] px-3 py-2 text-[#92400E]">
+        <p className="rounded-[var(--radius-control)] bg-warn-100 px-3 py-2 text-warn-800">
           {t('Dispute', 'تنازع')} {b.dispute.reference} ({b.dispute.kind.replaceAll('_', ' ')}) · {b.dispute.status}
           {b.dispute.outcome ? ` · ${b.dispute.outcome}` : ''} ·{' '}
           <Link href="/admin/disputes" className="font-semibold underline">
@@ -250,7 +250,7 @@ function BookingDetail({ id }: { id: string }) {
         </p>
       ) : null}
 
-      <div className="border-t border-[var(--border)] pt-2">
+      <div className="border-t border-line pt-2">
         <Timeline steps={b.timeline} />
       </div>
 

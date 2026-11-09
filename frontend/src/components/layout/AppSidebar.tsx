@@ -41,7 +41,7 @@ export function AppSidebar({
   }
 
   return (
-    <aside className="hidden w-64 shrink-0 border-e border-[var(--border)] bg-surface lg:flex lg:flex-col">
+    <aside className="hidden w-64 shrink-0 border-e border-line bg-surface lg:flex lg:flex-col">
       <div className="flex h-16 items-center px-5">
         <Link href={brandHref} aria-label={t('PakFix home', 'پاک فکس ہوم')}>
           <PakFixLogo className="h-8" />
@@ -87,7 +87,7 @@ export function AppSidebar({
         ))}
       </nav>
 
-      <div className="border-t border-[var(--border)] p-3">
+      <div className="border-t border-line p-3">
         <div className="flex items-center gap-3 px-2 py-2">
           <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-600 text-sm font-semibold text-white">
             {user?.name?.charAt(0).toUpperCase() ?? '?'}
@@ -107,7 +107,7 @@ export function AppSidebar({
           {t('Sign out', 'سائن آؤٹ')}
         </button>
 
-        <div className="mt-1 flex justify-end border-t border-[var(--border)] px-1 pt-2">
+        <div className="mt-1 flex justify-end border-t border-line px-1 pt-2">
           <LocaleToggle />
         </div>
       </div>

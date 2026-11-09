@@ -79,14 +79,14 @@ export function FaqAccordionSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-[#F8FAF9] border-b border-[#E5E7EB]">
+    <section className="py-16 sm:py-24 bg-surface-muted border-b border-line">
       <Container size="narrow">
         <div className="text-center space-y-2 mb-12">
-          <span className="text-xs font-bold text-[#00824A] uppercase tracking-wider">{t('FAQ', 'سوالات')}</span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#161616]">
+          <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">{t('FAQ', 'سوالات')}</span>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-ink-900">
             {t('Frequently Asked Questions', 'اکثر پوچھے گئے سوالات')}
           </h2>
-          <p className="text-sm text-[#475467]">
+          <p className="text-sm text-ink-600">
             {t('Quick answers to common questions about PakFix AI, bookings and professionals.', 'پاک فکس اے آئی، بکنگ اور پروفیشنلز کے بارے میں عام سوالات کے فوری جوابات۔')}
           </p>
         </div>
@@ -98,23 +98,23 @@ export function FaqAccordionSection() {
             return (
               <div
                 key={faq.q}
-                className="bg-white rounded-2xl border border-[#E5E7EB] overflow-hidden transition-all"
+                className="bg-white rounded-2xl border border-line overflow-hidden transition-all"
               >
                 <button
                   type="button"
                   onClick={() => setOpenIdx(isOpen ? null : idx)}
-                  className="w-full p-4 sm:p-5 text-start flex items-center justify-between gap-4 font-bold text-sm text-[#161616] hover:bg-[#F8FAF9] transition-colors cursor-pointer"
+                  className="w-full p-4 sm:p-5 text-start flex items-center justify-between gap-4 font-bold text-sm text-ink-900 hover:bg-surface-muted transition-colors cursor-pointer"
                   aria-expanded={isOpen}
                 >
                   <span>{t(faq.q, faq.qur)}</span>
                   <ChevronDown
-                    className={`h-4 w-4 shrink-0 transition-transform duration-200 text-[#00824A] ${
+                    className={`h-4 w-4 shrink-0 transition-transform duration-200 text-brand-600 ${
                       isOpen ? 'rotate-180' : ''
                     }`}
                   />
                 </button>
                 {isOpen ? (
-                  <div className="px-4 sm:px-5 pb-5 text-xs text-[#475467] leading-relaxed border-t border-[#E5E7EB] pt-3">
+                  <div className="px-4 sm:px-5 pb-5 text-xs text-ink-600 leading-relaxed border-t border-line pt-3">
                     {t(faq.a, faq.aur)}
                   </div>
                 ) : null}

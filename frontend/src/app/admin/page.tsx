@@ -63,7 +63,7 @@ export default function AdminOverviewPage() {
               <span className="text-2xl font-bold">{tile.value}</span>
               {tile.hint ? <span className="text-xs text-ink-500">{tile.hint}</span> : null}
               {tile.href ? (
-                <span className="mt-auto inline-flex items-center gap-1 pt-2 text-sm font-semibold text-[#00824A]">
+                <span className="mt-auto inline-flex items-center gap-1 pt-2 text-sm font-semibold text-brand-600">
                   {t('Manage', 'منتظم کریں')}
                   <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                 </span>
@@ -92,7 +92,7 @@ export default function AdminOverviewPage() {
             {t('Recent changes', 'حالیہ تبدیلیاں')}
           </h2>
           <Card className="mt-3">
-            <ul className="divide-y divide-[var(--border)]">
+            <ul className="divide-y divide-line">
               {recent_activity.map((entry, index) => (
                 <li key={index} className="flex flex-wrap items-center justify-between gap-2 px-5 py-3 text-sm">
                   <span>

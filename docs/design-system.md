@@ -5,47 +5,34 @@ The **PakFix Design System** provides a standardized, high-conversion visual ide
 
 ---
 
-## 1. Brand Color System
+## 1. Theme Tokens
 
-### Primary Brand Palette (Trust, Craftsmanship & Safety)
-- **Primary Green (`--color-brand-500`)**: `#16A34A`
-- **Primary Dark (`--color-brand-700`)**: `#15803D`
-- **Primary Light Tint (`--color-brand-50`)**: `#DCFCE7`
+All colours, fonts, radii and shadows live in `frontend/src/app/globals.css` under `@theme`.
+**Components never use raw hex values or Tailwind's stock palettes (`gray-*`, `green-*`, ...)** —
+only the token classes below. Changing a token restyles the whole site.
 
-### AI & Tech Accent Palette (Smart Features & AI Assistant)
-- **Accent Blue (`--color-accent-600`)**: `#2563EB`
-- **Accent Blue Light (`--color-accent-100`)**: `#DBEAFE`
+### Colour
+| Token | Value | Use |
+|---|---|---|
+| `brand-600` | `#0A7A48` | Primary action, links, brand text (5.4:1 on white) |
+| `brand-700` | `#066A3E` | Hover / pressed |
+| `brand-50` / `brand-100` | `#F2FAF5` / `#E4F4EA` | Tints, soft badges |
+| `brand-on-dark` | `#4ADE80` | Green text on dark bands and the footer |
+| `accent-600` | `#2F5BEA` | AI features, informational |
+| `ink-900` | `#131915` | Headings (`text-foreground`) |
+| `ink-600` | `#455049` | Body text |
+| `ink-500` | `#5E6A63` | Muted text (5.7:1 on white) |
+| `line` | `#E2E6E1` | Borders and dividers (`border-line`) |
+| `surface` / `surface-muted` | `#FFFFFF` / `#F6F8F5` | Cards / alternating sections |
+| `warn-*`, `danger-*` | amber / red scales | Status |
 
-### Slate Neutral Palette (Light Mode)
-- **Background**: `#F8FAFC`
-- **Surface (Cards)**: `#FFFFFF`
-- **Surface Muted**: `#F1F5F9`
-- **Border**: `#E2E8F0`
-- **Text Primary**: `#0F172A`
-- **Text Secondary**: `#475569`
-- **Text Muted**: `#64748B`
+Neutrals carry a faint green tint so greys sit comfortably next to the brand.
 
-### Dark Mode Neutral Palette
-- **Background**: `#020617`
-- **Surface (Cards)**: `#111827`
-- **Surface Muted**: `#0F172A`
-- **Border**: `#1E293B`
-- **Text Primary**: `#F8FAFC`
-- **Text Secondary**: `#CBD5E1`
+## 2. Typography, Radius & Elevation
 
----
-
-## 2. Typography & Radius Tokens
-
-### Font Stack
-- **Sans Serif**: `Inter`, `Plus Jakarta Sans`, sans-serif.
-
-### Radius Scale
-- **Small Control (`--radius-sm`)**: `8px` (`0.5rem`)
-- **Control Input/Button (`--radius-control`)**: `12px` (`0.75rem`)
-- **Cards (`--radius-card`)**: `16px` (`1rem`)
-- **Hero & Large Panels (`--radius-hero`)**: `24px` (`1.5rem`)
-- **Pills / Badges (`--radius-pill`)**: `9999px`
+- **Body:** Inter (`font-sans`). **Headings:** Plus Jakarta Sans (`font-display`, applied to `h1`–`h4` automatically, tight tracking, balanced wrapping). Both are loaded with `next/font` in `app/layout.tsx`.
+- **Radius:** controls `12px` (`rounded-xl`), cards `20px` (`rounded-2xl`), large sections `28px` (`rounded-3xl`), pills `rounded-full`. Tailwind's steps are pinned to these values.
+- **Shadows:** one ink-tinted family — `shadow-xs`, `shadow-card`, `shadow-lifted`, `shadow-floating`, plus `shadow-brand` for the primary button hover. Tailwind's `shadow-md`…`shadow-2xl` are re-tinted to match.
 
 ---
 
@@ -54,10 +41,10 @@ The **PakFix Design System** provides a standardized, high-conversion visual ide
 ### Buttons (`Button.tsx`)
 - Minimum height: `44px` (Touch target compliant).
 - Variants: `primary` (PakFix Green), `accent` (Tech Blue), `secondary` (Outline border), `ghost`, `danger`.
-- Focus state: `2px` green ring with outline offset.
+- Focus state: `2px` `brand-600` outline with offset; inputs show a soft `brand-600/15` ring.
 
 ### Verified Badge (`Badge.tsx`)
-- Custom `<VerifiedBadge />` component with `ShieldCheck` icon, gradient tint (`#DCFCE7` to `#DBEAFE`), and tooltip.
+- Custom `<VerifiedBadge />` component with `ShieldCheck` icon, gradient tint (`brand-50` to `accent-50`), and tooltip.
 
 ### Interactive Hero Visual (`HeroProductVisual.tsx`)
 - Layered visual preview card displaying live photo upload, AI confidence %, safety audit rating, PKR cost range, and verified pro assignment.

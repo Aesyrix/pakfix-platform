@@ -26,7 +26,7 @@ export function ErrorState({
       role="alert"
       className={cn(
         'flex flex-col items-center justify-center gap-3 rounded-[var(--radius-card)]',
-        'border border-[var(--border)] bg-surface px-6 py-12 text-center',
+        'border border-line bg-surface px-6 py-12 text-center',
         className
       )}
     >

@@ -47,7 +47,7 @@ export function ProfessionalView({ slug: builtSlug, initial }: { slug: string | 
 
   return (
     <>
-      <header className="border-b border-[var(--border)] bg-gradient-to-b from-brand-wash to-background">
+      <header className="border-b border-line bg-gradient-to-b from-brand-wash to-background">
         <Container className="py-10 sm:py-14">
           <Breadcrumbs
             items={[
@@ -74,7 +74,7 @@ export function ProfessionalView({ slug: builtSlug, initial }: { slug: string | 
               <h1 className="flex flex-wrap items-center gap-2 text-2xl font-extrabold tracking-tight sm:text-3xl">
                 {professional.name}
                 {professional.is_verified ? (
-                  <span className="inline-flex items-center gap-1 rounded-[var(--radius-pill)] bg-[#DCFCE7] px-2.5 py-1 text-xs font-bold text-[#15803D]">
+                  <span className="inline-flex items-center gap-1 rounded-[var(--radius-pill)] bg-brand-100 px-2.5 py-1 text-xs font-bold text-brand-700">
                     <BadgeCheck className="h-3.5 w-3.5" aria-hidden="true" />
                     {t('Verified by PakFix', 'پاک فکس سے تصدیق شدہ')}
                   </span>
@@ -131,7 +131,7 @@ export function ProfessionalView({ slug: builtSlug, initial }: { slug: string | 
             Booking arrives in Phase 6. Until then this says so plainly rather
             than offering a button that would not book anything.
           */}
-          <Card className="mt-8 border-[#00824A]/30 bg-surface">
+          <Card className="mt-8 border-brand-600/30 bg-surface">
             <CardBody className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="font-semibold">{t('Want this professional for a job?', 'اس پروفیشنل کو کسی کام کے لیے چاہتے ہیں؟')}</p>
@@ -178,7 +178,7 @@ export function ProfessionalView({ slug: builtSlug, initial }: { slug: string | 
                   <li key={category.slug}>
                     <Link
                       href={`/services/${category.slug}`}
-                      className="inline-flex min-h-11 items-center rounded-[var(--radius-pill)] border border-[var(--border)] bg-surface px-4 text-sm font-medium hover:border-[#00824A] hover:text-[#15803D]"
+                      className="inline-flex min-h-11 items-center rounded-[var(--radius-pill)] border border-line bg-surface px-4 text-sm font-medium hover:border-brand-600 hover:text-brand-700"
                     >
                       {category.name}
                     </Link>

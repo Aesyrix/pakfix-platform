@@ -12,7 +12,7 @@ interface PakFixLogoProps {
 /**
  * PakFix Logo Component
  * Incorporates:
- * - Strong dark wordmark ('Pak' in dark, 'Fix' in #00824A green)
+ * - Strong dark wordmark ('Pak' in dark, 'Fix' in brand-600 green)
  * - House roof + Wrench icon symbol
  * - Crescent / star Pakistan visual identity element
  */
@@ -29,7 +29,7 @@ export function PakFixLogo({ className, showWordmark = true, isDarkBackground = 
         aria-label={t('PakFix logo', 'پاک فکس لوگو')}
       >
         {/* Rounded Container Box */}
-        <rect width="36" height="36" rx="10" className="fill-[#00824A]" />
+        <rect width="36" height="36" rx="10" className="fill-brand-600" />
         
         {/* House Roofline */}
         <path
@@ -72,7 +72,7 @@ export function PakFixLogo({ className, showWordmark = true, isDarkBackground = 
           <span
             className={cn(
               'text-xl font-extrabold tracking-tight',
-              isDarkBackground ? 'text-white' : 'text-[#161616]'
+              isDarkBackground ? 'text-white' : 'text-ink-900'
             )}
           >
             Pak
@@ -82,7 +82,7 @@ export function PakFixLogo({ className, showWordmark = true, isDarkBackground = 
               'text-xl font-extrabold tracking-tight',
               // The action green is unreadable on a dark panel (3.7:1); the
               // on-dark green reads at 10.4:1.
-              isDarkBackground ? 'text-[#4ADE80]' : 'text-[#00824A]'
+              isDarkBackground ? 'text-brand-on-dark' : 'text-brand-600'
             )}
           >
             Fix
@@ -90,7 +90,7 @@ export function PakFixLogo({ className, showWordmark = true, isDarkBackground = 
           <span
             className={cn(
               'text-xs font-semibold ml-0.5',
-              isDarkBackground ? 'text-gray-300' : 'text-[#667085]'
+              isDarkBackground ? 'text-ink-300' : 'text-ink-500'
             )}
           >
             .pk

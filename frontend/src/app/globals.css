@@ -1,142 +1,188 @@
 @import "tailwindcss";
 
 /*
-  PakFix Master Brand Palette & Design System
-  -------------------------------------------
-  Primary Brand Green: #008A4B
-  Dark Green: #006838
-  Green Hover: #007541
-  Soft Green: #EAF7F0
-  Very Soft Green: #F4FBF7
-  Primary Dark: #161616
-  Secondary Dark: #252525
-  Body Text: #475467
-  Muted Text: #667085
-  Border: #E5E7EB
-  Page Background: #FFFFFF
-  Secondary Background: #F8FAF9
-  Danger: #DC2626
-  Warning: #F59E0B
-  Information: #2563EB
+  PakFix theme
+  ------------
+  Every colour in the app comes from the tokens below. Components use the
+  Tailwind classes these generate (bg-brand-600, text-ink-600, border-line,
+  bg-surface ...) and never raw hex values, so changing a value here restyles
+  the whole site consistently.
 
-  Proportions: 70% light neutrals, 20% dark typography, 10% green accents.
+  Character: a deep, confident emerald for action and trust; warm, faintly
+  green-tinted neutrals so greys sit comfortably beside the brand; blue
+  reserved for AI features; saffron as the warm highlight from the logo.
+
+  Contrast (WCAG AA, measured):
+    brand-600 on white 5.4:1 | white on brand-600 5.4:1
+    ink-500 on white 5.7:1   | ink-500 on surface-muted 5.3:1
+    brand-on-dark on ink-950 10.6:1
 */
 
 @theme {
-  /* Brand — Primary Green (#008A4B) Scale */
-  --color-brand-50: #F4FBF7;
-  --color-brand-100: #EAF7F0;
-  --color-brand-200: #C2ECCF;
-  --color-brand-300: #86DBAA;
-  --color-brand-400: #3EB87D;
-  --color-brand-500: #00A85B; /* Only on dark backgrounds (5.8:1 on #161616) */
-  /*
-    Primary action green. Darkened from #008A4B so that white text on it, and
-    the colour itself as text on white, both clear WCAG AA (4.9:1 either way).
-    #008A4B measured 4.43:1, which fails for normal text in both directions.
-  */
-  --color-brand-600: #00824A;
-  --color-brand-700: #006838; /* Dark Green */
-  --color-brand-800: #00532C;
-  --color-brand-900: #003B1F;
-  --color-brand-950: #002212;
-
-  /* Brand Green Hover */
-  --color-brand-hover: #006B3C;
-
-  /*
-    Green for text and icons sitting on a dark surface (the footer, the dark
-    call-to-action bands). The action green is far too dark to read there:
-    #00824A on #161616 is 3.7:1, this is 10.4:1.
-  */
+  /* Brand — emerald */
+  --color-brand-50: #F2FAF5;
+  --color-brand-100: #E4F4EA;
+  --color-brand-200: #C3E7D1;
+  --color-brand-300: #8FD2AC;
+  --color-brand-400: #4FB57F;
+  --color-brand-500: #22B26A; /* Only on dark backgrounds */
+  --color-brand-600: #0A7A48; /* Primary action */
+  --color-brand-700: #066A3E; /* Hover / pressed */
+  --color-brand-800: #07532F;
+  --color-brand-900: #083F25;
+  --color-brand-950: #032215;
   --color-brand-on-dark: #4ADE80;
 
-  /* Accent Blue (#2563EB) — AI Technology & Informational Focus */
-  --color-accent-50: #EFF6FF;
-  --color-accent-100: #DBEAFE;
-  --color-accent-200: #BFDBFE;
-  --color-accent-300: #93C5FD;
-  --color-accent-400: #60A5FA;
-  --color-accent-500: #3B82F6;
-  --color-accent-600: #2563EB;
+  /* Accent — AI and informational blue */
+  --color-accent-50: #EEF3FF;
+  --color-accent-100: #DCE6FE;
+  --color-accent-200: #BCCFFD;
+  --color-accent-300: #8EADFB;
+  --color-accent-400: #5F86F6;
+  --color-accent-500: #3E68EF;
+  --color-accent-600: #2F5BEA;
   --color-accent-700: #1D4ED8;
-  --color-accent-800: #1E40AF;
-  --color-accent-900: #1E3A8A;
+  --color-accent-800: #1C3FAA;
+  --color-accent-900: #1C3584;
 
-  /* Dark Neutrals (#161616 / #252525) */
-  --color-ink-50: #F8FAF9;
-  --color-ink-100: #F3F4F6;
-  --color-ink-200: #E5E7EB;
-  --color-ink-300: #D1D5DB;
-  --color-ink-400: #9CA3AF;
-  --color-ink-500: #667085; /* Muted Text */
-  --color-ink-600: #475467; /* Body Text */
-  --color-ink-700: #344054;
-  --color-ink-800: #252525; /* Secondary Dark */
-  --color-ink-900: #161616; /* Primary Dark */
-  --color-ink-950: #0C0C0C;
+  /* Ink — warm neutrals with a hint of green */
+  --color-ink-50: #F6F8F5;
+  --color-ink-100: #EEF1ED;
+  --color-ink-200: #E2E6E1;
+  --color-ink-300: #CBD1CA;
+  --color-ink-400: #9AA39C;
+  --color-ink-500: #5E6A63; /* Muted text */
+  --color-ink-600: #455049; /* Body text */
+  --color-ink-700: #333B36;
+  --color-ink-800: #1F2622;
+  --color-ink-900: #131915; /* Headings */
+  --color-ink-950: #0F1512;
 
-  /* State Colors */
-  --color-safe-500: #008A4B;
-  --color-safe-600: #006838;
+  /* Status */
+  --color-safe-500: #0A7A48;
+  --color-safe-600: #066A3E;
+
+  --color-warn-50: #FFFBEB;
+  --color-warn-100: #FEF3C7;
+  --color-warn-200: #FDE68A;
+  --color-warn-300: #FCD34D;
   --color-warn-500: #F59E0B;
   --color-warn-600: #D97706;
-  --color-danger-500: #DC2626;
-  --color-danger-600: #B91C1C;
-  --color-info-500: #2563EB;
+  --color-warn-700: #B54708;
+  --color-warn-800: #93370D;
+
+  --color-danger-50: #FEF3F2;
+  --color-danger-100: #FEE4E2;
+  --color-danger-200: #FECDCA;
+  --color-danger-500: #D92D20;
+  --color-danger-600: #B42318;
+  --color-danger-700: #912018;
+
+  --color-info-500: #2F5BEA;
   --color-info-600: #1D4ED8;
 
-  /* Typography */
-  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* Semantic surfaces */
+  --color-background: #FFFFFF;
+  --color-foreground: #131915;
+  --color-surface: #FFFFFF;
+  --color-surface-muted: #F6F8F5;
+  --color-line: #E2E6E1;
+  --color-brand-wash: #E4F4EA;
 
-  /* Radius System */
+  /* Typography */
+  --font-sans: var(--font-inter), system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: var(--font-jakarta), var(--font-inter), system-ui, sans-serif;
+
+  /* Radius */
   --radius-sm: 8px;
-  --radius-control: 12px; /* Inputs & Buttons */
-  --radius-card: 18px;    /* Cards */
-  --radius-section: 24px; /* Large sections */
+  --radius-control: 12px;
+  --radius-card: 20px;
+  --radius-section: 28px;
   --radius-pill: 9999px;
 
-  /* Elevation Shadows */
-  --shadow-sm: 0 1px 2px rgba(22, 22, 22, 0.04);
-  --shadow-card: 0 4px 20px rgba(22, 22, 22, 0.06);
-  --shadow-lifted: 0 10px 28px rgba(22, 22, 22, 0.08);
-  --shadow-floating: 0 20px 48px rgba(22, 22, 22, 0.12);
+  /* Tailwind's own radius steps, pinned to the scale above so rounded-xl,
+     rounded-2xl and rounded-3xl agree with controls, cards and sections. */
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+  --radius-2xl: 20px;
+  --radius-3xl: 28px;
+
+  /* Elevation: two-layer, faintly tinted with the ink colour */
+  --shadow-sm: 0 1px 2px rgba(19, 25, 21, 0.05);
+  --shadow-card: 0 1px 2px rgba(19, 25, 21, 0.04), 0 4px 16px rgba(19, 25, 21, 0.05);
+  --shadow-lifted: 0 2px 4px rgba(19, 25, 21, 0.04), 0 12px 32px rgba(19, 25, 21, 0.09);
+  --shadow-floating: 0 4px 8px rgba(19, 25, 21, 0.05), 0 24px 56px rgba(19, 25, 21, 0.14);
+  --shadow-brand: 0 6px 20px rgba(10, 122, 72, 0.25);
+
+  /* Tailwind's shadow steps, re-tinted so every shadow shares one colour. */
+  --shadow-2xs: 0 1px rgba(19, 25, 21, 0.04);
+  --shadow-xs: 0 1px 2px rgba(19, 25, 21, 0.05);
+  --shadow-md: 0 1px 2px rgba(19, 25, 21, 0.04), 0 4px 12px rgba(19, 25, 21, 0.07);
+  --shadow-lg: 0 2px 4px rgba(19, 25, 21, 0.04), 0 12px 28px rgba(19, 25, 21, 0.09);
+  --shadow-xl: 0 4px 8px rgba(19, 25, 21, 0.05), 0 20px 44px rgba(19, 25, 21, 0.12);
+  --shadow-2xl: 0 8px 16px rgba(19, 25, 21, 0.06), 0 32px 64px rgba(19, 25, 21, 0.18);
 }
 
 :root {
   /*
     PakFix is a light interface. Declaring it stops the browser rendering
-    native controls -- select menus, scrollbars, date pickers -- in dark
-    colours for someone whose system is set to dark, which is where
-    unreadable dark-on-dark text creeps in without any CSS of ours.
+    native controls in dark colours for someone whose system is set to dark.
   */
   color-scheme: light;
-  --background: #FFFFFF;
-  --background-secondary: #F8FAF9;
-  --foreground: #161616;
-  --surface: #FFFFFF;
-  --surface-muted: #F8FAF9;
-  --border: #E5E7EB;
-  --brand-wash: #EAF7F0;
-  --brand-very-soft: #F4FBF7;
-  --body-text: #475467;
-  --muted-text: #667085;
+
+  /* Legacy aliases still referenced as var(--...) in components. */
+  --background: var(--color-background);
+  --background-secondary: var(--color-surface-muted);
+  --foreground: var(--color-foreground);
+  --surface: var(--color-surface);
+  --surface-muted: var(--color-surface-muted);
+  --border: var(--color-line);
+  --brand-wash: var(--color-brand-wash);
+  --brand-very-soft: var(--color-brand-50);
+  --body-text: var(--color-ink-600);
+  --muted-text: var(--color-ink-500);
 }
 
-* {
-  border-color: var(--border);
-}
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
 
-html {
-  -webkit-text-size-adjust: 100%;
-  scroll-behavior: smooth;
-}
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans);
-  overflow-x: hidden;
+  body {
+    background: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv11', 'ss01';
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-brand-200);
+    color: var(--color-brand-950);
+  }
+
+  /* Visible focus, everywhere, in the brand colour */
+  :focus-visible {
+    outline: 2px solid var(--color-brand-600);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
 }
 
 /*
@@ -147,13 +193,6 @@ body {
 */
 html.i18n-pending body {
   visibility: hidden;
-}
-
-/* Visible focus accessibility */
-:focus-visible {
-  outline: 2px solid #008A4B;
-  outline-offset: 2px;
-  border-radius: var(--radius-control);
 }
 
 /* Respect reduced motion */
@@ -168,15 +207,14 @@ html.i18n-pending body {
   }
 }
 
-/* Custom Skeleton pulse */
 @keyframes pakfix-pulse {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  50% { opacity: 0.45; }
 }
 
 .skeleton {
   animation: pakfix-pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  background-color: var(--border);
+  background-color: var(--color-ink-100);
   border-radius: var(--radius-control);
 }
 

@@ -159,7 +159,7 @@ function DisputeCard({ dispute }: { dispute: AdminDispute }) {
               ) : null}
             </div>
 
-            <div className="rounded-[var(--radius-control)] border border-[var(--border)] p-3 text-sm">
+            <div className="rounded-[var(--radius-control)] border border-line p-3 text-sm">
               <p className="text-xs font-semibold uppercase tracking-wide text-ink-500">{t('The job', 'کام')}</p>
               <p className="mt-1">
                 <span className="font-semibold">{b.category}</span> · {b.problem_description}
@@ -170,7 +170,7 @@ function DisputeCard({ dispute }: { dispute: AdminDispute }) {
                 <Position label={t('Arrived', 'پہنچے')} metres={b.arrived_distance_m} far={b.arrived_far} />
                 <Position label={t('Finished', 'مکمل')} metres={b.completed_distance_m} far={b.completed_far} />
               </div>
-              <ol className="mt-3 flex flex-col gap-1 border-t border-[var(--border)] pt-2 text-xs text-ink-600">
+              <ol className="mt-3 flex flex-col gap-1 border-t border-line pt-2 text-xs text-ink-600">
                 {b.timeline.map((step, index) => (
                   <li key={index}>
                     {formatDate(step.at)} · <span className="font-semibold">{step.status.replaceAll('_', ' ')}</span>
@@ -224,7 +224,7 @@ function Position({ label, metres, far }: { label: string; metres: number | null
   if (text === null) return null;
 
   return (
-    <span className={far ? 'inline-flex items-center gap-1 font-semibold text-[#991B1B]' : 'inline-flex items-center gap-1'}>
+    <span className={far ? 'inline-flex items-center gap-1 font-semibold text-danger-700' : 'inline-flex items-center gap-1'}>
       <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
       {label}: {text} {t('from the address', 'پتے سے')}
       {far ? ` (${t('far', 'دور')})` : ''}
@@ -236,7 +236,7 @@ function PersonBox({ title, person, extra, warn }: { title: string; person: Admi
   if (!person) return null;
 
   return (
-    <div className="rounded-[var(--radius-control)] border border-[var(--border)] p-3 text-sm">
+    <div className="rounded-[var(--radius-control)] border border-line p-3 text-sm">
       <p className="text-xs font-semibold uppercase tracking-wide text-ink-500">{title}</p>
       <p className="mt-1 font-semibold">{person.name}</p>
       {person.email ? (
@@ -245,7 +245,7 @@ function PersonBox({ title, person, extra, warn }: { title: string; person: Admi
           {person.email}
         </a>
       ) : null}
-      {extra ? <p className={warn ? 'mt-1 text-xs font-semibold text-[#991B1B]' : 'mt-1 text-xs text-ink-600'}>{extra}</p> : null}
+      {extra ? <p className={warn ? 'mt-1 text-xs font-semibold text-danger-700' : 'mt-1 text-xs text-ink-600'}>{extra}</p> : null}
     </div>
   );
 }

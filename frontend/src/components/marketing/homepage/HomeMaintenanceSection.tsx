@@ -15,43 +15,43 @@ export function HomeMaintenanceSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-[#F8FAF9] border-b border-[#E5E7EB]">
+    <section className="py-16 sm:py-24 bg-surface-muted border-b border-line">
       <Container>
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           {/* Left Text Column */}
           <div className="lg:col-span-6 space-y-4">
-            <span className="text-xs font-bold text-[#00824A] uppercase tracking-wider">{t('Property Care', 'پراپرٹی کی دیکھ بھال')}</span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-[#161616]">
+            <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">{t('Property Care', 'پراپرٹی کی دیکھ بھال')}</span>
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-ink-900">
               {t('Keep your home maintained,', 'اپنے گھر کو برقرار رکھیں،')}<br />
-              <span className="text-[#00824A]">{t('not just repaired.', 'صرف مرمت نہیں۔')}</span>
+              <span className="text-brand-600">{t('not just repaired.', 'صرف مرمت نہیں۔')}</span>
             </h2>
-            <p className="text-sm text-[#475467] leading-relaxed">
+            <p className="text-sm text-ink-600 leading-relaxed">
               {t('Track appliances, save full repair history, schedule recurring preventive maintenance, and receive smart reminders.', 'آلات ٹریک کریں، مکمل مرمت کی تاریخ محفوظ کریں، بار بار حفاظتی دیکھ بھال شیڈول کریں، اور سمارٹ یاد دہانیاں حاصل کریں۔')}
             </p>
 
             <div className="grid sm:grid-cols-2 gap-3 pt-2">
-              <div className="bg-white p-3.5 rounded-xl border border-[#E5E7EB] flex items-center gap-2.5">
-                <Home className="h-5 w-5 text-[#00824A]" />
-                <span className="text-xs font-bold text-[#161616]">{t('Add Your Property', 'اپنی پراپرٹی شامل کریں')}</span>
+              <div className="bg-white p-3.5 rounded-xl border border-line flex items-center gap-2.5">
+                <Home className="h-5 w-5 text-brand-600" />
+                <span className="text-xs font-bold text-ink-900">{t('Add Your Property', 'اپنی پراپرٹی شامل کریں')}</span>
               </div>
-              <div className="bg-white p-3.5 rounded-xl border border-[#E5E7EB] flex items-center gap-2.5">
-                <History className="h-5 w-5 text-[#00824A]" />
-                <span className="text-xs font-bold text-[#161616]">{t('Save Repair History', 'مرمت کی تاریخ محفوظ کریں')}</span>
+              <div className="bg-white p-3.5 rounded-xl border border-line flex items-center gap-2.5">
+                <History className="h-5 w-5 text-brand-600" />
+                <span className="text-xs font-bold text-ink-900">{t('Save Repair History', 'مرمت کی تاریخ محفوظ کریں')}</span>
               </div>
-              <div className="bg-white p-3.5 rounded-xl border border-[#E5E7EB] flex items-center gap-2.5">
-                <Calendar className="h-5 w-5 text-[#00824A]" />
-                <span className="text-xs font-bold text-[#161616]">{t('Schedule Maintenance', 'دیکھ بھال شیڈول کریں')}</span>
+              <div className="bg-white p-3.5 rounded-xl border border-line flex items-center gap-2.5">
+                <Calendar className="h-5 w-5 text-brand-600" />
+                <span className="text-xs font-bold text-ink-900">{t('Schedule Maintenance', 'دیکھ بھال شیڈول کریں')}</span>
               </div>
-              <div className="bg-white p-3.5 rounded-xl border border-[#E5E7EB] flex items-center gap-2.5">
-                <Bell className="h-5 w-5 text-[#00824A]" />
-                <span className="text-xs font-bold text-[#161616]">{t('Get Smart Reminders', 'سمارٹ یاد دہانیاں حاصل کریں')}</span>
+              <div className="bg-white p-3.5 rounded-xl border border-line flex items-center gap-2.5">
+                <Bell className="h-5 w-5 text-brand-600" />
+                <span className="text-xs font-bold text-ink-900">{t('Get Smart Reminders', 'سمارٹ یاد دہانیاں حاصل کریں')}</span>
               </div>
             </div>
 
             <div className="pt-2">
               <Link
                 href="/home-maintenance"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#00824A] hover:bg-[#006B3C] text-white text-xs font-bold shadow-xs transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-xs transition-colors"
               >
                 <span>{t('Add Your Home Assets', 'اپنے گھریلو آلات شامل کریں')}</span>
                 <ArrowRight className="h-4 w-4" />
@@ -60,31 +60,31 @@ export function HomeMaintenanceSection() {
           </div>
 
           {/* Right Dashboard Assets Preview */}
-          <div className="lg:col-span-6 bg-white rounded-2xl border border-[#E5E7EB] p-6 shadow-card space-y-4">
-            <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-3">
+          <div className="lg:col-span-6 bg-white rounded-2xl border border-line p-6 shadow-card space-y-4">
+            <div className="flex items-center justify-between border-b border-line pb-3">
               <div className="flex items-center gap-2">
-                <Home className="h-4 w-4 text-[#00824A]" />
-                <span className="text-xs font-extrabold text-[#161616]">{t('MY HOME ASSETS & MAINTENANCE', 'میرے گھریلو آلات اور دیکھ بھال')}</span>
+                <Home className="h-4 w-4 text-brand-600" />
+                <span className="text-xs font-extrabold text-ink-900">{t('MY HOME ASSETS & MAINTENANCE', 'میرے گھریلو آلات اور دیکھ بھال')}</span>
               </div>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#EAF7F0] text-[#006838]">
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-brand-100 text-brand-700">
                 {t('4 Assets Logged', '4 آلات درج')}
               </span>
             </div>
 
             <div className="space-y-3">
               {assets.map((a) => (
-                <div key={a.en} className="p-3.5 rounded-xl bg-[#F8FAF9] border border-[#E5E7EB] flex items-center justify-between text-xs">
+                <div key={a.en} className="p-3.5 rounded-xl bg-surface-muted border border-line flex items-center justify-between text-xs">
                   <div>
-                    <h4 className="font-bold text-[#161616]">{t(a.en, a.ur)}</h4>
-                    <p className="text-[10px] text-[#667085]">{t('Last Service:', 'آخری سروس:')} {t(a.lsen, a.lsur)}</p>
+                    <h4 className="font-bold text-ink-900">{t(a.en, a.ur)}</h4>
+                    <p className="text-[10px] text-ink-500">{t('Last Service:', 'آخری سروس:')} {t(a.lsen, a.lsur)}</p>
                   </div>
                   <div className="text-right">
                     <span className={`font-bold px-2 py-0.5 rounded text-[10px] ${
-                      a.due ? 'bg-amber-100 text-amber-800' : 'bg-[#EAF7F0] text-[#006838]'
+                      a.due ? 'bg-warn-100 text-warn-800' : 'bg-brand-100 text-brand-700'
                     }`}>
                       {t(a.sen, a.sur)}
                     </span>
-                    <p className="text-[10px] text-[#667085] mt-1">{t(a.nsen, a.nsur)}</p>
+                    <p className="text-[10px] text-ink-500 mt-1">{t(a.nsen, a.nsur)}</p>
                   </div>
                 </div>
               ))}

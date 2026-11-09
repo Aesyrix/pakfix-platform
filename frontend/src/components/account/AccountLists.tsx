@@ -22,7 +22,7 @@ export function BookingCard({ booking }: { booking: MarketplaceBooking }) {
         </div>
         <p className="text-sm text-ink-600">{booking.problem_description}</p>
         <p className="text-sm text-ink-600">{[booking.address_line, booking.city?.name].filter(Boolean).join(', ')}</p>
-        {booking.total.minor > 0 ? <p className="text-sm font-bold text-[#00824A]">{booking.total.display}</p> : null}
+        {booking.total.minor > 0 ? <p className="text-sm font-bold text-brand-600">{booking.total.display}</p> : null}
       </CardBody>
     </Card>
   );
@@ -49,7 +49,7 @@ export function RequestCard({ request }: { request: MarketplaceRequest }) {
           {request.distance_km != null ? ` · ${request.distance_km} km` : ''}
         </p>
         {request.customer_offer ? (
-          <p className="text-sm font-bold text-[#00824A]">
+          <p className="text-sm font-bold text-brand-600">
             {t('Customer offer', 'کسٹمر کی آفر')}: {request.customer_offer.display}
           </p>
         ) : null}

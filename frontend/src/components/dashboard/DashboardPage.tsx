@@ -31,7 +31,7 @@ export function PageHeader({
     <div className="mb-8 flex flex-wrap items-start justify-between gap-4">
       <div>
         {eyebrow ? (
-          <span className="text-xs font-bold uppercase tracking-wider text-[#00824A]">
+          <span className="text-xs font-bold uppercase tracking-wider text-brand-600">
             {t(eyebrow, eyebrowUr)}
           </span>
         ) : null}
@@ -87,18 +87,18 @@ export function StatTile({
   return (
     <div
       className={cn(
-        'rounded-[var(--radius-card)] border border-[var(--border)] bg-surface p-4 shadow-xs',
-        tone === 'brand' && 'bg-gradient-to-br from-[#DCFCE7]/60 to-surface',
-        tone === 'warn' && 'border-[#F59E0B]/40 bg-[#FEF3C7]/20'
+        'rounded-[var(--radius-card)] border border-line bg-surface p-4 shadow-xs',
+        tone === 'brand' && 'bg-gradient-to-br from-brand-100/60 to-surface',
+        tone === 'warn' && 'border-warn-500/40 bg-warn-100/20'
       )}
     >
       <div className="flex items-center gap-2 text-ink-500">
         <span
           className={cn(
             'flex h-8 w-8 items-center justify-center rounded-[var(--radius-control)] bg-surface-muted text-ink-500',
-            tone === 'brand' && 'bg-[#DCFCE7] text-[#15803D]',
-            tone === 'info' && 'bg-[#DBEAFE] text-[#1E40AF]',
-            tone === 'warn' && 'bg-[#FEF3C7] text-[#B45309]'
+            tone === 'brand' && 'bg-brand-100 text-brand-700',
+            tone === 'info' && 'bg-accent-100 text-accent-800',
+            tone === 'warn' && 'bg-warn-100 text-warn-700'
           )}
         >
           {icon}

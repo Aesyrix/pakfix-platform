@@ -250,7 +250,7 @@ export function FaqList({ faqs }: { faqs: QuestionAnswer[] }) {
   if (faqs.length === 0) return null;
 
   return (
-    <div className="divide-y divide-[var(--border)] border-y border-[var(--border)]">
+    <div className="divide-y divide-line border-y border-line">
       {faqs.map((faq) => (
         <details key={faq.question} className="group py-4">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-medium">
@@ -281,7 +281,7 @@ export function LinkPills({ links, label }: { links: Array<{ name: string; path:
           <li key={link.path}>
             <Link
               href={link.path}
-              className="inline-flex min-h-11 items-center rounded-[var(--radius-pill)] border border-[var(--border)] bg-surface px-4 text-sm font-medium hover:border-brand-400 hover:text-brand-700"
+              className="inline-flex min-h-11 items-center rounded-[var(--radius-pill)] border border-line bg-surface px-4 text-sm font-medium hover:border-brand-400 hover:text-brand-700"
             >
               {link.name}
             </Link>

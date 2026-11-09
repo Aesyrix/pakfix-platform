@@ -52,7 +52,7 @@ export default function AdminServicesPage() {
                 <Card>
                   <CardBody className="flex flex-wrap items-center justify-between gap-3">
                     <div className="min-w-0">
-                      <button type="button" onClick={() => setEditing(category.id)} className="text-left font-medium hover:text-[#15803D]">
+                      <button type="button" onClick={() => setEditing(category.id)} className="text-left font-medium hover:text-brand-700">
                         {category.parent ? <span className="text-ink-400">{category.parent.name} › </span> : null}
                         {category.name}
                       </button>
@@ -72,7 +72,7 @@ export default function AdminServicesPage() {
                         href={`/services/${category.slug}`}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-ink-400 hover:text-[#00824A]"
+                        className="text-ink-400 hover:text-brand-600"
                         aria-label={t(`View ${category.name}`, `${category.name} دیکھیں`)}
                       >
                         <ExternalLink className="h-4 w-4" />
@@ -140,7 +140,7 @@ function CategoryEditor({ category, onClose }: { category: AdminServiceCategory;
   });
 
   return (
-    <Card className="border-[#00824A]">
+    <Card className="border-brand-600">
       <CardBody className="flex flex-col gap-4">
         <h2 className="font-semibold">{t(`Editing ${category.name}`, `${category.name} میں ترمیم`)}</h2>
 

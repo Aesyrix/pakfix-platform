@@ -59,7 +59,7 @@ export function PageHeader({
   size?: 'default' | 'narrow';
 }) {
   return (
-    <section className="border-b border-[var(--border)] bg-gradient-to-b from-brand-wash to-background">
+    <section className="border-b border-line bg-gradient-to-b from-brand-wash to-background">
       <Container size={size} className="py-10 sm:py-14">
         {breadcrumbs ? <Breadcrumbs items={breadcrumbs} className="mb-5" /> : null}
         {eyebrow ? <div className="mb-3">{eyebrow}</div> : null}
@@ -92,7 +92,7 @@ export function Section({
     <section
       id={id}
       aria-labelledby={title ? headingId : undefined}
-      className={cn('py-12 sm:py-16', muted && 'border-y border-[var(--border)] bg-surface')}
+      className={cn('py-12 sm:py-16', muted && 'border-y border-line bg-surface')}
     >
       <Container>
         {title || action ? (

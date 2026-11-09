@@ -1,13 +1,21 @@
 import type { Metadata, Viewport } from 'next';
-import { Plus_Jakarta_Sans } from 'next/font/google';
+import { Inter, Plus_Jakarta_Sans } from 'next/font/google';
 import { Providers } from '@/components/providers/Providers';
 import { SkipLink } from '@/components/layout/SkipLink';
 import { localeInitScript } from '@/lib/i18n';
 import './globals.css';
 
+// Inter for running text, Plus Jakarta Sans for headings. Both are exposed as
+// CSS variables that globals.css maps onto --font-sans and --font-display.
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+});
+
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  variable: '--font-plus-jakarta',
+  variable: '--font-jakarta',
   display: 'swap',
 });
 
@@ -68,7 +76,7 @@ export const viewport: Viewport = {
   maximumScale: 5,
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#0b1220' },
+    { media: '(prefers-color-scheme: dark)', color: '#0f1512' },
   ],
   viewportFit: 'cover',
 };
@@ -77,7 +85,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" dir="ltr" suppressHydrationWarning className={jakarta.variable}>
+    <html lang="en" dir="ltr" suppressHydrationWarning className={`${inter.variable} ${jakarta.variable}`}>
       <body className="antialiased">
         {/* Applies the saved English/اردو choice before the first paint. */}
         <script dangerouslySetInnerHTML={{ __html: localeInitScript() }} />

@@ -139,11 +139,11 @@ export function AssistantView() {
         eyebrow={
           <div className="flex items-center gap-2">
             <Badge tone="accent">
-              <Sparkles className="h-3.5 w-3.5 text-[#2563EB]" aria-hidden="true" />
+              <Sparkles className="h-3.5 w-3.5 text-accent-600" aria-hidden="true" />
               {t('PakFix AI Engine Online', 'پاک فکس اے آئی انجن آن لائن')}
             </Badge>
-            <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#15803D] bg-[#DCFCE7] px-2 py-0.5 rounded-full">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#00824A] animate-pulse" />
+            <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-brand-700 bg-brand-100 px-2 py-0.5 rounded-full">
+              <span className="h-1.5 w-1.5 rounded-full bg-brand-600 animate-pulse" />
               {t('Live Safety Audit', 'لائیو حفاظتی آڈٹ')}
             </span>
           </div>
@@ -155,8 +155,8 @@ export function AssistantView() {
 
       <Container size="narrow" className="py-8 sm:py-10">
         {inputMode === 'camera' ? (
-          <div className="mb-5 flex items-start gap-3 rounded-2xl border border-[#2563EB]/30 bg-[#EFF6FF] p-4 text-sm text-ink-700 dark:bg-slate-900">
-            <Camera className="mt-0.5 h-5 w-5 shrink-0 text-[#2563EB]" aria-hidden="true" />
+          <div className="mb-5 flex items-start gap-3 rounded-2xl border border-accent-600/30 bg-accent-50 p-4 text-sm text-ink-700 dark:bg-ink-900">
+            <Camera className="mt-0.5 h-5 w-5 shrink-0 text-accent-600" aria-hidden="true" />
             <div>
               <p className="font-bold text-foreground">{t('Photo Diagnostic Mode Active', 'فوٹو تشخیصی موڈ فعال')}</p>
               <p className="text-xs text-ink-600 mt-0.5">
@@ -183,8 +183,8 @@ export function AssistantView() {
               aria-describedby={fieldError ? 'problem-error' : undefined}
               className={cn(
                 'min-h-32 w-full resize-y rounded-[var(--radius-card)] border bg-surface p-4 pe-14 text-base outline-none transition-all',
-                'focus:ring-2 focus:ring-[#00824A] focus:border-transparent',
-                fieldError ? 'border-danger-500' : 'border-[var(--border)]'
+                'focus:ring-2 focus:ring-brand-600 focus:border-transparent',
+                fieldError ? 'border-danger-500' : 'border-line'
               )}
             />
             {dictationSupported ? (
@@ -197,7 +197,7 @@ export function AssistantView() {
                 aria-pressed={listening}
                 aria-label={listening ? t('Stop dictation', 'ڈکٹیشن روکیں') : t('Describe it out loud', 'اسے بول کر بیان کریں')}
               >
-                {listening ? <MicOff className="h-5 w-5" /> : <Mic className="h-5 w-5 text-[#2563EB]" />}
+                {listening ? <MicOff className="h-5 w-5" /> : <Mic className="h-5 w-5 text-accent-600" />}
               </Button>
             ) : null}
           </div>
@@ -213,7 +213,7 @@ export function AssistantView() {
                 key={example.en}
                 type="button"
                 onClick={() => setDescription(t(example.en, example.ur))}
-                className="rounded-full border border-[var(--border)] bg-surface px-3 py-1.5 text-xs font-medium text-ink-600 hover:border-[#00824A] hover:text-[#15803D] hover:bg-[#DCFCE7]/40 transition-colors"
+                className="rounded-full border border-line bg-surface px-3 py-1.5 text-xs font-medium text-ink-600 hover:border-brand-600 hover:text-brand-700 hover:bg-brand-100/40 transition-colors"
               >
                 {t(example.en, example.ur)}
               </button>

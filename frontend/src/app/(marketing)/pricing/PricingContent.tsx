@@ -58,26 +58,26 @@ export function PricingContent() {
         <Container>
           <div className="max-w-4xl mx-auto space-y-12">
             {/* Price Table Card */}
-            <div className="bg-[#F8FAF9] rounded-3xl border border-[#E5E7EB] p-6 sm:p-8 shadow-card space-y-6">
-              <h2 className="text-xl font-extrabold text-[#161616]">{t('Standard Service Rate Card (PKR)', 'معیاری سروس ریٹ کارڈ (روپے)')}</h2>
+            <div className="bg-surface-muted rounded-3xl border border-line p-6 sm:p-8 shadow-card space-y-6">
+              <h2 className="text-xl font-extrabold text-ink-900">{t('Standard Service Rate Card (PKR)', 'معیاری سروس ریٹ کارڈ (روپے)')}</h2>
 
               <div className="overflow-x-auto">
                 <table className="w-full text-start text-xs sm:text-sm">
                   <thead>
-                    <tr className="border-b border-[#E5E7EB] text-[#667085] uppercase tracking-wider font-bold">
+                    <tr className="border-b border-line text-ink-500 uppercase tracking-wider font-bold">
                       <th className="py-3 px-4 text-start">{t('Service', 'سروس')}</th>
                       <th className="py-3 px-4 text-start">{t('Inspection / Visit Fee', 'معائنہ / وزٹ فیس')}</th>
                       <th className="py-3 px-4 text-start">{t('Standard Labour Range', 'معیاری مزدوری کی حد')}</th>
                       <th className="py-3 px-4 text-start">{t('Est. Duration', 'تخمینہ دورانیہ')}</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#E5E7EB] font-medium text-[#161616]">
+                  <tbody className="divide-y divide-line font-medium text-ink-900">
                     {priceGrid.map((row) => (
                       <tr key={row.service.en} className="hover:bg-white transition-colors">
-                        <td className="py-3.5 px-4 font-bold text-[#00824A]">{t(row.service.en, row.service.ur)}</td>
+                        <td className="py-3.5 px-4 font-bold text-brand-600">{t(row.service.en, row.service.ur)}</td>
                         <td className="py-3.5 px-4">{t(row.visitFee.en, row.visitFee.ur)}</td>
                         <td className="py-3.5 px-4 font-bold">{t(row.labour.en, row.labour.ur)}</td>
-                        <td className="py-3.5 px-4 text-[#667085]">{t(row.time.en, row.time.ur)}</td>
+                        <td className="py-3.5 px-4 text-ink-500">{t(row.time.en, row.time.ur)}</td>
                       </tr>
                     ))}
                   </tbody>

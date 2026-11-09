@@ -73,7 +73,7 @@ export function DirectoryView({ cities, categories }: { cities: City[]; categori
 
       <Container className="py-8">
         <form
-          className="grid gap-3 rounded-[var(--radius-card)] border border-[var(--border)] bg-surface p-4 sm:grid-cols-2 lg:grid-cols-4"
+          className="grid gap-3 rounded-[var(--radius-card)] border border-line bg-surface p-4 sm:grid-cols-2 lg:grid-cols-4"
           aria-label={t('Filter professionals', 'پروفیشنلز فلٹر کریں')}
           onSubmit={(event) => event.preventDefault()}
         >
@@ -101,7 +101,7 @@ export function DirectoryView({ cities, categories }: { cities: City[]; categori
             <option value="experience">{t('Most experience', 'سب سے زیادہ تجربہ')}</option>
           </Select>
 
-          <label className="flex min-h-12 cursor-pointer items-center gap-3 self-end rounded-[var(--radius-control)] border border-[var(--border)] px-3.5">
+          <label className="flex min-h-12 cursor-pointer items-center gap-3 self-end rounded-[var(--radius-control)] border border-line px-3.5">
             <input
               type="checkbox"
               checked={filters.emergency}

@@ -39,7 +39,7 @@ export default function ProVerificationPage() {
             <div>
               <Badge tone={tone}>{t(label, labelUr)}</Badge>
             </div>
-            {verification?.rejection_reason ? <p className="text-sm text-[#991B1B]">{verification.rejection_reason}</p> : null}
+            {verification?.rejection_reason ? <p className="text-sm text-danger-700">{verification.rejection_reason}</p> : null}
             {verification?.status !== 'verified' ? (
               <p className="text-sm text-ink-600">
                 {t('Your profile, CNIC photos and selfie are submitted in the PakFix mobile app.', 'آپ کی پروفائل، شناختی کارڈ کی تصاویر اور سیلفی پاک فکس موبائل ایپ میں جمع کرائی جاتی ہیں۔')}

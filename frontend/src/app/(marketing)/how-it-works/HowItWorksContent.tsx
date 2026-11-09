@@ -81,8 +81,8 @@ export function HowItWorksContent() {
       <PageHeader
         breadcrumbs={[{ name: t('Home', 'ہوم'), href: '/' }, { name: t('How It Works', 'کیسے کام کرتا ہے') }]}
         eyebrow={
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EAF7F0] text-[#006838] text-xs font-bold">
-            <Sparkles className="h-3.5 w-3.5 text-[#00824A]" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-100 text-brand-700 text-xs font-bold">
+            <Sparkles className="h-3.5 w-3.5 text-brand-600" />
             {t('Simple 4-Step Process', 'آسان 4 مرحلوں کا عمل')}
           </div>
         }
@@ -105,20 +105,20 @@ export function HowItWorksContent() {
                   }`}
                 >
                   <div className={`lg:col-span-6 space-y-4 ${isEven ? 'lg:order-2' : ''}`}>
-                    <span className="text-3xl font-extrabold text-[#00824A] tracking-wider">
+                    <span className="text-3xl font-extrabold text-brand-600 tracking-wider">
                       {step.num}
                     </span>
-                    <h2 className="text-2xl sm:text-3xl font-bold text-[#161616]">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-ink-900">
                       {t(step.title.en, step.title.ur)}
                     </h2>
-                    <p className="text-sm sm:text-base text-[#475467] leading-relaxed">
+                    <p className="text-sm sm:text-base text-ink-600 leading-relaxed">
                       {t(step.desc.en, step.desc.ur)}
                     </p>
 
                     <ul className="space-y-2.5 pt-2">
                       {step.details.map((detail) => (
-                        <li key={detail.en} className="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-[#161616]">
-                          <CheckCircle2 className="h-4 w-4 text-[#00824A] shrink-0" />
+                        <li key={detail.en} className="flex items-center gap-2.5 text-xs sm:text-sm font-medium text-ink-900">
+                          <CheckCircle2 className="h-4 w-4 text-brand-600 shrink-0" />
                           <span>{t(detail.en, detail.ur)}</span>
                         </li>
                       ))}
@@ -126,16 +126,16 @@ export function HowItWorksContent() {
                   </div>
 
                   <div className={`lg:col-span-6 ${isEven ? 'lg:order-1' : ''}`}>
-                    <div className="bg-[#F8FAF9] rounded-3xl p-8 border border-[#E5E7EB] shadow-card space-y-4">
-                      <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-4">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EAF7F0] text-[#00532C]">
+                    <div className="bg-surface-muted rounded-3xl p-8 border border-line shadow-card space-y-4">
+                      <div className="flex items-center justify-between border-b border-line pb-4">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-100 text-brand-800">
                           <Icon className="h-6 w-6" />
                         </div>
-                        <span className="text-xs font-bold px-3 py-1 rounded-full bg-white text-[#006838] border border-[#E5E7EB]">
+                        <span className="text-xs font-bold px-3 py-1 rounded-full bg-white text-brand-700 border border-line">
                           {t('PakFix Standard', 'پاک فکس معیار')}
                         </span>
                       </div>
-                      <p className="text-xs text-[#667085] leading-relaxed">
+                      <p className="text-xs text-ink-500 leading-relaxed">
                         {t('Every step is backed by identity verification, automated price guidelines, and real-time support.', 'ہر مرحلہ شناخت کی تصدیق، خودکار قیمت کے رہنما اصولوں اور حقیقی وقت کی معاونت سے مضبوط ہے۔')}
                       </p>
                     </div>
@@ -148,30 +148,30 @@ export function HowItWorksContent() {
       </section>
 
       {/* Trust banner */}
-      <section className="py-12 bg-[#EAF7F0] border-t border-b border-[#E5E7EB]">
+      <section className="py-12 bg-brand-100 border-t border-b border-line">
         <Container>
           <div className="grid md:grid-cols-3 gap-6 text-center">
-            <div className="bg-white p-6 rounded-2xl border border-[#E5E7EB] space-y-2">
-              <ShieldCheck className="h-8 w-8 text-[#00824A] mx-auto" />
-              <h3 className="text-sm font-bold text-[#161616]">{t('Verified Technicians', 'تصدیق شدہ ٹیکنیشن')}</h3>
-              <p className="text-xs text-[#667085]">{t('CNIC and selfie checked by our team.', 'شناختی کارڈ اور سیلفی کی جانچ ہماری ٹیم کرتی ہے۔')}</p>
+            <div className="bg-white p-6 rounded-2xl border border-line space-y-2">
+              <ShieldCheck className="h-8 w-8 text-brand-600 mx-auto" />
+              <h3 className="text-sm font-bold text-ink-900">{t('Verified Technicians', 'تصدیق شدہ ٹیکنیشن')}</h3>
+              <p className="text-xs text-ink-500">{t('CNIC and selfie checked by our team.', 'شناختی کارڈ اور سیلفی کی جانچ ہماری ٹیم کرتی ہے۔')}</p>
             </div>
-            <div className="bg-white p-6 rounded-2xl border border-[#E5E7EB] space-y-2">
-              <Sparkles className="h-8 w-8 text-[#00824A] mx-auto" />
-              <h3 className="text-sm font-bold text-[#161616]">{t('AI Safety Audit', 'اے آئی حفاظتی آڈٹ')}</h3>
-              <p className="text-xs text-[#667085]">{t('Checks for gas, electrical & high-risk hazards.', 'گیس، بجلی اور زیادہ خطرے کے امور کی جانچ۔')}</p>
+            <div className="bg-white p-6 rounded-2xl border border-line space-y-2">
+              <Sparkles className="h-8 w-8 text-brand-600 mx-auto" />
+              <h3 className="text-sm font-bold text-ink-900">{t('AI Safety Audit', 'اے آئی حفاظتی آڈٹ')}</h3>
+              <p className="text-xs text-ink-500">{t('Checks for gas, electrical & high-risk hazards.', 'گیس، بجلی اور زیادہ خطرے کے امور کی جانچ۔')}</p>
             </div>
-            <div className="bg-white p-6 rounded-2xl border border-[#E5E7EB] space-y-2">
-              <PhoneCall className="h-8 w-8 text-[#00824A] mx-auto" />
-              <h3 className="text-sm font-bold text-[#161616]">{t('Help When You Need It', 'جب ضرورت ہو مدد')}</h3>
-              <p className="text-xs text-[#667085]">{t('Message our support team any time.', 'ہماری سپورٹ ٹیم کو کسی بھی وقت پیغام بھیجیں۔')}</p>
+            <div className="bg-white p-6 rounded-2xl border border-line space-y-2">
+              <PhoneCall className="h-8 w-8 text-brand-600 mx-auto" />
+              <h3 className="text-sm font-bold text-ink-900">{t('Help When You Need It', 'جب ضرورت ہو مدد')}</h3>
+              <p className="text-xs text-ink-500">{t('Message our support team any time.', 'ہماری سپورٹ ٹیم کو کسی بھی وقت پیغام بھیجیں۔')}</p>
             </div>
           </div>
 
           <div className="mt-10 text-center">
             <Link
               href="/ai"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-[#00824A] hover:bg-[#006B3C] text-white text-sm font-bold shadow-md transition-all"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold shadow-md transition-all"
             >
               <span>{t('Try AI Diagnosis Now', 'ابھی اے آئی تشخیص آزمائیں')}</span>
               <ArrowRight className="h-4 w-4 rtl:rotate-180" />

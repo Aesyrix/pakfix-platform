@@ -97,7 +97,7 @@ export function SiteHeader() {
       <TopUtilityBar />
 
       {/* Main Header Navigation Bar */}
-      <div className="border-b border-[#E5E7EB] bg-white/95 backdrop-blur-md shadow-xs relative">
+      <div className="border-b border-line bg-white/95 backdrop-blur-md shadow-xs relative">
         <Container size="wide">
           <div className="flex h-[74px] items-center justify-between gap-4">
             {/* LEFT: PakFix Brand Logo */}
@@ -129,8 +129,8 @@ export function SiteHeader() {
                         className={cn(
                           'inline-flex items-center gap-1 rounded-xl px-2.5 py-2 text-[13px] font-semibold whitespace-nowrap transition-all cursor-pointer',
                           megaOpen || pathname.startsWith('/services')
-                            ? 'bg-[#EAF7F0] text-[#006838]'
-                            : 'text-[#475467] hover:bg-[#F8FAF9] hover:text-[#161616]'
+                            ? 'bg-brand-100 text-brand-700'
+                            : 'text-ink-600 hover:bg-surface-muted hover:text-ink-900'
                         )}
                         aria-expanded={megaOpen}
                       >
@@ -138,7 +138,7 @@ export function SiteHeader() {
                         <ChevronDown
                           className={cn(
                             'h-4 w-4 transition-transform duration-200',
-                            megaOpen ? 'rotate-180 text-[#00824A]' : 'text-[#667085]'
+                            megaOpen ? 'rotate-180 text-brand-600' : 'text-ink-500'
                           )}
                         />
                       </button>
@@ -157,13 +157,13 @@ export function SiteHeader() {
                     className={cn(
                       'inline-flex items-center gap-1.5 rounded-xl px-2.5 py-2 text-[13px] font-semibold whitespace-nowrap transition-all',
                       isActive
-                        ? 'bg-[#EAF7F0] text-[#006838]'
+                        ? 'bg-brand-100 text-brand-700'
                         : link.highlight
-                        ? 'text-[#2563EB] hover:bg-[#EFF6FF]'
-                        : 'text-[#475467] hover:bg-[#F8FAF9] hover:text-[#161616]'
+                        ? 'text-accent-600 hover:bg-accent-50'
+                        : 'text-ink-600 hover:bg-surface-muted hover:text-ink-900'
                     )}
                   >
-                    {link.highlight ? <Sparkles className="h-3.5 w-3.5 text-[#2563EB]" /> : null}
+                    {link.highlight ? <Sparkles className="h-3.5 w-3.5 text-accent-600" /> : null}
                     <span>{t(link.en, link.ur)}</span>
                   </Link>
                 );
@@ -184,14 +184,14 @@ export function SiteHeader() {
                     href="/login"
                     variant="ghost"
                     size="sm"
-                    className="text-[#475467] hover:text-[#161616] font-semibold"
+                    className="text-ink-600 hover:text-ink-900 font-semibold"
                   >
                     {t('Sign In', 'سائن اِن')}
                   </ButtonLink>
                   <ButtonLink
                     href="/ai"
                     size="sm"
-                    className="bg-[#00824A] hover:bg-[#006B3C] text-white font-semibold rounded-xl px-5 py-2.5 shadow-xs"
+                    className="bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl px-5 py-2.5 shadow-xs"
                   >
                     {t('Get Started', 'شروع کریں')}
                   </ButtonLink>
@@ -205,7 +205,7 @@ export function SiteHeader() {
                 <ButtonLink
                   href="/ai"
                   size="sm"
-                  className="bg-[#00824A] text-white px-3.5 py-1.5 text-xs font-semibold rounded-lg"
+                  className="bg-brand-600 text-white px-3.5 py-1.5 text-xs font-semibold rounded-lg"
                 >
                   {t('Get Started', 'شروع کریں')}
                 </ButtonLink>
@@ -216,7 +216,7 @@ export function SiteHeader() {
               <button
                 type="button"
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="p-2 rounded-xl text-[#161616] hover:bg-[#F8FAF9] cursor-pointer"
+                className="p-2 rounded-xl text-ink-900 hover:bg-surface-muted cursor-pointer"
                 aria-label={mobileOpen ? t('Close menu', 'مینو بند کریں') : t('Open menu', 'مینو کھولیں')}
               >                {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
@@ -226,7 +226,7 @@ export function SiteHeader() {
 
         {/* MOBILE NAVIGATION DRAWER */}
         {mobileOpen ? (
-          <div className="border-t border-[#E5E7EB] bg-white shadow-2xl xl:hidden max-h-[calc(100dvh-74px)] overflow-y-auto">
+          <div className="border-t border-line bg-white shadow-2xl xl:hidden max-h-[calc(100dvh-74px)] overflow-y-auto">
             <Container className="py-4 space-y-1">
               {NAV_LINKS.map((link) => (
                 <Link
@@ -235,20 +235,20 @@ export function SiteHeader() {
                   className={cn(
                     'flex items-center justify-between rounded-xl px-4 py-3 text-base font-medium transition-colors',
                     pathname.startsWith(link.href)
-                      ? 'bg-[#EAF7F0] text-[#006838] font-bold'
-                      : 'text-[#161616] hover:bg-[#F8FAF9]'
+                      ? 'bg-brand-100 text-brand-700 font-bold'
+                      : 'text-ink-900 hover:bg-surface-muted'
                   )}
                 >
                   <span>{t(link.en, link.ur)}</span>
                   {link.highlight ? (
-                    <span className="text-xs font-bold px-2 py-0.5 rounded bg-[#DBEAFE] text-[#2563EB]">
+                    <span className="text-xs font-bold px-2 py-0.5 rounded bg-accent-100 text-accent-600">
                       {t('AI Diagnostic', 'اے آئی تشخیص')}
                     </span>
                   ) : null}
                 </Link>
               ))}
 
-              <div className="pt-4 border-t border-[#E5E7EB] flex flex-col gap-2.5">
+              <div className="pt-4 border-t border-line flex flex-col gap-2.5">
                 {user ? (
                   <ButtonLink href={user.home_path ?? '/dashboard'} block>
                     {t('Go to Dashboard', 'ڈیش بورڈ پر جائیں')}
@@ -258,7 +258,7 @@ export function SiteHeader() {
                     <ButtonLink
                       href="/ai"
                       block
-                      className="bg-[#00824A] text-white font-bold py-3 text-center rounded-xl"
+                      className="bg-brand-600 text-white font-bold py-3 text-center rounded-xl"
                     >
                       {t('Diagnose My Problem', 'میرا مسئلہ تشخیص کریں')}
                     </ButtonLink>
@@ -266,7 +266,7 @@ export function SiteHeader() {
                       href="/login"
                       variant="secondary"
                       block
-                      className="border-[#E5E7EB] text-[#161616] font-semibold py-3 text-center rounded-xl"
+                      className="border-line text-ink-900 font-semibold py-3 text-center rounded-xl"
                     >
                       {t('Sign In', 'سائن اِن')}
                     </ButtonLink>

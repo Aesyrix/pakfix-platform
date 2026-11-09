@@ -39,7 +39,7 @@ export function ArticleView({ slug: builtSlug, initial }: { slug: string | null;
   return (
     <>
       <article>
-        <header className="border-b border-[var(--border)] bg-gradient-to-b from-brand-wash to-background">
+        <header className="border-b border-line bg-gradient-to-b from-brand-wash to-background">
           <Container size="narrow" className="py-10 sm:py-14">
             <Breadcrumbs
               items={[
@@ -94,7 +94,7 @@ export function ArticleView({ slug: builtSlug, initial }: { slug: string | null;
           <RichText html={post.body_html} />
 
           {post.tags.length > 0 ? (
-            <div className="mt-10 flex flex-wrap items-center gap-2 border-t border-[var(--border)] pt-6">
+            <div className="mt-10 flex flex-wrap items-center gap-2 border-t border-line pt-6">
               <Tag className="h-4 w-4 text-ink-400" aria-hidden="true" />
               {post.tags.map((tag) => (
                 <Badge key={tag.slug} tone="neutral">

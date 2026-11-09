@@ -91,20 +91,20 @@ export function MegaMenu({ onClose }: MegaMenuProps) {
   ];
 
   return (
-    <div className="absolute top-full left-0 w-full bg-white border-b border-[#E5E7EB] shadow-2xl z-50">
+    <div className="absolute top-full left-0 w-full bg-white border-b border-line shadow-2xl z-50">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {categories.map((col) => (
             <div key={col.en} className="space-y-4">
               <div>
-                <h3 className="text-sm font-bold text-[#161616] tracking-wider uppercase flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-[#00824A]" />
+                <h3 className="text-sm font-bold text-ink-900 tracking-wider uppercase flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-brand-600" />
                   {t(col.en, col.ur)}
                 </h3>
-                <p className="text-xs text-[#667085] mt-0.5">{t(col.descriptionEn, col.descriptionUr)}</p>
+                <p className="text-xs text-ink-500 mt-0.5">{t(col.descriptionEn, col.descriptionUr)}</p>
               </div>
 
-              <div className="space-y-1.5 border-t border-[#E5E7EB] pt-3">
+              <div className="space-y-1.5 border-t border-line pt-3">
                 {col.items.map((item) => {
                   const Icon = item.icon;
                   return (
@@ -112,14 +112,14 @@ export function MegaMenu({ onClose }: MegaMenuProps) {
                       key={item.href}
                       href={item.href}
                       onClick={onClose}
-                      className="flex items-center justify-between p-2 rounded-lg text-sm text-[#475467] hover:text-[#00824A] hover:bg-[#F4FBF7] transition-all group"
+                      className="flex items-center justify-between p-2 rounded-lg text-sm text-ink-600 hover:text-brand-600 hover:bg-brand-50 transition-all group"
                     >
                       <div className="flex items-center gap-2.5">
-                        <Icon className="h-4 w-4 text-[#667085] group-hover:text-[#00824A] transition-colors" />
+                        <Icon className="h-4 w-4 text-ink-500 group-hover:text-brand-600 transition-colors" />
                         <span className="font-medium group-hover:font-semibold">{t(item.en, item.ur)}</span>
                       </div>
                       {item.badge ? (
-                        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#EAF7F0] text-[#006838]">
+                        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-brand-100 text-brand-700">
                           {t(item.badge.en, item.badge.ur)}
                         </span>
                       ) : null}
@@ -132,16 +132,16 @@ export function MegaMenu({ onClose }: MegaMenuProps) {
         </div>
 
         {/* Bottom Banner Bar inside Mega Menu */}
-        <div className="mt-8 pt-4 border-t border-[#E5E7EB] flex flex-wrap items-center justify-between gap-4 bg-[#F8FAF9] p-4 rounded-xl">
+        <div className="mt-8 pt-4 border-t border-line flex flex-wrap items-center justify-between gap-4 bg-surface-muted p-4 rounded-xl">
           <div className="flex items-center gap-3">
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#EAF7F0] text-[#00532C] font-bold">
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-100 text-brand-800 font-bold">
               {t('AI', 'اے آئی')}
             </span>
             <div>
-              <p className="text-xs font-bold text-[#161616]">
+              <p className="text-xs font-bold text-ink-900">
                 {t('Not sure which service you need?', 'سمجھ نہیں آ رہا کون سی سروس چاہیے؟')}
               </p>
-              <p className="text-xs text-[#667085]">
+              <p className="text-xs text-ink-500">
                 {t('Let PakFix AI diagnose your issue in 10 seconds.', 'پاک فکس اے آئی 10 سیکنڈ میں آپ کا مسئلہ تشخیص کرے گا۔')}
               </p>
             </div>
@@ -151,7 +151,7 @@ export function MegaMenu({ onClose }: MegaMenuProps) {
             <Link
               href="/ai"
               onClick={onClose}
-              className="text-xs font-bold text-[#00824A] hover:underline"
+              className="text-xs font-bold text-brand-600 hover:underline"
             >
               {t('Try AI Diagnosis', 'اے آئی تشخیص آزمائیں')} &rarr;
             </Link>
@@ -159,7 +159,7 @@ export function MegaMenu({ onClose }: MegaMenuProps) {
             <Link
               href="/services"
               onClick={onClose}
-              className="inline-flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-lg bg-[#00824A] text-white hover:bg-[#006B3C] transition-colors shadow-xs"
+              className="inline-flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-lg bg-brand-600 text-white hover:bg-brand-700 transition-colors shadow-xs"
             >
               <span>{t('View All Services', 'تمام خدمات دیکھیں')}</span>
               <ArrowRight className="h-3.5 w-3.5" />

@@ -107,8 +107,8 @@ function CategoryPill({ href, active, children }: { href: string; active: boolea
       className={cn(
         'inline-flex min-h-11 items-center rounded-[var(--radius-pill)] border px-4 text-sm font-medium transition-colors',
         active
-          ? 'border-[#00824A] bg-[#DCFCE7] text-[#15803D]'
-          : 'border-[var(--border)] bg-surface text-ink-600 hover:border-[#00824A] hover:text-[#15803D]'
+          ? 'border-brand-600 bg-brand-100 text-brand-700'
+          : 'border-line bg-surface text-ink-600 hover:border-brand-600 hover:text-brand-700'
       )}
     >
       {children}

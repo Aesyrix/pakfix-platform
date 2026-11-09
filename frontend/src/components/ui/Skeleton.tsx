@@ -26,7 +26,7 @@ export function SkeletonCard({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'rounded-[var(--radius-card)] border border-[var(--border)] bg-surface p-5',
+        'rounded-[var(--radius-card)] border border-line bg-surface p-5',
         className
       )}
       aria-hidden="true"
