@@ -18,8 +18,8 @@ export function AiToProHandoffSection() {
     <section className="py-16 sm:py-24 bg-white border-b border-line">
       <Container>
         <div className="max-w-2xl mx-auto text-center space-y-2 mb-12">
-          <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">{t('Seamless Handoff', 'بے رکاوٹ منتقلی')}</span>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-ink-900">
+          <span className="eyebrow">{t('Seamless Handoff', 'بے رکاوٹ منتقلی')}</span>
+          <h2 className="section-title text-ink-900">
             {t('From AI diagnosis to job completed.', 'اے آئی تشخیص سے کام مکمل ہونے تک۔')}<br />
             <span className="text-brand-600">{t('Zero repetitive typing.', 'دوبارہ لکھنے کی ضرورت نہیں۔')}</span>
           </h2>

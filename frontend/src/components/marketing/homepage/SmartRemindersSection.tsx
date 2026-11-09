@@ -24,7 +24,7 @@ export function SmartRemindersSection() {
               <Bell className="h-3.5 w-3.5 text-brand-600" />
               {t('Automated Reminders', 'خودکار یاد دہانیاں')}
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-ink-900">
+            <h2 className="section-title text-ink-900">
               {t('PakFix remembers maintenance for you.', 'پاک فکس آپ کے لیے دیکھ بھال یاد رکھتا ہے۔')}
             </h2>
             <p className="text-sm text-ink-600 mt-1">
@@ -47,7 +47,7 @@ export function SmartRemindersSection() {
             return (
               <div
                 key={r.en}
-                className="bg-surface-muted rounded-2xl p-4 border border-line hover:border-brand-600 transition-all space-y-2"
+                className="bg-surface-muted rounded-2xl p-4 border border-line hover:border-brand-300 transition-all space-y-2"
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-line text-brand-600">
                   <Icon className="h-5 w-5" />

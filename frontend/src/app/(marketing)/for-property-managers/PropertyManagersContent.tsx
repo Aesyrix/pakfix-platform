@@ -19,7 +19,7 @@ export function PropertyManagersContent() {
         <Container>
           <div className="bg-surface-muted rounded-3xl p-8 sm:p-12 border border-line text-center space-y-6">
             <Home className="h-12 w-12 text-brand-600 mx-auto" />
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-ink-900">
+            <h2 className="section-title text-ink-900">
               {t('Streamline Tenant Repairs & Maintenance', 'کرایہ داروں کی مرمت اور دیکھ بھال کو ہموار کریں')}
             </h2>
             <p className="text-sm text-ink-600 max-w-xl mx-auto">

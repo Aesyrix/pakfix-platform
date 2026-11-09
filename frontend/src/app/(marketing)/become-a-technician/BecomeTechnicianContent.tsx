@@ -104,8 +104,8 @@ export function BecomeTechnicianContent() {
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             {/* Left Content */}
             <div className="lg:col-span-6 space-y-6">
-              <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">{t('Why Join PakFix?', 'پاک فکس کیوں جوائن کریں؟')}</span>
-              <h2 className="text-2xl sm:text-4xl font-extrabold text-ink-900">
+              <span className="eyebrow">{t('Why Join PakFix?', 'پاک فکس کیوں جوائن کریں؟')}</span>
+              <h2 className="section-title text-ink-900">
                 {t('Everything you need to succeed as a professional.', 'ایک پروفیشنل کے طور پر کامیابی کے لیے ہر ضروری چیز۔')}
               </h2>
               <p className="text-sm sm:text-base text-ink-600 leading-relaxed">

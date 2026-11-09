@@ -34,8 +34,8 @@ export function CustomerDashboardPreviewSection() {
     <section className="py-16 sm:py-24 bg-surface-muted border-b border-line">
       <Container>
         <div className="max-w-2xl mx-auto text-center space-y-2 mb-12">
-          <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">{t('Customer Portal', 'کسٹمر پورٹل')}</span>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-ink-900">
+          <span className="eyebrow">{t('Customer Portal', 'کسٹمر پورٹل')}</span>
+          <h2 className="section-title text-ink-900">
             {t('Everything about your home in one place.', 'آپ کے گھر کی ہر چیز ایک جگہ۔')}
           </h2>
           <p className="text-sm text-ink-600">

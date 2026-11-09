@@ -20,8 +20,8 @@ export function HomeMaintenanceSection() {
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           {/* Left Text Column */}
           <div className="lg:col-span-6 space-y-4">
-            <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">{t('Property Care', 'پراپرٹی کی دیکھ بھال')}</span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-ink-900">
+            <span className="eyebrow">{t('Property Care', 'پراپرٹی کی دیکھ بھال')}</span>
+            <h2 className="section-title text-ink-900">
               {t('Keep your home maintained,', 'اپنے گھر کو برقرار رکھیں،')}<br />
               <span className="text-brand-600">{t('not just repaired.', 'صرف مرمت نہیں۔')}</span>
             </h2>

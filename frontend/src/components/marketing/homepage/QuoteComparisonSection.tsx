@@ -47,8 +47,8 @@ export function QuoteComparisonSection() {
     <section className="py-16 sm:py-24 bg-white border-b border-line">
       <Container>
         <div className="max-w-2xl mx-auto text-center space-y-2 mb-12">
-          <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">{t('Transparent Pricing', 'شفاف قیمت')}</span>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-ink-900">
+          <span className="eyebrow">{t('Transparent Pricing', 'شفاف قیمت')}</span>
+          <h2 className="section-title text-ink-900">
             {t('Compare before you choose.', 'انتخاب سے پہلے موازنہ کریں۔')}
           </h2>
           <p className="text-sm text-ink-600">
@@ -61,7 +61,7 @@ export function QuoteComparisonSection() {
           {quotes.map((q) => (
             <div
               key={q.pro}
-              className="bg-surface-muted rounded-2xl border border-line hover:border-brand-600 p-6 shadow-2xs hover:shadow-card transition-all flex flex-col justify-between"
+              className="bg-surface-muted rounded-2xl border border-line hover:border-brand-300 p-6 shadow-2xs hover:shadow-card transition-all flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">

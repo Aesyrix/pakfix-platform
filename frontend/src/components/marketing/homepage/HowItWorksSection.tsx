@@ -45,8 +45,8 @@ export function HowItWorksSection() {
     <section className="py-16 sm:py-24 bg-surface-muted border-b border-line">
       <Container>
         <div className="max-w-2xl mx-auto text-center space-y-2 mb-12">
-          <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">{t('Simple Process', 'آسان طریقہ')}</span>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-ink-900">
+          <span className="eyebrow">{t('Simple Process', 'آسان طریقہ')}</span>
+          <h2 className="section-title text-ink-900">
             {t('From problem to fixed.', 'مسئلے سے حل تک۔')}
           </h2>
           <p className="text-sm text-ink-600">
@@ -61,7 +61,7 @@ export function HowItWorksSection() {
             return (
               <div
                 key={step.num}
-                className="bg-white rounded-2xl p-6 border border-line shadow-2xs relative flex flex-col justify-between group hover:border-brand-600 hover:shadow-card transition-all"
+                className="bg-white rounded-2xl p-6 border border-line shadow-2xs relative flex flex-col justify-between group hover:border-brand-300 hover:shadow-card transition-all"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">

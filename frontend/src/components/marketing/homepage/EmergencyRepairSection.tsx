@@ -26,7 +26,7 @@ export function EmergencyRepairSection() {
                 <span>{t('Urgent Emergency Service', 'ہنگامی فوری سروس')}</span>
               </div>
 
-              <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
+              <h2 className="section-title text-white">
                 {t('Need urgent help?', 'فوری مدد کی ضرورت ہے؟')}
               </h2>
 

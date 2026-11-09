@@ -38,22 +38,19 @@ export function TrustStripSection() {
   ];
 
   return (
-    <section className="py-6 border-b border-line bg-surface-muted">
+    <section className="border-b border-line bg-white">
       <Container>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 md:divide-x divide-line">
           {items.map((item) => {
             const Icon = item.icon;
             return (
-              <div
-                key={item.en}
-                className="flex items-start gap-3 p-3 rounded-xl bg-white border border-line shadow-2xs"
-              >
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-100 text-brand-800">
+              <div key={item.en} className="flex items-start gap-3.5 px-2 py-6 md:px-6 first:md:pl-0 last:md:pr-0">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand-50 to-brand-100 text-brand-700 ring-1 ring-brand-200/70">
                   <Icon className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="text-xs font-bold text-ink-900">{t(item.en, item.ur)}</h3>
-                  <p className="text-[11px] text-ink-500 leading-snug mt-0.5">{t(item.den, item.dur)}</p>
+                  <h3 className="text-sm font-semibold text-ink-900">{t(item.en, item.ur)}</h3>
+                  <p className="text-xs text-ink-500 leading-snug mt-1">{t(item.den, item.dur)}</p>
                 </div>
               </div>
             );

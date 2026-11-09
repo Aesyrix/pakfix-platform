@@ -43,7 +43,7 @@ export function ContactContent() {
           <div className="grid lg:grid-cols-12 gap-12">
             {/* Left Info Column */}
             <div className="lg:col-span-5 space-y-6">
-              <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">{t('Direct Channels', 'براہِ راست ذرائع')}</span>
+              <span className="eyebrow">{t('Direct Channels', 'براہِ راست ذرائع')}</span>
               <h2 className="text-2xl font-extrabold text-ink-900">{t('Get in touch with PakFix', 'پاک فکس سے رابطہ کریں')}</h2>
               <p className="text-sm text-ink-600 leading-relaxed">
                 {t('Send us a message and the PakFix team will get back to you.', 'ہمیں پیغام بھیجیں، پاک فکس ٹیم آپ سے رابطہ کرے گی۔')}

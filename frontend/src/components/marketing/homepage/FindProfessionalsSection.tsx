@@ -23,8 +23,8 @@ export function FindProfessionalsSection() {
       <Container>
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-10">
           <div>
-            <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">{t('Verified Professionals', 'تصدیق شدہ پروفیشنلز')}</span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-ink-900 mt-1">
+            <span className="eyebrow">{t('Verified Professionals', 'تصدیق شدہ پروفیشنلز')}</span>
+            <h2 className="section-title text-ink-900 mt-3">
               {t('Professionals you can check before you book.', 'بکنگ سے پہلے جانچنے کے قابل پروفیشنلز۔')}
             </h2>
             <p className="text-sm text-ink-600 mt-1">
@@ -57,7 +57,7 @@ export function FindProfessionalsSection() {
             </div>
             <Link
               href="/become-a-technician"
-              className="bg-white rounded-2xl border border-line hover:border-brand-600 p-5 shadow-2xs transition-all"
+              className="bg-white rounded-2xl border border-line hover:border-brand-300 p-5 shadow-2xs transition-all"
             >
               <UserPlus className="h-6 w-6 text-brand-600" />
               <h3 className="mt-3 text-base font-bold text-ink-900">{t('Are you a professional?', 'کیا آپ پروفیشنل ہیں؟')}</h3>

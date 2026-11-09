@@ -98,8 +98,8 @@ export function QuickBookingFormSection() {
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           {/* Left Text Column */}
           <div className="lg:col-span-5 space-y-4">
-            <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">{t('Fast Booking', 'فوری بکنگ')}</span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-ink-900">
+            <span className="eyebrow">{t('Fast Booking', 'فوری بکنگ')}</span>
+            <h2 className="section-title text-ink-900">
               {t('Know what you need?', 'جانتے ہیں کیا چاہیے؟')}<br />
               <span className="text-brand-600">{t('Book a service.', 'سروس بک کریں۔')}</span>
             </h2>

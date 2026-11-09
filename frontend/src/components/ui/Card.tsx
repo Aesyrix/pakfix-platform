@@ -13,7 +13,7 @@ export function Card({
         'rounded-[var(--radius-card)] border border-line bg-surface',
         'shadow-[var(--shadow-card)] transition-all duration-200',
         interactive &&
-          'hover:-translate-y-0.5 hover:shadow-[var(--shadow-lifted)] hover:border-brand-300 focus-within:shadow-[var(--shadow-lifted)] focus-within:border-brand-300',
+          'hover:-translate-y-1 hover:shadow-[var(--shadow-lifted)] hover:border-brand-200 focus-within:shadow-[var(--shadow-lifted)] focus-within:border-brand-200',
         className
       )}
       {...props}

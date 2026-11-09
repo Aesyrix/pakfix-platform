@@ -29,7 +29,7 @@ export function CostEstimatorSection() {
               <Calculator className="h-4 w-4 text-brand-600" />
               <span>{t('Interactive Repair Tool', 'انٹرایکٹو مرمت ٹول')}</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-ink-900">
+            <h2 className="section-title text-ink-900">
               {t('Get an estimated repair range.', 'مرمت کی تخمینی حد معلوم کریں۔')}
             </h2>
             <p className="text-xs sm:text-sm text-ink-600">

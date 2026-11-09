@@ -97,7 +97,7 @@ export function SiteHeader() {
       <TopUtilityBar />
 
       {/* Main Header Navigation Bar */}
-      <div className="border-b border-line bg-white/95 backdrop-blur-md shadow-xs relative">
+      <div className="border-b border-line/70 bg-white/80 backdrop-blur-xl backdrop-saturate-150 relative">
         <Container size="wide">
           <div className="flex h-[74px] items-center justify-between gap-4">
             {/* LEFT: PakFix Brand Logo */}
@@ -129,7 +129,7 @@ export function SiteHeader() {
                         className={cn(
                           'inline-flex items-center gap-1 rounded-xl px-2.5 py-2 text-[13px] font-semibold whitespace-nowrap transition-all cursor-pointer',
                           megaOpen || pathname.startsWith('/services')
-                            ? 'bg-brand-100 text-brand-700'
+                            ? 'bg-brand-50 text-brand-700'
                             : 'text-ink-600 hover:bg-surface-muted hover:text-ink-900'
                         )}
                         aria-expanded={megaOpen}
@@ -157,7 +157,7 @@ export function SiteHeader() {
                     className={cn(
                       'inline-flex items-center gap-1.5 rounded-xl px-2.5 py-2 text-[13px] font-semibold whitespace-nowrap transition-all',
                       isActive
-                        ? 'bg-brand-100 text-brand-700'
+                        ? 'bg-brand-50 text-brand-700'
                         : link.highlight
                         ? 'text-accent-600 hover:bg-accent-50'
                         : 'text-ink-600 hover:bg-surface-muted hover:text-ink-900'
@@ -191,7 +191,7 @@ export function SiteHeader() {
                   <ButtonLink
                     href="/ai"
                     size="sm"
-                    className="bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl px-5 py-2.5 shadow-xs"
+                    className="px-5"
                   >
                     {t('Get Started', 'شروع کریں')}
                   </ButtonLink>

@@ -82,8 +82,8 @@ export function FaqAccordionSection() {
     <section className="py-16 sm:py-24 bg-surface-muted border-b border-line">
       <Container size="narrow">
         <div className="text-center space-y-2 mb-12">
-          <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">{t('FAQ', 'سوالات')}</span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-ink-900">
+          <span className="eyebrow">{t('FAQ', 'سوالات')}</span>
+          <h2 className="section-title text-ink-900">
             {t('Frequently Asked Questions', 'اکثر پوچھے گئے سوالات')}
           </h2>
           <p className="text-sm text-ink-600">

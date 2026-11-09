@@ -36,6 +36,14 @@ Neutrals carry a faint green tint so greys sit comfortably next to the brand.
 
 ---
 
+### Shared classes (`globals.css`, `@layer components`)
+- `eyebrow` — the small pill label above every section heading.
+- `section-title` — the one size and weight for section headings (use with a colour, e.g. `text-ink-900`).
+- `text-gradient-brand` / `text-gradient-on-dark` — emerald gradient for the emphasised half of a headline.
+- `bg-premium-dark` + `bg-grid-dark` — the deep emerald background used by the hero, the final call to action and, in solid `ink-950`, the footer.
+
+---
+
 ## 3. Core UI Components
 
 ### Buttons (`Button.tsx`)

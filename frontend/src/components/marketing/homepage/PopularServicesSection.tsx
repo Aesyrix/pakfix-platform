@@ -39,8 +39,8 @@ export function PopularServicesSection() {
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-10">
           <div>
-            <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">{t('Services', 'خدمات')}</span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-ink-900 mt-1">
+            <span className="eyebrow">{t('Services', 'خدمات')}</span>
+            <h2 className="section-title text-ink-900 mt-3">
               {t('Whatever needs fixing, start here.', 'جو بھی ٹھیک کرانا ہو، یہاں سے شروع کریں۔')}
             </h2>
             <p className="text-sm text-ink-600 mt-1">
@@ -66,7 +66,7 @@ export function PopularServicesSection() {
               <Link
                 key={s.en}
                 href={s.href}
-                className="group relative bg-surface-muted hover:bg-white rounded-2xl border border-line hover:border-brand-600 p-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-card flex flex-col justify-between h-full"
+                className="group relative bg-surface-muted hover:bg-white rounded-2xl border border-line hover:border-brand-300 p-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-card flex flex-col justify-between h-full"
               >
                 <div>
                   <div className="relative mb-4 h-24 w-full overflow-hidden rounded-xl bg-brand-100">

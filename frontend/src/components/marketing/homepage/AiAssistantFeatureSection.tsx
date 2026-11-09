@@ -58,14 +58,14 @@ export function AiAssistantFeatureSection() {
   const causes = isUr ? current.causesUr : current.causes;
 
   return (
-    <section className="py-16 sm:py-24 bg-brand-100 border-b border-line">
+    <section className="py-16 sm:py-24 bg-gradient-to-b from-brand-50 via-white to-surface-muted border-b border-line">
       <Container>
         <div className="max-w-3xl mx-auto text-center space-y-3 mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white text-brand-700 text-xs font-bold shadow-2xs">
             <Sparkles className="h-3.5 w-3.5 text-brand-600" />
             {t('Smart AI Repair Guidance', 'سمارٹ اے آئی مرمت رہنمائی')}
           </div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-ink-900">
+          <h2 className="section-title text-ink-900">
             {t("Not sure what's wrong?", 'سمجھ نہیں آ رہا کیا مسئلہ ہے؟')}<br />
             <span className="text-brand-600">{t('Ask PakFix AI.', 'پاک فکس اے آئی سے پوچھیں۔')}</span>
           </h2>

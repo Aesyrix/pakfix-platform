@@ -11,15 +11,15 @@ export function FinalCtaSection() {
   const [text, setText] = useState('');
 
   return (
-    <section className="py-20 sm:py-28 bg-ink-900 text-white relative overflow-hidden border-b border-ink-800">
+    <section className="py-20 sm:py-28 bg-premium-dark text-white relative isolate overflow-hidden">
       <Container size="narrow">
         <div className="text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-600/20 border border-brand-600/30 text-brand-500 text-xs font-bold">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/15 text-brand-on-dark text-xs font-semibold">
             <Sparkles className="h-4 w-4" />
             <span>{t('Ready to Fix It?', 'ٹھیک کرنے کے لیے تیار؟')}</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+          <h2 className="section-title text-white sm:text-5xl">
             {t('Something needs fixing?', 'کچھ ٹھیک کرنے کی ضرورت ہے؟')}
           </h2>
 

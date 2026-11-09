@@ -24,8 +24,8 @@ export function CitiesSection() {
     <section className="py-16 sm:py-24 bg-white border-b border-line">
       <Container>
         <div className="max-w-2xl mx-auto text-center space-y-2 mb-10">
-          <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">{t('Our Cities', 'ہمارے شہر')}</span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-ink-900">
+          <span className="eyebrow">{t('Our Cities', 'ہمارے شہر')}</span>
+          <h2 className="section-title text-ink-900">
             {t('Starting in Islamabad and Rawalpindi.', 'اسلام آباد اور راولپنڈی سے آغاز۔')}
           </h2>
           <p className="text-sm text-ink-600">

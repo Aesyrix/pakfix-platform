@@ -16,10 +16,10 @@ export function SiteFooter({ popularCategories }: SiteFooterProps) {
   const t = useT();
 
   return (
-    <footer className="bg-ink-900 text-white border-t border-ink-800 pt-16 pb-12">
+    <footer className="bg-ink-950 text-white border-t border-white/10 pt-16 pb-12">
       <Container>
         {/* Main 6-Column Links Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 pb-12 border-b border-ink-800">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 pb-12 border-b border-white/10">
           {/* Column 1: PakFix Brand & Motto */}
           <div className="col-span-2 md:col-span-3 lg:col-span-2 space-y-4">
             <PakFixLogo isDarkBackground showWordmark />
@@ -41,7 +41,7 @@ export function SiteFooter({ popularCategories }: SiteFooterProps) {
 
           {/* Column 2: Popular Services */}
           <div className="space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-brand-500">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.08em] text-white">
               {t('Services', 'خدمات')}
             </h3>
             <ul className="space-y-2 text-xs text-ink-400">
@@ -68,7 +68,7 @@ export function SiteFooter({ popularCategories }: SiteFooterProps) {
 
           {/* Column 3: Platform Features */}
           <div className="space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-brand-500">PakFix</h3>
+            <h3 className="text-xs font-semibold uppercase tracking-[0.08em] text-white">PakFix</h3>
             <ul className="space-y-2 text-xs text-ink-400">
               <li><Link href="/ai" className="hover:text-white transition-colors">{t('AI Assistant', 'اے آئی معاون')}</Link></li>
               <li><Link href="/how-it-works" className="hover:text-white transition-colors">{t('How It Works', 'یہ کیسے کام کرتا ہے')}</Link></li>
@@ -80,7 +80,7 @@ export function SiteFooter({ popularCategories }: SiteFooterProps) {
 
           {/* Column 4: For Professionals */}
           <div className="space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-brand-500">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.08em] text-white">
               {t('Professionals', 'پروفیشنلز')}
             </h3>
             <ul className="space-y-2 text-xs text-ink-400">
@@ -93,7 +93,7 @@ export function SiteFooter({ popularCategories }: SiteFooterProps) {
 
           {/* Column 5: Support & Legal */}
           <div className="space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-brand-500">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.08em] text-white">
               {t('Support', 'مدد')}
             </h3>
             <ul className="space-y-2 text-xs text-ink-400">

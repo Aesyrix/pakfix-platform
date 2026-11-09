@@ -8,7 +8,7 @@ import { useT } from '@/components/i18n/LocaleProvider';
 export function MobilePwaSection() {
   const t = useT();
   return (
-    <section className="py-16 sm:py-24 bg-brand-100 border-b border-line">
+    <section className="py-16 sm:py-24 bg-gradient-to-br from-brand-50 via-white to-accent-50 border-b border-line">
       <Container>
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           {/* Left Column */}
@@ -18,7 +18,7 @@ export function MobilePwaSection() {
               {t('PWA & Mobile Ready', 'پی ڈبلیو اے اور موبائل کے لیے تیار')}
             </div>
 
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-ink-900">
+            <h2 className="section-title text-ink-900">
               {t('PakFix goes wherever your home needs help.', 'پاک فکس وہاں جاتا ہے جہاں آپ کے گھر کو مدد کی ضرورت ہو۔')}
             </h2>
 

@@ -38,8 +38,8 @@ export function CustomerReviewsSection() {
     <section className="py-16 sm:py-24 bg-surface-muted border-b border-line">
       <Container>
         <div className="max-w-2xl mx-auto text-center space-y-2 mb-12">
-          <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">{t('Customer Trust', 'گاہکوں کا اعتماد')}</span>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-ink-900">
+          <span className="eyebrow">{t('Customer Trust', 'گاہکوں کا اعتماد')}</span>
+          <h2 className="section-title text-ink-900">
             {t('Homeowners deserve a simpler repair experience.', 'گھر مالکان آسان مرمت کے تجربے کے حقدار ہیں۔')}
           </h2>
           <p className="text-sm text-ink-600">

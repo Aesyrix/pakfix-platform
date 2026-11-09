@@ -51,8 +51,8 @@ export function HomeGuidesSection() {
       <Container>
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-10">
           <div>
-            <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">{t('Home Guides', 'گھریلو رہنمائی')}</span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-ink-900 mt-1">
+            <span className="eyebrow">{t('Home Guides', 'گھریلو رہنمائی')}</span>
+            <h2 className="section-title text-ink-900 mt-3">
               {t('Help for your home.', 'آپ کے گھر کے لیے مدد۔')}
             </h2>
             <p className="text-sm text-ink-600 mt-1">
@@ -74,7 +74,7 @@ export function HomeGuidesSection() {
             <Link
               key={art.en}
               href={art.href}
-              className="bg-surface-muted rounded-2xl border border-line hover:border-brand-600 p-5 shadow-2xs hover:shadow-card transition-all flex flex-col justify-between group"
+              className="bg-surface-muted rounded-2xl border border-line hover:border-brand-300 p-5 shadow-2xs hover:shadow-card transition-all flex flex-col justify-between group"
             >
               <div>
                 <div className="flex items-center justify-between text-[11px] text-ink-500 mb-3">

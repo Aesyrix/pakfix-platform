@@ -75,7 +75,7 @@ export function HomeMaintenanceContent() {
           </div>
 
           <div className="bg-ink-900 text-white rounded-3xl p-8 sm:p-12 border border-ink-800 text-center space-y-6">
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
+            <h2 className="section-title text-white">
               {t('Ready to organize your home care?', 'اپنے گھر کی دیکھ بھال منظم کرنے کے لیے تیار ہیں؟')}
             </h2>
             <p className="text-sm text-ink-300 max-w-xl mx-auto">

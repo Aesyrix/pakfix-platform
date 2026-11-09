@@ -59,11 +59,17 @@ export function PageHeader({
   size?: 'default' | 'narrow';
 }) {
   return (
-    <section className="border-b border-line bg-gradient-to-b from-brand-wash to-background">
-      <Container size={size} className="py-10 sm:py-14">
+    <section className="relative isolate overflow-hidden border-b border-line bg-gradient-to-b from-brand-50 to-background">
+      {/* Soft glow and dot grid; purely decorative. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute -top-32 -left-24 h-80 w-80 rounded-full bg-brand-200/50 blur-3xl" />
+        <div className="absolute -top-24 right-0 h-72 w-72 rounded-full bg-accent-100/60 blur-3xl" />
+        <div className="absolute inset-0 bg-[radial-gradient(var(--color-ink-200)_1px,transparent_1px)] [background-size:22px_22px] [mask-image:linear-gradient(to_bottom,black,transparent_80%)]" />
+      </div>
+      <Container size={size} className="py-12 sm:py-20">
         {breadcrumbs ? <Breadcrumbs items={breadcrumbs} className="mb-5" /> : null}
         {eyebrow ? <div className="mb-3">{eyebrow}</div> : null}
-        <h1 className="text-balance text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">{title}</h1>
+        <h1 className="text-balance text-4xl font-bold leading-[1.08] tracking-[-0.022em] text-ink-900 sm:text-5xl">{title}</h1>
         {subtitle ? <p className="mt-3 max-w-2xl text-pretty text-base text-ink-600 sm:text-lg">{subtitle}</p> : null}
         {children ? <div className="mt-6">{children}</div> : null}
       </Container>
@@ -92,14 +98,14 @@ export function Section({
     <section
       id={id}
       aria-labelledby={title ? headingId : undefined}
-      className={cn('py-12 sm:py-16', muted && 'border-y border-line bg-surface')}
+      className={cn('py-14 sm:py-20', muted && 'border-y border-line bg-surface-muted')}
     >
       <Container>
         {title || action ? (
           <div className="mb-7 flex flex-wrap items-end justify-between gap-4">
             <div>
               {title ? (
-                <h2 id={headingId} className="text-2xl font-bold tracking-tight sm:text-3xl">
+                <h2 id={headingId} className="section-title text-ink-900">
                   {title}
                 </h2>
               ) : null}

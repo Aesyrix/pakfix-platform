@@ -19,7 +19,7 @@ export function ServiceCompaniesContent() {
         <Container>
           <div className="bg-ink-900 text-white rounded-3xl p-8 sm:p-12 border border-ink-800 text-center space-y-6">
             <Building2 className="h-12 w-12 text-brand-500 mx-auto" />
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
+            <h2 className="section-title text-white">
               {t('Scale Your Home Service Enterprise', 'اپنا گھریلو سروس انٹرپرائز بڑھائیں')}
             </h2>
             <p className="text-sm text-ink-300 max-w-xl mx-auto">
