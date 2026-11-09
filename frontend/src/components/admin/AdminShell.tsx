@@ -94,7 +94,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
               <Link href="/" aria-label={t('PakFix home', 'پاک فکس ہوم')}>
                 <PakFixLogo className="h-8" />
               </Link>
-              <Badge tone="neutral">{t('Admin', 'ایڈمن')}</Badge>
+              <Badge tone="brand">{t('Admin', 'ایڈمن')}</Badge>
             </div>
 
             <div className="flex items-center gap-3">
@@ -114,7 +114,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
       </header>
 
       <Container size="wide" className="flex flex-col gap-6 py-6 lg:flex-row">
-        <nav aria-label={t('Admin sections', 'ایڈمن کے حصے')} className="lg:w-56 lg:shrink-0">
+        <nav aria-label={t('Admin sections', 'ایڈمن کے حصے')} className="lg:sticky lg:top-24 lg:w-60 lg:shrink-0 lg:self-start lg:rounded-2xl lg:border lg:border-line lg:bg-surface/80 lg:p-2 lg:shadow-card lg:backdrop-blur-xl">
           <ul className="flex gap-1 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible lg:pb-0">
             {visible.map((link) => {
               const active = link.exact ? pathname === link.href : pathname.startsWith(link.href);
