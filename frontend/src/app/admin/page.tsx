@@ -141,7 +141,7 @@ export default function AdminOverviewPage() {
 
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-xl">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-3 py-1 text-xs font-semibold text-brand-on-dark backdrop-blur-sm">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-surface/[0.06] px-3 py-1 text-xs font-semibold text-brand-on-dark backdrop-blur-sm">
               {formatDate(new Date().toISOString(), { dateStyle: 'full' })}
             </span>
             <h1 className="mt-4 text-3xl font-bold tracking-[-0.02em] sm:text-4xl">
@@ -167,8 +167,8 @@ export default function AdminOverviewPage() {
                     className={cn(
                       'inline-flex min-h-11 items-center gap-2 rounded-xl px-4 text-sm font-semibold transition-colors',
                       index === 0
-                        ? 'bg-white text-ink-900 shadow-md hover:bg-brand-50'
-                        : 'border border-white/15 bg-white/[0.06] text-white backdrop-blur-sm hover:bg-white/[0.12]'
+                        ? 'bg-surface text-ink-900 shadow-md hover:bg-brand-50'
+                        : 'border border-white/15 bg-surface/[0.06] text-white backdrop-blur-sm hover:bg-surface/[0.12]'
                     )}
                   >
                     <Icon className="h-4 w-4" aria-hidden="true" />
@@ -220,7 +220,7 @@ export default function AdminOverviewPage() {
           </ul>
         ) : (
           <div className="flex items-center gap-3 rounded-2xl border border-brand-200/70 bg-gradient-to-r from-brand-50 to-surface p-4 shadow-card">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-brand-600 ring-1 ring-inset ring-brand-200">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface text-brand-600 ring-1 ring-inset ring-brand-200">
               <CheckCircle2 className="h-5 w-5" aria-hidden="true" />
             </span>
             <div>
@@ -299,7 +299,7 @@ function TileGroup({ id, title, tiles, tone }: { id: string; title: string; tile
                   <Icon className="h-5 w-5" aria-hidden="true" />
                 </span>
                 {tile.href ? (
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full border border-line text-ink-400 transition-all group-hover:border-brand-600 group-hover:bg-brand-600 group-hover:text-white">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full border border-line text-ink-400 transition-all group-hover:border-brand-600 group-hover:bg-brand-solid group-hover:text-white">
                     <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                   </span>
                 ) : null}

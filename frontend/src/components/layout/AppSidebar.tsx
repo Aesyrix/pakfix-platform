@@ -7,6 +7,7 @@ import { PakFixLogo } from '@/components/layout/PakFixLogo';
 import { useToast } from '@/components/ui/Toast';
 import { LocaleToggle } from '@/components/i18n/LocaleToggle';
 import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher';
+import { ModeToggle } from '@/components/theme/ModeToggle';
 import { useT } from '@/components/i18n/LocaleProvider';
 import { useAuthStore } from '@/stores/auth';
 import { cn } from '@/lib/utils/cn';
@@ -85,7 +86,7 @@ export function AppSidebar({
 
       <div className="m-3 rounded-2xl border border-line bg-surface-muted/70 p-2">
         <div className="flex items-center gap-3 px-2 py-2">
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-brand-700 text-sm font-semibold text-white ring-2 ring-white shadow-sm">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-brand-700 text-sm font-semibold text-white ring-2 ring-surface shadow-sm">
             {user?.name?.charAt(0).toUpperCase() ?? '?'}
           </span>
           <div className="min-w-0 flex-1">
@@ -105,7 +106,10 @@ export function AppSidebar({
 
         <div className="mt-1 flex items-center justify-between px-1">
           <ThemeSwitcher placement="above" align="start" />
-          <LocaleToggle />
+          <div className="flex items-center">
+            <ModeToggle />
+            <LocaleToggle />
+          </div>
         </div>
       </div>
     </aside>

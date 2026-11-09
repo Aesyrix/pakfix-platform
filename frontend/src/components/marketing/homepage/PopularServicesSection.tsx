@@ -34,7 +34,7 @@ export function PopularServicesSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-white border-b border-line">
+    <section className="py-16 sm:py-24 bg-surface border-b border-line">
       <Container>
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-10">
@@ -66,7 +66,7 @@ export function PopularServicesSection() {
               <Link
                 key={s.en}
                 href={s.href}
-                className="group relative bg-surface-muted hover:bg-white rounded-2xl border border-line hover:border-brand-300 p-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-card flex flex-col justify-between h-full"
+                className="group relative bg-surface-muted hover:bg-surface rounded-2xl border border-line hover:border-brand-300 p-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-card flex flex-col justify-between h-full"
               >
                 <div>
                   <div className="relative mb-4 h-24 w-full overflow-hidden rounded-xl bg-brand-100">
@@ -78,7 +78,7 @@ export function PopularServicesSection() {
                         className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                     ) : null}
-                    <span className="absolute bottom-2 start-2 flex h-9 w-9 items-center justify-center rounded-lg border border-line bg-white/95 text-ink-900 shadow-sm backdrop-blur-xs transition-colors group-hover:text-brand-600">
+                    <span className="absolute bottom-2 start-2 flex h-9 w-9 items-center justify-center rounded-lg border border-line bg-surface/95 text-ink-900 shadow-sm backdrop-blur-xs transition-colors group-hover:text-brand-600">
                       <Icon className="h-4 w-4" />
                     </span>
                   </div>

@@ -57,14 +57,14 @@ export function HomeMaintenanceContent() {
         subtitle={t('Prevent expensive home emergency breakdowns with PakFix structured maintenance tracking, asset history, and seasonal reminders.', 'پاک فکس کی منظم مینٹیننس ٹریکنگ، اثاثہ تاریخ اور موسمی یاد دہانیوں کے ساتھ مہنگی ہنگامی خرابیوں سے بچیں۔')}
       />
 
-      <section className="py-12 sm:py-20 bg-white">
+      <section className="py-12 sm:py-20 bg-surface">
         <Container>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
             {features.map((f) => {
               const Icon = f.icon;
               return (
                 <div key={f.title.en} className="bg-surface-muted rounded-2xl p-6 border border-line space-y-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white border border-line text-brand-600">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-surface border border-line text-brand-600">
                     <Icon className="h-5 w-5" />
                   </div>
                   <h3 className="text-base font-bold text-ink-900">{t(f.title.en, f.title.ur)}</h3>
@@ -84,7 +84,7 @@ export function HomeMaintenanceContent() {
             <div>
               <Link
                 href="/login"
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold shadow-md transition-all"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-brand-solid hover:bg-brand-solid-hover text-white text-sm font-bold shadow-md transition-all"
               >
                 <span>{t('Open Customer Dashboard', 'کسٹمر ڈیش بورڈ کھولیں')}</span>
                 <ArrowRight className="h-4 w-4 rtl:rotate-180" />

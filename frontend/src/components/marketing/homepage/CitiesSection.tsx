@@ -21,7 +21,7 @@ export function CitiesSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-white border-b border-line">
+    <section className="py-16 sm:py-24 bg-surface border-b border-line">
       <Container>
         <div className="max-w-2xl mx-auto text-center space-y-2 mb-10">
           <span className="eyebrow">{t('Our Cities', 'ہمارے شہر')}</span>

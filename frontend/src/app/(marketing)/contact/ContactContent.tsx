@@ -38,7 +38,7 @@ export function ContactContent() {
         subtitle={t('Have a question about a booking, service price, or AI diagnosis? Reach out to our team anytime.', 'بکنگ، سروس قیمت یا اے آئی تشخیص کے بارے میں کوئی سوال ہے؟ کسی بھی وقت ہماری ٹیم سے رابطہ کریں۔')}
       />
 
-      <section className="py-12 sm:py-20 bg-white">
+      <section className="py-12 sm:py-20 bg-surface">
         <Container>
           <div className="grid lg:grid-cols-12 gap-12">
             {/* Left Info Column */}
@@ -82,7 +82,7 @@ export function ContactContent() {
                       required
                       minLength={2}
                       placeholder={t('e.g. Usman Malik', 'مثلاً عثمان ملک')}
-                      className="w-full rounded-xl border border-line bg-white p-3 text-xs text-ink-900 outline-none focus:border-brand-600"
+                      className="w-full rounded-xl border border-line bg-surface p-3 text-xs text-ink-900 outline-none focus:border-brand-600"
                     />
                   </div>
                   <div>
@@ -92,7 +92,7 @@ export function ContactContent() {
                       type="tel"
                       required
                       placeholder="0300 1234567"
-                      className="w-full rounded-xl border border-line bg-white p-3 text-xs text-ink-900 outline-none focus:border-brand-600"
+                      className="w-full rounded-xl border border-line bg-surface p-3 text-xs text-ink-900 outline-none focus:border-brand-600"
                     />
                   </div>
                 </div>
@@ -104,13 +104,13 @@ export function ContactContent() {
                     type="email"
                     required
                     placeholder="usman@example.com"
-                    className="w-full rounded-xl border border-line bg-white p-3 text-xs text-ink-900 outline-none focus:border-brand-600"
+                    className="w-full rounded-xl border border-line bg-surface p-3 text-xs text-ink-900 outline-none focus:border-brand-600"
                   />
                 </div>
 
                 <div>
                   <label className="block text-xs font-bold text-ink-900 mb-1">{t('Subject', 'موضوع')}</label>
-                  <select name="subject" className="w-full rounded-xl border border-line bg-white p-3 text-xs text-ink-900 outline-none focus:border-brand-600">
+                  <select name="subject" className="w-full rounded-xl border border-line bg-surface p-3 text-xs text-ink-900 outline-none focus:border-brand-600">
                     <option value="Booking Question">{t('Booking & Service Inquiry', 'بکنگ اور سروس استفسار')}</option>
                     <option value="AI Diagnosis Help">{t('AI Diagnosis Assistance', 'اے آئی تشخیص معاونت')}</option>
                     <option value="Pro Onboarding">{t('Technician Onboarding', 'ٹیکنیشن آن بورڈنگ')}</option>
@@ -126,14 +126,14 @@ export function ContactContent() {
                     required
                     minLength={10}
                     placeholder={t('How can we help you?', 'ہم آپ کی کیسے مدد کر سکتے ہیں؟')}
-                    className="w-full rounded-xl border border-line bg-white p-3 text-xs text-ink-900 outline-none focus:border-brand-600 resize-none"
+                    className="w-full rounded-xl border border-line bg-surface p-3 text-xs text-ink-900 outline-none focus:border-brand-600 resize-none"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={lead.sending}
-                  className="w-full py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-3.5 rounded-xl bg-brand-solid hover:bg-brand-solid-hover text-white text-xs font-bold shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Send className="h-4 w-4" />
                   <span>{t('Send Support Message', 'سپورٹ پیغام بھیجیں')}</span>

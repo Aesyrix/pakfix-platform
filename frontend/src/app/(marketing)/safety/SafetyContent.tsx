@@ -46,7 +46,7 @@ export function SafetyContent() {
         subtitle={t("Your family's safety and peace of mind are our highest priorities.", 'آپ کے خاندان کی حفاظت اور اطمینان ہماری سب سے بڑی ترجیح ہے۔')}
       />
 
-      <section className="py-12 sm:py-20 bg-white">
+      <section className="py-12 sm:py-20 bg-surface">
         <Container>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {protocols.map((p) => (

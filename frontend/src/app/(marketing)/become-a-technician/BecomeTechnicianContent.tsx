@@ -99,7 +99,7 @@ export function BecomeTechnicianContent() {
         subtitle={t('Are you a skilled plumber, electrician, AC mechanic or appliance technician? Register with PakFix to connect directly with paying customers across Pakistan.', 'کیا آپ ہنرمند پلمبر، الیکٹریشن، اے سی مکینک یا آلات کے ٹیکنیشن ہیں؟ پاک فکس کے ساتھ رجسٹر ہوں اور پورے پاکستان میں ادائیگی کرنے والے گاہکوں سے براہِ راست جڑیں۔')}
       />
 
-      <section className="py-12 sm:py-20 bg-white">
+      <section className="py-12 sm:py-20 bg-surface">
         <Container>
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             {/* Left Content */}
@@ -198,7 +198,7 @@ export function BecomeTechnicianContent() {
                   <button
                     type="submit"
                     disabled={lead.sending}
-                    className="w-full py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-md transition-colors cursor-pointer"
+                    className="w-full py-3.5 rounded-xl bg-brand-solid hover:bg-brand-solid-hover text-white text-xs font-bold shadow-md transition-colors cursor-pointer"
                   >
                     {t('Submit Registration', 'رجسٹریشن جمع کروائیں')} &rarr;
                   </button>

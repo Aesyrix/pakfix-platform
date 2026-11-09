@@ -44,7 +44,7 @@ export function QuoteComparisonSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-white border-b border-line">
+    <section className="py-16 sm:py-24 bg-surface border-b border-line">
       <Container>
         <div className="max-w-2xl mx-auto text-center space-y-2 mb-12">
           <span className="eyebrow">{t('Transparent Pricing', 'شفاف قیمت')}</span>
@@ -101,7 +101,7 @@ export function QuoteComparisonSection() {
 
               <Link
                 href="#quick-booking"
-                className="mt-6 w-full py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold text-center transition-colors block shadow-2xs"
+                className="mt-6 w-full py-2.5 rounded-xl bg-brand-solid hover:bg-brand-solid-hover text-white text-xs font-bold text-center transition-colors block shadow-2xs"
               >
                 {t('Request a Professional', 'پروفیشنل کی درخواست کریں')}
               </Link>

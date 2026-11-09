@@ -49,7 +49,7 @@ export function Initials({ name, className }: { name: string; className?: string
     <span
       aria-hidden="true"
       className={cn(
-        'flex shrink-0 items-center justify-center rounded-full bg-brand-600 font-semibold text-white',
+        'flex shrink-0 items-center justify-center rounded-full bg-brand-solid font-semibold text-white',
         className
       )}
     >

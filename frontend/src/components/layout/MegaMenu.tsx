@@ -91,14 +91,14 @@ export function MegaMenu({ onClose }: MegaMenuProps) {
   ];
 
   return (
-    <div className="absolute top-full left-0 w-full bg-white border-b border-line shadow-2xl z-50">
+    <div className="absolute top-full left-0 w-full bg-surface border-b border-line shadow-2xl z-50">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {categories.map((col) => (
             <div key={col.en} className="space-y-4">
               <div>
                 <h3 className="text-sm font-bold text-ink-900 tracking-wider uppercase flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-brand-600" />
+                  <span className="h-2 w-2 rounded-full bg-brand-solid" />
                   {t(col.en, col.ur)}
                 </h3>
                 <p className="text-xs text-ink-500 mt-0.5">{t(col.descriptionEn, col.descriptionUr)}</p>
@@ -159,7 +159,7 @@ export function MegaMenu({ onClose }: MegaMenuProps) {
             <Link
               href="/services"
               onClick={onClose}
-              className="inline-flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-lg bg-brand-600 text-white hover:bg-brand-700 transition-colors shadow-xs"
+              className="inline-flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-lg bg-brand-solid text-white hover:bg-brand-solid-hover transition-colors shadow-xs"
             >
               <span>{t('View All Services', 'تمام خدمات دیکھیں')}</span>
               <ArrowRight className="h-3.5 w-3.5" />

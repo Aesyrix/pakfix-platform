@@ -30,19 +30,19 @@ export function HomeMaintenanceSection() {
             </p>
 
             <div className="grid sm:grid-cols-2 gap-3 pt-2">
-              <div className="bg-white p-3.5 rounded-xl border border-line flex items-center gap-2.5">
+              <div className="bg-surface p-3.5 rounded-xl border border-line flex items-center gap-2.5">
                 <Home className="h-5 w-5 text-brand-600" />
                 <span className="text-xs font-bold text-ink-900">{t('Add Your Property', 'اپنی پراپرٹی شامل کریں')}</span>
               </div>
-              <div className="bg-white p-3.5 rounded-xl border border-line flex items-center gap-2.5">
+              <div className="bg-surface p-3.5 rounded-xl border border-line flex items-center gap-2.5">
                 <History className="h-5 w-5 text-brand-600" />
                 <span className="text-xs font-bold text-ink-900">{t('Save Repair History', 'مرمت کی تاریخ محفوظ کریں')}</span>
               </div>
-              <div className="bg-white p-3.5 rounded-xl border border-line flex items-center gap-2.5">
+              <div className="bg-surface p-3.5 rounded-xl border border-line flex items-center gap-2.5">
                 <Calendar className="h-5 w-5 text-brand-600" />
                 <span className="text-xs font-bold text-ink-900">{t('Schedule Maintenance', 'دیکھ بھال شیڈول کریں')}</span>
               </div>
-              <div className="bg-white p-3.5 rounded-xl border border-line flex items-center gap-2.5">
+              <div className="bg-surface p-3.5 rounded-xl border border-line flex items-center gap-2.5">
                 <Bell className="h-5 w-5 text-brand-600" />
                 <span className="text-xs font-bold text-ink-900">{t('Get Smart Reminders', 'سمارٹ یاد دہانیاں حاصل کریں')}</span>
               </div>
@@ -51,7 +51,7 @@ export function HomeMaintenanceSection() {
             <div className="pt-2">
               <Link
                 href="/home-maintenance"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-xs transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-solid hover:bg-brand-solid-hover text-white text-xs font-bold shadow-xs transition-colors"
               >
                 <span>{t('Add Your Home Assets', 'اپنے گھریلو آلات شامل کریں')}</span>
                 <ArrowRight className="h-4 w-4" />
@@ -60,7 +60,7 @@ export function HomeMaintenanceSection() {
           </div>
 
           {/* Right Dashboard Assets Preview */}
-          <div className="lg:col-span-6 bg-white rounded-2xl border border-line p-6 shadow-card space-y-4">
+          <div className="lg:col-span-6 bg-surface rounded-2xl border border-line p-6 shadow-card space-y-4">
             <div className="flex items-center justify-between border-b border-line pb-3">
               <div className="flex items-center gap-2">
                 <Home className="h-4 w-4 text-brand-600" />

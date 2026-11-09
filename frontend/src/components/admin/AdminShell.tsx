@@ -26,6 +26,7 @@ import { PakFixLogo } from '@/components/layout/PakFixLogo';
 import { useToast } from '@/components/ui/Toast';
 import { LocaleToggle } from '@/components/i18n/LocaleToggle';
 import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher';
+import { ModeToggle } from '@/components/theme/ModeToggle';
 import { useT } from '@/components/i18n/LocaleProvider';
 import { adminApi } from '@/lib/api/endpoints';
 import { useAuthStore } from '@/stores/auth';
@@ -88,7 +89,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-dvh app-canvas">
-      <header className="sticky top-0 z-30 border-b border-line/70 bg-white/80 backdrop-blur-xl backdrop-saturate-150">
+      <header className="sticky top-0 z-30 border-b border-line/70 bg-surface/80 backdrop-blur-xl backdrop-saturate-150">
         <Container size="wide">
           <div className="flex h-16 items-center justify-between gap-4">
             <div className="flex items-center gap-3">
@@ -101,6 +102,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
             <div className="flex items-center gap-3">
               <span className="hidden text-sm text-ink-600 sm:inline">{user?.name}</span>
               <ThemeSwitcher />
+              <ModeToggle />
               <LocaleToggle />
               <button
                 type="button"

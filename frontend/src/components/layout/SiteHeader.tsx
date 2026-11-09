@@ -11,6 +11,7 @@ import { TopUtilityBar } from '@/components/layout/TopUtilityBar';
 import { MegaMenu } from '@/components/layout/MegaMenu';
 import { LocaleToggle } from '@/components/i18n/LocaleToggle';
 import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher';
+import { ModeToggle } from '@/components/theme/ModeToggle';
 import { useAuthStore } from '@/stores/auth';
 import { cn } from '@/lib/utils/cn';
 
@@ -98,7 +99,7 @@ export function SiteHeader() {
       <TopUtilityBar />
 
       {/* Main Header Navigation Bar */}
-      <div className="border-b border-line/70 bg-white/80 backdrop-blur-xl backdrop-saturate-150 relative">
+      <div className="border-b border-line/70 bg-surface/80 backdrop-blur-xl backdrop-saturate-150 relative">
         <Container size="wide">
           <div className="flex h-[74px] items-center justify-between gap-4">
             {/* LEFT: PakFix Brand Logo */}
@@ -172,7 +173,8 @@ export function SiteHeader() {
             </nav>
 
             {/* RIGHT CTAs (Desktop) */}
-            <div className="hidden xl:flex items-center gap-3 shrink-0">
+            <div className="hidden xl:flex items-center gap-2 shrink-0">
+              <ModeToggle />
               {initialising ? (
                 <div className="skeleton h-10 w-36" />
               ) : user ? (
@@ -206,12 +208,13 @@ export function SiteHeader() {
                 <ButtonLink
                   href="/ai"
                   size="sm"
-                  className="bg-brand-600 text-white px-3.5 py-1.5 text-xs font-semibold rounded-lg"
+                  className="bg-brand-solid text-white px-3.5 py-1.5 text-xs font-semibold rounded-lg"
                 >
                   {t('Get Started', 'شروع کریں')}
                 </ButtonLink>
               )}
 
+              <ModeToggle />
               <LocaleToggle className="sm:hidden" />
 
               <button
@@ -227,7 +230,7 @@ export function SiteHeader() {
 
         {/* MOBILE NAVIGATION DRAWER */}
         {mobileOpen ? (
-          <div className="border-t border-line bg-white shadow-2xl xl:hidden max-h-[calc(100dvh-74px)] overflow-y-auto">
+          <div className="border-t border-line bg-surface shadow-2xl xl:hidden max-h-[calc(100dvh-74px)] overflow-y-auto">
             <Container className="py-4 space-y-1">
               {NAV_LINKS.map((link) => (
                 <Link
@@ -264,7 +267,7 @@ export function SiteHeader() {
                     <ButtonLink
                       href="/ai"
                       block
-                      className="bg-brand-600 text-white font-bold py-3 text-center rounded-xl"
+                      className="bg-brand-solid text-white font-bold py-3 text-center rounded-xl"
                     >
                       {t('Diagnose My Problem', 'میرا مسئلہ تشخیص کریں')}
                     </ButtonLink>

@@ -55,13 +55,13 @@ export function HeroSection() {
           {/* LEFT SIDE: Hero Content & AI Input Box */}
           <div className="lg:col-span-7 space-y-6">
             {/* Trust Pill */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/15 text-brand-on-dark text-xs font-semibold backdrop-blur-sm">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface/[0.06] border border-white/15 text-brand-on-dark text-xs font-semibold backdrop-blur-sm">
               <Sparkles className="h-4 w-4" />
               <span>{t('AI-powered home repair assistance', 'اے آئی سے چلنے والی گھریلو مرمت معاونت')}</span>
             </div>
 
             {/* Main Heading */}
-            <h1 className="text-4xl sm:text-5xl lg:text-[3.6rem] font-bold text-white tracking-[-0.025em] leading-[1.06]">
+            <h1 className="text-4xl sm:text-5xl lg:text-[3.3rem] font-bold text-white tracking-[-0.025em] leading-[1.06]">
               {t('Show the Problem.', 'مسئلہ دکھائیں۔')}<br />
               <span className="text-gradient-on-dark">{t('PakFix Helps You Fix It.', 'پاک فکس اسے ٹھیک کرنے میں مدد کرتا ہے۔')}</span>
             </h1>
@@ -75,7 +75,7 @@ export function HeroSection() {
             </p>
 
             {/* MAIN AI PROBLEM CARD */}
-            <div className="bg-white text-ink-900 rounded-2xl p-5 sm:p-6 shadow-2xl ring-1 ring-white/20 space-y-4 relative">
+            <div className="bg-surface text-ink-900 rounded-2xl p-5 sm:p-6 shadow-2xl ring-1 ring-surface/20 space-y-4 relative">
               <div className="flex items-center justify-between">
                 <label htmlFor="ai-problem-input" className="text-sm font-bold text-ink-900 flex items-center gap-2">
                   <Sparkles className="h-4 w-4 text-brand-600" />
@@ -145,7 +145,7 @@ export function HeroSection() {
                 {/* Primary CTA Button */}
                 <Link
                   href={{ pathname: '/ai', query: { text: problemText } }}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold shadow-[var(--shadow-brand)] transition-all group"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-brand-solid hover:bg-brand-solid-hover text-white text-sm font-bold shadow-[var(--shadow-brand)] transition-all group"
                 >
                   <span>{t('Diagnose My Problem', 'میرا مسئلہ تشخیص کریں')}</span>
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -173,11 +173,11 @@ export function HeroSection() {
 
           {/* RIGHT SIDE: Product UI Preview Card */}
           <div className="lg:col-span-5 space-y-4">
-            <div className="bg-white text-ink-900 rounded-2xl p-5 shadow-2xl ring-1 ring-white/20 relative overflow-hidden lg:rotate-[0.6deg] transition-transform duration-500 hover:rotate-0">
+            <div className="bg-surface text-ink-900 rounded-2xl p-5 shadow-2xl ring-1 ring-surface/20 relative overflow-hidden lg:rotate-[0.6deg] transition-transform duration-500 hover:rotate-0">
               {/* Header Bar inside preview */}
               <div className="flex items-center justify-between border-b border-line pb-3 mb-4">
                 <div className="flex items-center gap-2">
-                  <span className="h-2.5 w-2.5 rounded-full bg-brand-600 animate-ping" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-brand-solid animate-ping" />
                   <span className="text-xs font-extrabold text-ink-900 tracking-wide">{t('PAKFIX AI DIAGNOSIS', 'پاک فکس اے آئی تشخیص')}</span>
                 </div>
                 <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-brand-100 text-brand-700">
@@ -234,7 +234,7 @@ export function HeroSection() {
                 </Link>
                 <Link
                   href="/find-a-technician"
-                  className="inline-flex items-center justify-center text-xs font-bold py-2.5 rounded-xl bg-brand-600 text-white hover:bg-brand-700 transition-colors shadow-xs"
+                  className="inline-flex items-center justify-center text-xs font-bold py-2.5 rounded-xl bg-brand-solid text-white hover:bg-brand-solid-hover transition-colors shadow-xs"
                 >
                   {t('Book Plumber', 'پلمبر بک کریں')}
                 </Link>
@@ -243,13 +243,13 @@ export function HeroSection() {
               {/* Verified Technician Badge Card Underneath */}
               <div className="mt-4 pt-3 border-t border-line flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <div className="h-8 w-8 rounded-full bg-brand-600 text-white font-bold text-xs flex items-center justify-center">
+                  <div className="h-8 w-8 rounded-full bg-brand-solid text-white font-bold text-xs flex items-center justify-center">
                     PF
                   </div>
                   <div>
                     <div className="flex items-center gap-1">
                       <span className="text-xs font-bold text-ink-900">{t('Verified professional', 'تصدیق شدہ پروفیشنل')}</span>
-                      <CheckCircle2 className="h-3.5 w-3.5 text-brand-600 fill-brand-600" />
+                      <CheckCircle2 className="h-3.5 w-3.5 text-brand-600 fill-brand-solid" />
                     </div>
                     <span className="text-[10px] text-ink-500">{t('Plumber', 'پلمبر')}</span>
                   </div>

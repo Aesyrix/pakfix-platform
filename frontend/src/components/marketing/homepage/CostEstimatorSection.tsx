@@ -23,7 +23,7 @@ export function CostEstimatorSection() {
   return (
     <section className="py-16 sm:py-24 bg-surface-muted border-b border-line">
       <Container>
-        <div className="max-w-3xl mx-auto bg-white rounded-3xl border border-line p-6 sm:p-10 shadow-card">
+        <div className="max-w-3xl mx-auto bg-surface rounded-3xl border border-line p-6 sm:p-10 shadow-card">
           <div className="text-center space-y-2 mb-8">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-100 text-brand-700 text-xs font-bold">
               <Calculator className="h-4 w-4 text-brand-600" />
@@ -84,7 +84,7 @@ export function CostEstimatorSection() {
 
             <button
               type="submit"
-              className="w-full py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold transition-colors cursor-pointer"
+              className="w-full py-3 rounded-xl bg-brand-solid hover:bg-brand-solid-hover text-white text-xs font-bold transition-colors cursor-pointer"
             >
               {t('Calculate Estimated Cost Range', 'تخمینی لاگت کی حد کا حساب لگائیں')}
             </button>

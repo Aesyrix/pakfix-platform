@@ -89,7 +89,51 @@ export function getServerThemeSnapshot(): ThemeId {
   return DEFAULT_THEME;
 }
 
-/** Inline, pre-paint: read the saved theme and set it on <html>. */
+// ---- Light / dark mode -------------------------------------------------
+
+export type Mode = 'light' | 'dark';
+export const MODE_STORAGE_KEY = 'pakfix-mode';
+const MODE_EVENT = 'pakfix-mode-change';
+
+function setModeAttribute(mode: Mode) {
+  const root = document.documentElement;
+  if (mode === 'dark') root.dataset.mode = 'dark';
+  else delete root.dataset.mode;
+}
+
+export function applyMode(mode: Mode): void {
+  setModeAttribute(mode);
+  try {
+    localStorage.setItem(MODE_STORAGE_KEY, mode);
+  } catch {
+    // Private mode: still applies for this visit.
+  }
+  window.dispatchEvent(new Event(MODE_EVENT));
+}
+
+export function subscribeMode(onChange: () => void): () => void {
+  function onStorage(event: StorageEvent) {
+    if (event.key !== MODE_STORAGE_KEY) return;
+    setModeAttribute(event.newValue === 'dark' ? 'dark' : 'light');
+    onChange();
+  }
+  window.addEventListener(MODE_EVENT, onChange);
+  window.addEventListener('storage', onStorage);
+  return () => {
+    window.removeEventListener(MODE_EVENT, onChange);
+    window.removeEventListener('storage', onStorage);
+  };
+}
+
+export function getModeSnapshot(): Mode {
+  return document.documentElement.dataset.mode === 'dark' ? 'dark' : 'light';
+}
+
+export function getServerModeSnapshot(): Mode {
+  return 'light';
+}
+
+/** Inline, pre-paint: read the saved theme and mode and set them on <html>. */
 export function themeInitScript(): string {
   const ids = JSON.stringify(THEMES.map((theme) => theme.id).filter((id) => id !== DEFAULT_THEME));
   return (
@@ -99,6 +143,11 @@ export function themeInitScript(): string {
     `var t=q?q[1]:localStorage.getItem('${THEME_STORAGE_KEY}');` +
     `if(q){try{localStorage.setItem('${THEME_STORAGE_KEY}',t);}catch(_){}}` +
     `if(${ids}.indexOf(t)>-1){document.documentElement.dataset.theme=t;}` +
+    // Mode: ?mode=dark previews; otherwise the saved choice. Light by default.
+    "var mq=/[?&]mode=(light|dark)/.exec(location.search);" +
+    `var m=mq?mq[1]:localStorage.getItem('${MODE_STORAGE_KEY}');` +
+    `if(mq){try{localStorage.setItem('${MODE_STORAGE_KEY}',m);}catch(_){}}` +
+    "if(m==='dark'){document.documentElement.dataset.mode='dark';}" +
     '}catch(_){}})();'
   );
 }

@@ -58,10 +58,10 @@ export function AiAssistantFeatureSection() {
   const causes = isUr ? current.causesUr : current.causes;
 
   return (
-    <section className="py-16 sm:py-24 bg-gradient-to-b from-brand-50 via-white to-surface-muted border-b border-line">
+    <section className="py-16 sm:py-24 bg-gradient-to-b from-brand-50 via-surface to-surface-muted border-b border-line">
       <Container>
         <div className="max-w-3xl mx-auto text-center space-y-3 mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white text-brand-700 text-xs font-bold shadow-2xs">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface text-brand-700 text-xs font-bold shadow-2xs">
             <Sparkles className="h-3.5 w-3.5 text-brand-600" />
             {t('Smart AI Repair Guidance', 'سمارٹ اے آئی مرمت رہنمائی')}
           </div>
@@ -76,7 +76,7 @@ export function AiAssistantFeatureSection() {
 
         {/* 3 Input Method Pill Headers */}
         <div className="grid md:grid-cols-3 gap-4 mb-8">
-          <div className="bg-white rounded-2xl p-4 border border-line flex items-start gap-3">
+          <div className="bg-surface rounded-2xl p-4 border border-line flex items-start gap-3">
             <div className="h-9 w-9 rounded-xl bg-brand-100 text-brand-800 font-bold flex items-center justify-center shrink-0">
               <MessageSquare className="h-5 w-5" />
             </div>
@@ -86,7 +86,7 @@ export function AiAssistantFeatureSection() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-4 border border-line flex items-start gap-3">
+          <div className="bg-surface rounded-2xl p-4 border border-line flex items-start gap-3">
             <div className="h-9 w-9 rounded-xl bg-accent-100 text-accent-600 font-bold flex items-center justify-center shrink-0">
               <Camera className="h-5 w-5" />
             </div>
@@ -96,7 +96,7 @@ export function AiAssistantFeatureSection() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-4 border border-line flex items-start gap-3">
+          <div className="bg-surface rounded-2xl p-4 border border-line flex items-start gap-3">
             <div className="h-9 w-9 rounded-xl bg-brand-100 text-brand-800 font-bold flex items-center justify-center shrink-0">
               <CheckCircle className="h-5 w-5" />
             </div>
@@ -108,7 +108,7 @@ export function AiAssistantFeatureSection() {
         </div>
 
         {/* Interactive Demo Interface */}
-        <div className="bg-white rounded-2xl border border-line shadow-card p-6 lg:p-8">
+        <div className="bg-surface rounded-2xl border border-line shadow-card p-6 lg:p-8">
           {/* Query Preset Tabs */}
           <div className="flex flex-wrap items-center gap-2 mb-6 border-b border-line pb-4">
             <span className="text-xs font-bold text-ink-500 me-2">{t('Try interactive sample:', 'انٹرایکٹو نمونہ آزمائیں:')}</span>
@@ -117,7 +117,7 @@ export function AiAssistantFeatureSection() {
               onClick={() => setActiveQuery('fridge')}
               className={`text-xs px-3 py-1.5 rounded-xl font-semibold transition-all cursor-pointer ${
                 activeQuery === 'fridge'
-                  ? 'bg-brand-600 text-white'
+                  ? 'bg-brand-solid text-white'
                   : 'bg-surface-muted text-ink-600 hover:bg-brand-100'
               }`}
             >
@@ -128,7 +128,7 @@ export function AiAssistantFeatureSection() {
               onClick={() => setActiveQuery('ac')}
               className={`text-xs px-3 py-1.5 rounded-xl font-semibold transition-all cursor-pointer ${
                 activeQuery === 'ac'
-                  ? 'bg-brand-600 text-white'
+                  ? 'bg-brand-solid text-white'
                   : 'bg-surface-muted text-ink-600 hover:bg-brand-100'
               }`}
             >
@@ -139,7 +139,7 @@ export function AiAssistantFeatureSection() {
               onClick={() => setActiveQuery('water')}
               className={`text-xs px-3 py-1.5 rounded-xl font-semibold transition-all cursor-pointer ${
                 activeQuery === 'water'
-                  ? 'bg-brand-600 text-white'
+                  ? 'bg-brand-solid text-white'
                   : 'bg-surface-muted text-ink-600 hover:bg-brand-100'
               }`}
             >
@@ -199,7 +199,7 @@ export function AiAssistantFeatureSection() {
             <span className="text-xs text-ink-500">{t('Have a real home issue right now?', 'کیا ابھی کوئی حقیقی گھریلو مسئلہ ہے؟')}</span>
             <Link
               href="/ai"
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-xs transition-all"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-brand-solid hover:bg-brand-solid-hover text-white text-xs font-bold shadow-xs transition-all"
             >
               <span>{t('Try PakFix AI Free', 'پاک فکس اے آئی مفت آزمائیں')}</span>
               <ArrowRight className="h-4 w-4" />

@@ -38,7 +38,7 @@ export function TrustStripSection() {
   ];
 
   return (
-    <section className="border-b border-line bg-white">
+    <section className="border-b border-line bg-surface">
       <Container>
         <div className="grid grid-cols-2 md:grid-cols-4 md:divide-x divide-line">
           {items.map((item) => {

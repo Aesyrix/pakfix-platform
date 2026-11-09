@@ -44,7 +44,7 @@ export function CustomerDashboardPreviewSection() {
         </div>
 
         {/* Screenshot-Style Web App UI Container */}
-        <div className="bg-white rounded-3xl border border-line shadow-floating overflow-hidden">
+        <div className="bg-surface rounded-3xl border border-line shadow-floating overflow-hidden">
           {/* Top Window Control Bar */}
           <div className="bg-ink-900 px-4 py-3 flex items-center justify-between text-xs text-ink-400 border-b border-ink-800">
             <div className="flex items-center gap-2">
@@ -69,7 +69,7 @@ export function CustomerDashboardPreviewSection() {
                   <div
                     key={item.en}
                     className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
-                      item.active ? 'bg-brand-600 text-white' : 'text-ink-400 hover:text-white hover:bg-ink-800'
+                      item.active ? 'bg-brand-solid text-white' : 'text-ink-400 hover:text-white hover:bg-ink-800'
                     }`}
                   >
                     <div className="flex items-center gap-2.5">
@@ -89,7 +89,7 @@ export function CustomerDashboardPreviewSection() {
             {/* App Main Content Area */}
             <div className="lg:col-span-9 p-6 sm:p-8 bg-surface-muted space-y-6">
               {/* Header banner inside app */}
-              <div className="flex items-center justify-between bg-white p-4 rounded-2xl border border-line">
+              <div className="flex items-center justify-between bg-surface p-4 rounded-2xl border border-line">
                 <div>
                   <h3 className="text-base font-extrabold text-ink-900">{t('How your dashboard looks', 'آپ کا ڈیش بورڈ ایسا نظر آتا ہے')}</h3>
                   <p className="text-xs text-ink-500">{t('An example, to show the idea.', 'یہ ایک مثال ہے، بات سمجھانے کے لیے۔')}</p>
@@ -102,7 +102,7 @@ export function CustomerDashboardPreviewSection() {
               {/* 4 Cards Grid */}
               <div className="grid sm:grid-cols-2 gap-4">
                 {/* Card 1: Upcoming Booking */}
-                <div className="bg-white p-4 rounded-2xl border border-line space-y-2">
+                <div className="bg-surface p-4 rounded-2xl border border-line space-y-2">
                   <div className="flex items-center justify-between text-xs font-bold text-ink-900">
                     <span>{t('Upcoming Booking', 'آنے والی بکنگ')}</span>
                     <span className="text-brand-600">{t('Active', 'فعال')}</span>
@@ -114,7 +114,7 @@ export function CustomerDashboardPreviewSection() {
                 </div>
 
                 {/* Card 2: Open Quote */}
-                <div className="bg-white p-4 rounded-2xl border border-line space-y-2">
+                <div className="bg-surface p-4 rounded-2xl border border-line space-y-2">
                   <div className="flex items-center justify-between text-xs font-bold text-ink-900">
                     <span>{t('Open Quote', 'کھلا تخمینہ')}</span>
                     <span className="text-accent-600">{t('1 Pending', '1 زیر التوا')}</span>
@@ -126,7 +126,7 @@ export function CustomerDashboardPreviewSection() {
                 </div>
 
                 {/* Card 3: Recent Diagnosis */}
-                <div className="bg-white p-4 rounded-2xl border border-line space-y-2">
+                <div className="bg-surface p-4 rounded-2xl border border-line space-y-2">
                   <div className="flex items-center justify-between text-xs font-bold text-ink-900">
                     <span>{t('Recent AI Diagnosis', 'حالیہ اے آئی تشخیص')}</span>
                     <span className="text-xs text-ink-500">{t('Yesterday', 'کل')}</span>
@@ -138,7 +138,7 @@ export function CustomerDashboardPreviewSection() {
                 </div>
 
                 {/* Card 4: Maintenance Due */}
-                <div className="bg-white p-4 rounded-2xl border border-line space-y-2">
+                <div className="bg-surface p-4 rounded-2xl border border-line space-y-2">
                   <div className="flex items-center justify-between text-xs font-bold text-ink-900">
                     <span>{t('Maintenance Schedule', 'دیکھ بھال کا شیڈول')}</span>
                     <span className="text-warn-700 font-bold">{t('Due', 'واجب')}</span>

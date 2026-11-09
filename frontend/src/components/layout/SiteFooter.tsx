@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher';
+import { ModeToggle } from '@/components/theme/ModeToggle';
 import { Mail, ShieldCheck, Heart } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { PakFixLogo } from '@/components/layout/PakFixLogo';
@@ -120,7 +121,10 @@ export function SiteFooter({ popularCategories }: SiteFooterProps) {
             </span>
           </div>
 
-          <ThemeSwitcher onDark placement="above" align="start" />
+          <div className="flex items-center gap-1">
+            <ThemeSwitcher onDark placement="above" align="start" />
+            <ModeToggle onDark />
+          </div>
 
           <div className="flex items-center gap-1 text-ink-400">
             <span>{t('Made with', 'بنایا گیا')}</span>

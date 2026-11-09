@@ -45,7 +45,7 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
         ]}
         eyebrow={
           <span className="flex flex-wrap items-center gap-2">
-            <span className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-control)] bg-brand-600 text-white">
+            <span className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-control)] bg-brand-solid text-white">
               <CategoryIcon name={category.icon} className="h-5 w-5" />
             </span>
             {category.is_emergency ? (
@@ -157,7 +157,7 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
             { title: t('Agree the price, then the work', 'قیمت طے کریں، پھر کام'), body: t('You approve the quote before any work starts, and the job stays on your home record.', 'کام شروع ہونے سے پہلے آپ کوٹ منظور کرتے ہیں، اور کام آپ کے ہوم ریکارڈ میں محفوظ رہتا ہے۔') },
           ].map(({ title, body }, index) => (
             <li key={title} className="flex gap-4">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-600 text-sm font-bold text-white" aria-hidden="true">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-solid text-sm font-bold text-white" aria-hidden="true">
                 {index + 1}
               </span>
               <div>

@@ -93,7 +93,7 @@ export function QuickBookingFormSection() {
   };
 
   return (
-    <section className="py-16 sm:py-24 bg-white border-b border-line" id="quick-booking">
+    <section className="py-16 sm:py-24 bg-surface border-b border-line" id="quick-booking">
       <Container>
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           {/* Left Text Column */}
@@ -168,7 +168,7 @@ export function QuickBookingFormSection() {
                       placeholder={field.hint}
                       value={formData[field.key as 'name' | 'phone' | 'email']}
                       onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
-                      className="w-full rounded-xl border border-line bg-white p-3 text-xs text-ink-900 outline-none focus:border-brand-600"
+                      className="w-full rounded-xl border border-line bg-surface p-3 text-xs text-ink-900 outline-none focus:border-brand-600"
                     />
                   </div>
                 ))}
@@ -181,7 +181,7 @@ export function QuickBookingFormSection() {
                   <select
                     value={formData.service}
                     onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                    className="w-full rounded-xl border border-line bg-white p-3 text-xs text-ink-900 outline-none focus:border-brand-600"
+                    className="w-full rounded-xl border border-line bg-surface p-3 text-xs text-ink-900 outline-none focus:border-brand-600"
                   >
                     {services.map((s) => (
                       <option key={s.en} value={s.en}>{t(s.en, s.ur)}</option>
@@ -195,7 +195,7 @@ export function QuickBookingFormSection() {
                   <select
                     value={formData.city}
                     onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                    className="w-full rounded-xl border border-line bg-white p-3 text-xs text-ink-900 outline-none focus:border-brand-600"
+                    className="w-full rounded-xl border border-line bg-surface p-3 text-xs text-ink-900 outline-none focus:border-brand-600"
                   >
                     {cities.map((c) => (
                       <option key={c.en} value={c.en}>{t(c.en, c.ur)}</option>
@@ -214,7 +214,7 @@ export function QuickBookingFormSection() {
                     placeholder={t('e.g. House 45, Street 12, Sector F-8/2', 'مثلاً مکان 45، گلی 12، سیکٹر F-8/2')}
                     value={formData.address}
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                    className="w-full rounded-xl border border-line bg-white p-3 ps-9 text-xs text-ink-900 placeholder-ink-400 outline-none focus:border-brand-600"
+                    className="w-full rounded-xl border border-line bg-surface p-3 ps-9 text-xs text-ink-900 placeholder-ink-400 outline-none focus:border-brand-600"
                   />
                   <MapPin className="h-4 w-4 text-ink-500 absolute start-3 top-3.5" />
                 </div>
@@ -229,7 +229,7 @@ export function QuickBookingFormSection() {
                       type="date"
                       value={formData.preferred_date}
                       onChange={(e) => setFormData({ ...formData, preferred_date: e.target.value })}
-                      className="w-full rounded-xl border border-line bg-white p-3 text-xs text-ink-900 outline-none focus:border-brand-600"
+                      className="w-full rounded-xl border border-line bg-surface p-3 text-xs text-ink-900 outline-none focus:border-brand-600"
                     />
                   </div>
                 </div>
@@ -240,7 +240,7 @@ export function QuickBookingFormSection() {
                   <select
                     value={formData.preferred_time}
                     onChange={(e) => setFormData({ ...formData, preferred_time: e.target.value })}
-                    className="w-full rounded-xl border border-line bg-white p-3 text-xs text-ink-900 outline-none focus:border-brand-600"
+                    className="w-full rounded-xl border border-line bg-surface p-3 text-xs text-ink-900 outline-none focus:border-brand-600"
                   >
                     {times.map((tm) => (
                       <option key={tm.en} value={tm.en}>{t(tm.en, tm.ur)}</option>
@@ -257,7 +257,7 @@ export function QuickBookingFormSection() {
                   placeholder={t('Describe what needs fixing or specific details...', 'بیان کریں کیا ٹھیک کرانا ہے یا مخصوص تفصیلات...')}
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full rounded-xl border border-line bg-white p-3 text-xs text-ink-900 placeholder-ink-400 outline-none focus:border-brand-600 resize-none"
+                  className="w-full rounded-xl border border-line bg-surface p-3 text-xs text-ink-900 placeholder-ink-400 outline-none focus:border-brand-600 resize-none"
                 />
               </div>
 
@@ -273,9 +273,9 @@ export function QuickBookingFormSection() {
                       className={`py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                         formData.urgency === urg.en
                           ? urg.en === 'Emergency'
-                            ? 'bg-danger-600 text-white'
-                            : 'bg-brand-600 text-white'
-                          : 'bg-white border border-line text-ink-600 hover:bg-brand-100'
+                            ? 'bg-danger-solid-hover text-white'
+                            : 'bg-brand-solid text-white'
+                          : 'bg-surface border border-line text-ink-600 hover:bg-brand-100'
                       }`}
                     >
                       {t(urg.en, urg.ur)}
@@ -288,7 +288,7 @@ export function QuickBookingFormSection() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                className="w-full py-3 rounded-xl bg-brand-solid hover:bg-brand-solid-hover text-white text-xs font-bold shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
                 <span>{t('Request a Professional', 'پروفیشنل کی درخواست کریں')}</span>

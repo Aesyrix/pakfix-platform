@@ -45,19 +45,19 @@ export function FindProfessionalsSection() {
           <ProfessionalGrid professionals={pros} />
         ) : (
           <div className="grid sm:grid-cols-3 gap-6">
-            <div className="bg-white rounded-2xl border border-line p-5 shadow-2xs">
+            <div className="bg-surface rounded-2xl border border-line p-5 shadow-2xs">
               <ShieldCheck className="h-6 w-6 text-brand-600" />
               <h3 className="mt-3 text-base font-bold text-ink-900">{t('Checked by people', 'انسانوں کی جانچ')}</h3>
               <p className="mt-1 text-xs text-ink-500">{t('Our team reviews every CNIC and selfie by hand.', 'ہماری ٹیم ہر شناختی کارڈ اور سیلفی خود دیکھتی ہے۔')}</p>
             </div>
-            <div className="bg-white rounded-2xl border border-line p-5 shadow-2xs">
+            <div className="bg-surface rounded-2xl border border-line p-5 shadow-2xs">
               <MapPin className="h-6 w-6 text-brand-600" />
               <h3 className="mt-3 text-base font-bold text-ink-900">{t('Launching near you', 'آپ کے قریب آغاز')}</h3>
               <p className="mt-1 text-xs text-ink-500">{t('We are starting in Islamabad and Rawalpindi.', 'ہم اسلام آباد اور راولپنڈی سے آغاز کر رہے ہیں۔')}</p>
             </div>
             <Link
               href="/become-a-technician"
-              className="bg-white rounded-2xl border border-line hover:border-brand-300 p-5 shadow-2xs transition-all"
+              className="bg-surface rounded-2xl border border-line hover:border-brand-300 p-5 shadow-2xs transition-all"
             >
               <UserPlus className="h-6 w-6 text-brand-600" />
               <h3 className="mt-3 text-base font-bold text-ink-900">{t('Are you a professional?', 'کیا آپ پروفیشنل ہیں؟')}</h3>

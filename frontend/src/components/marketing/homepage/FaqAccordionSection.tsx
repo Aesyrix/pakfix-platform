@@ -98,7 +98,7 @@ export function FaqAccordionSection() {
             return (
               <div
                 key={faq.q}
-                className="bg-white rounded-2xl border border-line overflow-hidden transition-all"
+                className="bg-surface rounded-2xl border border-line overflow-hidden transition-all"
               >
                 <button
                   type="button"

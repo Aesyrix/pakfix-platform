@@ -16,7 +16,7 @@ export function EmergencyRepairSection() {
   ];
 
   return (
-    <section className="py-12 bg-white border-b border-line">
+    <section className="py-12 bg-surface border-b border-line">
       <Container>
         <div className="bg-ink-900 text-white rounded-2xl p-6 sm:p-10 relative overflow-hidden border border-ink-800">
           <div className="grid lg:grid-cols-12 gap-8 items-center">

@@ -143,7 +143,7 @@ export function AssistantView() {
               {t('PakFix AI Engine Online', 'پاک فکس اے آئی انجن آن لائن')}
             </Badge>
             <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-brand-700 bg-brand-100 px-2 py-0.5 rounded-full">
-              <span className="h-1.5 w-1.5 rounded-full bg-brand-600 animate-pulse" />
+              <span className="h-1.5 w-1.5 rounded-full bg-brand-solid animate-pulse" />
               {t('Live Safety Audit', 'لائیو حفاظتی آڈٹ')}
             </span>
           </div>
@@ -279,7 +279,7 @@ function TriageOutcome({ result }: { result: TriageResult }) {
               <a
                 key={entry.number}
                 href={`tel:${entry.number}`}
-                className="inline-flex min-h-12 items-center gap-2 rounded-[var(--radius-control)] bg-danger-600 px-4 font-semibold text-white hover:bg-danger-500"
+                className="inline-flex min-h-12 items-center gap-2 rounded-[var(--radius-control)] bg-danger-solid-hover px-4 font-semibold text-white hover:bg-danger-500"
               >
                 <Phone className="h-4 w-4" aria-hidden="true" />
                 {entry.label}: {entry.number}

@@ -61,11 +61,11 @@ export function HowItWorksSection() {
             return (
               <div
                 key={step.num}
-                className="bg-white rounded-2xl p-6 border border-line shadow-2xs relative flex flex-col justify-between group hover:border-brand-300 hover:shadow-card transition-all"
+                className="bg-surface rounded-2xl p-6 border border-line shadow-2xs relative flex flex-col justify-between group hover:border-brand-300 hover:shadow-card transition-all"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-100 text-brand-800 group-hover:bg-brand-600 group-hover:text-white transition-colors">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-100 text-brand-800 group-hover:bg-brand-solid group-hover:text-white transition-colors">
                       <Icon className="h-6 w-6" />
                     </div>
                     <span className="text-2xl font-extrabold text-ink-400 group-hover:text-brand-600 transition-colors">
@@ -79,7 +79,7 @@ export function HowItWorksSection() {
 
                 {idx < 3 ? (
                   <div className="hidden lg:block absolute -right-3 top-1/2 -translate-y-1/2 z-10">
-                    <div className="h-6 w-6 rounded-full bg-white border border-line text-brand-600 flex items-center justify-center text-xs font-bold shadow-2xs">
+                    <div className="h-6 w-6 rounded-full bg-surface border border-line text-brand-600 flex items-center justify-center text-xs font-bold shadow-2xs">
                       &rarr;
                     </div>
                   </div>

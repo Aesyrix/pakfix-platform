@@ -6,6 +6,7 @@ import { PakFixLogo } from '@/components/layout/PakFixLogo';
 import { LocaleToggle } from '@/components/i18n/LocaleToggle';
 import { useT } from '@/components/i18n/LocaleProvider';
 import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher';
+import { ModeToggle } from '@/components/theme/ModeToggle';
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   const t = useT();
@@ -40,7 +41,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             <PakFixLogo isDarkBackground className="h-10" />
           </Link>
 
-          <span className="mt-12 flex w-fit items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.06] px-3.5 py-1.5 text-xs font-semibold text-brand-on-dark backdrop-blur-sm">
+          <span className="mt-12 flex w-fit items-center gap-1.5 rounded-full border border-white/15 bg-surface/[0.06] px-3.5 py-1.5 text-xs font-semibold text-brand-on-dark backdrop-blur-sm">
             <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
             {t('Trusted Home Services Platform', 'قابلِ اعتماد ہوم سروسز پلیٹ فارم')}
           </span>
@@ -56,9 +57,9 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
               return (
                 <li key={step.title} className="relative flex gap-4 pb-6 last:pb-0">
                   {index < steps.length - 1 ? (
-                    <span aria-hidden="true" className="absolute left-5 top-11 bottom-1 w-px bg-gradient-to-b from-white/25 to-white/5" />
+                    <span aria-hidden="true" className="absolute left-5 top-11 bottom-1 w-px bg-gradient-to-b from-surface/25 to-surface/5" />
                   ) : null}
-                  <span className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/15 bg-white/[0.07] text-brand-on-dark backdrop-blur-sm">
+                  <span className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/15 bg-surface/[0.07] text-brand-on-dark backdrop-blur-sm">
                     <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
                   </span>
                   <div className="pt-0.5">
@@ -72,17 +73,17 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         </div>
 
         {/* Example offer, labelled as an example, like the homepage preview */}
-        <div className="mt-10 max-w-sm rounded-2xl border border-white/10 bg-white/[0.06] p-4 shadow-2xl backdrop-blur-md">
+        <div className="mt-10 max-w-sm rounded-2xl border border-white/10 bg-surface/[0.06] p-4 shadow-2xl backdrop-blur-md">
           <div className="flex items-center justify-between">
             <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-ink-300">
               {t('Offer received', 'آفر موصول')}
             </span>
-            <span className="rounded-full bg-white/10 px-2 py-0.5 text-[0.625rem] font-semibold text-ink-300">
+            <span className="rounded-full bg-surface/10 px-2 py-0.5 text-[0.625rem] font-semibold text-ink-300">
               {t('Example', 'مثال')}
             </span>
           </div>
           <div className="mt-3 flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-brand-400 to-brand-700 text-sm font-semibold text-white ring-2 ring-white/20">
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-brand-400 to-brand-700 text-sm font-semibold text-white ring-2 ring-surface/20">
               P
             </span>
             <div className="min-w-0 flex-1">
@@ -120,6 +121,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
           </Link>
           <div className="flex items-center gap-1">
             <ThemeSwitcher />
+            <ModeToggle />
             <LocaleToggle />
           </div>
         </header>

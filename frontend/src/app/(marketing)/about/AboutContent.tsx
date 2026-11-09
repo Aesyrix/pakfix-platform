@@ -15,7 +15,7 @@ export function AboutContent() {
         subtitle={t('PakFix was built to solve the frustration of unreliable home repairs, hidden fees, and safety concerns.', 'پاک فکس غیر قابلِ اعتماد گھریلو مرمت، چھپی فیسوں اور حفاظتی خدشات کے مسئلے کو حل کرنے کے لیے بنایا گیا۔')}
       />
 
-      <section className="py-12 sm:py-20 bg-white">
+      <section className="py-12 sm:py-20 bg-surface">
         <Container>
           <div className="max-w-3xl mx-auto space-y-8 text-sm sm:text-base text-ink-600 leading-relaxed">
             <h2 className="text-2xl font-extrabold text-ink-900">{t('Our Mission', 'ہمارا مشن')}</h2>

@@ -16,7 +16,7 @@ export function SmartRemindersSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-white border-b border-line">
+    <section className="py-16 sm:py-24 bg-surface border-b border-line">
       <Container>
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-4 mb-10">
           <div>
@@ -34,7 +34,7 @@ export function SmartRemindersSection() {
 
           <Link
             href="/home-maintenance"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold transition-colors shadow-xs"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-solid hover:bg-brand-solid-hover text-white text-xs font-bold transition-colors shadow-xs"
           >
             <span>{t('Create Maintenance Plan', 'دیکھ بھال کا منصوبہ بنائیں')}</span>
             <ArrowRight className="h-4 w-4" />
@@ -49,7 +49,7 @@ export function SmartRemindersSection() {
                 key={r.en}
                 className="bg-surface-muted rounded-2xl p-4 border border-line hover:border-brand-300 transition-all space-y-2"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-line text-brand-600">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface border border-line text-brand-600">
                   <Icon className="h-5 w-5" />
                 </div>
                 <h3 className="text-sm font-bold text-ink-900">{t(r.en, r.ur)}</h3>

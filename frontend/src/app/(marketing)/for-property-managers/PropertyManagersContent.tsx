@@ -15,7 +15,7 @@ export function PropertyManagersContent() {
         title={t('Multi-Property Maintenance Portal', 'ملٹی پراپرٹی مینٹیننس پورٹل')}
         subtitle={t('Manage repairs across residential & commercial rental properties with centralized invoicing and verified technicians.', 'مرکزی انوائسنگ اور تصدیق شدہ ٹیکنیشنز کے ساتھ رہائشی اور تجارتی کرائے کی جائیدادوں میں مرمت کا انتظام کریں۔')}
       />
-      <section className="py-12 sm:py-20 bg-white">
+      <section className="py-12 sm:py-20 bg-surface">
         <Container>
           <div className="bg-surface-muted rounded-3xl p-8 sm:p-12 border border-line text-center space-y-6">
             <Home className="h-12 w-12 text-brand-600 mx-auto" />
@@ -28,7 +28,7 @@ export function PropertyManagersContent() {
             <div>
               <Link
                 href="/home-maintenance"
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold shadow-md transition-all"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-brand-solid hover:bg-brand-solid-hover text-white text-sm font-bold shadow-md transition-all"
               >
                 <span>{t('Add Your Properties', 'اپنی جائیدادیں شامل کریں')}</span>
                 <ArrowRight className="h-4 w-4 rtl:rotate-180" />

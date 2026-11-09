@@ -15,7 +15,7 @@ export function AiToProHandoffSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-white border-b border-line">
+    <section className="py-16 sm:py-24 bg-surface border-b border-line">
       <Container>
         <div className="max-w-2xl mx-auto text-center space-y-2 mb-12">
           <span className="eyebrow">{t('Seamless Handoff', 'بے رکاوٹ منتقلی')}</span>
@@ -38,7 +38,7 @@ export function AiToProHandoffSection() {
                 className="bg-surface-muted rounded-2xl p-5 border border-line relative flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-line text-brand-600 mb-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface border border-line text-brand-600 mb-3">
                     <Icon className="h-5 w-5" />
                   </div>
                   <h3 className="text-sm font-bold text-ink-900">{t(step.en, step.ur)}</h3>

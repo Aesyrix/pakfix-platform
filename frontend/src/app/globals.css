@@ -32,6 +32,10 @@
   --color-brand-900: #083F25;
   --color-brand-950: #032215;
   --color-brand-on-dark: #4ADE80;
+  /* Solid fills behind white text (buttons, logo tile). Separate from
+     brand-600 so dark mode can lighten text without washing out buttons. */
+  --color-brand-solid: #0A7A48;
+  --color-brand-solid-hover: #066A3E;
 
   /* Accent — AI and informational blue */
   --color-accent-50: #EEF3FF;
@@ -44,6 +48,8 @@
   --color-accent-700: #1D4ED8;
   --color-accent-800: #1C3FAA;
   --color-accent-900: #1C3584;
+  --color-accent-solid: #2F5BEA;
+  --color-accent-solid-hover: #1D4ED8;
 
   /* Ink — warm neutrals with a hint of green */
   --color-ink-50: #F6F8F5;
@@ -77,6 +83,7 @@
   --color-danger-500: #D92D20;
   --color-danger-600: #B42318;
   --color-danger-700: #912018;
+  --color-danger-solid-hover: #B42318;
 
   --color-info-500: #2F5BEA;
   --color-info-600: #1D4ED8;
@@ -99,6 +106,7 @@
   --radius-card: 20px;
   --radius-section: 28px;
   --radius-pill: 9999px;
+  --radius-button: var(--radius-control); /* Clay makes buttons pills */
 
   /* Tailwind's own radius steps, pinned to the scale above so rounded-xl,
      rounded-2xl and rounded-3xl agree with controls, cards and sections. */
@@ -176,6 +184,62 @@
   --color-foreground: #131826;
   --color-surface-muted: #F6F7FA;
   --color-line: #E1E5EE;
+
+  --color-brand-solid: #213F8F;
+  --color-brand-solid-hover: #1A3274;
+  --color-accent-solid: #8A6106;
+  --color-accent-solid-hover: #73510A;
+
+  /* Style: editorial serif headings, crisp tailored corners. */
+  --font-display: var(--font-fraunces), Georgia, 'Times New Roman', serif;
+  --radius-sm: 6px;
+  --radius-control: 8px;
+  --radius-card: 12px;
+  --radius-section: 18px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 8px;
+  --radius-2xl: 12px;
+  --radius-3xl: 18px;
+
+  /* light values for dark-mode derivation */
+  --lt-brand-50: #F1F4FB;
+  --lt-brand-100: #E2E8F7;
+  --lt-brand-200: #C3CFEE;
+  --lt-brand-300: #93A8DE;
+  --lt-brand-400: #5F7DC9;
+  --lt-brand-500: #6F8FE0;
+  --lt-brand-600: #213F8F;
+  --lt-brand-700: #1A3274;
+  --lt-brand-800: #15295E;
+  --lt-brand-900: #11214B;
+  --lt-brand-950: #0A1530;
+  --lt-accent-50: #FFF8E6;
+  --lt-accent-100: #FDEFC8;
+  --lt-accent-200: #F9DC8E;
+  --lt-accent-300: #F2C14E;
+  --lt-accent-400: #E3A92B;
+  --lt-accent-500: #C98E12;
+  --lt-accent-600: #8A6106;
+  --lt-accent-700: #73510A;
+  --lt-accent-800: #5E4208;
+  --lt-accent-900: #4A3406;
+  --lt-ink-50: #F6F7FA;
+  --lt-ink-100: #EEF0F5;
+  --lt-ink-200: #E1E5EE;
+  --lt-ink-300: #C9CFDC;
+  --lt-ink-400: #98A1B5;
+  --lt-ink-500: #5F6880;
+  --lt-ink-600: #464E63;
+  --lt-ink-700: #333A4C;
+  --lt-ink-800: #1F2433;
+  --lt-ink-900: #131826;
+  --lt-ink-950: #0C101B;
+  --lt-foreground: #131826;
+  --lt-surface-muted: #F6F7FA;
+  --lt-line: #E1E5EE;
+  --lt-brand-wash: #E2E8F7;
+  --lt-brand-on-dark: #F2C14E;
 }
 
 /* Clay: warm terracotta with teal. */
@@ -221,12 +285,262 @@
   --color-foreground: #171412;
   --color-surface-muted: #F8F6F4;
   --color-line: #E6E1DB;
+
+  --color-brand-solid: #B0432A;
+  --color-brand-solid-hover: #933722;
+  --color-accent-solid: #187A75;
+  --color-accent-solid-hover: #14625E;
+
+  /* Style: soft rounded headings, generous pillowy shapes, pill buttons. */
+  --font-display: var(--font-nunito), var(--font-inter), system-ui, sans-serif;
+  --radius-sm: 10px;
+  --radius-control: 16px;
+  --radius-card: 26px;
+  --radius-section: 34px;
+  --radius-button: 9999px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 16px;
+  --radius-2xl: 26px;
+  --radius-3xl: 34px;
+
+  /* light values for dark-mode derivation */
+  --lt-brand-50: #FDF5F1;
+  --lt-brand-100: #FAE8DF;
+  --lt-brand-200: #F3CDBB;
+  --lt-brand-300: #E8A68A;
+  --lt-brand-400: #D9785A;
+  --lt-brand-500: #E58A66;
+  --lt-brand-600: #B0432A;
+  --lt-brand-700: #933722;
+  --lt-brand-800: #7A2F1C;
+  --lt-brand-900: #5F2516;
+  --lt-brand-950: #36140B;
+  --lt-accent-50: #EFFAF9;
+  --lt-accent-100: #D6F1EF;
+  --lt-accent-200: #ADE2DE;
+  --lt-accent-300: #77CBC5;
+  --lt-accent-400: #3FAEA8;
+  --lt-accent-500: #23928C;
+  --lt-accent-600: #187A75;
+  --lt-accent-700: #14625E;
+  --lt-accent-800: #114E4B;
+  --lt-accent-900: #0E3F3D;
+  --lt-ink-50: #F8F6F4;
+  --lt-ink-100: #F1EEEA;
+  --lt-ink-200: #E6E1DB;
+  --lt-ink-300: #D1CAC1;
+  --lt-ink-400: #A39A8F;
+  --lt-ink-500: #6B6259;
+  --lt-ink-600: #4F4740;
+  --lt-ink-700: #3A342F;
+  --lt-ink-800: #25211E;
+  --lt-ink-900: #171412;
+  --lt-ink-950: #100E0C;
+  --lt-foreground: #171412;
+  --lt-surface-muted: #F8F6F4;
+  --lt-line: #E6E1DB;
+  --lt-brand-wash: #FAE8DF;
+  --lt-brand-on-dark: #F4A582;
+}
+
+/*
+  Light-mode values kept under --lt-* so dark mode can derive from them and
+  dark bands (hero, footer ...) can restore them. Generated alongside the
+  tokens; keep in step when a token changes. :where() keeps this at zero
+  specificity so each theme's own --lt-* values (same element) win.
+*/
+:where(:root) {
+  --lt-brand-50: #F2FAF5;
+  --lt-brand-100: #E4F4EA;
+  --lt-brand-200: #C3E7D1;
+  --lt-brand-300: #8FD2AC;
+  --lt-brand-400: #4FB57F;
+  --lt-brand-500: #22B26A;
+  --lt-brand-600: #0A7A48;
+  --lt-brand-700: #066A3E;
+  --lt-brand-800: #07532F;
+  --lt-brand-900: #083F25;
+  --lt-brand-950: #032215;
+  --lt-accent-50: #EEF3FF;
+  --lt-accent-100: #DCE6FE;
+  --lt-accent-200: #BCCFFD;
+  --lt-accent-300: #8EADFB;
+  --lt-accent-400: #5F86F6;
+  --lt-accent-500: #3E68EF;
+  --lt-accent-600: #2F5BEA;
+  --lt-accent-700: #1D4ED8;
+  --lt-accent-800: #1C3FAA;
+  --lt-accent-900: #1C3584;
+  --lt-ink-50: #F6F8F5;
+  --lt-ink-100: #EEF1ED;
+  --lt-ink-200: #E2E6E1;
+  --lt-ink-300: #CBD1CA;
+  --lt-ink-400: #9AA39C;
+  --lt-ink-500: #5E6A63;
+  --lt-ink-600: #455049;
+  --lt-ink-700: #333B36;
+  --lt-ink-800: #1F2622;
+  --lt-ink-900: #131915;
+  --lt-ink-950: #0F1512;
+  --lt-warn-50: #FFFBEB;
+  --lt-warn-100: #FEF3C7;
+  --lt-warn-200: #FDE68A;
+  --lt-warn-300: #FCD34D;
+  --lt-warn-500: #F59E0B;
+  --lt-warn-600: #D97706;
+  --lt-warn-700: #B54708;
+  --lt-warn-800: #93370D;
+  --lt-danger-50: #FEF3F2;
+  --lt-danger-100: #FEE4E2;
+  --lt-danger-200: #FECDCA;
+  --lt-danger-500: #D92D20;
+  --lt-danger-600: #B42318;
+  --lt-danger-700: #912018;
+  --lt-background: #FFFFFF;
+  --lt-foreground: #131915;
+  --lt-surface: #FFFFFF;
+  --lt-surface-muted: #F6F8F5;
+  --lt-line: #E2E6E1;
+  --lt-brand-wash: #E4F4EA;
+  --lt-brand-on-dark: #4ADE80;
+}
+/*
+  Dark mode
+  ---------
+  <html data-mode="dark"> works with every colour theme: neutrals mirror the
+  theme's own ink scale, tints are mixed from its 500 shade, and text shades
+  come from the light end of its scale, so Midnight-dark is navy and
+  Clay-dark is warm. Solid fills (buttons) keep their colour.
+*/
+[data-mode='dark'] {
+  color-scheme: dark;
+  --color-ink-50: color-mix(in oklab, var(--lt-ink-900) 70%, var(--lt-ink-950));
+  --color-ink-100: color-mix(in oklab, var(--lt-ink-800) 55%, var(--lt-ink-950));
+  --color-ink-200: color-mix(in oklab, var(--lt-ink-700) 45%, var(--lt-ink-950));
+  --color-ink-300: var(--lt-ink-600);
+  --color-ink-400: var(--lt-ink-500);
+  --color-ink-500: var(--lt-ink-400);
+  --color-ink-600: var(--lt-ink-300);
+  --color-ink-700: var(--lt-ink-200);
+  --color-ink-800: var(--lt-ink-100);
+  --color-ink-900: var(--lt-ink-50);
+  --color-ink-950: #FFFFFF;
+  --color-background: color-mix(in oklab, var(--lt-ink-950) 82%, black);
+  --color-surface-muted: var(--lt-ink-950);
+  --color-surface: color-mix(in oklab, var(--lt-ink-800) 30%, var(--lt-ink-950));
+  --color-line: color-mix(in oklab, var(--lt-ink-700) 45%, var(--lt-ink-950));
+  --color-foreground: var(--lt-ink-50);
+  --color-brand-50: color-mix(in oklab, var(--lt-brand-500) 12%, var(--lt-ink-950));
+  --color-brand-100: color-mix(in oklab, var(--lt-brand-500) 18%, var(--lt-ink-950));
+  --color-brand-200: color-mix(in oklab, var(--lt-brand-500) 28%, var(--lt-ink-950));
+  --color-brand-300: color-mix(in oklab, var(--lt-brand-500) 42%, var(--lt-ink-950));
+  --color-brand-400: var(--lt-brand-400);
+  --color-brand-500: var(--lt-brand-400);
+  --color-brand-600: var(--lt-brand-400);
+  --color-brand-700: var(--lt-brand-300);
+  --color-brand-800: var(--lt-brand-200);
+  --color-brand-900: var(--lt-brand-100);
+  --color-brand-950: var(--lt-brand-50);
+  --color-brand-wash: var(--color-brand-100);
+  --color-accent-50: color-mix(in oklab, var(--lt-accent-500) 12%, var(--lt-ink-950));
+  --color-accent-100: color-mix(in oklab, var(--lt-accent-500) 18%, var(--lt-ink-950));
+  --color-accent-200: color-mix(in oklab, var(--lt-accent-500) 28%, var(--lt-ink-950));
+  --color-accent-300: color-mix(in oklab, var(--lt-accent-500) 42%, var(--lt-ink-950));
+  --color-accent-400: var(--lt-accent-400);
+  --color-accent-500: var(--lt-accent-400);
+  --color-accent-600: var(--lt-accent-400);
+  --color-accent-700: var(--lt-accent-300);
+  --color-accent-800: var(--lt-accent-200);
+  --color-accent-900: var(--lt-accent-100);
+  --color-warn-50: color-mix(in oklab, var(--lt-warn-500) 14%, var(--lt-ink-950));
+  --color-warn-100: color-mix(in oklab, var(--lt-warn-500) 20%, var(--lt-ink-950));
+  --color-warn-200: color-mix(in oklab, var(--lt-warn-500) 34%, var(--lt-ink-950));
+  --color-danger-50: color-mix(in oklab, var(--lt-danger-500) 14%, var(--lt-ink-950));
+  --color-danger-100: color-mix(in oklab, var(--lt-danger-500) 20%, var(--lt-ink-950));
+  --color-danger-200: color-mix(in oklab, var(--lt-danger-500) 34%, var(--lt-ink-950));
+  --color-warn-600: #FBBF24;
+  --color-warn-700: #FCD34D;
+  --color-warn-800: #FDE68A;
+  --color-danger-600: #F97066;
+  --color-danger-700: #FDA29B;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.35), 0 6px 20px rgba(0, 0, 0, 0.35);
+  --shadow-lifted: 0 2px 4px rgba(0, 0, 0, 0.4), 0 16px 40px rgba(0, 0, 0, 0.5);
+  --shadow-floating: 0 4px 8px rgba(0, 0, 0, 0.45), 0 28px 64px rgba(0, 0, 0, 0.6);
+  --shadow-md: 0 1px 2px rgba(0, 0, 0, 0.35), 0 6px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 2px 4px rgba(0, 0, 0, 0.4), 0 14px 32px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 4px 8px rgba(0, 0, 0, 0.45), 0 22px 48px rgba(0, 0, 0, 0.55);
+  --shadow-2xl: 0 8px 16px rgba(0, 0, 0, 0.5), 0 32px 72px rgba(0, 0, 0, 0.65);
+}
+
+/*
+  Bands that are dark in both modes (hero, footer, dark call-to-action
+  cards) keep their light-mode tokens, so they look identical in dark mode
+  instead of being inverted. Add .keep-tone to any other such element.
+*/
+[data-mode='dark'] :is(.bg-premium-dark, .bg-ink-800, .bg-ink-900, .bg-ink-950, .keep-tone) {
+  --color-brand-50: var(--lt-brand-50);
+  --color-brand-100: var(--lt-brand-100);
+  --color-brand-200: var(--lt-brand-200);
+  --color-brand-300: var(--lt-brand-300);
+  --color-brand-400: var(--lt-brand-400);
+  --color-brand-500: var(--lt-brand-500);
+  --color-brand-600: var(--lt-brand-600);
+  --color-brand-700: var(--lt-brand-700);
+  --color-brand-800: var(--lt-brand-800);
+  --color-brand-900: var(--lt-brand-900);
+  --color-brand-950: var(--lt-brand-950);
+  --color-accent-50: var(--lt-accent-50);
+  --color-accent-100: var(--lt-accent-100);
+  --color-accent-200: var(--lt-accent-200);
+  --color-accent-300: var(--lt-accent-300);
+  --color-accent-400: var(--lt-accent-400);
+  --color-accent-500: var(--lt-accent-500);
+  --color-accent-600: var(--lt-accent-600);
+  --color-accent-700: var(--lt-accent-700);
+  --color-accent-800: var(--lt-accent-800);
+  --color-accent-900: var(--lt-accent-900);
+  --color-ink-50: var(--lt-ink-50);
+  --color-ink-100: var(--lt-ink-100);
+  --color-ink-200: var(--lt-ink-200);
+  --color-ink-300: var(--lt-ink-300);
+  --color-ink-400: var(--lt-ink-400);
+  --color-ink-500: var(--lt-ink-500);
+  --color-ink-600: var(--lt-ink-600);
+  --color-ink-700: var(--lt-ink-700);
+  --color-ink-800: var(--lt-ink-800);
+  --color-ink-900: var(--lt-ink-900);
+  --color-ink-950: var(--lt-ink-950);
+  --color-warn-50: var(--lt-warn-50);
+  --color-warn-100: var(--lt-warn-100);
+  --color-warn-200: var(--lt-warn-200);
+  --color-warn-300: var(--lt-warn-300);
+  --color-warn-500: var(--lt-warn-500);
+  --color-warn-600: var(--lt-warn-600);
+  --color-warn-700: var(--lt-warn-700);
+  --color-warn-800: var(--lt-warn-800);
+  --color-danger-50: var(--lt-danger-50);
+  --color-danger-100: var(--lt-danger-100);
+  --color-danger-200: var(--lt-danger-200);
+  --color-danger-500: var(--lt-danger-500);
+  --color-danger-600: var(--lt-danger-600);
+  --color-danger-700: var(--lt-danger-700);
+  --color-background: var(--lt-background);
+  --color-foreground: var(--lt-foreground);
+  --color-surface: var(--lt-surface);
+  --color-surface-muted: var(--lt-surface-muted);
+  --color-line: var(--lt-line);
+  --color-brand-wash: var(--lt-brand-wash);
+  --color-brand-on-dark: var(--lt-brand-on-dark);
 }
 
 :root {
   /*
-    PakFix is a light interface. Declaring it stops the browser rendering
-    native controls in dark colours for someone whose system is set to dark.
+    Light by default. Declaring it stops the browser rendering native
+    controls in dark colours unless the visitor picks dark mode.
   */
   color-scheme: light;
 
@@ -241,6 +555,11 @@
   --brand-very-soft: var(--color-brand-50);
   --body-text: var(--color-ink-600);
   --muted-text: var(--color-ink-500);
+}
+
+/* After :root so it beats its color-scheme: light. */
+[data-mode='dark'] {
+  color-scheme: dark;
 }
 
 @layer base {

@@ -13,7 +13,7 @@ export function PrivacyContent() {
         title={t('Privacy Policy', 'رازداری کی پالیسی')}
         subtitle={t('Last updated: January 2026', 'آخری تازہ کاری: جنوری 2026')}
       />
-      <section className="py-12 sm:py-20 bg-white">
+      <section className="py-12 sm:py-20 bg-surface">
         <Container size="narrow">
           <div className="prose max-w-none text-xs sm:text-sm text-ink-600 leading-relaxed space-y-6">
             <h2 className="text-lg font-bold text-ink-900">{t('1. Data We Collect', '1. ہم کون سا ڈیٹا جمع کرتے ہیں')}</h2>

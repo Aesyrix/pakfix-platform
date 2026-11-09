@@ -26,7 +26,7 @@ export function HeroProductVisual() {
             </div>
           </div>
           <span className="inline-flex items-center gap-1 rounded-full bg-brand-100 px-2.5 py-0.5 text-[11px] font-bold text-brand-700">
-            <span className="h-1.5 w-1.5 rounded-full bg-brand-600 animate-pulse" />
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-solid animate-pulse" />
             {t('86% Confidence', '86% اعتماد')}
           </span>
         </div>
@@ -39,7 +39,7 @@ export function HeroProductVisual() {
               <div className="absolute inset-0 bg-gradient-to-tr from-ink-800 to-ink-600 flex items-center justify-center text-white">
                 <Wrench className="h-6 w-6 text-brand-on-dark" />
               </div>
-              <span className="absolute bottom-1 end-1 flex h-3 w-3 items-center justify-center rounded-full bg-brand-600 text-[8px] text-white">
+              <span className="absolute bottom-1 end-1 flex h-3 w-3 items-center justify-center rounded-full bg-brand-solid text-[8px] text-white">
                 ✓
               </span>
             </div>
@@ -93,7 +93,7 @@ export function HeroProductVisual() {
               <div className="h-11 w-11 rounded-full bg-gradient-to-tr from-brand-600 to-accent-600 flex items-center justify-center text-white font-bold text-sm shadow-xs">
                 AH
               </div>
-              <span className="absolute -bottom-0.5 -end-0.5 h-4 w-4 rounded-full bg-brand-600 border-2 border-white flex items-center justify-center text-[9px] text-white">
+              <span className="absolute -bottom-0.5 -end-0.5 h-4 w-4 rounded-full bg-brand-solid border-2 border-white flex items-center justify-center text-[9px] text-white">
                 ✓
               </span>
             </div>
@@ -114,7 +114,7 @@ export function HeroProductVisual() {
 
           <Link
             href="/find-a-technician"
-            className="inline-flex items-center gap-1 rounded-xl bg-brand-600 px-3.5 py-2 text-xs font-bold text-white shadow-xs hover:bg-brand-700 transition-colors shrink-0"
+            className="inline-flex items-center gap-1 rounded-xl bg-brand-solid px-3.5 py-2 text-xs font-bold text-white shadow-xs hover:bg-brand-solid-hover transition-colors shrink-0"
           >
             {t('Book Now', 'ابھی بک کریں')}
             <ArrowUpRight className="h-3.5 w-3.5" />

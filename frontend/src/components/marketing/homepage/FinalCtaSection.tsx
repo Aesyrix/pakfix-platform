@@ -14,7 +14,7 @@ export function FinalCtaSection() {
     <section className="py-20 sm:py-28 bg-premium-dark text-white relative isolate overflow-hidden">
       <Container size="narrow">
         <div className="text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/15 text-brand-on-dark text-xs font-semibold">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface/[0.06] border border-white/15 text-brand-on-dark text-xs font-semibold">
             <Sparkles className="h-4 w-4" />
             <span>{t('Ready to Fix It?', 'ٹھیک کرنے کے لیے تیار؟')}</span>
           </div>
@@ -39,7 +39,7 @@ export function FinalCtaSection() {
 
             <Link
               href={{ pathname: '/ai', query: { text } }}
-              className="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold transition-colors shrink-0"
+              className="px-5 py-2.5 rounded-xl bg-brand-solid hover:bg-brand-solid-hover text-white text-xs font-bold transition-colors shrink-0"
             >
               {t('Ask PakFix AI', 'پاک فکس اے آئی سے پوچھیں')}
             </Link>
@@ -48,7 +48,7 @@ export function FinalCtaSection() {
           <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
             <Link
               href="/ai"
-              className="px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold transition-colors shadow-md"
+              className="px-6 py-3 rounded-xl bg-brand-solid hover:bg-brand-solid-hover text-white text-xs font-bold transition-colors shadow-md"
             >
               {t('Ask PakFix AI', 'پاک فکس اے آئی سے پوچھیں')}
             </Link>

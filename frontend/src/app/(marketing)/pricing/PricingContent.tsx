@@ -54,7 +54,7 @@ export function PricingContent() {
         subtitle={t('Upfront market price ranges for labor and inspection. Know what to expect before booking.', 'مزدوری اور معائنے کے لیے پیشگی مارکیٹ قیمت کی حدود۔ بکنگ سے پہلے جانیں کیا توقع رکھنی ہے۔')}
       />
 
-      <section className="py-12 sm:py-20 bg-white">
+      <section className="py-12 sm:py-20 bg-surface">
         <Container>
           <div className="max-w-4xl mx-auto space-y-12">
             {/* Price Table Card */}
@@ -73,7 +73,7 @@ export function PricingContent() {
                   </thead>
                   <tbody className="divide-y divide-line font-medium text-ink-900">
                     {priceGrid.map((row) => (
-                      <tr key={row.service.en} className="hover:bg-white transition-colors">
+                      <tr key={row.service.en} className="hover:bg-surface transition-colors">
                         <td className="py-3.5 px-4 font-bold text-brand-600">{t(row.service.en, row.service.ur)}</td>
                         <td className="py-3.5 px-4">{t(row.visitFee.en, row.visitFee.ur)}</td>
                         <td className="py-3.5 px-4 font-bold">{t(row.labour.en, row.labour.ur)}</td>

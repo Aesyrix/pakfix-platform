@@ -28,7 +28,7 @@ export function AppBottomNav({
     <nav
       aria-label={t(ariaLabel, ariaLabelUr)}
       className={cn(
-        'fixed inset-x-0 bottom-0 z-40 border-t border-line/70 bg-white/85 backdrop-blur-xl backdrop-saturate-150 shadow-[0_-8px_24px_rgba(19,25,21,0.06)]',
+        'fixed inset-x-0 bottom-0 z-40 border-t border-line/70 bg-surface/85 backdrop-blur-xl backdrop-saturate-150 shadow-[0_-8px_24px_rgba(19,25,21,0.06)]',
         'pb-[env(safe-area-inset-bottom,0px)] lg:hidden'
       )}
     >
@@ -47,7 +47,7 @@ export function AppBottomNav({
                   active ? 'text-brand-600' : 'text-ink-500 hover:text-foreground'
                 )}
               >
-                {active && <span className="absolute top-0 h-0.5 w-8 rounded-full bg-brand-600" />}
+                {active && <span className="absolute top-0 h-0.5 w-8 rounded-full bg-brand-solid" />}
                 <Icon
                   className={cn(
                     'h-5 w-5 transition-transform',

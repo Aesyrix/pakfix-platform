@@ -15,7 +15,7 @@ export function SafetyNoticeSection() {
   ];
 
   return (
-    <section className="py-12 bg-white border-b border-line">
+    <section className="py-12 bg-surface border-b border-line">
       <Container>
         <div className="bg-danger-50 rounded-2xl border-2 border-danger-500/20 p-6 sm:p-8 relative overflow-hidden">
           <div className="grid lg:grid-cols-12 gap-8 items-center">
@@ -45,7 +45,7 @@ export function SafetyNoticeSection() {
             {/* Right Hazards Grid */}
             <div className="lg:col-span-7 grid sm:grid-cols-2 gap-3">
               {hazards.map((h) => (
-                <div key={h.en} className="bg-white rounded-xl p-3.5 border border-line space-y-1">
+                <div key={h.en} className="bg-surface rounded-xl p-3.5 border border-line space-y-1">
                   <div className="flex items-center gap-2 text-xs font-bold text-ink-900">
                     <AlertTriangle className="h-3.5 w-3.5 text-danger-600" />
                     <span>{t(h.en, h.ur)}</span>

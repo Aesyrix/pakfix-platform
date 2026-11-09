@@ -29,7 +29,7 @@ export function PakFixLogo({ className, showWordmark = true, isDarkBackground = 
         aria-label={t('PakFix logo', 'پاک فکس لوگو')}
       >
         {/* Rounded Container Box */}
-        <rect width="36" height="36" rx="10" className="fill-brand-600" />
+        <rect width="36" height="36" rx="10" className="fill-brand-solid" />
         
         {/* House Roofline */}
         <path

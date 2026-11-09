@@ -51,7 +51,7 @@ export function CustomerReviewsSection() {
           {promises.map((promise) => (
             <div
               key={promise.title}
-              className="bg-white rounded-2xl border border-line p-6 shadow-2xs hover:shadow-card transition-all"
+              className="bg-surface rounded-2xl border border-line p-6 shadow-2xs hover:shadow-card transition-all"
             >
               <div className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-100 border border-brand-200">{promise.icon}</div>
               <h3 className="mt-4 text-sm font-bold text-ink-900">{promise.title}</h3>

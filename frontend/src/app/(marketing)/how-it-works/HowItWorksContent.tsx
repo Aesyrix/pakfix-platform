@@ -91,7 +91,7 @@ export function HowItWorksContent() {
       />
 
       {/* Main Steps Timeline */}
-      <section className="py-12 sm:py-20 bg-white">
+      <section className="py-12 sm:py-20 bg-surface">
         <Container>
           <div className="space-y-16">
             {steps.map((step, idx) => {
@@ -131,7 +131,7 @@ export function HowItWorksContent() {
                         <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-100 text-brand-800">
                           <Icon className="h-6 w-6" />
                         </div>
-                        <span className="text-xs font-bold px-3 py-1 rounded-full bg-white text-brand-700 border border-line">
+                        <span className="text-xs font-bold px-3 py-1 rounded-full bg-surface text-brand-700 border border-line">
                           {t('PakFix Standard', 'پاک فکس معیار')}
                         </span>
                       </div>
@@ -151,17 +151,17 @@ export function HowItWorksContent() {
       <section className="py-12 bg-brand-100 border-t border-b border-line">
         <Container>
           <div className="grid md:grid-cols-3 gap-6 text-center">
-            <div className="bg-white p-6 rounded-2xl border border-line space-y-2">
+            <div className="bg-surface p-6 rounded-2xl border border-line space-y-2">
               <ShieldCheck className="h-8 w-8 text-brand-600 mx-auto" />
               <h3 className="text-sm font-bold text-ink-900">{t('Verified Technicians', 'تصدیق شدہ ٹیکنیشن')}</h3>
               <p className="text-xs text-ink-500">{t('CNIC and selfie checked by our team.', 'شناختی کارڈ اور سیلفی کی جانچ ہماری ٹیم کرتی ہے۔')}</p>
             </div>
-            <div className="bg-white p-6 rounded-2xl border border-line space-y-2">
+            <div className="bg-surface p-6 rounded-2xl border border-line space-y-2">
               <Sparkles className="h-8 w-8 text-brand-600 mx-auto" />
               <h3 className="text-sm font-bold text-ink-900">{t('AI Safety Audit', 'اے آئی حفاظتی آڈٹ')}</h3>
               <p className="text-xs text-ink-500">{t('Checks for gas, electrical & high-risk hazards.', 'گیس، بجلی اور زیادہ خطرے کے امور کی جانچ۔')}</p>
             </div>
-            <div className="bg-white p-6 rounded-2xl border border-line space-y-2">
+            <div className="bg-surface p-6 rounded-2xl border border-line space-y-2">
               <PhoneCall className="h-8 w-8 text-brand-600 mx-auto" />
               <h3 className="text-sm font-bold text-ink-900">{t('Help When You Need It', 'جب ضرورت ہو مدد')}</h3>
               <p className="text-xs text-ink-500">{t('Message our support team any time.', 'ہماری سپورٹ ٹیم کو کسی بھی وقت پیغام بھیجیں۔')}</p>
@@ -171,7 +171,7 @@ export function HowItWorksContent() {
           <div className="mt-10 text-center">
             <Link
               href="/ai"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold shadow-md transition-all"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-brand-solid hover:bg-brand-solid-hover text-white text-sm font-bold shadow-md transition-all"
             >
               <span>{t('Try AI Diagnosis Now', 'ابھی اے آئی تشخیص آزمائیں')}</span>
               <ArrowRight className="h-4 w-4 rtl:rotate-180" />

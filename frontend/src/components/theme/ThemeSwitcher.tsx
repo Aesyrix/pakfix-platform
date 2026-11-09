@@ -1,9 +1,20 @@
 'use client';
 
-import { Check, Palette } from 'lucide-react';
+import { Check, Moon, Palette, Sun } from 'lucide-react';
 import { useEffect, useId, useRef, useState, useSyncExternalStore } from 'react';
 import { useT } from '@/components/i18n/LocaleProvider';
-import { applyTheme, getServerThemeSnapshot, getThemeSnapshot, subscribeTheme, THEMES, type ThemeId } from '@/lib/theme';
+import {
+  applyMode,
+  applyTheme,
+  getModeSnapshot,
+  getServerModeSnapshot,
+  getServerThemeSnapshot,
+  getThemeSnapshot,
+  subscribeMode,
+  subscribeTheme,
+  THEMES,
+  type ThemeId,
+} from '@/lib/theme';
 import { cn } from '@/lib/utils/cn';
 
 /**
@@ -27,6 +38,7 @@ export function ThemeSwitcher({
   const [open, setOpen] = useState(false);
   // The init script has already applied the saved theme before paint.
   const current = useSyncExternalStore(subscribeTheme, getThemeSnapshot, getServerThemeSnapshot);
+  const mode = useSyncExternalStore(subscribeMode, getModeSnapshot, getServerModeSnapshot);
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -63,7 +75,7 @@ export function ThemeSwitcher({
         aria-label={t('Change colour theme', 'رنگوں کا انداز تبدیل کریں')}
         className={cn(
           'inline-flex min-h-9 cursor-pointer items-center gap-1.5 rounded-[var(--radius-control)] px-2.5 text-xs font-semibold transition-colors',
-          onDark ? 'text-ink-300 hover:bg-white/10 hover:text-white' : 'text-ink-600 hover:bg-surface-muted hover:text-foreground'
+          onDark ? 'text-ink-300 hover:bg-surface/10 hover:text-white' : 'text-ink-600 hover:bg-surface-muted hover:text-foreground'
         )}
       >
         <Palette className="h-3.5 w-3.5" aria-hidden="true" />
@@ -81,7 +93,31 @@ export function ThemeSwitcher({
             placement === 'below' ? 'top-full mt-2' : 'bottom-full mb-2'
           )}
         >
-          <p className="px-2.5 pb-1 pt-1.5 text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-ink-500">
+          <p className="px-2.5 pb-1.5 pt-1.5 text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-ink-500">
+            {t('Appearance', 'ظاہری انداز')}
+          </p>
+          <div className="mx-1 mb-2 grid grid-cols-2 gap-1 rounded-xl bg-surface-muted p-1">
+            {(['light', 'dark'] as const).map((value) => {
+              const Icon = value === 'light' ? Sun : Moon;
+              const selected = mode === value;
+              return (
+                <button
+                  key={value}
+                  type="button"
+                  onClick={() => applyMode(value)}
+                  aria-pressed={selected}
+                  className={cn(
+                    'inline-flex min-h-9 cursor-pointer items-center justify-center gap-1.5 rounded-lg text-xs font-semibold transition-all',
+                    selected ? 'bg-surface text-foreground shadow-sm' : 'text-ink-500 hover:text-foreground'
+                  )}
+                >
+                  <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+                  {value === 'light' ? t('Light', 'روشن') : t('Dark', 'تاریک')}
+                </button>
+              );
+            })}
+          </div>
+          <p className="px-2.5 pb-1 pt-1 text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-ink-500">
             {t('Colour theme', 'رنگوں کا انداز')}
           </p>
           <ul>

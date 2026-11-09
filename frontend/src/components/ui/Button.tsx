@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils/cn';
 const button = cva(
   [
     'inline-flex items-center justify-center gap-2 font-semibold',
-    'rounded-[var(--radius-control)] transition-[background-color,border-color,color,box-shadow,transform] duration-200 active:translate-y-px',
+    'rounded-[var(--radius-button)] transition-[background-color,border-color,color,box-shadow,transform] duration-200 active:translate-y-px',
     'disabled:pointer-events-none disabled:opacity-50',
     'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600',
     'min-h-[44px] touch-manipulation select-none cursor-pointer',
@@ -21,15 +21,15 @@ const button = cva(
     variants: {
       variant: {
         primary:
-          'bg-brand-600 text-white shadow-[var(--shadow-sm)] hover:bg-brand-700 hover:shadow-[var(--shadow-brand)] active:bg-brand-800',
+          'bg-brand-solid text-white shadow-[var(--shadow-sm)] hover:bg-brand-solid-hover hover:shadow-[var(--shadow-brand)] active:bg-brand-solid-hover',
         accent:
-          'bg-accent-600 text-white shadow-[var(--shadow-sm)] hover:bg-accent-700 active:bg-accent-800',
+          'bg-accent-solid text-white shadow-[var(--shadow-sm)] hover:bg-accent-solid-hover active:bg-accent-solid-hover',
         secondary:
           'bg-surface text-foreground border border-line shadow-[var(--shadow-sm)] hover:bg-surface-muted hover:border-ink-300',
         outline:
           'bg-transparent text-brand-600 border-2 border-brand-600 hover:bg-brand-50 hover:text-brand-700',
         ghost: 'bg-transparent text-foreground hover:bg-surface-muted',
-        danger: 'bg-danger-500 text-white hover:bg-danger-600 active:bg-danger-700',
+        danger: 'bg-danger-500 text-white hover:bg-danger-solid-hover active:bg-danger-solid-hover',
         link: 'bg-transparent text-brand-600 underline underline-offset-4 hover:text-brand-700 min-h-0 p-0',
       },
       size: {
