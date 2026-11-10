@@ -5,9 +5,9 @@ import { AssistantView } from '@/components/marketing/views/AssistantView';
 import { pageMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Ask PakFix: Check a Home Problem',
+  title: 'Ask PakFix: Check Any Problem',
   description:
-    'Describe what is wrong at home. PakFix checks it for danger first, tells you what to do in an emergency, and points you to the right verified professional.',
+    'Describe what is wrong. PakFix checks it for danger first, tells you what to do in an emergency, and points you to the right verified professional.',
   path: '/ai',
 });
 

@@ -29,7 +29,7 @@ const ROLE_OPTIONS: Array<{
   hint: string;
   hintUr: string;
 }> = [
-  { value: 'customer', label: 'I need something fixed', labelUr: 'مجھے کچھ ٹھیک کروانا ہے', hint: 'Book repairs and maintenance for your home.', hintUr: 'اپنے گھر کے لیے مرمت اور دیکھ بھال بک کریں۔' },
+  { value: 'customer', label: 'I need something fixed', labelUr: 'مجھے کچھ ٹھیک کروانا ہے', hint: 'Book repairs and maintenance for your home, office or shop.', hintUr: 'اپنے گھر، دفتر یا دکان کے لیے مرمت اور دیکھ بھال بک کریں۔' },
   { value: 'technician', label: 'I am a professional', labelUr: 'میں ایک پروفیشنل ہوں', hint: 'Receive jobs and quote for work near you.', hintUr: 'اپنے قریب کام کے جاب وصول کریں اور کوٹ دیں۔' },
   { value: 'company', label: 'I run a service company', labelUr: 'میں سروس کمپنی چلاتا ہوں', hint: 'Manage a team of technicians and their jobs.', hintUr: 'ٹیکنیشنز کی ٹیم اور ان کے کام سنبھالیں۔' },
   { value: 'property_manager', label: 'I manage properties', labelUr: 'میں پراپرٹیز کا انتظام کرتا ہوں', hint: 'Track maintenance across multiple units.', hintUr: 'متعدد یونٹس میں دیکھ بھال ٹریک کریں۔' },
@@ -157,13 +157,13 @@ export function RegisterForm({
       <div className="space-y-2">
         <div className="flex items-center justify-between text-xs font-bold text-ink-500">
           <span>{t('STEP', 'مرحلہ')} {step} {t('OF 3', 'از 3')}</span>
-          <span className="text-[#00824A]">
+          <span className="text-brand-600">
             {step === 1 ? t('Account Type', 'اکاؤنٹ کی قسم') : step === 2 ? t('Personal Info', 'ذاتی معلومات') : t('Security & Terms', 'سیکیورٹی اور شرائط')}
           </span>
         </div>
         <div className="h-2 w-full rounded-full bg-surface-muted overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-[#00824A] to-[#2563EB] transition-all duration-300"
+            className="h-full bg-gradient-to-r from-brand-600 to-accent-600 transition-all duration-300"
             style={{ width: `${(step / 3) * 100}%` }}
           />
         </div>
@@ -190,14 +190,14 @@ export function RegisterForm({
                 className={cn(
                   'flex cursor-pointer items-start gap-3 rounded-2xl border p-4 transition-all duration-200',
                   selectedRole === option.value
-                    ? 'border-[#00824A] bg-[#DCFCE7]/40 shadow-xs'
-                    : 'border-[var(--border)] hover:bg-surface-muted'
+                    ? 'border-brand-600 bg-brand-100/40 shadow-xs'
+                    : 'border-line hover:bg-surface-muted'
                 )}
               >
                 <input
                   type="radio"
                   value={option.value}
-                  className="mt-1 h-4 w-4 accent-[#00824A]"
+                  className="mt-1 h-4 w-4 accent-brand-600"
                   {...register('role')}
                 />
                 <span>
@@ -300,11 +300,11 @@ export function RegisterForm({
               label={
                 <>
                   {t('I agree to the', 'میں متفق ہوں')}{' '}
-                  <Link href="/terms-of-service" className="font-semibold text-[#00824A] underline">
+                  <Link href="/terms-of-service" className="font-semibold text-brand-600 underline">
                     {t('terms of service', 'شرائطِ خدمات')}
                   </Link>{' '}
                   {t('and', 'اور')}{' '}
-                  <Link href="/privacy-policy" className="font-semibold text-[#00824A] underline">
+                  <Link href="/privacy-policy" className="font-semibold text-brand-600 underline">
                     {t('privacy policy', 'رازداری پالیسی')}
                   </Link>
                   .

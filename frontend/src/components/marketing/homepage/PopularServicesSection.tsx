@@ -34,23 +34,23 @@ export function PopularServicesSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-white border-b border-[#E5E7EB]">
+    <section className="py-16 sm:py-24 bg-surface">
       <Container>
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-10">
           <div>
-            <span className="text-xs font-bold text-[#00824A] uppercase tracking-wider">{t('Services', 'خدمات')}</span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#161616] mt-1">
+            <span className="eyebrow">{t('Services', 'خدمات')}</span>
+            <h2 className="section-title text-ink-900 mt-3">
               {t('Whatever needs fixing, start here.', 'جو بھی ٹھیک کرانا ہو، یہاں سے شروع کریں۔')}
             </h2>
-            <p className="text-sm text-[#475467] mt-1">
-              {t('Find the right verified professional for common household repairs across Pakistan.', 'پاکستان بھر میں عام گھریلو مرمت کے لیے صحیح تصدیق شدہ پروفیشنل تلاش کریں۔')}
+            <p className="text-sm text-ink-600 mt-1">
+              {t('Find the right verified professional for common repairs across Pakistan.', 'پاکستان بھر میں عام مرمت کے لیے صحیح تصدیق شدہ پروفیشنل تلاش کریں۔')}
             </p>
           </div>
 
           <Link
             href="/services"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#00824A] hover:text-[#006B3C] transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-600 hover:text-brand-700 transition-colors"
           >
             <span>{t('View All Services', 'تمام خدمات دیکھیں')}</span>
             <ArrowRight className="h-4 w-4" />
@@ -66,10 +66,10 @@ export function PopularServicesSection() {
               <Link
                 key={s.en}
                 href={s.href}
-                className="group relative bg-[#F8FAF9] hover:bg-white rounded-2xl border border-[#E5E7EB] hover:border-[#00824A] p-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-card flex flex-col justify-between h-full"
+                className="group relative bg-surface-muted hover:bg-surface rounded-2xl border border-line hover:border-brand-300 p-3 transition-all duration-200 hover:-translate-y-1 hover:shadow-card flex flex-col justify-between h-full"
               >
                 <div>
-                  <div className="relative mb-4 h-24 w-full overflow-hidden rounded-xl bg-[#EAF7F0]">
+                  <div className="relative mb-4 h-24 w-full overflow-hidden rounded-xl bg-brand-100">
                     {image ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
@@ -78,17 +78,17 @@ export function PopularServicesSection() {
                         className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                     ) : null}
-                    <span className="absolute bottom-2 start-2 flex h-9 w-9 items-center justify-center rounded-lg border border-[#E5E7EB] bg-white/95 text-[#161616] shadow-sm backdrop-blur-xs transition-colors group-hover:text-[#00824A]">
+                    <span className="absolute bottom-2 start-2 flex h-9 w-9 items-center justify-center rounded-lg border border-line bg-surface/95 text-ink-900 shadow-sm backdrop-blur-xs transition-colors group-hover:text-brand-600">
                       <Icon className="h-4 w-4" />
                     </span>
                   </div>
-                  <h3 className="px-2 text-base font-bold text-[#161616] group-hover:text-[#00824A] transition-colors">
+                  <h3 className="px-2 text-base font-bold text-ink-900 group-hover:text-brand-600 transition-colors">
                     {t(s.en, s.ur)}
                   </h3>
-                  <p className="px-2 text-xs text-[#667085] mt-1 leading-relaxed">{t(s.den, s.dur)}</p>
+                  <p className="px-2 text-xs text-ink-500 mt-1 leading-relaxed">{t(s.den, s.dur)}</p>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-[#E5E7EB] flex items-center justify-between text-xs font-semibold text-[#00824A]">
+                <div className="mt-4 pt-3 border-t border-line flex items-center justify-between text-xs font-semibold text-brand-600">
                   <span>{t('Book Now', 'ابھی بک کریں')}</span>
                   <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1 rtl:rotate-180" />
                 </div>

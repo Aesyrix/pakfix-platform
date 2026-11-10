@@ -46,14 +46,14 @@ export function SafetyContent() {
         subtitle={t("Your family's safety and peace of mind are our highest priorities.", 'آپ کے خاندان کی حفاظت اور اطمینان ہماری سب سے بڑی ترجیح ہے۔')}
       />
 
-      <section className="py-12 sm:py-20 bg-white">
+      <section className="py-12 sm:py-20 bg-surface">
         <Container>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {protocols.map((p) => (
-              <div key={p.title.en} className="bg-[#F8FAF9] rounded-2xl p-6 border border-[#E5E7EB] space-y-3">
-                <ShieldCheck className="h-8 w-8 text-[#00824A]" />
-                <h3 className="text-base font-bold text-[#161616]">{t(p.title.en, p.title.ur)}</h3>
-                <p className="text-xs text-[#667085] leading-relaxed">{t(p.desc.en, p.desc.ur)}</p>
+              <div key={p.title.en} className="bg-surface-muted rounded-2xl p-6 border border-line space-y-3">
+                <ShieldCheck className="h-8 w-8 text-brand-600" />
+                <h3 className="text-base font-bold text-ink-900">{t(p.title.en, p.title.ur)}</h3>
+                <p className="text-xs text-ink-500 leading-relaxed">{t(p.desc.en, p.desc.ur)}</p>
               </div>
             ))}
           </div>

@@ -93,35 +93,35 @@ export function QuickBookingFormSection() {
   };
 
   return (
-    <section className="py-16 sm:py-24 bg-white border-b border-[#E5E7EB]" id="quick-booking">
+    <section className="py-16 sm:py-24 bg-surface" id="quick-booking">
       <Container>
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           {/* Left Text Column */}
           <div className="lg:col-span-5 space-y-4">
-            <span className="text-xs font-bold text-[#00824A] uppercase tracking-wider">{t('Fast Booking', 'فوری بکنگ')}</span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-[#161616]">
+            <span className="eyebrow">{t('Fast Booking', 'فوری بکنگ')}</span>
+            <h2 className="section-title text-ink-900">
               {t('Know what you need?', 'جانتے ہیں کیا چاہیے؟')}<br />
-              <span className="text-[#00824A]">{t('Book a service.', 'سروس بک کریں۔')}</span>
+              <span className="text-gradient-brand">{t('Book a service.', 'سروس بک کریں۔')}</span>
             </h2>
-            <p className="text-sm text-[#475467] leading-relaxed">
+            <p className="text-sm text-ink-600 leading-relaxed">
               {t('Tell us what you need and the PakFix team will help you get it sorted by a verified professional.', 'بتائیں کیا چاہیے، پاک فکس ٹیم تصدیق شدہ پروفیشنل کے ذریعے آپ کا کام کروانے میں مدد کرے گی۔')}
             </p>
 
             <div className="pt-4 space-y-3">
-              <div className="flex items-center gap-3 text-xs font-semibold text-[#161616]">
-                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#EAF7F0] text-[#00532C]">
+              <div className="flex items-center gap-3 text-xs font-semibold text-ink-900">
+                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-100 text-brand-800">
                   <CheckCircle2 className="h-4 w-4" />
                 </div>
                 <span>{t('Verified & skilled professionals', 'تصدیق شدہ اور ہنرمند پروفیشنلز')}</span>
               </div>
-              <div className="flex items-center gap-3 text-xs font-semibold text-[#161616]">
-                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#EAF7F0] text-[#00532C]">
+              <div className="flex items-center gap-3 text-xs font-semibold text-ink-900">
+                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-100 text-brand-800">
                   <CheckCircle2 className="h-4 w-4" />
                 </div>
                 <span>{t('Clear PKR prices you approve first', 'روپے میں واضح قیمت، پہلے آپ کی منظوری')}</span>
               </div>
-              <div className="flex items-center gap-3 text-xs font-semibold text-[#161616]">
-                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#EAF7F0] text-[#00532C]">
+              <div className="flex items-center gap-3 text-xs font-semibold text-ink-900">
+                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-100 text-brand-800">
                   <CheckCircle2 className="h-4 w-4" />
                 </div>
                 <span>{t('Follow your job step by step', 'اپنے کام کا ہر مرحلہ دیکھیں')}</span>
@@ -133,13 +133,13 @@ export function QuickBookingFormSection() {
           <div className="lg:col-span-7">
             <form
               onSubmit={handleSubmit}
-              className="bg-[#F8FAF9] rounded-2xl border border-[#E5E7EB] p-6 sm:p-8 shadow-card space-y-4"
+              className="bg-surface-muted rounded-2xl border border-line p-6 sm:p-8 shadow-card space-y-4"
             >
-              <h3 className="text-lg font-bold text-[#161616]">{t('Service Booking Form', 'سروس بکنگ فارم')}</h3>
+              <h3 className="text-lg font-bold text-ink-900">{t('Service Booking Form', 'سروس بکنگ فارم')}</h3>
 
               {success ? (
-                <div className="p-4 rounded-xl bg-[#EAF7F0] border border-[#C2ECCF] text-[#006838] text-xs font-semibold flex items-start gap-2">
-                  <CheckCircle2 className="h-5 w-5 shrink-0 text-[#00824A]" />
+                <div className="p-4 rounded-xl bg-brand-100 border border-brand-200 text-brand-700 text-xs font-semibold flex items-start gap-2">
+                  <CheckCircle2 className="h-5 w-5 shrink-0 text-brand-600" />
                   <div>
                     <p className="font-bold text-sm">{t('Request received!', 'درخواست موصول ہو گئی!')}</p>
                     <p className="mt-0.5">{t('The PakFix team will contact you about your request.', 'پاک فکس ٹیم آپ کی درخواست کے بارے میں آپ سے رابطہ کرے گی۔')}</p>
@@ -148,7 +148,7 @@ export function QuickBookingFormSection() {
               ) : null}
 
               {error ? (
-                <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium flex items-center gap-2">
+                <div className="p-3 rounded-xl bg-danger-50 border border-danger-200 text-danger-700 text-xs font-medium flex items-center gap-2">
                   <AlertCircle className="h-4 w-4 shrink-0" />
                   <span>{error}</span>
                 </div>
@@ -161,14 +161,14 @@ export function QuickBookingFormSection() {
                   { key: 'email', type: 'email', en: 'Email', ur: 'ای میل', hint: 'you@example.com' },
                 ].map((field) => (
                   <div key={field.key}>
-                    <label className="block text-xs font-bold text-[#161616] mb-1.5">{t(field.en, field.ur)}</label>
+                    <label className="block text-xs font-bold text-ink-900 mb-1.5">{t(field.en, field.ur)}</label>
                     <input
                       type={field.type}
                       required
                       placeholder={field.hint}
                       value={formData[field.key as 'name' | 'phone' | 'email']}
                       onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
-                      className="w-full rounded-xl border border-[#E5E7EB] bg-white p-3 text-xs text-[#161616] outline-none focus:border-[#00824A]"
+                      className="w-full rounded-xl border border-line bg-surface p-3 text-xs text-ink-900 outline-none focus:border-brand-600"
                     />
                   </div>
                 ))}
@@ -177,11 +177,11 @@ export function QuickBookingFormSection() {
               <div className="grid sm:grid-cols-2 gap-4">
                 {/* Service Selection */}
                 <div>
-                  <label className="block text-xs font-bold text-[#161616] mb-1.5">{t('Service Needed', 'مطلوبہ سروس')}</label>
+                  <label className="block text-xs font-bold text-ink-900 mb-1.5">{t('Service Needed', 'مطلوبہ سروس')}</label>
                   <select
                     value={formData.service}
                     onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                    className="w-full rounded-xl border border-[#E5E7EB] bg-white p-3 text-xs text-[#161616] outline-none focus:border-[#00824A]"
+                    className="w-full rounded-xl border border-line bg-surface p-3 text-xs text-ink-900 outline-none focus:border-brand-600"
                   >
                     {services.map((s) => (
                       <option key={s.en} value={s.en}>{t(s.en, s.ur)}</option>
@@ -191,11 +191,11 @@ export function QuickBookingFormSection() {
 
                 {/* City Selection */}
                 <div>
-                  <label className="block text-xs font-bold text-[#161616] mb-1.5">{t('City', 'شہر')}</label>
+                  <label className="block text-xs font-bold text-ink-900 mb-1.5">{t('City', 'شہر')}</label>
                   <select
                     value={formData.city}
                     onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                    className="w-full rounded-xl border border-[#E5E7EB] bg-white p-3 text-xs text-[#161616] outline-none focus:border-[#00824A]"
+                    className="w-full rounded-xl border border-line bg-surface p-3 text-xs text-ink-900 outline-none focus:border-brand-600"
                   >
                     {cities.map((c) => (
                       <option key={c.en} value={c.en}>{t(c.en, c.ur)}</option>
@@ -206,7 +206,7 @@ export function QuickBookingFormSection() {
 
               {/* Area / Address */}
               <div>
-                <label className="block text-xs font-bold text-[#161616] mb-1.5">{t('Area / Street Address', 'علاقہ / گلی کا پتہ')}</label>
+                <label className="block text-xs font-bold text-ink-900 mb-1.5">{t('Area / Street Address', 'علاقہ / گلی کا پتہ')}</label>
                 <div className="relative">
                   <input
                     type="text"
@@ -214,33 +214,33 @@ export function QuickBookingFormSection() {
                     placeholder={t('e.g. House 45, Street 12, Sector F-8/2', 'مثلاً مکان 45، گلی 12، سیکٹر F-8/2')}
                     value={formData.address}
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                    className="w-full rounded-xl border border-[#E5E7EB] bg-white p-3 ps-9 text-xs text-[#161616] placeholder-[#9CA3AF] outline-none focus:border-[#00824A]"
+                    className="w-full rounded-xl border border-line bg-surface p-3 ps-9 text-xs text-ink-900 placeholder-ink-400 outline-none focus:border-brand-600"
                   />
-                  <MapPin className="h-4 w-4 text-[#667085] absolute start-3 top-3.5" />
+                  <MapPin className="h-4 w-4 text-ink-500 absolute start-3 top-3.5" />
                 </div>
               </div>
 
               <div className="grid sm:grid-cols-2 gap-4">
                 {/* Preferred Date */}
                 <div>
-                  <label className="block text-xs font-bold text-[#161616] mb-1.5">{t('Preferred Date', 'پسندیدہ تاریخ')}</label>
+                  <label className="block text-xs font-bold text-ink-900 mb-1.5">{t('Preferred Date', 'پسندیدہ تاریخ')}</label>
                   <div className="relative">
                     <input
                       type="date"
                       value={formData.preferred_date}
                       onChange={(e) => setFormData({ ...formData, preferred_date: e.target.value })}
-                      className="w-full rounded-xl border border-[#E5E7EB] bg-white p-3 text-xs text-[#161616] outline-none focus:border-[#00824A]"
+                      className="w-full rounded-xl border border-line bg-surface p-3 text-xs text-ink-900 outline-none focus:border-brand-600"
                     />
                   </div>
                 </div>
 
                 {/* Preferred Time */}
                 <div>
-                  <label className="block text-xs font-bold text-[#161616] mb-1.5">{t('Preferred Time', 'پسندیدہ وقت')}</label>
+                  <label className="block text-xs font-bold text-ink-900 mb-1.5">{t('Preferred Time', 'پسندیدہ وقت')}</label>
                   <select
                     value={formData.preferred_time}
                     onChange={(e) => setFormData({ ...formData, preferred_time: e.target.value })}
-                    className="w-full rounded-xl border border-[#E5E7EB] bg-white p-3 text-xs text-[#161616] outline-none focus:border-[#00824A]"
+                    className="w-full rounded-xl border border-line bg-surface p-3 text-xs text-ink-900 outline-none focus:border-brand-600"
                   >
                     {times.map((tm) => (
                       <option key={tm.en} value={tm.en}>{t(tm.en, tm.ur)}</option>
@@ -251,19 +251,19 @@ export function QuickBookingFormSection() {
 
               {/* Description */}
               <div>
-                <label className="block text-xs font-bold text-[#161616] mb-1.5">{t('Problem Description', 'مسئلے کی تفصیل')}</label>
+                <label className="block text-xs font-bold text-ink-900 mb-1.5">{t('Problem Description', 'مسئلے کی تفصیل')}</label>
                 <textarea
                   rows={2}
                   placeholder={t('Describe what needs fixing or specific details...', 'بیان کریں کیا ٹھیک کرانا ہے یا مخصوص تفصیلات...')}
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full rounded-xl border border-[#E5E7EB] bg-white p-3 text-xs text-[#161616] placeholder-[#9CA3AF] outline-none focus:border-[#00824A] resize-none"
+                  className="w-full rounded-xl border border-line bg-surface p-3 text-xs text-ink-900 placeholder-ink-400 outline-none focus:border-brand-600 resize-none"
                 />
               </div>
 
               {/* Urgency Selector */}
               <div>
-                <label className="block text-xs font-bold text-[#161616] mb-1.5">{t('Urgency Level', 'فوری کی سطح')}</label>
+                <label className="block text-xs font-bold text-ink-900 mb-1.5">{t('Urgency Level', 'فوری کی سطح')}</label>
                 <div className="grid grid-cols-3 gap-2">
                   {urgencies.map((urg) => (
                     <button
@@ -273,9 +273,9 @@ export function QuickBookingFormSection() {
                       className={`py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                         formData.urgency === urg.en
                           ? urg.en === 'Emergency'
-                            ? 'bg-red-600 text-white'
-                            : 'bg-[#00824A] text-white'
-                          : 'bg-white border border-[#E5E7EB] text-[#475467] hover:bg-[#EAF7F0]'
+                            ? 'bg-danger-solid-hover text-white'
+                            : 'bg-brand-solid text-white'
+                          : 'bg-surface border border-line text-ink-600 hover:bg-brand-100'
                       }`}
                     >
                       {t(urg.en, urg.ur)}
@@ -288,7 +288,7 @@ export function QuickBookingFormSection() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 rounded-xl bg-[#00824A] hover:bg-[#006B3C] text-white text-xs font-bold shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                className="w-full py-3 rounded-xl bg-brand-solid hover:bg-brand-solid-hover text-white text-xs font-bold shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
                 <span>{t('Request a Professional', 'پروفیشنل کی درخواست کریں')}</span>

@@ -136,7 +136,7 @@ function VerificationCard({ item }: { item: AdminVerification }) {
         </div>
 
         {item.rejection_reason ? (
-          <p className="text-sm text-[#991B1B]">
+          <p className="text-sm text-danger-700">
             {t('Sent back', 'واپس بھیجا گیا')}: {item.rejection_reason}
           </p>
         ) : null}
@@ -198,7 +198,7 @@ function ReviewPanel({ item }: { item: AdminVerification }) {
   const pending = d.status === 'pending';
 
   return (
-    <div className="flex flex-col gap-4 rounded-[var(--radius-control)] border border-[var(--border)] bg-surface-muted p-4">
+    <div className="flex flex-col gap-4 rounded-[var(--radius-control)] border border-line bg-surface-muted p-4">
       {d.documents.length === 0 ? (
         <p className="text-sm text-ink-600">{t('No documents uploaded yet.', 'ابھی کوئی دستاویز اپ لوڈ نہیں ہوئی۔')}</p>
       ) : (
@@ -209,7 +209,7 @@ function ReviewPanel({ item }: { item: AdminVerification }) {
               <figure key={doc.id} className="flex flex-col gap-1.5">
                 <figcaption className="text-xs font-medium text-ink-600">{t(en, ur)}</figcaption>
                 {doc.mime_type === 'application/pdf' ? (
-                  <a href={doc.url} target="_blank" rel="noreferrer" className="text-sm font-medium text-[#00824A] underline">
+                  <a href={doc.url} target="_blank" rel="noreferrer" className="text-sm font-medium text-brand-600 underline">
                     {t('Open PDF', 'پی ڈی ایف کھولیں')}
                   </a>
                 ) : (
@@ -219,7 +219,7 @@ function ReviewPanel({ item }: { item: AdminVerification }) {
                     <img
                       src={doc.url}
                       alt={t(en, ur)}
-                      className="aspect-[4/3] w-full rounded-[var(--radius-control)] border border-[var(--border)] bg-surface object-contain"
+                      className="aspect-[4/3] w-full rounded-[var(--radius-control)] border border-line bg-surface object-contain"
                     />
                   </a>
                 )}

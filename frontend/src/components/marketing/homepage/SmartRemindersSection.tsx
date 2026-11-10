@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Bell, CalendarCheck, Wind, Droplets, Sun, Bug, Zap, ArrowRight } from 'lucide-react';
+import { CalendarCheck, Wind, Droplets, Sun, Bug, Zap, ArrowRight } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { useT } from '@/components/i18n/LocaleProvider';
 
@@ -16,25 +16,22 @@ export function SmartRemindersSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-white border-b border-[#E5E7EB]">
+    <section className="py-16 sm:py-24 bg-surface">
       <Container>
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-4 mb-10">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EAF7F0] text-[#006838] text-xs font-bold mb-2">
-              <Bell className="h-3.5 w-3.5 text-[#00824A]" />
-              {t('Automated Reminders', 'خودکار یاد دہانیاں')}
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#161616]">
+            <span className="eyebrow">{t('Automated Reminders', 'خودکار یاد دہانیاں')}</span>
+            <h2 className="section-title text-ink-900">
               {t('PakFix remembers maintenance for you.', 'پاک فکس آپ کے لیے دیکھ بھال یاد رکھتا ہے۔')}
             </h2>
-            <p className="text-sm text-[#475467] mt-1">
-              {t('Never miss important seasonal home care schedules.', 'گھریلو دیکھ بھال کے اہم موسمی شیڈول کبھی نہ چھوڑیں۔')}
+            <p className="text-sm text-ink-600 mt-1">
+              {t('Never miss important seasonal maintenance schedules.', 'دیکھ بھال کے اہم موسمی شیڈول کبھی نہ چھوڑیں۔')}
             </p>
           </div>
 
           <Link
             href="/home-maintenance"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#00824A] hover:bg-[#006B3C] text-white text-xs font-bold transition-colors shadow-xs"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-solid hover:bg-brand-solid-hover text-white text-xs font-bold transition-colors shadow-xs"
           >
             <span>{t('Create Maintenance Plan', 'دیکھ بھال کا منصوبہ بنائیں')}</span>
             <ArrowRight className="h-4 w-4" />
@@ -47,16 +44,16 @@ export function SmartRemindersSection() {
             return (
               <div
                 key={r.en}
-                className="bg-[#F8FAF9] rounded-2xl p-4 border border-[#E5E7EB] hover:border-[#00824A] transition-all space-y-2"
+                className="card-lift bg-surface rounded-2xl p-5 border border-line shadow-xs space-y-2"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-[#E5E7EB] text-[#00824A]">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-brand-100">
                   <Icon className="h-5 w-5" />
                 </div>
-                <h3 className="text-sm font-bold text-[#161616]">{t(r.en, r.ur)}</h3>
-                <span className="inline-block text-[10px] font-bold px-2 py-0.5 rounded bg-[#EAF7F0] text-[#006838]">
+                <h3 className="text-sm font-bold text-ink-900">{t(r.en, r.ur)}</h3>
+                <span className="inline-block text-[10px] font-bold px-2 py-0.5 rounded bg-brand-100 text-brand-700">
                   {t(r.cen, r.cur)}
                 </span>
-                <p className="text-[11px] text-[#667085] leading-snug pt-1">{t(r.den, r.dur)}</p>
+                <p className="text-xs text-ink-500 leading-snug pt-1">{t(r.den, r.dur)}</p>
               </div>
             );
           })}

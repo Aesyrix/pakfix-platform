@@ -31,11 +31,11 @@ export function PageHeader({
     <div className="mb-8 flex flex-wrap items-start justify-between gap-4">
       <div>
         {eyebrow ? (
-          <span className="text-xs font-bold uppercase tracking-wider text-[#00824A]">
+          <span className="eyebrow">
             {t(eyebrow, eyebrowUr)}
           </span>
         ) : null}
-        <h1 className="mt-1 text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">
+        <h1 className="text-2xl font-bold tracking-[-0.02em] text-foreground sm:text-3xl">
           {t(title, titleUr)}
         </h1>
         {description ? (
@@ -58,7 +58,7 @@ export function SectionTitle({
 }) {
   const t = useT();
   return (
-    <h2 className={cn('text-sm font-bold uppercase tracking-wide text-ink-500', className)}>
+    <h2 className={cn('text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-ink-500', className)}>
       {t(children, urdu)}
     </h2>
   );
@@ -87,25 +87,25 @@ export function StatTile({
   return (
     <div
       className={cn(
-        'rounded-[var(--radius-card)] border border-[var(--border)] bg-surface p-4 shadow-xs',
-        tone === 'brand' && 'bg-gradient-to-br from-[#DCFCE7]/60 to-surface',
-        tone === 'warn' && 'border-[#F59E0B]/40 bg-[#FEF3C7]/20'
+        'rounded-[var(--radius-card)] border border-line bg-surface p-5 shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lifted',
+        tone === 'brand' && 'bg-gradient-to-br from-brand-50 via-surface to-surface border-brand-200/70',
+        tone === 'warn' && 'border-warn-200 bg-gradient-to-br from-warn-50 via-surface to-surface'
       )}
     >
       <div className="flex items-center gap-2 text-ink-500">
         <span
           className={cn(
-            'flex h-8 w-8 items-center justify-center rounded-[var(--radius-control)] bg-surface-muted text-ink-500',
-            tone === 'brand' && 'bg-[#DCFCE7] text-[#15803D]',
-            tone === 'info' && 'bg-[#DBEAFE] text-[#1E40AF]',
-            tone === 'warn' && 'bg-[#FEF3C7] text-[#B45309]'
+            'flex h-9 w-9 items-center justify-center rounded-[var(--radius-control)] bg-surface-muted text-ink-500 ring-1 ring-inset ring-line',
+            tone === 'brand' && 'bg-brand-100 text-brand-700',
+            tone === 'info' && 'bg-accent-100 text-accent-800',
+            tone === 'warn' && 'bg-warn-100 text-warn-700'
           )}
         >
           {icon}
         </span>
-        <span className="text-[11px] font-bold uppercase tracking-wide">{t(label, labelUr)}</span>
+        <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.08em]">{t(label, labelUr)}</span>
       </div>
-      <p className="mt-2 text-2xl font-extrabold text-foreground">{value}</p>
+      <p className="mt-3 font-display text-3xl font-bold tracking-[-0.02em] tabular-nums text-foreground">{value}</p>
       {hint ? (
         <p className="mt-0.5 text-[11px] font-medium text-ink-500">{t(hint, hintUr)}</p>
       ) : null}

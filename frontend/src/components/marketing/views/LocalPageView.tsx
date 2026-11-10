@@ -81,8 +81,8 @@ export function LocalPageView({
         }
         title={t(`${tradeName} in ${data.city.name}`, `${data.city.name} میں ${tradeName}`)}
         subtitle={t(
-          `Book an identity-checked ${tradeName.toLowerCase()} covering ${data.city.name}. You see the price before any work starts, and every job stays on your home's record.`,
-          `${data.city.name} میں شناخت جانچے گئے ${tradeName} بک کریں۔ کام شروع ہونے سے پہلے آپ قیمت دیکھتے ہیں، اور ہر کام آپ کے ہوم ریکارڈ میں محفوظ رہتا ہے۔`
+          `Book an identity-checked ${tradeName.toLowerCase()} covering ${data.city.name}. You see the price before any work starts, and every job stays on your property's record.`,
+          `${data.city.name} میں شناخت جانچے گئے ${tradeName} بک کریں۔ کام شروع ہونے سے پہلے آپ قیمت دیکھتے ہیں، اور ہر کام آپ کے پراپرٹی ریکارڈ میں محفوظ رہتا ہے۔`
         )}
       >
         <div className="flex flex-col gap-3 sm:flex-row">
@@ -107,10 +107,10 @@ export function LocalPageView({
               <li key={problem}>
                 <Link
                   href={`/ai?q=${encodeURIComponent(problem)}`}
-                  className="flex min-h-14 items-center justify-between gap-3 rounded-[var(--radius-control)] border border-[var(--border)] bg-surface px-4 py-3 text-sm font-medium transition-colors hover:border-[#00824A]"
+                  className="flex min-h-14 items-center justify-between gap-3 rounded-[var(--radius-control)] border border-line bg-surface px-4 py-3 text-sm font-medium transition-colors hover:border-brand-600"
                 >
                   <span className="flex items-center gap-3">
-                    <Wrench className="h-4 w-4 shrink-0 text-[#00824A]" aria-hidden="true" />
+                    <Wrench className="h-4 w-4 shrink-0 text-brand-600" aria-hidden="true" />
                     {problem}
                   </span>
                   <ArrowRight className="h-4 w-4 shrink-0 text-ink-400 rtl:rotate-180" aria-hidden="true" />
@@ -158,7 +158,7 @@ export function LocalPageView({
             {data.areas.map((area) => (
               <li
                 key={area.id}
-                className="inline-flex min-h-10 items-center gap-1.5 rounded-[var(--radius-pill)] border border-[var(--border)] bg-surface px-3.5 text-sm text-ink-600"
+                className="inline-flex min-h-10 items-center gap-1.5 rounded-[var(--radius-pill)] border border-line bg-surface px-3.5 text-sm text-ink-600"
               >
                 <MapPin className="h-3.5 w-3.5 text-ink-400" aria-hidden="true" />
                 {area.name}

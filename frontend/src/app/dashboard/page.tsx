@@ -183,13 +183,13 @@ function QuickAction({
     <Link href={href} className="block h-full">
       <Card
         interactive
-        className={cn('h-full', emphasis && 'border-brand-600 bg-brand-600 text-white')}
+        className={cn('h-full', emphasis && 'border-brand-600 bg-brand-solid text-white')}
       >
         <CardBody className="flex h-full flex-col gap-2 p-4">
           <span
             className={cn(
               'flex h-10 w-10 items-center justify-center rounded-[var(--radius-control)]',
-              emphasis ? 'bg-white/15 text-white' : 'bg-surface-muted text-ink-600'
+              emphasis ? 'bg-surface/15 text-white' : 'bg-surface-muted text-ink-600'
             )}
           >
             {icon}

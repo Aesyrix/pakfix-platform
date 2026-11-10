@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ShieldAlert, Phone, AlertCircle, Zap, Droplets, Lock, Wind } from 'lucide-react';
+import { ShieldAlert, Phone, Zap, Droplets, Lock, Wind } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { useT } from '@/components/i18n/LocaleProvider';
 
@@ -16,36 +16,38 @@ export function EmergencyRepairSection() {
   ];
 
   return (
-    <section className="py-12 bg-white border-b border-[#E5E7EB]">
+    <section className="pb-16 sm:pb-24 bg-surface">
       <Container>
-        <div className="bg-[#161616] text-white rounded-2xl p-6 sm:p-10 relative overflow-hidden border border-gray-800">
+        <div className="keep-tone bg-premium-dark text-white rounded-3xl p-6 sm:p-10 relative isolate overflow-hidden border border-white/10 shadow-floating">
+          <div aria-hidden="true" className="absolute -left-24 -top-24 -z-10 h-80 w-80 rounded-full bg-danger-500/25 blur-[100px]" />
+          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-grid-dark opacity-60" />
           <div className="grid lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-5 space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#DC2626]/20 border border-[#DC2626]/40 text-[#FCA5A5] text-xs font-bold">
-                <AlertCircle className="h-4 w-4" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-danger-500/20 border border-danger-500/40 text-danger-200 text-xs font-bold">
+                <span aria-hidden="true" className="relative flex h-2 w-2"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-danger-500 opacity-75 motion-reduce:hidden" /><span className="relative inline-flex h-2 w-2 rounded-full bg-danger-500" /></span>
                 <span>{t('Urgent Emergency Service', 'ہنگامی فوری سروس')}</span>
               </div>
 
-              <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
+              <h2 className="section-title text-white">
                 {t('Need urgent help?', 'فوری مدد کی ضرورت ہے؟')}
               </h2>
 
-              <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
+              <p className="text-sm text-ink-300 leading-relaxed">
                 {t('Create an urgent service request with photo, location and contact info to dispatch local emergency repair technicians.', 'تصویر، مقام اور رابطہ معلومات کے ساتھ ہنگامی درخواست بنائیں تاکہ مقامی ہنگامی مرمت ٹیکنیشنز بھیجے جا سکیں۔')}
               </p>
 
               <div className="flex flex-wrap items-center gap-3 pt-2">
                 <Link
                   href="#quick-booking"
-                  className="px-5 py-2.5 rounded-xl bg-[#DC2626] hover:bg-red-700 text-white text-xs font-bold transition-colors shadow-md"
+                  className="inline-flex min-h-11 items-center px-5 rounded-[var(--radius-button)] bg-danger-500 hover:bg-danger-solid-hover text-white text-sm font-semibold transition-colors shadow-lg shadow-danger-500/30"
                 >
                   {t('Request Urgent Service', 'ہنگامی سروس کی درخواست کریں')}
                 </Link>
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-white text-xs font-bold transition-colors"
+                  className="inline-flex min-h-11 items-center gap-1.5 px-4 rounded-[var(--radius-button)] border border-white/15 bg-white/5 hover:bg-white/10 text-white text-sm font-semibold transition-colors"
                 >
-                  <Phone className="h-3.5 w-3.5 text-[#00824A]" />
+                  <Phone className="h-3.5 w-3.5 text-brand-on-dark" aria-hidden="true" />
                   <span>{t('Contact Support', 'سپورٹ سے رابطہ کریں')}</span>
                 </Link>
               </div>
@@ -57,13 +59,13 @@ export function EmergencyRepairSection() {
                 return (
                   <div
                     key={item.en}
-                    className="bg-gray-900/90 rounded-xl p-3.5 border border-gray-800 hover:border-[#DC2626] transition-colors space-y-1.5"
+                    className="rounded-2xl p-4 border border-white/10 bg-white/[0.04] backdrop-blur-sm hover:border-danger-500/60 hover:bg-white/[0.07] transition-colors space-y-2"
                   >
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#DC2626]/20 text-[#FCA5A5]">
-                      <Icon className="h-4 w-4" />
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-danger-500/20 text-danger-200">
+                      <Icon className="h-4 w-4" aria-hidden="true" />
                     </div>
-                    <h3 className="text-xs font-bold text-white">{t(item.en, item.ur)}</h3>
-                    <p className="text-[10px] text-gray-400 leading-snug">{t(item.den, item.dur)}</p>
+                    <h3 className="text-sm font-semibold text-white">{t(item.en, item.ur)}</h3>
+                    <p className="text-xs text-ink-300 leading-snug">{t(item.den, item.dur)}</p>
                   </div>
                 );
               })}

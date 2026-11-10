@@ -15,7 +15,7 @@ export const metadata: Metadata = pageMetadata({
 
 export default function ResetPasswordPage() {
   return (
-    <Card>
+    <Card className="shadow-lifted">
       <CardBody className="sm:p-8">
         <AuthIntro title="Set a new password" titleUr="نیا پاس ورڈ مقرر کریں" />
 

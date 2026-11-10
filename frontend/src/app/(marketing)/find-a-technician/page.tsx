@@ -7,7 +7,7 @@ import { safeFetch } from '@/lib/api/safe';
 import { pageMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Find a Verified Home Repair Professional',
+  title: 'Find a Verified Repair Professional',
   description:
     'Compare verified plumbers, electricians, AC technicians and more across Pakistan by rating, experience and visit fee.',
   path: '/find-a-technician',

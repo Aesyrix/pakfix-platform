@@ -1,6 +1,7 @@
 'use client';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { useCallback } from 'react';
 import { SlidersHorizontal, UserSearch } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Button, ButtonLink } from '@/components/ui/Button';
@@ -9,7 +10,7 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { ErrorState } from '@/components/ui/ErrorState';
 import { Select } from '@/components/ui/Input';
 import { SkeletonCard } from '@/components/ui/Skeleton';
-import { ProfessionalCard } from '@/components/marketing/Cards';
+import { ProfessionalCarousel } from '@/components/marketing/ProfessionalCarousel';
 import { PageHeader } from '@/components/marketing/PageHeader';
 import { useT } from '@/components/i18n/LocaleProvider';
 import { technicianApi, type TechnicianFilters } from '@/lib/api/endpoints';
@@ -52,6 +53,10 @@ export function DirectoryView({ cities, categories }: { cities: City[]; categori
   }
 
   const professionals = query.data?.pages.flatMap((page) => page.data) ?? [];
+  const { hasNextPage, isFetchingNextPage, fetchNextPage } = query;
+  const loadMore = useCallback(() => {
+    if (hasNextPage && !isFetchingNextPage) fetchNextPage();
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
   const total = query.data?.pages[0]?.pagination?.total ?? null;
   const cityName = cities.find((city) => city.slug === filters.city)?.name;
   const categoryName = categories.find((category) => category.slug === filters.category)?.name;
@@ -73,7 +78,7 @@ export function DirectoryView({ cities, categories }: { cities: City[]; categori
 
       <Container className="py-8">
         <form
-          className="grid gap-3 rounded-[var(--radius-card)] border border-[var(--border)] bg-surface p-4 sm:grid-cols-2 lg:grid-cols-4"
+          className="grid gap-3 rounded-[var(--radius-card)] border border-line bg-surface p-4 sm:grid-cols-2 lg:grid-cols-4"
           aria-label={t('Filter professionals', 'پروفیشنلز فلٹر کریں')}
           onSubmit={(event) => event.preventDefault()}
         >
@@ -101,7 +106,7 @@ export function DirectoryView({ cities, categories }: { cities: City[]; categori
             <option value="experience">{t('Most experience', 'سب سے زیادہ تجربہ')}</option>
           </Select>
 
-          <label className="flex min-h-12 cursor-pointer items-center gap-3 self-end rounded-[var(--radius-control)] border border-[var(--border)] px-3.5">
+          <label className="flex min-h-12 cursor-pointer items-center gap-3 self-end rounded-[var(--radius-control)] border border-line px-3.5">
             <input
               type="checkbox"
               checked={filters.emergency}
@@ -111,9 +116,11 @@ export function DirectoryView({ cities, categories }: { cities: City[]; categori
             <span className="text-sm font-medium">{t('Emergency call-outs only', 'صرف ہنگامی کال آؤٹ')}</span>
           </label>
         </form>
+      </Container>
 
-        <div className="mt-6" aria-live="polite">
+      <div aria-live="polite">
           {query.isPending ? (
+            <Container className="pb-12">
             <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-label={t('Loading professionals', 'پروفیشنلز لوڈ ہو رہے ہیں')}>
               {Array.from({ length: 6 }).map((_, index) => (
                 <li key={index}>
@@ -121,9 +128,13 @@ export function DirectoryView({ cities, categories }: { cities: City[]; categori
                 </li>
               ))}
             </ul>
+            </Container>
           ) : query.isError ? (
-            <ErrorState description={t('The directory could not be loaded.', 'ڈائریکٹری لوڈ نہیں ہو سکی۔')} onRetry={() => query.refetch()} />
+            <Container className="pb-12">
+              <ErrorState description={t('The directory could not be loaded.', 'ڈائریکٹری لوڈ نہیں ہو سکی۔')} onRetry={() => query.refetch()} />
+            </Container>
           ) : professionals.length === 0 ? (
+            <Container className="pb-12">
             <EmptyState
               icon={<UserSearch className="h-5 w-5" />}
               title={t('No professionals match these filters yet', 'ابھی ان فلٹرز سے کوئی پروفیشنل مطابقت نہیں رکھتا')}
@@ -138,20 +149,21 @@ export function DirectoryView({ cities, categories }: { cities: City[]; categori
                 </div>
               }
             />
+            </Container>
           ) : (
-            <>
+            <section className="relative isolate overflow-hidden bg-premium-dark py-14 text-white sm:py-20">
+              {/* Grid, a central glow and a soft top fade, purely decorative */}
+              <div aria-hidden="true" className="absolute inset-0 -z-10 bg-grid-dark" />
+              <div aria-hidden="true" className="absolute left-1/2 top-1/3 -z-10 h-[28rem] w-[min(60rem,100%)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-500/30 blur-[120px]" />
+              <div aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-on-dark/50 to-transparent" />
+              <Container size="wide">
               {total !== null ? (
-                <p className="mb-4 text-sm text-ink-500">
+                <p className="mb-6 flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-brand-on-dark sm:mb-8">
+                  <span aria-hidden="true" className="h-1.5 w-1.5 rounded-sm bg-brand-on-dark" />
                   {t(`${total} ${total === 1 ? 'professional' : 'professionals'}`, `${total} ${total === 1 ? 'پروفیشنل' : 'پروفیشنلز'}`)}
                 </p>
               ) : null}
-              <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {professionals.map((professional) => (
-                  <li key={professional.id} className="relative">
-                    <ProfessionalCard professional={professional} />
-                  </li>
-                ))}
-              </ul>
+              <ProfessionalCarousel professionals={professionals} onReachEnd={loadMore} />
               {query.hasNextPage ? (
                 <div className="mt-8 flex justify-center">
                   <Button variant="secondary" onClick={() => query.fetchNextPage()} loading={query.isFetchingNextPage}>
@@ -159,10 +171,10 @@ export function DirectoryView({ cities, categories }: { cities: City[]; categori
                   </Button>
                 </div>
               ) : null}
-            </>
+              </Container>
+            </section>
           )}
-        </div>
-      </Container>
+      </div>
     </>
   );
 }

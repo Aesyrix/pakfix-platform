@@ -24,12 +24,12 @@ import { FinalCtaSection } from '@/components/marketing/homepage/FinalCtaSection
 import { FloatingAiAction } from '@/components/marketing/homepage/FloatingAiAction';
 
 export const metadata: Metadata = {
-  title: { absolute: 'PakFix.pk | AI Home Repair & Professional Services in Pakistan' },
+  title: { absolute: 'PakFix.pk | AI Repair & Professional Services in Pakistan' },
   description:
-    'Show or describe your home repair problem, get instant AI diagnosis, transparent upfront estimates, and book identity-verified local professionals across Pakistan.',
+    'Show or describe any repair problem, get instant AI diagnosis, transparent upfront estimates, and book identity-verified local professionals across Pakistan.',
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'PakFix.pk | AI Home Repair & Professional Services',
+    title: 'PakFix.pk | AI Repair & Professional Services',
     description: 'Show the Problem. PakFix Helps You Fix It.',
     url: 'https://pakfix.pk',
     siteName: 'PakFix.pk',

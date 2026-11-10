@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   if (!data) return pageMetadata({ title: 'City not found', path: `/${slug}`, noindex: true });
 
   return pageMetadata({
-    title: `Home Repair Services in ${data.city.name}`,
+    title: `Repair Services in ${data.city.name}`,
     description: `Book verified plumbers, electricians, AC technicians and more in ${data.city.name}. ${data.professional_count} identity-checked professionals on PakFix.`,
     path: `/${slug}`,
   });
@@ -53,7 +53,7 @@ export default async function CityPage({ params }: Params) {
             ]),
             {
               '@type': 'Service',
-              name: `Home repair and maintenance in ${initial.city.name}`,
+              name: `Repair and maintenance in ${initial.city.name}`,
               provider: { '@type': 'Organization', name: 'PakFix', url: absoluteUrl('/') },
               areaServed: { '@type': 'City', name: initial.city.name },
             },

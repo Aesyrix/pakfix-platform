@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { PakFixLogo } from '@/components/layout/PakFixLogo';
 import { useToast } from '@/components/ui/Toast';
 import { LocaleToggle } from '@/components/i18n/LocaleToggle';
+import { ModeToggle } from '@/components/theme/ModeToggle';
 import { useT } from '@/components/i18n/LocaleProvider';
 import { useAuthStore } from '@/stores/auth';
 import { cn } from '@/lib/utils/cn';
@@ -41,7 +42,7 @@ export function AppSidebar({
   }
 
   return (
-    <aside className="hidden w-64 shrink-0 border-e border-[var(--border)] bg-surface lg:flex lg:flex-col">
+    <aside className="sticky top-0 hidden h-dvh w-64 shrink-0 border-e border-line bg-surface/90 backdrop-blur-xl lg:flex lg:flex-col">
       <div className="flex h-16 items-center px-5">
         <Link href={brandHref} aria-label={t('PakFix home', 'پاک فکس ہوم')}>
           <PakFixLogo className="h-8" />
@@ -52,7 +53,7 @@ export function AppSidebar({
         {sections.map((section, index) => (
           <div key={section.heading ?? index} className={cn(index > 0 && 'mt-6')}>
             {section.heading ? (
-              <h2 className="px-3 pb-2 text-xs font-semibold uppercase tracking-wide text-ink-400">
+              <h2 className="px-3 pb-2 text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-ink-400">
                 {t(section.heading, section.headingUr ?? undefined)}
               </h2>
             ) : null}
@@ -69,12 +70,7 @@ export function AppSidebar({
                     <Link
                       href={item.href}
                       aria-current={active ? 'page' : undefined}
-                      className={cn(
-                        'flex min-h-11 items-center gap-3 rounded-[var(--radius-control)] px-3 text-sm font-medium transition-colors',
-                        active
-                          ? 'bg-brand-50 text-brand-700'
-                          : 'text-ink-600 hover:bg-surface-muted hover:text-foreground'
-                      )}
+                      className="nav-link"
                     >
                       <Icon className="h-4.5 w-4.5 shrink-0" aria-hidden="true" />
                       {t(item.label, item.labelUr)}
@@ -87,9 +83,9 @@ export function AppSidebar({
         ))}
       </nav>
 
-      <div className="border-t border-[var(--border)] p-3">
+      <div className="m-3 rounded-2xl border border-line bg-surface-muted/70 p-2">
         <div className="flex items-center gap-3 px-2 py-2">
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-600 text-sm font-semibold text-white">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-brand-700 text-sm font-semibold text-white ring-2 ring-surface shadow-sm">
             {user?.name?.charAt(0).toUpperCase() ?? '?'}
           </span>
           <div className="min-w-0 flex-1">
@@ -107,8 +103,11 @@ export function AppSidebar({
           {t('Sign out', 'سائن آؤٹ')}
         </button>
 
-        <div className="mt-1 flex justify-end border-t border-[var(--border)] px-1 pt-2">
-          <LocaleToggle />
+        <div className="mt-1 flex items-center justify-end px-1">
+          <div className="flex items-center">
+            <ModeToggle />
+            <LocaleToggle />
+          </div>
         </div>
       </div>
     </aside>

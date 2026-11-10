@@ -15,7 +15,7 @@ export function PageSkeleton() {
   return (
     <div role="status" aria-live="polite">
       <span className="sr-only">{t('Loading', 'لوڈ ہو رہا ہے')}</span>
-      <div className="border-b border-[var(--border)] bg-gradient-to-b from-brand-wash to-background">
+      <div className="border-b border-line bg-gradient-to-b from-brand-wash to-background">
         <Container className="py-10 sm:py-14">
           <Skeleton className="h-4 w-40" />
           <Skeleton className="mt-5 h-10 w-3/4 max-w-xl" />

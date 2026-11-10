@@ -10,10 +10,10 @@ export function Card({
   return (
     <div
       className={cn(
-        'rounded-[var(--radius-card)] border border-[var(--border)] bg-surface',
+        'rounded-[var(--radius-card)] border border-line bg-surface',
         'shadow-[var(--shadow-card)] transition-all duration-200',
         interactive &&
-          'hover:-translate-y-0.5 hover:shadow-[var(--shadow-lifted)] hover:border-brand-300 focus-within:shadow-[var(--shadow-lifted)] focus-within:border-brand-300',
+          'hover:-translate-y-1 hover:shadow-[var(--shadow-lifted)] hover:border-brand-200 focus-within:shadow-[var(--shadow-lifted)] focus-within:border-brand-200',
         className
       )}
       {...props}
@@ -42,7 +42,7 @@ export function CardBody({ className, ...props }: HTMLAttributes<HTMLDivElement>
 export function CardFooter({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn('flex items-center gap-3 border-t border-[var(--border)] p-5', className)}
+      className={cn('flex items-center gap-3 border-t border-line p-5', className)}
       {...props}
     />
   );

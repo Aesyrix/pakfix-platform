@@ -46,9 +46,9 @@ export function HeroSearch({ examples = [] }: { examples?: string[] }) {
 
         <div
           className={cn(
-            'flex flex-col gap-3 rounded-[var(--radius-card)] border-2 border-[#00824A]/20',
+            'flex flex-col gap-3 rounded-[var(--radius-card)] border-2 border-brand-600/20',
             'bg-surface p-3 shadow-xl backdrop-blur-sm',
-            'transition-all duration-200 focus-within:border-[#00824A] focus-within:shadow-2xl'
+            'transition-all duration-200 focus-within:border-brand-600 focus-within:shadow-2xl'
           )}
         >
           <div className="flex items-center gap-2">
@@ -56,7 +56,7 @@ export function HeroSearch({ examples = [] }: { examples?: string[] }) {
               id="hero-problem"
               value={value}
               onChange={(event) => setValue(event.target.value)}
-              placeholder={t('What needs fixing in your home?', 'آپ کے گھر میں کیا ٹھیک کرانا ہے؟')}
+              placeholder={t('What needs fixing?', 'کیا ٹھیک کرانا ہے؟')}
               autoComplete="off"
               className={cn(
                 'min-h-[48px] w-full flex-1 rounded-[var(--radius-control)] bg-transparent px-4',
@@ -65,17 +65,17 @@ export function HeroSearch({ examples = [] }: { examples?: string[] }) {
             />
           </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[var(--border)] pt-2.5">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-t border-line pt-2.5">
             <div className="flex items-center gap-1.5 text-xs">
               <Button
                 type="button"
                 variant="ghost"
                 size="sm"
                 onClick={() => router.push('/ai?input=camera')}
-                className="h-9 px-2.5 text-xs text-ink-600 hover:text-[#00824A] hover:bg-brand-50"
+                className="h-9 px-2.5 text-xs text-ink-600 hover:text-brand-600 hover:bg-brand-50"
                 title={t('Take or upload a photo', 'تصویر لیں یا اپ لوڈ کریں')}
               >
-                <Camera className="h-4 w-4 text-[#00824A]" aria-hidden="true" />
+                <Camera className="h-4 w-4 text-brand-600" aria-hidden="true" />
                 <span>{t('Upload Photo', 'تصویر اپ لوڈ کریں')}</span>
               </Button>
 
@@ -84,10 +84,10 @@ export function HeroSearch({ examples = [] }: { examples?: string[] }) {
                 variant="ghost"
                 size="sm"
                 onClick={() => router.push('/ai?input=voice')}
-                className="h-9 px-2.5 text-xs text-ink-600 hover:text-[#2563EB] hover:bg-accent-50"
+                className="h-9 px-2.5 text-xs text-ink-600 hover:text-accent-600 hover:bg-accent-50"
                 title={t('Describe it out loud', 'اسے بول کر بیان کریں')}
               >
-                <Mic className="h-4 w-4 text-[#2563EB]" aria-hidden="true" />
+                <Mic className="h-4 w-4 text-accent-600" aria-hidden="true" />
                 <span>{t('Voice Input', 'آواز سے ان پٹ')}</span>
               </Button>
             </div>
@@ -109,9 +109,9 @@ export function HeroSearch({ examples = [] }: { examples?: string[] }) {
                 type="button"
                 onClick={() => setValue(example)}
                 className={cn(
-                  'rounded-full border border-[var(--border)] bg-surface/90',
+                  'rounded-full border border-line bg-surface/90',
                   'px-3 py-1.5 text-xs font-medium text-ink-600 transition-all',
-                  'hover:border-[#00824A] hover:text-[#15803D] hover:bg-[#DCFCE7]/50'
+                  'hover:border-brand-600 hover:text-brand-700 hover:bg-brand-100/50'
                 )}
               >
                 &ldquo;{example}&rdquo;

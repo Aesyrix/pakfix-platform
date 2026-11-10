@@ -12,25 +12,25 @@ import { cn } from '@/lib/utils/cn';
 const button = cva(
   [
     'inline-flex items-center justify-center gap-2 font-semibold',
-    'rounded-[var(--radius-control)] transition-all duration-200',
+    'rounded-[var(--radius-button)] transition-[background-color,border-color,color,box-shadow,transform] duration-200 active:translate-y-px',
     'disabled:pointer-events-none disabled:opacity-50',
-    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00824A]',
+    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600',
     'min-h-[44px] touch-manipulation select-none cursor-pointer',
   ],
   {
     variants: {
       variant: {
         primary:
-          'bg-[#00824A] text-white hover:bg-[#15803D] active:bg-[#166534] shadow-sm hover:shadow transition-all',
+          'bg-brand-solid text-white shadow-[0_6px_18px_-6px_color-mix(in_oklab,var(--color-brand-500)_50%,transparent)] hover:-translate-y-px hover:bg-brand-solid-hover hover:shadow-[var(--shadow-brand)] active:translate-y-0 active:bg-brand-solid-hover',
         accent:
-          'bg-[#2563EB] text-white hover:bg-[#1D4ED8] active:bg-[#1E40AF] shadow-sm hover:shadow transition-all',
+          'bg-accent-solid text-white shadow-[var(--shadow-sm)] hover:bg-accent-solid-hover active:bg-accent-solid-hover',
         secondary:
-          'bg-surface text-foreground border border-[var(--border)] hover:bg-surface-muted hover:border-ink-300',
+          'bg-surface text-foreground border border-line shadow-[var(--shadow-sm)] hover:bg-surface-muted hover:border-ink-300',
         outline:
-          'bg-transparent text-[#00824A] border-2 border-[#00824A] hover:bg-brand-50 hover:text-[#15803D]',
+          'bg-transparent text-brand-600 border-2 border-brand-600 hover:bg-brand-50 hover:text-brand-700',
         ghost: 'bg-transparent text-foreground hover:bg-surface-muted',
-        danger: 'bg-[#DC2626] text-white hover:bg-[#B91C1C] active:bg-[#991B1B]',
-        link: 'bg-transparent text-[#00824A] underline underline-offset-4 hover:text-[#15803D] min-h-0 p-0',
+        danger: 'bg-danger-500 text-white hover:bg-danger-solid-hover active:bg-danger-solid-hover',
+        link: 'bg-transparent text-brand-600 underline underline-offset-4 hover:text-brand-700 min-h-0 p-0',
       },
       size: {
         sm: 'h-11 px-4 text-sm',

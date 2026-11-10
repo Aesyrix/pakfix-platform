@@ -125,7 +125,7 @@ export default function AdminBlogPage() {
               <Card>
                 <CardBody className="flex flex-wrap items-center justify-between gap-3">
                   <div className="min-w-0">
-                    <button type="button" onClick={() => setEditingId(post.id)} className="text-left font-medium hover:text-[#15803D]">
+                    <button type="button" onClick={() => setEditingId(post.id)} className="text-left font-medium hover:text-brand-700">
                       {post.title}
                     </button>
                     <p className="mt-0.5 text-xs text-ink-500">
@@ -145,7 +145,7 @@ export default function AdminBlogPage() {
                         href={`/blog/${post.slug}`}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-ink-400 hover:text-[#00824A]"
+                        className="text-ink-400 hover:text-brand-600"
                         aria-label={t(`View ${post.title}`, `${post.title} دیکھیں`)}
                       >
                         <ExternalLink className="h-4 w-4" />

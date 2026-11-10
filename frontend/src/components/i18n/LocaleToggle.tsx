@@ -30,7 +30,7 @@ export function LocaleToggle({
       className={cn(
         'inline-flex min-h-9 cursor-pointer items-center gap-1.5 rounded-[var(--radius-control)] px-2.5 text-xs font-semibold transition-colors',
         onDark
-          ? 'text-gray-300 hover:bg-white/10 hover:text-white'
+          ? 'text-ink-300 hover:bg-surface/10 hover:text-white'
           : 'text-ink-600 hover:bg-surface-muted hover:text-foreground',
         className
       )}

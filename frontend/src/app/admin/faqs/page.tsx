@@ -153,7 +153,7 @@ function FaqRow({ faq, onDeleted, deleting }: { faq: AdminFaq; onDeleted: () => 
     <Card>
       <CardBody className="flex flex-col gap-3">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <button type="button" onClick={() => setOpen((value) => !value)} className="text-left font-medium hover:text-[#15803D]">
+          <button type="button" onClick={() => setOpen((value) => !value)} className="text-left font-medium hover:text-brand-700">
             {faq.question}
           </button>
           <div className="flex shrink-0 items-center gap-2">

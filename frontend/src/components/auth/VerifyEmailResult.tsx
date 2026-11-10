@@ -39,7 +39,7 @@ export function VerifyEmailResult() {
   if (status === 'verified' || status === 'already-verified') {
     return (
       <div className="flex flex-col items-center gap-3 text-center">
-        <CircleCheck className="h-10 w-10 text-[#00824A]" aria-hidden="true" />
+        <CircleCheck className="h-10 w-10 text-brand-600" aria-hidden="true" />
         <h1 className="text-2xl font-bold tracking-tight">
           {status === 'verified' ? t('Email verified', 'ای میل تصدیق شدہ') : t('Already verified', 'پہلے ہی تصدیق شدہ')}
         </h1>
@@ -83,7 +83,7 @@ export function VerifyEmailResult() {
 
   return (
     <div className="flex flex-col items-center gap-3 text-center">
-      <MailQuestion className="h-10 w-10 text-[#2563EB]" aria-hidden="true" />
+      <MailQuestion className="h-10 w-10 text-accent-600" aria-hidden="true" />
       <h1 className="text-2xl font-bold tracking-tight">{t('Confirm your email address', 'اپنے ای میل پتے کی تصدیق کریں')}</h1>
       <p className="text-sm text-ink-600">
         {t('We sent a link to your email address. Open it to confirm, so PakFix can send you booking updates.', 'ہم نے آپ کے ای میل پتے پر ایک لنک بھیجا ہے۔ تصدیق کے لیے اسے کھولیں، تاکہ پاک فکس آپ کو بکنگ کی اطلاعات بھیج سکے۔')}

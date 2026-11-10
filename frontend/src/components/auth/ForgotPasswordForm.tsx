@@ -57,8 +57,8 @@ export function ForgotPasswordForm() {
 
   if (sentTo) {
     return (
-      <div className="flex flex-col items-center gap-3 rounded-[var(--radius-card)] border border-[#86EFAC] bg-[#DCFCE7] p-6 text-center">
-        <MailCheck className="h-8 w-8 text-[#15803D]" aria-hidden="true" />
+      <div className="flex flex-col items-center gap-3 rounded-[var(--radius-card)] border border-brand-300 bg-brand-100 p-6 text-center">
+        <MailCheck className="h-8 w-8 text-brand-700" aria-hidden="true" />
         <h2 className="text-lg font-bold">{t('Check your email', 'اپنا ای میل چیک کریں')}</h2>
         <p className="text-sm text-ink-700">
           {t('If', 'اگر')} <strong>{sentTo}</strong> {t('belongs to a PakFix account, a password reset link is on its way. The link is valid for 60 minutes.', 'پاک فکس اکاؤنٹ سے وابستہ ہے، تو پاس ورڈ ری سیٹ لنک بھیج دیا گیا ہے۔ لنک 60 منٹ کے لیے کارآمد ہے۔')}

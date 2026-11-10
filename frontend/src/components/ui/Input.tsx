@@ -54,7 +54,7 @@ const controlClasses = [
   'w-full rounded-[var(--radius-control)] border bg-surface px-4 py-3',
   'text-base text-foreground placeholder:text-ink-400',
   'transition-all outline-none',
-  'focus:ring-2 focus:ring-[#00824A] focus:border-transparent',
+  'hover:border-ink-300 focus:ring-4 focus:ring-brand-600/15 focus:border-brand-600',
   'disabled:cursor-not-allowed disabled:opacity-60',
   'min-h-[48px]',
 ].join(' ');
@@ -92,8 +92,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
             controlClasses,
             leading && 'pl-10',
             error
-              ? 'border-danger-500 focus:border-danger-500'
-              : 'border-[var(--border)] focus:border-brand-500',
+              ? 'border-danger-500 focus:border-danger-500 focus:ring-danger-500/15'
+              : 'border-line',
             className
           )}
           {...props}
@@ -130,8 +130,8 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
           controlClasses,
           'resize-y',
           error
-            ? 'border-danger-500 focus:border-danger-500'
-            : 'border-[var(--border)] focus:border-brand-500',
+            ? 'border-danger-500 focus:border-danger-500 focus:ring-danger-500/15'
+            : 'border-line',
           className
         )}
         {...props}
@@ -167,8 +167,8 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
           controlClasses,
           'appearance-none bg-[length:1rem] bg-[right_0.875rem_center] bg-no-repeat pr-10',
           error
-            ? 'border-danger-500 focus:border-danger-500'
-            : 'border-[var(--border)] focus:border-brand-500',
+            ? 'border-danger-500 focus:border-danger-500 focus:ring-danger-500/15'
+            : 'border-line',
           className
         )}
         style={{
@@ -206,7 +206,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? `${id}-error` : undefined}
           className={cn(
-            'mt-0.5 h-5 w-5 shrink-0 rounded border-[var(--border)] text-brand-600',
+            'mt-0.5 h-5 w-5 shrink-0 rounded border-line text-brand-600',
             'accent-[var(--color-brand-600)]',
             className
           )}

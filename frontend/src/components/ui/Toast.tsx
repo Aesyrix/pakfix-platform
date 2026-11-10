@@ -86,7 +86,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               'border bg-surface p-3.5 shadow-[var(--shadow-lifted)]',
               item.tone === 'success' && 'border-safe-500/40',
               item.tone === 'error' && 'border-danger-500/40',
-              item.tone === 'info' && 'border-[var(--border)]'
+              item.tone === 'info' && 'border-line'
             )}
           >
             <ToastIcon tone={item.tone} />

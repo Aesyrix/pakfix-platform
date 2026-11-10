@@ -171,7 +171,7 @@ function UserDetail({ id }: { id: string }) {
   const p = u.professional;
 
   return (
-    <div className="flex flex-col gap-4 border-t border-[var(--border)] pt-3 text-sm">
+    <div className="flex flex-col gap-4 border-t border-line pt-3 text-sm">
       <div className="flex flex-wrap gap-4 text-ink-600">
         {u.email ? (
           <a href={`mailto:${u.email}`} className="inline-flex items-center gap-1 hover:text-foreground">
@@ -189,19 +189,19 @@ function UserDetail({ id }: { id: string }) {
       </div>
 
       {p ? (
-        <div className="grid gap-2 rounded-[var(--radius-control)] border border-[var(--border)] p-3 sm:grid-cols-4">
+        <div className="grid gap-2 rounded-[var(--radius-control)] border border-line p-3 sm:grid-cols-4">
           <Stat label={t('Verification', 'تصدیق')} value={p.verification ?? '-'} />
           <Stat label={t('Completed / cancelled', 'مکمل / منسوخ')} value={`${p.completed_jobs} / ${p.cancelled_jobs}`} />
           <Stat
             label={t('Rating', 'ریٹنگ')}
-            value={p.rating_count > 0 ? <span className="inline-flex items-center gap-1"><Star className="h-3.5 w-3.5 text-[#D97706]" aria-hidden="true" />{p.rating_average} ({p.rating_count})</span> : '-'}
+            value={p.rating_count > 0 ? <span className="inline-flex items-center gap-1"><Star className="h-3.5 w-3.5 text-warn-600" aria-hidden="true" />{p.rating_average} ({p.rating_count})</span> : '-'}
           />
           <Stat label={t('Strikes', 'اسٹرائیکس')} value={`${p.strikes} / ${p.max_strikes}${p.strikes >= p.max_strikes ? ` · ${t('cannot send offers', 'آفر نہیں بھیج سکتے')}` : ''}`} />
         </div>
       ) : null}
 
       {u.is_suspended && u.status_reason ? (
-        <p className="rounded-[var(--radius-control)] bg-[#FEE2E2] px-3 py-2 text-[#991B1B]">
+        <p className="rounded-[var(--radius-control)] bg-danger-100 px-3 py-2 text-danger-700">
           <span className="font-semibold">{t('Suspended because', 'معطلی کی وجہ')}: </span>
           {u.status_reason}
         </p>

@@ -71,7 +71,7 @@ export function Distance({ label, metres, far }: { label: string; metres: number
   const text = metres >= 1000 ? `${(metres / 1000).toFixed(1)} km` : `${metres} m`;
 
   return (
-    <span className={far ? 'inline-flex items-center gap-1 font-semibold text-[#991B1B]' : 'inline-flex items-center gap-1'}>
+    <span className={far ? 'inline-flex items-center gap-1 font-semibold text-danger-700' : 'inline-flex items-center gap-1'}>
       <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
       {label}: {text} {t('from the address', 'پتے سے')}
       {far ? ` (${t('far', 'دور')})` : ''}

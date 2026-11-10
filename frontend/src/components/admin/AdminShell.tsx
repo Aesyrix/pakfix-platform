@@ -25,10 +25,10 @@ import { Container } from '@/components/ui/Container';
 import { PakFixLogo } from '@/components/layout/PakFixLogo';
 import { useToast } from '@/components/ui/Toast';
 import { LocaleToggle } from '@/components/i18n/LocaleToggle';
+import { ModeToggle } from '@/components/theme/ModeToggle';
 import { useT } from '@/components/i18n/LocaleProvider';
 import { adminApi } from '@/lib/api/endpoints';
 import { useAuthStore } from '@/stores/auth';
-import { cn } from '@/lib/utils/cn';
 
 /**
  * The admin shell.
@@ -87,19 +87,20 @@ export function AdminShell({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="min-h-dvh bg-background">
-      <header className="sticky top-0 z-30 border-b border-[var(--border)] bg-surface">
+    <div className="min-h-dvh app-canvas">
+      <header className="sticky top-0 z-30 border-b border-line/70 bg-surface/80 backdrop-blur-xl backdrop-saturate-150">
         <Container size="wide">
           <div className="flex h-16 items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <Link href="/" aria-label={t('PakFix home', 'پاک فکس ہوم')}>
                 <PakFixLogo className="h-8" />
               </Link>
-              <Badge tone="neutral">{t('Admin', 'ایڈمن')}</Badge>
+              <Badge tone="brand">{t('Admin', 'ایڈمن')}</Badge>
             </div>
 
             <div className="flex items-center gap-3">
               <span className="hidden text-sm text-ink-600 sm:inline">{user?.name}</span>
+              <ModeToggle />
               <LocaleToggle />
               <button
                 type="button"
@@ -115,7 +116,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
       </header>
 
       <Container size="wide" className="flex flex-col gap-6 py-6 lg:flex-row">
-        <nav aria-label={t('Admin sections', 'ایڈمن کے حصے')} className="lg:w-56 lg:shrink-0">
+        <nav aria-label={t('Admin sections', 'ایڈمن کے حصے')} className="lg:sticky lg:top-24 lg:w-60 lg:shrink-0 lg:self-start lg:rounded-2xl lg:border lg:border-line lg:bg-surface/80 lg:p-2 lg:shadow-card lg:backdrop-blur-xl">
           <ul className="flex gap-1 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible lg:pb-0">
             {visible.map((link) => {
               const active = link.exact ? pathname === link.href : pathname.startsWith(link.href);
@@ -126,30 +127,27 @@ export function AdminShell({ children }: { children: ReactNode }) {
                   <Link
                     href={link.href}
                     aria-current={active ? 'page' : undefined}
-                    className={cn(
-                      'flex min-h-11 items-center gap-2.5 whitespace-nowrap rounded-[var(--radius-control)] px-3 text-sm font-medium transition-colors',
-                      active ? 'bg-[#DCFCE7] text-[#15803D]' : 'text-ink-600 hover:bg-surface-muted hover:text-foreground'
-                    )}
+                    className="nav-link"
                   >
                     <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
                     {t(link.label, link.labelUr)}
                     {link.permission === 'inbox' && unhandled > 0 ? (
-                      <span className="ml-auto rounded-full bg-[#DC2626] px-1.5 py-0.5 text-[0.6875rem] font-bold text-white">
+                      <span className="ml-auto rounded-full bg-danger-500 px-1.5 py-0.5 text-[0.6875rem] font-bold text-white">
                         {unhandled}
                       </span>
                     ) : null}
                     {link.permission === 'reports' && openReports > 0 ? (
-                      <span className="ml-auto rounded-full bg-[#DC2626] px-1.5 py-0.5 text-[0.6875rem] font-bold text-white">
+                      <span className="ml-auto rounded-full bg-danger-500 px-1.5 py-0.5 text-[0.6875rem] font-bold text-white">
                         {openReports}
                       </span>
                     ) : null}
                     {link.permission === 'disputes' && openDisputes > 0 ? (
-                      <span className="ml-auto rounded-full bg-[#DC2626] px-1.5 py-0.5 text-[0.6875rem] font-bold text-white">
+                      <span className="ml-auto rounded-full bg-danger-500 px-1.5 py-0.5 text-[0.6875rem] font-bold text-white">
                         {openDisputes}
                       </span>
                     ) : null}
                     {link.permission === 'verifications' && pendingPros > 0 ? (
-                      <span className="ml-auto rounded-full bg-[#D97706] px-1.5 py-0.5 text-[0.6875rem] font-bold text-white">
+                      <span className="ml-auto rounded-full bg-warn-600 px-1.5 py-0.5 text-[0.6875rem] font-bold text-white">
                         {pendingPros}
                       </span>
                     ) : null}
@@ -183,7 +181,7 @@ export function AdminPageHeader({
   return (
     <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">{t(title)}</h1>
+        <h1 className="text-2xl font-bold tracking-[-0.02em] text-ink-900 sm:text-3xl">{t(title)}</h1>
         {description ? <p className="mt-1 max-w-2xl text-sm text-ink-600">{t(description)}</p> : null}
       </div>
       {action}

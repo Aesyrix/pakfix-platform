@@ -15,26 +15,26 @@ export function SafetyNoticeSection() {
   ];
 
   return (
-    <section className="py-12 bg-white border-b border-[#E5E7EB]">
+    <section className="py-12 bg-surface">
       <Container>
-        <div className="bg-[#FFF5F5] rounded-2xl border-2 border-[#DC2626]/20 p-6 sm:p-8 relative overflow-hidden">
+        <div className="bg-danger-50 rounded-2xl border-2 border-danger-500/20 p-6 sm:p-8 relative overflow-hidden">
           <div className="grid lg:grid-cols-12 gap-8 items-center">
             {/* Left Header */}
             <div className="lg:col-span-5 space-y-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#DC2626]/10 text-[#B91C1C] text-xs font-bold">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-danger-500/10 text-danger-600 text-xs font-bold">
                 <ShieldAlert className="h-4 w-4" />
                 <span>{t('Safety Protocol', 'حفاظتی پروٹوکول')}</span>
               </div>
-              <h2 className="text-2xl font-extrabold text-[#161616]">
-                {t('Some repairs should', 'کچھ مرمتیں')} <span className="text-[#B91C1C]">{t('never be DIY.', 'ہرگز خود نہ کریں۔')}</span>
+              <h2 className="text-2xl font-extrabold text-ink-900">
+                {t('Some repairs should', 'کچھ مرمتیں')} <span className="text-danger-600">{t('never be DIY.', 'ہرگز خود نہ کریں۔')}</span>
               </h2>
-              <p className="text-xs sm:text-sm text-[#475467] leading-relaxed">
-                {t('PakFix AI strictly classifies high-hazard situations as High Risk and instantly connects you with licensed professionals to protect your home and family.', 'پاک فکس اے آئی شدید خطرے والے حالات کو ہائی رسک قرار دیتا ہے اور آپ کے گھر اور خاندان کی حفاظت کے لیے فوراً لائسنس یافتہ پروفیشنلز سے جوڑ دیتا ہے۔')}
+              <p className="text-xs sm:text-sm text-ink-600 leading-relaxed">
+                {t('PakFix AI strictly classifies high-hazard situations as High Risk and instantly connects you with licensed professionals to protect your people and property.', 'پاک فکس اے آئی شدید خطرے والے حالات کو ہائی رسک قرار دیتا ہے اور آپ کے لوگوں اور پراپرٹی کی حفاظت کے لیے فوراً لائسنس یافتہ پروفیشنلز سے جوڑ دیتا ہے۔')}
               </p>
               <div className="pt-2">
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#B91C1C] hover:underline"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-danger-600 hover:underline"
                 >
                   <span>{t('Read Emergency Safety Rules', 'ہنگامی حفاظتی اصول پڑھیں')}</span>
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -45,12 +45,12 @@ export function SafetyNoticeSection() {
             {/* Right Hazards Grid */}
             <div className="lg:col-span-7 grid sm:grid-cols-2 gap-3">
               {hazards.map((h) => (
-                <div key={h.en} className="bg-white rounded-xl p-3.5 border border-[#E5E7EB] space-y-1">
-                  <div className="flex items-center gap-2 text-xs font-bold text-[#161616]">
-                    <AlertTriangle className="h-3.5 w-3.5 text-[#B91C1C]" />
+                <div key={h.en} className="bg-surface rounded-xl p-3.5 border border-line space-y-1">
+                  <div className="flex items-center gap-2 text-xs font-bold text-ink-900">
+                    <AlertTriangle className="h-3.5 w-3.5 text-danger-600" />
                     <span>{t(h.en, h.ur)}</span>
                   </div>
-                  <p className="text-[11px] text-[#667085] leading-snug">{t(h.den, h.dur)}</p>
+                  <p className="text-[11px] text-ink-500 leading-snug">{t(h.den, h.dur)}</p>
                 </div>
               ))}
             </div>

@@ -42,7 +42,7 @@ export function DeleteAccountContent() {
           <Card>
             <CardBody className="flex flex-col gap-3">
               <h2 className="flex items-center gap-2 text-lg font-semibold">
-                <Smartphone className="h-5 w-5 text-[#00824A]" aria-hidden="true" />
+                <Smartphone className="h-5 w-5 text-brand-600" aria-hidden="true" />
                 {t('In the PakFix app', 'پاک فکس ایپ میں')}
               </h2>
               <p className="text-sm text-ink-600">
@@ -60,7 +60,7 @@ export function DeleteAccountContent() {
               <ul className="flex flex-col gap-2 text-sm">
                 {erased.map(([line]) => (
                   <li key={line} className="flex gap-2">
-                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#00824A]" aria-hidden="true" />
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-brand-600" aria-hidden="true" />
                     {line}
                   </li>
                 ))}
@@ -75,7 +75,7 @@ export function DeleteAccountContent() {
               <p className="text-sm text-ink-600">
                 {t('You cannot delete your account while a job is in progress. Finish or cancel it first.', 'جب کوئی کام جاری ہو تو اکاؤنٹ حذف نہیں ہو سکتا۔ پہلے اسے مکمل یا منسوخ کریں۔')}{' '}
                 {t('Questions?', 'سوالات؟')}{' '}
-                <Link href="/contact" className="font-medium text-[#00824A] underline">
+                <Link href="/contact" className="font-medium text-brand-600 underline">
                   {t('Contact us', 'ہم سے رابطہ کریں')}
                 </Link>
                 .
@@ -123,7 +123,7 @@ function DeletePanel() {
     <Card>
       <CardBody className="flex flex-col gap-4">
         <h2 className="flex items-center gap-2 text-lg font-semibold">
-          <Trash2 className="h-5 w-5 text-[#DC2626]" aria-hidden="true" />
+          <Trash2 className="h-5 w-5 text-danger-500" aria-hidden="true" />
           {t('Delete it here', 'یہاں حذف کریں')}
         </h2>
 
@@ -156,8 +156,8 @@ function DeletePanel() {
               onChange={(event) => setReason(event.target.value)}
             />
             {confirming ? (
-              <div className="flex flex-col gap-2 rounded-[var(--radius-control)] border border-[#FCA5A5] bg-[#FEE2E2] p-3">
-                <p className="text-sm font-medium text-[#991B1B]">
+              <div className="flex flex-col gap-2 rounded-[var(--radius-control)] border border-danger-200 bg-danger-100 p-3">
+                <p className="text-sm font-medium text-danger-700">
                   {t('This cannot be undone. Delete your account now?', 'یہ واپس نہیں ہو سکتا۔ کیا ابھی اکاؤنٹ حذف کریں؟')}
                 </p>
                 <div className="flex gap-2">

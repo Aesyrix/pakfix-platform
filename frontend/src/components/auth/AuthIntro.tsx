@@ -18,7 +18,7 @@ export function AuthIntro({
 
   return (
     <>
-      <h1 className="text-2xl font-bold tracking-tight">{t(title, titleUr)}</h1>
+      <h1 className="text-[1.75rem] font-bold leading-tight tracking-[-0.02em] text-ink-900">{t(title, titleUr)}</h1>
       {description ? (
         <p className="mt-2 text-sm text-ink-600">{t(description, descriptionUr)}</p>
       ) : null}

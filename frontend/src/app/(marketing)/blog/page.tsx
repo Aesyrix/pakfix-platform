@@ -8,7 +8,7 @@ import { BlogListContent } from './BlogListContent';
 export const metadata: Metadata = pageMetadata({
   title: 'Home Maintenance Guides for Pakistan',
   description:
-    'Practical guides on AC servicing, plumbing, electrical safety, appliances and seasonal maintenance, written for Pakistani homes.',
+    'Practical guides on AC servicing, plumbing, electrical safety, appliances and seasonal maintenance, written for Pakistani homes and businesses.',
   path: '/blog',
 });
 
@@ -28,7 +28,7 @@ export default async function BlogPage() {
           ]),
           {
             '@type': 'Blog',
-            name: 'PakFix Home Guides',
+            name: 'PakFix Repair Guides',
             url: absoluteUrl('/blog'),
             blogPost: posts.slice(0, 10).map((post) => ({
               '@type': 'BlogPosting',
@@ -43,9 +43,9 @@ export default async function BlogPage() {
       <BlogListContent
         categories={categories}
         initialPosts={posts}
-        title="Home maintenance guides"
+        title="Repair and maintenance guides"
         titleUr="گھر کی دیکھ بھال کے رہنما"
-        subtitle="What goes wrong in Pakistani homes, what you can safely check yourself, and when to call a professional."
+        subtitle="What goes wrong in Pakistani homes, offices and shops, what you can safely check yourself, and when to call a professional."
         subtitleUr="پاکستانی گھروں میں کیا خراب ہوتا ہے، آپ خود کیا محفوظ طریقے سے چیک کر سکتے ہیں، اور پروفیشنل کو کب بلانا چاہیے۔"
       />
     </>

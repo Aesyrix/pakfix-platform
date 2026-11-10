@@ -10,10 +10,10 @@ export function FloatingAiAction() {
     <div className="fixed bottom-6 end-6 z-40 hidden md:block">
       <Link
         href="/ai"
-        className="flex items-center gap-2.5 px-4 py-3 rounded-full bg-[#00824A] hover:bg-[#006B3C] text-white text-xs font-extrabold shadow-floating transition-all hover:scale-105 border-2 border-white"
+        className="anim-ring flex items-center gap-2.5 px-4 py-3 rounded-full bg-brand-solid hover:bg-brand-solid-hover text-white text-xs font-extrabold shadow-floating transition-all hover:scale-105 border-2 border-white"
         aria-label={t('Ask PakFix AI', 'پاک فکس اے آئی سے پوچھیں')}
       >
-        <Sparkles className="h-4 w-4 animate-pulse text-amber-300" />
+        <Sparkles className="h-4 w-4 animate-pulse text-accent-300" aria-hidden="true" />
         <span>{t('Ask PakFix AI', 'پاک فکس اے آئی سے پوچھیں')}</span>
       </Link>
     </div>

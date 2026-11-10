@@ -14,7 +14,7 @@ export const metadata: Metadata = pageMetadata({
 
 export default function ForgotPasswordPage() {
   return (
-    <Card>
+    <Card className="shadow-lifted">
       <CardBody className="sm:p-8">
         <AuthIntro
           title="Forgot your password?"

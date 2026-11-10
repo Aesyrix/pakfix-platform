@@ -70,7 +70,7 @@ export default function AdminPagesPage() {
                     onClick={() => { setSelectedId(page.id); setCreating(false); }}
                     aria-current={selectedId === page.id ? 'true' : undefined}
                     className={`flex w-full min-h-12 items-center justify-between gap-2 rounded-[var(--radius-control)] border px-3 text-left text-sm ${
-                      selectedId === page.id ? 'border-[#00824A] bg-[#DCFCE7]' : 'border-[var(--border)] bg-surface hover:bg-surface-muted'
+                      selectedId === page.id ? 'border-brand-600 bg-brand-100' : 'border-line bg-surface hover:bg-surface-muted'
                     }`}
                   >
                     <span className="min-w-0">
@@ -172,7 +172,7 @@ function PageEditor({ page }: { page: AdminPage }) {
             href={publicPath}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-[#00824A] hover:text-[#15803D]"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-brand-600 hover:text-brand-700"
           >
             {t('View page', 'صفحہ دیکھیں')}
             <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />

@@ -135,7 +135,7 @@ function ReportCard({ report }: { report: AdminReport }) {
         </div>
 
         {report.snapshot ? (
-          <blockquote className="rounded-[var(--radius-control)] border-l-4 border-[#DC2626] bg-surface-muted px-4 py-3 text-sm">
+          <blockquote className="rounded-[var(--radius-control)] border-l-4 border-danger-500 bg-surface-muted px-4 py-3 text-sm">
             <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-ink-500">{t('Reported message', 'رپورٹ شدہ پیغام')}</p>
             {report.snapshot}
           </blockquote>
@@ -187,7 +187,7 @@ function PersonBox({ title, person, extra }: { title: string; person: AdminRepor
   if (!person) return null;
 
   return (
-    <div className="rounded-[var(--radius-control)] border border-[var(--border)] p-3 text-sm">
+    <div className="rounded-[var(--radius-control)] border border-line p-3 text-sm">
       <p className="text-xs font-semibold uppercase tracking-wide text-ink-500">{title}</p>
       <p className="mt-1 font-semibold">
         {person.name}
@@ -207,7 +207,7 @@ function PersonBox({ title, person, extra }: { title: string; person: AdminRepor
           </a>
         ) : null}
       </div>
-      {extra ? <p className="mt-1 text-xs font-semibold text-[#991B1B]">{extra}</p> : null}
+      {extra ? <p className="mt-1 text-xs font-semibold text-danger-700">{extra}</p> : null}
     </div>
   );
 }

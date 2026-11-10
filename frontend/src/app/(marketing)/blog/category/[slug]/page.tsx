@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
   return pageMetadata({
     title: category ? `${category.name} Guides` : 'Guides',
-    description: category?.description ?? `PakFix home maintenance guides about ${category?.name ?? 'home repair'}.`,
+    description: category?.description ?? `PakFix repair and maintenance guides about ${category?.name ?? 'repairs'}.`,
     path: `/blog/category/${slug}`,
   });
 }

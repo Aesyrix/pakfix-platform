@@ -1,5 +1,6 @@
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { SiteHeader } from '@/components/layout/SiteHeader';
+import { ScrollReveal } from '@/components/layout/ScrollReveal';
 import { catalogueApi, contentApi } from '@/lib/api/endpoints';
 import { safeFetch } from '@/lib/api/safe';
 
@@ -25,6 +26,7 @@ export default async function MarketingLayout({
         {children}
       </main>
       <SiteFooter bootstrap={bootstrap} popularCategories={popularCategories} />
+      <ScrollReveal />
     </div>
   );
 }

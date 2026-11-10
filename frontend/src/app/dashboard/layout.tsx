@@ -12,7 +12,7 @@ import { DashboardSidebar } from '@/components/layout/DashboardSidebar';
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <RequireAuth roles={['customer', 'property_manager']}>
-      <div className="flex min-h-dvh">
+      <div className="flex min-h-dvh app-canvas">
         <DashboardSidebar />
 
         <div className="flex min-w-0 flex-1 flex-col">

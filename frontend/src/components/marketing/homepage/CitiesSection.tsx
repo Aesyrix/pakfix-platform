@@ -21,14 +21,14 @@ export function CitiesSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-white border-b border-[#E5E7EB]">
+    <section className="py-16 sm:py-24 bg-surface">
       <Container>
         <div className="max-w-2xl mx-auto text-center space-y-2 mb-10">
-          <span className="text-xs font-bold text-[#00824A] uppercase tracking-wider">{t('Our Cities', 'ہمارے شہر')}</span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#161616]">
+          <span className="eyebrow">{t('Our Cities', 'ہمارے شہر')}</span>
+          <h2 className="section-title text-ink-900">
             {t('Starting in Islamabad and Rawalpindi.', 'اسلام آباد اور راولپنڈی سے آغاز۔')}
           </h2>
-          <p className="text-sm text-[#475467]">
+          <p className="text-sm text-ink-600">
             {t('More major cities across Pakistan are on the way.', 'پاکستان کے مزید بڑے شہر جلد شامل ہوں گے۔')}
           </p>
         </div>
@@ -39,10 +39,10 @@ export function CitiesSection() {
             <Link
               key={c.slug}
               href={`/${c.slug}`}
-              className="bg-[#F8FAF9] hover:bg-[#EAF7F0] border border-[#E5E7EB] hover:border-[#00824A] rounded-xl p-3.5 text-center transition-all group"
+              className="card-lift bg-surface border border-line rounded-2xl p-4 text-center shadow-xs group"
             >
-              <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-[#161616] group-hover:text-[#00824A]">
-                <Building2 className="h-4 w-4 text-[#667085] group-hover:text-[#00824A]" />
+              <div className="flex items-center justify-center gap-1.5 text-sm font-semibold text-ink-900 group-hover:text-brand-700">
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-50 text-brand-600 ring-1 ring-brand-100"><Building2 className="h-4 w-4" aria-hidden="true" /></span>
                 <span>{t(c.name, c.ur)}</span>
               </div>
             </Link>

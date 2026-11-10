@@ -1,14 +1,32 @@
 import type { Metadata, Viewport } from 'next';
-import { Plus_Jakarta_Sans } from 'next/font/google';
+import { Inter, Noto_Nastaliq_Urdu, Plus_Jakarta_Sans } from 'next/font/google';
 import { Providers } from '@/components/providers/Providers';
 import { SkipLink } from '@/components/layout/SkipLink';
 import { localeInitScript } from '@/lib/i18n';
+import { modeInitScript } from '@/lib/theme';
 import './globals.css';
+
+// Inter for running text, Plus Jakarta Sans for headings. Both are exposed as
+// CSS variables that globals.css maps onto --font-sans and --font-display.
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+});
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  variable: '--font-plus-jakarta',
+  variable: '--font-jakarta',
   display: 'swap',
+});
+
+// Urdu in Nastaliq, the calligraphic style iPhones use for Urdu. Not
+// preloaded: English visitors never download it; it loads when Urdu is on.
+const nastaliq = Noto_Nastaliq_Urdu({
+  subsets: ['arabic'],
+  variable: '--font-urdu',
+  display: 'swap',
+  preload: false,
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pakfix.pk';
@@ -16,15 +34,17 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://pakfix.pk';
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'PakFix | Pakistan Smart Home Repair Platform',
+    default: 'PakFix | Pakistan Smart Repair Platform',
     // Every page supplies its own title; this keeps the brand on the end.
     template: '%s | PakFix',
   },
   description:
-    'Upload a photo, describe the problem, or book a verified professional near you. Home repair, maintenance and appliance care across Pakistan.',
+    'Upload a photo, describe the problem, or book a verified professional near you. Repair, maintenance and appliance care for homes, offices and businesses across Pakistan.',
   applicationName: 'PakFix',
   keywords: [
+    'repair services Pakistan',
     'home repair Pakistan',
+    'office repair Pakistan',
     'plumber Lahore',
     'electrician Karachi',
     'AC repair Islamabad',
@@ -39,13 +59,13 @@ export const metadata: Metadata = {
     url: siteUrl,
     title: 'PakFix | Show the Problem. Get It Fixed.',
     description:
-      'Describe or photograph what is wrong at home and get a plain-language diagnosis, a realistic cost, and a verified professional near you.',
+      'Describe or photograph what is wrong and get a plain-language diagnosis, a realistic cost, and a verified professional near you.',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'PakFix | Show the Problem. Get It Fixed.',
     description:
-      'Pakistan smart home repair platform. AI diagnosis, verified professionals, transparent pricing.',
+      'Pakistan smart repair platform. AI diagnosis, verified professionals, transparent pricing.',
   },
   robots: {
     index: true,
@@ -68,7 +88,7 @@ export const viewport: Viewport = {
   maximumScale: 5,
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#0b1220' },
+    { media: '(prefers-color-scheme: dark)', color: '#0d1416' },
   ],
   viewportFit: 'cover',
 };
@@ -77,10 +97,12 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" dir="ltr" suppressHydrationWarning className={jakarta.variable}>
+    <html lang="en" dir="ltr" suppressHydrationWarning className={`${inter.variable} ${jakarta.variable} ${nastaliq.variable}`}>
       <body className="antialiased">
         {/* Applies the saved English/اردو choice before the first paint. */}
         <script dangerouslySetInnerHTML={{ __html: localeInitScript() }} />
+        {/* Applies the saved light/dark choice before the first paint. */}
+        <script dangerouslySetInnerHTML={{ __html: modeInitScript() }} />
         {/* First stop for a keyboard user on every page. */}
         <SkipLink />
         <Providers>{children}</Providers>
