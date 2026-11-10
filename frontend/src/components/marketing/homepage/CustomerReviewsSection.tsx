@@ -35,15 +35,15 @@ export function CustomerReviewsSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-surface-muted border-b border-line">
+    <section className="py-16 sm:py-24 bg-section-glow">
       <Container>
         <div className="max-w-2xl mx-auto text-center space-y-2 mb-12">
           <span className="eyebrow">{t('Customer Trust', 'گاہکوں کا اعتماد')}</span>
           <h2 className="section-title text-ink-900">
-            {t('Homeowners deserve a simpler repair experience.', 'گھر مالکان آسان مرمت کے تجربے کے حقدار ہیں۔')}
+            {t('Everyone deserves a simpler repair experience.', 'ہر کوئی آسان مرمت کے تجربے کا حقدار ہے۔')}
           </h2>
           <p className="text-sm text-ink-600">
-            {t('PakFix is built around what matters most when someone comes to work in your home.', 'پاک فکس اس بات کو سامنے رکھ کر بنایا گیا ہے کہ آپ کے گھر کام ہو تو سب سے اہم کیا ہے۔')}
+            {t('PakFix is built around what matters most when someone comes to work at your place.', 'پاک فکس اس بات کو سامنے رکھ کر بنایا گیا ہے کہ آپ کی جگہ پر کام ہو تو سب سے اہم کیا ہے۔')}
           </p>
         </div>
 
@@ -51,7 +51,7 @@ export function CustomerReviewsSection() {
           {promises.map((promise) => (
             <div
               key={promise.title}
-              className="bg-surface rounded-2xl border border-line p-6 shadow-2xs hover:shadow-card transition-all"
+              className="card-lift bg-surface rounded-2xl border border-line p-6 shadow-xs"
             >
               <div className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-100 border border-brand-200">{promise.icon}</div>
               <h3 className="mt-4 text-sm font-bold text-ink-900">{promise.title}</h3>

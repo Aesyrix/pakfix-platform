@@ -13,16 +13,16 @@ export const dynamic = 'force-static';
  */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'PakFix — Home Repair & Maintenance',
+    name: 'PakFix — Repair & Maintenance',
     short_name: 'PakFix',
     description:
-      'Diagnose a home problem, book a verified professional, and keep a maintenance record of your property.',
+      'Diagnose any repair problem, book a verified professional, and keep a maintenance record of your property.',
     start_url: '/dashboard',
     scope: '/',
     display: 'standalone',
     orientation: 'portrait',
     background_color: '#ffffff',
-    theme_color: '#0a7a48',
+    theme_color: '#0b7a84',
     lang: 'en-PK',
     dir: 'ltr',
     categories: ['utilities', 'lifestyle', 'productivity'],

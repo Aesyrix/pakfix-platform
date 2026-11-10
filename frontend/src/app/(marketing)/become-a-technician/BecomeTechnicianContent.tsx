@@ -38,8 +38,8 @@ export function BecomeTechnicianContent() {
       icon: Briefcase,
       title: { en: 'More Nearby Jobs', ur: 'آس پاس مزید کام' },
       desc: {
-        en: 'Receive job leads from homeowners in your area directly on your phone.',
-        ur: 'اپنے علاقے کے گھر مالکان سے جاب لیڈز براہِ راست اپنے فون پر حاصل کریں۔',
+        en: 'Receive job leads from customers in your area directly on your phone.',
+        ur: 'اپنے علاقے کے گاہکوں سے جاب لیڈز براہِ راست اپنے فون پر حاصل کریں۔',
       },
     },
     {
@@ -95,7 +95,7 @@ export function BecomeTechnicianContent() {
             {t("Join Pakistan's Pro Network", 'پاکستان کے پروفیشنل نیٹ ورک میں شامل ہوں')}
           </div>
         }
-        title={t('Grow Your Home Service Business', 'اپنا گھریلو سروس کاروبار بڑھائیں')}
+        title={t('Grow Your Service Business', 'اپنا سروس کاروبار بڑھائیں')}
         subtitle={t('Are you a skilled plumber, electrician, AC mechanic or appliance technician? Register with PakFix to connect directly with paying customers across Pakistan.', 'کیا آپ ہنرمند پلمبر، الیکٹریشن، اے سی مکینک یا آلات کے ٹیکنیشن ہیں؟ پاک فکس کے ساتھ رجسٹر ہوں اور پورے پاکستان میں ادائیگی کرنے والے گاہکوں سے براہِ راست جڑیں۔')}
       />
 

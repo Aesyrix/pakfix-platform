@@ -56,7 +56,7 @@ export function HeroSearch({ examples = [] }: { examples?: string[] }) {
               id="hero-problem"
               value={value}
               onChange={(event) => setValue(event.target.value)}
-              placeholder={t('What needs fixing in your home?', 'آپ کے گھر میں کیا ٹھیک کرانا ہے؟')}
+              placeholder={t('What needs fixing?', 'کیا ٹھیک کرانا ہے؟')}
               autoComplete="off"
               className={cn(
                 'min-h-[48px] w-full flex-1 rounded-[var(--radius-control)] bg-transparent px-4',

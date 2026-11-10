@@ -31,12 +31,12 @@ export function CustomerDashboardPreviewSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-surface-muted border-b border-line">
+    <section className="py-16 sm:py-24 bg-section-glow">
       <Container>
         <div className="max-w-2xl mx-auto text-center space-y-2 mb-12">
           <span className="eyebrow">{t('Customer Portal', 'کسٹمر پورٹل')}</span>
           <h2 className="section-title text-ink-900">
-            {t('Everything about your home in one place.', 'آپ کے گھر کی ہر چیز ایک جگہ۔')}
+            {t('Everything about your property in one place.', 'آپ کی پراپرٹی کی ہر چیز ایک جگہ۔')}
           </h2>
           <p className="text-sm text-ink-600">
             {t('Track active repair jobs, inspect itemized quotes, check AI diagnosis history, and manage recurring maintenance.', 'فعال مرمت کے کام ٹریک کریں، تفصیلی تخمینے دیکھیں، اے آئی تشخیص کی تاریخ چیک کریں، اور بار بار دیکھ بھال سنبھالیں۔')}

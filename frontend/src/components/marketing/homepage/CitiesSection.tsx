@@ -21,7 +21,7 @@ export function CitiesSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-surface border-b border-line">
+    <section className="py-16 sm:py-24 bg-surface">
       <Container>
         <div className="max-w-2xl mx-auto text-center space-y-2 mb-10">
           <span className="eyebrow">{t('Our Cities', 'ہمارے شہر')}</span>
@@ -39,10 +39,10 @@ export function CitiesSection() {
             <Link
               key={c.slug}
               href={`/${c.slug}`}
-              className="bg-surface-muted hover:bg-brand-100 border border-line hover:border-brand-600 rounded-xl p-3.5 text-center transition-all group"
+              className="card-lift bg-surface border border-line rounded-2xl p-4 text-center shadow-xs group"
             >
-              <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-ink-900 group-hover:text-brand-600">
-                <Building2 className="h-4 w-4 text-ink-500 group-hover:text-brand-600" />
+              <div className="flex items-center justify-center gap-1.5 text-sm font-semibold text-ink-900 group-hover:text-brand-700">
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-50 text-brand-600 ring-1 ring-brand-100"><Building2 className="h-4 w-4" aria-hidden="true" /></span>
                 <span>{t(c.name, c.ur)}</span>
               </div>
             </Link>

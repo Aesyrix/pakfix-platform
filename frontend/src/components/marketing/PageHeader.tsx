@@ -98,7 +98,7 @@ export function Section({
     <section
       id={id}
       aria-labelledby={title ? headingId : undefined}
-      className={cn('py-14 sm:py-20', muted && 'border-y border-line bg-surface-muted')}
+      className={cn('py-14 sm:py-20', muted && 'bg-section-glow')}
     >
       <Container>
         {title || action ? (

@@ -20,7 +20,7 @@ export function ServiceCompaniesContent() {
           <div className="relative isolate overflow-hidden bg-premium-dark text-white rounded-3xl p-8 sm:p-14 border border-white/10 shadow-floating text-center space-y-6">
             <Building2 className="h-12 w-12 text-brand-500 mx-auto" />
             <h2 className="section-title text-white">
-              {t('Scale Your Home Service Enterprise', 'اپنا گھریلو سروس انٹرپرائز بڑھائیں')}
+              {t('Scale Your Service Enterprise', 'اپنا سروس انٹرپرائز بڑھائیں')}
             </h2>
             <p className="text-sm text-ink-300 max-w-xl mx-auto">
               {t('Register your company on PakFix to unlock multi-technician dispatch, corporate invoicing, and lead management.', 'ملٹی ٹیکنیشن ڈسپیچ، کارپوریٹ انوائسنگ اور لیڈ مینجمنٹ کے لیے اپنی کمپنی پاک فکس پر رجسٹر کریں۔')}

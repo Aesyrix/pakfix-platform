@@ -42,11 +42,11 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
 
           <span className="mt-12 flex w-fit items-center gap-1.5 rounded-full border border-white/15 bg-surface/[0.06] px-3.5 py-1.5 text-xs font-semibold text-brand-on-dark backdrop-blur-sm">
             <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-            {t('Trusted Home Services Platform', 'قابلِ اعتماد ہوم سروسز پلیٹ فارم')}
+            {t('Trusted Repair & Services Platform', 'قابلِ اعتماد مرمت اور سروسز پلیٹ فارم')}
           </span>
           <h2 className="mt-5 max-w-md text-4xl font-bold leading-[1.12] tracking-[-0.018em] xl:text-[2.75rem]">
-            {t("Pakistan's smarter way", 'اپنے گھر کی مرمت کا')}{' '}
-            <span className="text-gradient-on-dark">{t('to fix your home', 'زیادہ سمجھدار طریقہ')}</span>
+            {t("Pakistan's smarter way", 'ہر چیز کی مرمت کا')}{' '}
+            <span className="text-gradient-on-dark">{t('to fix anything', 'زیادہ سمجھدار طریقہ')}</span>
           </h2>
 
           {/* How it works */}

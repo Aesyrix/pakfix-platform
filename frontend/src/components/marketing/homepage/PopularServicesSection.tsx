@@ -34,7 +34,7 @@ export function PopularServicesSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-surface border-b border-line">
+    <section className="py-16 sm:py-24 bg-surface">
       <Container>
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-10">
@@ -44,7 +44,7 @@ export function PopularServicesSection() {
               {t('Whatever needs fixing, start here.', 'جو بھی ٹھیک کرانا ہو، یہاں سے شروع کریں۔')}
             </h2>
             <p className="text-sm text-ink-600 mt-1">
-              {t('Find the right verified professional for common household repairs across Pakistan.', 'پاکستان بھر میں عام گھریلو مرمت کے لیے صحیح تصدیق شدہ پروفیشنل تلاش کریں۔')}
+              {t('Find the right verified professional for common repairs across Pakistan.', 'پاکستان بھر میں عام مرمت کے لیے صحیح تصدیق شدہ پروفیشنل تلاش کریں۔')}
             </p>
           </div>
 

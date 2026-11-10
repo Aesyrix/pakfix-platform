@@ -6,7 +6,7 @@ import { pageMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Search',
-  description: 'Search PakFix services, professionals and home repair guides.',
+  description: 'Search PakFix services, professionals and repair guides.',
   path: '/search',
   // Result pages are thin and endless; they add nothing to an index.
   noindex: true,

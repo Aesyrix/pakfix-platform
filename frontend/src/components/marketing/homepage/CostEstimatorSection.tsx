@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Calculator, ArrowRight, ShieldCheck } from 'lucide-react';
+import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { useT } from '@/components/i18n/LocaleProvider';
 
@@ -21,14 +21,11 @@ export function CostEstimatorSection() {
   };
 
   return (
-    <section className="py-16 sm:py-24 bg-surface-muted border-b border-line">
+    <section className="py-16 sm:py-24 bg-section-glow">
       <Container>
-        <div className="max-w-3xl mx-auto bg-surface rounded-3xl border border-line p-6 sm:p-10 shadow-card">
+        <div className="max-w-3xl mx-auto bg-surface rounded-3xl border border-line p-6 sm:p-10 shadow-lifted">
           <div className="text-center space-y-2 mb-8">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-100 text-brand-700 text-xs font-bold">
-              <Calculator className="h-4 w-4 text-brand-600" />
-              <span>{t('Interactive Repair Tool', 'انٹرایکٹو مرمت ٹول')}</span>
-            </div>
+            <span className="eyebrow">{t('Interactive Repair Tool', 'انٹرایکٹو مرمت ٹول')}</span>
             <h2 className="section-title text-ink-900">
               {t('Get an estimated repair range.', 'مرمت کی تخمینی حد معلوم کریں۔')}
             </h2>

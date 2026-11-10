@@ -15,7 +15,7 @@ export function SafetyNoticeSection() {
   ];
 
   return (
-    <section className="py-12 bg-surface border-b border-line">
+    <section className="py-12 bg-surface">
       <Container>
         <div className="bg-danger-50 rounded-2xl border-2 border-danger-500/20 p-6 sm:p-8 relative overflow-hidden">
           <div className="grid lg:grid-cols-12 gap-8 items-center">
@@ -29,7 +29,7 @@ export function SafetyNoticeSection() {
                 {t('Some repairs should', 'کچھ مرمتیں')} <span className="text-danger-600">{t('never be DIY.', 'ہرگز خود نہ کریں۔')}</span>
               </h2>
               <p className="text-xs sm:text-sm text-ink-600 leading-relaxed">
-                {t('PakFix AI strictly classifies high-hazard situations as High Risk and instantly connects you with licensed professionals to protect your home and family.', 'پاک فکس اے آئی شدید خطرے والے حالات کو ہائی رسک قرار دیتا ہے اور آپ کے گھر اور خاندان کی حفاظت کے لیے فوراً لائسنس یافتہ پروفیشنلز سے جوڑ دیتا ہے۔')}
+                {t('PakFix AI strictly classifies high-hazard situations as High Risk and instantly connects you with licensed professionals to protect your people and property.', 'پاک فکس اے آئی شدید خطرے والے حالات کو ہائی رسک قرار دیتا ہے اور آپ کے لوگوں اور پراپرٹی کی حفاظت کے لیے فوراً لائسنس یافتہ پروفیشنلز سے جوڑ دیتا ہے۔')}
               </p>
               <div className="pt-2">
                 <Link

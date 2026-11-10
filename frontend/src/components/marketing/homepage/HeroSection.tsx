@@ -44,30 +44,32 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative isolate overflow-hidden bg-premium-dark py-14 lg:py-24 text-white">
-      {/* Grid lines and an emerald glow behind the hero; purely decorative. */}
+    <section data-no-reveal className="relative isolate overflow-hidden bg-premium-dark py-14 lg:py-24 text-white">
+      {/* Grid lines, an aqua glow behind the headline and a coral glow behind the card; purely decorative. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-grid-dark" />
-        <div className="absolute right-[8%] top-1/3 h-72 w-72 rounded-full bg-brand-500/25 blur-[100px]" />
+        <div className="anim-drift absolute -left-24 top-[12%] h-[26rem] w-[34rem] rounded-full bg-brand-400/35 blur-[120px]" />
+        <div className="anim-drift-slow absolute right-[4%] top-[18%] h-[24rem] w-[24rem] rounded-full bg-glow-warm/35 blur-[120px]" />
+        <div className="absolute bottom-[-6rem] left-1/3 h-72 w-[30rem] rounded-full bg-brand-500/30 blur-[110px]" />
       </div>
       <Container className="relative">
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           {/* LEFT SIDE: Hero Content & AI Input Box */}
           <div className="lg:col-span-7 space-y-6">
             {/* Trust Pill */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface/[0.06] border border-white/15 text-brand-on-dark text-xs font-semibold backdrop-blur-sm">
+            <div className="anim-rise inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface/[0.06] border border-white/15 text-brand-on-dark text-xs font-semibold backdrop-blur-sm">
               <Sparkles className="h-4 w-4" />
-              <span>{t('AI-powered home repair assistance', 'اے آئی سے چلنے والی گھریلو مرمت معاونت')}</span>
+              <span>{t('AI-powered repair assistance', 'اے آئی سے چلنے والی مرمت معاونت')}</span>
             </div>
 
             {/* Main Heading */}
-            <h1 className="text-4xl sm:text-5xl lg:text-[3.3rem] font-bold text-white tracking-[-0.025em] leading-[1.06]">
+            <h1 className="anim-rise text-4xl sm:text-5xl lg:text-[3.3rem] font-bold text-white tracking-[-0.025em] leading-[1.06]" style={{ '--d': '90ms' } as React.CSSProperties}>
               {t('Show the Problem.', 'مسئلہ دکھائیں۔')}<br />
               <span className="text-gradient-on-dark">{t('PakFix Helps You Fix It.', 'پاک فکس اسے ٹھیک کرنے میں مدد کرتا ہے۔')}</span>
             </h1>
 
             {/* Subheading */}
-            <p className="text-base sm:text-lg text-ink-300 leading-relaxed max-w-xl">
+            <p className="anim-rise text-base sm:text-lg text-ink-300 leading-relaxed max-w-xl" style={{ '--d': '180ms' } as React.CSSProperties}>
               {t(
                 'Describe the issue, upload a photo or video, and PakFix can help identify the problem and connect you with a trusted local professional.',
                 'مسئلہ بیان کریں، تصویر یا ویڈیو اپلوڈ کریں، اور پاک فکس مسئلے کی نشاندہی کر کے آپ کو قابلِ اعتماد مقامی پروفیشنل سے جوڑنے میں مدد کرتا ہے۔'
@@ -75,7 +77,7 @@ export function HeroSection() {
             </p>
 
             {/* MAIN AI PROBLEM CARD */}
-            <div className="bg-surface text-ink-900 rounded-2xl p-5 sm:p-6 shadow-2xl ring-1 ring-surface/20 space-y-4 relative">
+            <div className="anim-rise bg-surface text-ink-900 rounded-2xl p-5 sm:p-6 shadow-2xl ring-1 ring-surface/20 space-y-4 relative" style={{ '--d': '280ms' } as React.CSSProperties}>
               <div className="flex items-center justify-between">
                 <label htmlFor="ai-problem-input" className="text-sm font-bold text-ink-900 flex items-center gap-2">
                   <Sparkles className="h-4 w-4 text-brand-600" />
@@ -172,8 +174,8 @@ export function HeroSection() {
           </div>
 
           {/* RIGHT SIDE: Product UI Preview Card */}
-          <div className="lg:col-span-5 space-y-4">
-            <div className="bg-surface text-ink-900 rounded-2xl p-5 shadow-2xl ring-1 ring-surface/20 relative overflow-hidden lg:rotate-[0.6deg] transition-transform duration-500 hover:rotate-0">
+          <div className="anim-rise lg:col-span-5 space-y-4" style={{ '--d': '380ms' } as React.CSSProperties}>
+            <div className="anim-float bg-surface text-ink-900 rounded-2xl p-5 shadow-2xl ring-1 ring-surface/20 relative overflow-hidden lg:rotate-[0.6deg] transition-transform duration-500 hover:rotate-0">
               {/* Header Bar inside preview */}
               <div className="flex items-center justify-between border-b border-line pb-3 mb-4">
                 <div className="flex items-center gap-2">

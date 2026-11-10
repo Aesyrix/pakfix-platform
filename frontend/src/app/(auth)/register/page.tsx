@@ -9,7 +9,7 @@ import { safeFetch } from '@/lib/api/safe';
 export const metadata: Metadata = {
   title: 'Create your account',
   description:
-    'Create a PakFix account to diagnose home problems, book verified professionals and keep a maintenance record of your property.',
+    'Create a PakFix account to diagnose any repair problem, book verified professionals and keep a maintenance record of your property.',
   robots: { index: false, follow: false },
 };
 

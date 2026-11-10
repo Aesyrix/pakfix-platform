@@ -8,7 +8,7 @@ import { useT } from '@/components/i18n/LocaleProvider';
 export function ForProfessionalsSection() {
   const t = useT();
   return (
-    <section className="py-16 sm:py-24 bg-surface border-b border-line">
+    <section className="py-16 sm:py-24 bg-surface">
       <Container>
         <div className="grid md:grid-cols-2 gap-6">
           {/* Card 1: Individual Professionals */}
@@ -21,7 +21,7 @@ export function ForProfessionalsSection() {
                 {t('Are you a skilled service professional?', 'کیا آپ ہنرمند سروس پروفیشنل ہیں؟')}
               </h3>
               <p className="text-xs sm:text-sm text-ink-300 leading-relaxed">
-                {t('Join PakFix to connect directly with homeowners looking for quality plumbing, electrical, AC and home repair services.', 'پاک فکس جوائن کریں اور معیاری پلمبنگ، الیکٹریکل، اے سی اور گھریلو مرمت کی خدمات کے خواہشمند گھر مالکان سے براہِ راست جڑیں۔')}
+                {t('Join PakFix to connect directly with customers looking for quality plumbing, electrical, AC and repair services.', 'پاک فکس جوائن کریں اور معیاری پلمبنگ، الیکٹریکل، اے سی اور مرمت کی خدمات کے خواہشمند گاہکوں سے براہِ راست جڑیں۔')}
               </p>
 
               <ul className="space-y-2 text-xs text-ink-300">

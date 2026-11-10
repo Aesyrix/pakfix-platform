@@ -81,8 +81,8 @@ export function LocalPageView({
         }
         title={t(`${tradeName} in ${data.city.name}`, `${data.city.name} میں ${tradeName}`)}
         subtitle={t(
-          `Book an identity-checked ${tradeName.toLowerCase()} covering ${data.city.name}. You see the price before any work starts, and every job stays on your home's record.`,
-          `${data.city.name} میں شناخت جانچے گئے ${tradeName} بک کریں۔ کام شروع ہونے سے پہلے آپ قیمت دیکھتے ہیں، اور ہر کام آپ کے ہوم ریکارڈ میں محفوظ رہتا ہے۔`
+          `Book an identity-checked ${tradeName.toLowerCase()} covering ${data.city.name}. You see the price before any work starts, and every job stays on your property's record.`,
+          `${data.city.name} میں شناخت جانچے گئے ${tradeName} بک کریں۔ کام شروع ہونے سے پہلے آپ قیمت دیکھتے ہیں، اور ہر کام آپ کے پراپرٹی ریکارڈ میں محفوظ رہتا ہے۔`
         )}
       >
         <div className="flex flex-col gap-3 sm:flex-row">

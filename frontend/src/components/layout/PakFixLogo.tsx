@@ -60,7 +60,7 @@ export function PakFixLogo({ className, showWordmark = true, isDarkBackground = 
         />
 
         {/* Crescent Star Pakistan Identity accent */}
-        <circle cx="25.5" cy="10.5" r="3.5" fill="#F59E0B" opacity="0.95" />
+        <circle cx="25.5" cy="10.5" r="3.5" className="fill-accent-500" opacity="0.95" />
         <path
           d="M26.2 9.2L26.7 10.4L27.9 10.5L27 11.3L27.3 12.5L26.2 11.8L25.1 12.5L25.4 11.3L24.5 10.5L25.7 10.4L26.2 9.2Z"
           fill="white"

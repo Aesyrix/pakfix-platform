@@ -15,15 +15,15 @@ export function HomeMaintenanceSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-surface-muted border-b border-line">
+    <section className="py-16 sm:py-24 bg-section-glow">
       <Container>
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           {/* Left Text Column */}
           <div className="lg:col-span-6 space-y-4">
             <span className="eyebrow">{t('Property Care', 'پراپرٹی کی دیکھ بھال')}</span>
             <h2 className="section-title text-ink-900">
-              {t('Keep your home maintained,', 'اپنے گھر کو برقرار رکھیں،')}<br />
-              <span className="text-brand-600">{t('not just repaired.', 'صرف مرمت نہیں۔')}</span>
+              {t('Keep your property maintained,', 'اپنی پراپرٹی کو برقرار رکھیں،')}<br />
+              <span className="text-gradient-brand">{t('not just repaired.', 'صرف مرمت نہیں۔')}</span>
             </h2>
             <p className="text-sm text-ink-600 leading-relaxed">
               {t('Track appliances, save full repair history, schedule recurring preventive maintenance, and receive smart reminders.', 'آلات ٹریک کریں، مکمل مرمت کی تاریخ محفوظ کریں، بار بار حفاظتی دیکھ بھال شیڈول کریں، اور سمارٹ یاد دہانیاں حاصل کریں۔')}
@@ -53,7 +53,7 @@ export function HomeMaintenanceSection() {
                 href="/home-maintenance"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-solid hover:bg-brand-solid-hover text-white text-xs font-bold shadow-xs transition-colors"
               >
-                <span>{t('Add Your Home Assets', 'اپنے گھریلو آلات شامل کریں')}</span>
+                <span>{t('Add Your Property Assets', 'اپنی پراپرٹی کے آلات شامل کریں')}</span>
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -64,7 +64,7 @@ export function HomeMaintenanceSection() {
             <div className="flex items-center justify-between border-b border-line pb-3">
               <div className="flex items-center gap-2">
                 <Home className="h-4 w-4 text-brand-600" />
-                <span className="text-xs font-extrabold text-ink-900">{t('MY HOME ASSETS & MAINTENANCE', 'میرے گھریلو آلات اور دیکھ بھال')}</span>
+                <span className="text-xs font-extrabold text-ink-900">{t('MY ASSETS & MAINTENANCE', 'میرے آلات اور دیکھ بھال')}</span>
               </div>
               <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-brand-100 text-brand-700">
                 {t('4 Assets Logged', '4 آلات درج')}

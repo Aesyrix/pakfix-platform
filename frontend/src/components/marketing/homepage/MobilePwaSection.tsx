@@ -1,25 +1,22 @@
 'use client';
 
 import Link from 'next/link';
-import { Smartphone, Download, Sparkles, Bell, MessageSquare, CheckCircle2 } from 'lucide-react';
+import { Download, Sparkles, Bell, MessageSquare, CheckCircle2 } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { useT } from '@/components/i18n/LocaleProvider';
 
 export function MobilePwaSection() {
   const t = useT();
   return (
-    <section className="py-16 sm:py-24 bg-gradient-to-br from-brand-50 via-surface to-accent-50 border-b border-line">
+    <section className="py-16 sm:py-24 bg-gradient-to-br from-brand-50 via-surface to-accent-50">
       <Container>
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           {/* Left Column */}
           <div className="lg:col-span-7 space-y-4">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface text-brand-700 text-xs font-bold">
-              <Smartphone className="h-3.5 w-3.5 text-brand-600" />
-              {t('PWA & Mobile Ready', 'پی ڈبلیو اے اور موبائل کے لیے تیار')}
-            </div>
+            <span className="eyebrow">{t('PWA & Mobile Ready', 'پی ڈبلیو اے اور موبائل کے لیے تیار')}</span>
 
             <h2 className="section-title text-ink-900">
-              {t('PakFix goes wherever your home needs help.', 'پاک فکس وہاں جاتا ہے جہاں آپ کے گھر کو مدد کی ضرورت ہو۔')}
+              {t('PakFix goes wherever you need help.', 'پاک فکس وہاں جاتا ہے جہاں آپ کو مدد کی ضرورت ہو۔')}
             </h2>
 
             <p className="text-sm text-ink-600 leading-relaxed">

@@ -93,7 +93,7 @@ export function QuickBookingFormSection() {
   };
 
   return (
-    <section className="py-16 sm:py-24 bg-surface border-b border-line" id="quick-booking">
+    <section className="py-16 sm:py-24 bg-surface" id="quick-booking">
       <Container>
         <div className="grid lg:grid-cols-12 gap-12 items-center">
           {/* Left Text Column */}
@@ -101,7 +101,7 @@ export function QuickBookingFormSection() {
             <span className="eyebrow">{t('Fast Booking', 'فوری بکنگ')}</span>
             <h2 className="section-title text-ink-900">
               {t('Know what you need?', 'جانتے ہیں کیا چاہیے؟')}<br />
-              <span className="text-brand-600">{t('Book a service.', 'سروس بک کریں۔')}</span>
+              <span className="text-gradient-brand">{t('Book a service.', 'سروس بک کریں۔')}</span>
             </h2>
             <p className="text-sm text-ink-600 leading-relaxed">
               {t('Tell us what you need and the PakFix team will help you get it sorted by a verified professional.', 'بتائیں کیا چاہیے، پاک فکس ٹیم تصدیق شدہ پروفیشنل کے ذریعے آپ کا کام کروانے میں مدد کرے گی۔')}

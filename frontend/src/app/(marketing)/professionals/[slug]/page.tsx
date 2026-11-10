@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
   const { professional } = data;
   const city = professional.city ? ` in ${professional.city.name}` : '';
-  const trade = professional.categories[0]?.name ?? 'Home repair';
+  const trade = professional.categories[0]?.name ?? 'Repair';
 
   return pageMetadata({
     title: `${professional.name} — ${trade}${city}`,

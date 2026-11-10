@@ -45,7 +45,7 @@ export function CityView({ slug: builtSlug, initial }: { slug: string | null; in
             {city.province ? `${city.name}, ${city.province}` : city.name}
           </Badge>
         }
-        title={t(`Home repair and maintenance in ${city.name}`, `${city.name} میں گھریلو مرمت اور دیکھ بھال`)}
+        title={t(`Repair and maintenance in ${city.name}`, `${city.name} میں مرمت اور دیکھ بھال`)}
         subtitle={
           professional_count > 0
             ? t(
@@ -131,7 +131,7 @@ export function CityView({ slug: builtSlug, initial }: { slug: string | null; in
       ) : null}
 
       {guides.length > 0 ? (
-        <Section title={t('Home guides', 'ہوم گائیڈز')} muted>
+        <Section title={t('Repair guides', 'مرمت کی گائیڈز')} muted>
           <PostGrid posts={guides} />
         </Section>
       ) : null}

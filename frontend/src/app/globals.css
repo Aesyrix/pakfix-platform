@@ -20,49 +20,52 @@
 
 @theme {
   /* Brand — emerald */
-  --color-brand-50: #F2FAF5;
-  --color-brand-100: #E4F4EA;
-  --color-brand-200: #C3E7D1;
-  --color-brand-300: #8FD2AC;
-  --color-brand-400: #4FB57F;
-  --color-brand-500: #22B26A; /* Only on dark backgrounds */
-  --color-brand-600: #0A7A48; /* Primary action */
-  --color-brand-700: #066A3E; /* Hover / pressed */
-  --color-brand-800: #07532F;
-  --color-brand-900: #083F25;
-  --color-brand-950: #032215;
-  --color-brand-on-dark: #4ADE80;
+  --color-brand-50: #EFFAFA;
+  --color-brand-100: #DDF3F3;
+  --color-brand-200: #B5E5E6;
+  --color-brand-300: #7FD0D3;
+  --color-brand-400: #3FB4BA;
+  --color-brand-500: #14A3AB; /* Only on dark backgrounds */
+  --color-brand-600: #0B7A84; /* Primary action */
+  --color-brand-700: #086870; /* Hover / pressed */
+  --color-brand-800: #08525A;
+  --color-brand-900: #0A4249;
+  --color-brand-950: #04262B;
+  --color-brand-on-dark: #5EEAD4;
   /* Solid fills behind white text (buttons, logo tile). Separate from
      brand-600 so dark mode can lighten text without washing out buttons. */
-  --color-brand-solid: #0A7A48;
-  --color-brand-solid-hover: #066A3E;
+  --color-brand-solid: #0B7A84;
+  --color-brand-solid-hover: #086870;
 
   /* Accent — AI and informational blue */
-  --color-accent-50: #EEF3FF;
-  --color-accent-100: #DCE6FE;
-  --color-accent-200: #BCCFFD;
-  --color-accent-300: #8EADFB;
-  --color-accent-400: #5F86F6;
-  --color-accent-500: #3E68EF;
-  --color-accent-600: #2F5BEA;
-  --color-accent-700: #1D4ED8;
-  --color-accent-800: #1C3FAA;
-  --color-accent-900: #1C3584;
-  --color-accent-solid: #2F5BEA;
-  --color-accent-solid-hover: #1D4ED8;
+  --color-accent-50: #FFF4F1;
+  --color-accent-100: #FFE5DE;
+  --color-accent-200: #FFC9BA;
+  --color-accent-300: #FFA48D;
+  --color-accent-400: #FF8466;
+  --color-accent-500: #FF6B4A;
+  --color-accent-600: #C2410C;
+  --color-accent-700: #A3360F;
+  --color-accent-800: #7F2C10;
+  --color-accent-900: #62230F;
+  --color-accent-solid: #C2410C;
+  --color-accent-solid-hover: #A3360F;
+  /* Warm glow for dark bands. Pure coral fades through brown over dark teal;
+     a touch of pink keeps the fade rosy. Decoration only, never text. */
+  --color-glow-warm: #FF6F8E;
 
   /* Ink — warm neutrals with a hint of green */
-  --color-ink-50: #F6F8F5;
-  --color-ink-100: #EEF1ED;
-  --color-ink-200: #E2E6E1;
-  --color-ink-300: #CBD1CA;
-  --color-ink-400: #9AA39C;
-  --color-ink-500: #5E6A63; /* Muted text */
-  --color-ink-600: #455049; /* Body text */
-  --color-ink-700: #333B36;
-  --color-ink-800: #1F2622;
-  --color-ink-900: #131915; /* Headings */
-  --color-ink-950: #0F1512;
+  --color-ink-50: #F5F8F8;
+  --color-ink-100: #ECF1F1;
+  --color-ink-200: #DFE6E7;
+  --color-ink-300: #C7D1D3;
+  --color-ink-400: #94A2A5;
+  --color-ink-500: #56656A; /* Muted text */
+  --color-ink-600: #3F4D51; /* Body text */
+  --color-ink-700: #313B3E;
+  --color-ink-800: #1D2628;
+  --color-ink-900: #121A1C; /* Headings */
+  --color-ink-950: #0D1416;
 
   /* Status */
   --color-safe-500: #0A7A48;
@@ -90,11 +93,11 @@
 
   /* Semantic surfaces */
   --color-background: #FFFFFF;
-  --color-foreground: #131915;
+  --color-foreground: #121A1C;
   --color-surface: #FFFFFF;
-  --color-surface-muted: #F6F8F5;
-  --color-line: #E2E6E1;
-  --color-brand-wash: #E4F4EA;
+  --color-surface-muted: #F5F8F8;
+  --color-line: #DFE6E7;
+  --color-brand-wash: #DDF3F3;
 
   /* Typography */
   --font-sans: var(--font-inter), system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -121,7 +124,7 @@
   --shadow-card: 0 1px 2px rgba(19, 25, 21, 0.04), 0 4px 16px rgba(19, 25, 21, 0.05);
   --shadow-lifted: 0 2px 4px rgba(19, 25, 21, 0.04), 0 12px 32px rgba(19, 25, 21, 0.09);
   --shadow-floating: 0 4px 8px rgba(19, 25, 21, 0.05), 0 24px 56px rgba(19, 25, 21, 0.14);
-  --shadow-brand: 0 6px 20px color-mix(in oklab, var(--color-brand-600) 28%, transparent);
+  --shadow-brand: 0 10px 28px -6px color-mix(in oklab, var(--color-brand-500) 55%, transparent);
 
   /* Tailwind's shadow steps, re-tinted so every shadow shares one colour. */
   --shadow-2xs: 0 1px rgba(19, 25, 21, 0.04);
@@ -138,38 +141,38 @@
   tokens; keep in step when a token changes.
 */
 :where(:root) {
-  --lt-brand-50: #F2FAF5;
-  --lt-brand-100: #E4F4EA;
-  --lt-brand-200: #C3E7D1;
-  --lt-brand-300: #8FD2AC;
-  --lt-brand-400: #4FB57F;
-  --lt-brand-500: #22B26A;
-  --lt-brand-600: #0A7A48;
-  --lt-brand-700: #066A3E;
-  --lt-brand-800: #07532F;
-  --lt-brand-900: #083F25;
-  --lt-brand-950: #032215;
-  --lt-accent-50: #EEF3FF;
-  --lt-accent-100: #DCE6FE;
-  --lt-accent-200: #BCCFFD;
-  --lt-accent-300: #8EADFB;
-  --lt-accent-400: #5F86F6;
-  --lt-accent-500: #3E68EF;
-  --lt-accent-600: #2F5BEA;
-  --lt-accent-700: #1D4ED8;
-  --lt-accent-800: #1C3FAA;
-  --lt-accent-900: #1C3584;
-  --lt-ink-50: #F6F8F5;
-  --lt-ink-100: #EEF1ED;
-  --lt-ink-200: #E2E6E1;
-  --lt-ink-300: #CBD1CA;
-  --lt-ink-400: #9AA39C;
-  --lt-ink-500: #5E6A63;
-  --lt-ink-600: #455049;
-  --lt-ink-700: #333B36;
-  --lt-ink-800: #1F2622;
-  --lt-ink-900: #131915;
-  --lt-ink-950: #0F1512;
+  --lt-brand-50: #EFFAFA;
+  --lt-brand-100: #DDF3F3;
+  --lt-brand-200: #B5E5E6;
+  --lt-brand-300: #7FD0D3;
+  --lt-brand-400: #3FB4BA;
+  --lt-brand-500: #14A3AB;
+  --lt-brand-600: #0B7A84;
+  --lt-brand-700: #086870;
+  --lt-brand-800: #08525A;
+  --lt-brand-900: #0A4249;
+  --lt-brand-950: #04262B;
+  --lt-accent-50: #FFF4F1;
+  --lt-accent-100: #FFE5DE;
+  --lt-accent-200: #FFC9BA;
+  --lt-accent-300: #FFA48D;
+  --lt-accent-400: #FF8466;
+  --lt-accent-500: #FF6B4A;
+  --lt-accent-600: #C2410C;
+  --lt-accent-700: #A3360F;
+  --lt-accent-800: #7F2C10;
+  --lt-accent-900: #62230F;
+  --lt-ink-50: #F5F8F8;
+  --lt-ink-100: #ECF1F1;
+  --lt-ink-200: #DFE6E7;
+  --lt-ink-300: #C7D1D3;
+  --lt-ink-400: #94A2A5;
+  --lt-ink-500: #56656A;
+  --lt-ink-600: #3F4D51;
+  --lt-ink-700: #313B3E;
+  --lt-ink-800: #1D2628;
+  --lt-ink-900: #121A1C;
+  --lt-ink-950: #0D1416;
   --lt-warn-50: #FFFBEB;
   --lt-warn-100: #FEF3C7;
   --lt-warn-200: #FDE68A;
@@ -185,12 +188,12 @@
   --lt-danger-600: #B42318;
   --lt-danger-700: #912018;
   --lt-background: #FFFFFF;
-  --lt-foreground: #131915;
+  --lt-foreground: #121A1C;
   --lt-surface: #FFFFFF;
-  --lt-surface-muted: #F6F8F5;
-  --lt-line: #E2E6E1;
-  --lt-brand-wash: #E4F4EA;
-  --lt-brand-on-dark: #4ADE80;
+  --lt-surface-muted: #F5F8F8;
+  --lt-line: #DFE6E7;
+  --lt-brand-wash: #DDF3F3;
+  --lt-brand-on-dark: #5EEAD4;
 }
 /*
   Dark mode
@@ -211,7 +214,7 @@
   --color-ink-700: var(--lt-ink-200);
   --color-ink-800: var(--lt-ink-100);
   --color-ink-900: var(--lt-ink-50);
-  --color-ink-950: #FFFFFF;
+  --color-ink-950: #0D1416;
   --color-background: color-mix(in oklab, var(--lt-ink-950) 82%, black);
   --color-surface-muted: var(--lt-ink-950);
   --color-surface: color-mix(in oklab, var(--lt-ink-800) 30%, var(--lt-ink-950));
@@ -468,24 +471,25 @@ html.i18n-pending body {
 
   /* Emerald gradient text for the emphasised half of a headline. */
   .text-gradient-brand {
-    background: linear-gradient(100deg, var(--color-brand-600), var(--color-brand-400) 60%, var(--color-accent-500));
+    background: linear-gradient(100deg, var(--color-brand-600) 10%, var(--color-brand-500) 45%, var(--color-accent-600) 95%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
   .text-gradient-on-dark {
-    background: linear-gradient(100deg, var(--color-brand-on-dark), var(--color-brand-300) 55%, var(--color-accent-300));
+    background: linear-gradient(100deg, var(--color-brand-on-dark) 5%, var(--color-brand-300) 40%, var(--color-accent-400) 90%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 
-  /* Deep emerald night: the hero and other dark feature bands. */
+  /* Deep teal night lit by aqua and coral: the hero and other dark bands. */
   .bg-premium-dark {
     background-color: var(--color-ink-950);
     background-image:
-      radial-gradient(60rem 30rem at 15% -10%, color-mix(in oklab, var(--color-brand-600) 45%, transparent), transparent 70%),
-      radial-gradient(40rem 28rem at 95% 10%, color-mix(in oklab, var(--color-accent-600) 22%, transparent), transparent 70%),
+      radial-gradient(64rem 34rem at 8% -12%, color-mix(in oklab, var(--color-brand-500) 80%, transparent), transparent 70%),
+      radial-gradient(40rem 28rem at 102% -4%, color-mix(in oklab, var(--color-glow-warm) 55%, transparent), transparent 65%),
+      radial-gradient(50rem 26rem at 55% 115%, color-mix(in oklab, var(--color-brand-400) 30%, transparent), transparent 70%),
       linear-gradient(180deg, var(--color-brand-950), var(--color-ink-950));
   }
 
@@ -605,4 +609,188 @@ html.i18n-pending body {
       radial-gradient(26rem 16rem at 100% 100%, color-mix(in oklab, var(--color-accent-100) 70%, transparent), transparent 70%),
       linear-gradient(180deg, var(--color-brand-50), var(--color-surface));
   }
+
+  /* Grey section band with a soft emerald glow at the top. */
+  .bg-section-glow {
+    background-color: var(--color-surface-muted);
+    background-image:
+      radial-gradient(48rem 22rem at 25% 0%, color-mix(in oklab, var(--color-brand-100) 85%, transparent), transparent 70%),
+      radial-gradient(40rem 20rem at 85% 0%, color-mix(in oklab, var(--color-accent-100) 70%, transparent), transparent 70%);
+  }
+
+  /* A card that rises a little on hover. One feel for every card grid. */
+  .card-lift {
+    transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+  }
+  .card-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lifted);
+    border-color: var(--color-brand-200);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card-lift:hover { transform: none; }
+  }
 }
+
+/* Mega menu entrance */
+@keyframes megaIn {
+  from { opacity: 0; transform: translateY(-6px) scale(0.99); }
+  to { opacity: 1; transform: none; }
+}
+
+/*
+  Solid teal fills get depth: a gradient from the brand teal into a deeper
+  teal (darker, so white text only gains contrast). Hover deepens it.
+*/
+.bg-brand-solid {
+  background-image: linear-gradient(135deg, var(--color-brand-solid) 0%, color-mix(in oklab, var(--color-brand-solid) 65%, var(--lt-brand-900)) 100%);
+}
+.bg-brand-solid:hover,
+.hover\:bg-brand-solid-hover:hover {
+  background-image: linear-gradient(135deg, var(--color-brand-solid-hover) 0%, var(--lt-brand-900) 100%);
+}
+
+/*
+  Motion
+  ------
+  Every animation uses the individual `translate` / `scale` properties, so it
+  composes with any `transform` or `rotate` an element already has (hover
+  lifts, the carousel, tilted cards). All of it is switched off for visitors
+  whose device asks for reduced motion.
+*/
+@keyframes pf-rise {
+  from { opacity: 0; translate: 0 18px; }
+  to { opacity: 1; translate: 0 0; }
+}
+@keyframes pf-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -10px; }
+}
+@keyframes pf-drift {
+  0%, 100% { translate: 0 0; scale: 1; }
+  33% { translate: 3% -4%; scale: 1.06; }
+  66% { translate: -3% 3%; scale: 0.96; }
+}
+@keyframes pf-pan {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@keyframes pf-ring {
+  0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-brand-400) 55%, transparent); }
+  80%, 100% { box-shadow: 0 0 0 16px transparent; }
+}
+@keyframes pf-dot {
+  0%, 100% { box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-brand-500) 20%, transparent); }
+  50% { box-shadow: 0 0 0 6px color-mix(in oklab, var(--color-brand-500) 6%, transparent); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Page-load entrance; stagger with style={{ '--d': '120ms' }}. */
+  .anim-rise {
+    animation: pf-rise 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    animation-delay: var(--d, 0ms);
+  }
+  .anim-float { animation: pf-float 6s ease-in-out infinite; }
+  .anim-drift { animation: pf-drift 18s ease-in-out infinite; }
+  .anim-drift-slow { animation: pf-drift 26s ease-in-out infinite reverse; }
+  .anim-ring { animation: pf-ring 2.4s ease-out infinite; }
+
+  /* Headline gradients slowly shift colour. */
+  .text-gradient-brand,
+  .text-gradient-on-dark {
+    background-size: 200% 100%;
+    animation: pf-pan 9s ease-in-out infinite;
+  }
+
+  /* The dot in every section label breathes. */
+  .eyebrow::before { animation: pf-dot 2.8s ease-in-out infinite; }
+
+  /* Scroll reveal (see components/layout/ScrollReveal.tsx). */
+  .reveal-pending {
+    opacity: 0;
+    translate: 0 22px;
+    transition:
+      opacity 700ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      translate 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .reveal-pending.reveal-in {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* Assistant: scanning beam, bouncing dots, and a red ring while the mic listens. */
+@keyframes pf-scan { from { translate: 0 0; } to { translate: 400% 0; } }
+@keyframes pf-bounce { 0%, 80%, 100% { translate: 0 0; opacity: 0.5; } 40% { translate: 0 -6px; opacity: 1; } }
+@keyframes pf-ring-danger {
+  0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-danger-500) 55%, transparent); }
+  80%, 100% { box-shadow: 0 0 0 14px transparent; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .pf-scan { animation: pf-scan 1.6s ease-in-out infinite; }
+  .pf-dot-bounce { animation: pf-bounce 1.1s ease-in-out infinite; }
+  .anim-ring-danger { animation: pf-ring-danger 1.6s ease-out infinite; }
+}
+
+/* Ask PakFix: orbiting icons, travelling border light, rising sparks. */
+@property --pf-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes pf-orbit { to { rotate: 360deg; } }
+@keyframes pf-orbit-counter {
+  from { rotate: var(--start, 0deg); }
+  to { rotate: calc(var(--start, 0deg) - 360deg); }
+}
+@keyframes pf-spin-angle { to { --pf-angle: 360deg; } }
+@keyframes pf-spark {
+  0% { translate: 0 0; opacity: 0; }
+  12% { opacity: 0.9; }
+  100% { translate: 0 -440px; opacity: 0; }
+}
+.pf-border-spin {
+  background: conic-gradient(
+    from var(--pf-angle),
+    var(--color-line) 0deg,
+    var(--color-brand-400) 60deg,
+    var(--color-accent-400) 120deg,
+    var(--color-line) 180deg,
+    var(--color-line) 360deg
+  );
+}
+.pf-orbit-counter { rotate: var(--start, 0deg); }
+.pf-spark { opacity: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .pf-orbit { animation: pf-orbit 24s linear infinite; }
+  .pf-orbit-counter { animation: pf-orbit-counter 24s linear infinite; }
+  .pf-border-spin { animation: pf-spin-angle 5s linear infinite; }
+  .pf-spark { animation: pf-spark 12s linear infinite; }
+}
+
+/*
+  Urdu
+  ----
+  Nastaliq (the iPhone's Urdu style) for every font role. Latin characters in
+  an Urdu page (numbers, "PakFix", prices) fall back to Inter.
+  Nastaliq is tall and slants down to the left, so it needs generous line
+  height or ascenders and descenders get clipped; and letter spacing breaks
+  the joins between letters, so it is reset everywhere.
+*/
+html[data-locale='ur'] {
+  --font-sans: var(--font-urdu), var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-urdu), var(--font-jakarta), var(--font-inter), sans-serif;
+}
+html[data-locale='ur'] body { line-height: 2; }
+html[data-locale='ur'] *,
+html[data-locale='ur'] *::before,
+html[data-locale='ur'] *::after { letter-spacing: 0 !important; }
+html[data-locale='ur'] :where(h1, h2, h3, h4, .section-title) {
+  line-height: 1.75 !important;
+  font-weight: 700;
+}
+html[data-locale='ur'] :where(p, li, a, button, label, span, dd, dt, td, th, input, textarea, select, blockquote) {
+  line-height: 1.9 !important;
+}
+

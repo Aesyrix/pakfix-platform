@@ -135,18 +135,20 @@ export default function AdminOverviewPage() {
   return (
     <div className="space-y-8">
       {/* Welcome banner */}
-      <section className="relative isolate overflow-hidden rounded-3xl bg-premium-dark p-6 text-white shadow-lifted sm:p-8">
+      <section className="relative isolate overflow-hidden rounded-3xl border border-white/10 bg-premium-dark p-6 text-white shadow-floating sm:p-8 lg:p-10">
         <div aria-hidden="true" className="absolute inset-0 -z-10 bg-grid-dark" />
-        <div aria-hidden="true" className="absolute -right-16 -top-20 -z-10 h-64 w-64 rounded-full bg-brand-500/25 blur-[90px]" />
+        <div aria-hidden="true" className="absolute -left-20 -bottom-24 -z-10 h-72 w-96 rounded-full bg-brand-400/35 blur-[100px]" />
+        <div aria-hidden="true" className="absolute -right-10 -top-16 -z-10 h-64 w-64 rounded-full bg-glow-warm/30 blur-[100px]" />
 
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-xl">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-surface/[0.06] px-3 py-1 text-xs font-semibold text-brand-on-dark backdrop-blur-sm">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-3 py-1 text-xs font-semibold text-brand-on-dark backdrop-blur-sm">
+              <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-brand-on-dark" />
               {formatDate(new Date().toISOString(), { dateStyle: 'full' })}
             </span>
-            <h1 className="mt-4 text-3xl font-bold tracking-[-0.02em] sm:text-4xl">
+            <h1 className="mt-4 text-3xl font-bold tracking-[-0.02em] sm:text-4xl lg:text-[2.75rem]">
               {greeting}
-              {firstName ? `, ${firstName}` : ''}
+              {firstName ? <span className="text-gradient-on-dark">, {firstName}</span> : null}
             </h1>
             <p className="mt-2 text-sm leading-relaxed text-ink-300 sm:text-base">
               {t(
@@ -157,7 +159,7 @@ export default function AdminOverviewPage() {
           </div>
 
           {quickActions.length > 0 ? (
-            <div className="flex flex-wrap gap-2">
+            <div className="grid gap-2 sm:grid-cols-3 lg:w-64 lg:shrink-0 lg:grid-cols-1">
               {quickActions.map((action, index) => {
                 const Icon = action.icon;
                 return (
@@ -165,14 +167,22 @@ export default function AdminOverviewPage() {
                     key={action.href}
                     href={action.href}
                     className={cn(
-                      'inline-flex min-h-11 items-center gap-2 rounded-xl px-4 text-sm font-semibold transition-colors',
+                      'group inline-flex min-h-12 items-center gap-3 rounded-2xl px-4 text-sm font-semibold transition-all hover:-translate-y-px',
                       index === 0
-                        ? 'bg-surface text-ink-900 shadow-md hover:bg-brand-50'
-                        : 'border border-white/15 bg-surface/[0.06] text-white backdrop-blur-sm hover:bg-surface/[0.12]'
+                        ? 'bg-white text-ink-900 shadow-lg shadow-black/20 hover:shadow-xl'
+                        : 'border border-white/15 bg-white/[0.07] text-white backdrop-blur-md hover:border-white/25 hover:bg-white/[0.12]'
                     )}
                   >
-                    <Icon className="h-4 w-4" aria-hidden="true" />
-                    {action.label}
+                    <span
+                      className={cn(
+                        'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg',
+                        index === 0 ? 'bg-brand-solid text-white' : 'bg-white/10 text-brand-on-dark'
+                      )}
+                    >
+                      <Icon className="h-4 w-4" aria-hidden="true" />
+                    </span>
+                    <span className="flex-1">{action.label}</span>
+                    <ArrowUpRight className="h-4 w-4 opacity-50 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100 rtl:-scale-x-100" aria-hidden="true" />
                   </Link>
                 );
               })}
@@ -201,7 +211,7 @@ export default function AdminOverviewPage() {
                 </div>
               );
               const box = cn(
-                'group block rounded-2xl border bg-surface p-4 shadow-card transition-all',
+                'group block rounded-2xl border bg-surface p-5 shadow-card transition-all',
                 item.tone === 'warn' ? 'border-warn-200' : 'border-danger-200',
                 item.href && 'hover:-translate-y-0.5 hover:shadow-lifted'
               );
@@ -219,12 +229,13 @@ export default function AdminOverviewPage() {
             })}
           </ul>
         ) : (
-          <div className="flex items-center gap-3 rounded-2xl border border-brand-200/70 bg-gradient-to-r from-brand-50 to-surface p-4 shadow-card">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface text-brand-600 ring-1 ring-inset ring-brand-200">
-              <CheckCircle2 className="h-5 w-5" aria-hidden="true" />
+          <div className="flex items-center gap-4 rounded-2xl border border-brand-200/70 bg-brand-glow p-5 shadow-card">
+            <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-md shadow-brand-500/30">
+              <span aria-hidden="true" className="absolute inset-0 animate-ping rounded-2xl bg-brand-400/30 [animation-duration:2.5s] motion-reduce:hidden" />
+              <CheckCircle2 className="relative h-6 w-6" aria-hidden="true" />
             </span>
             <div>
-              <p className="text-sm font-semibold text-ink-900">{t('All caught up', 'سب کچھ مکمل')}</p>
+              <p className="font-display text-base font-bold text-ink-900">{t('All caught up', 'سب کچھ مکمل')}</p>
               <p className="text-xs text-ink-600">
                 {t('No professionals waiting, no unanswered messages, no open reports or disputes.', 'کوئی پروفیشنل منتظر نہیں، کوئی پیغام بغیر جواب نہیں، کوئی شکایت یا تنازع کھلا نہیں۔')}
               </p>
@@ -277,8 +288,10 @@ export default function AdminOverviewPage() {
 
 function GroupHeading({ id, children }: { id: string; children: React.ReactNode }) {
   return (
-    <h2 id={id} className="mb-3 text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-ink-500">
+    <h2 id={id} className="mb-4 flex items-center gap-3 text-[0.6875rem] font-bold uppercase tracking-[0.1em] text-ink-600">
+      <span aria-hidden="true" className="h-3.5 w-1 rounded-full bg-gradient-to-b from-brand-500 to-accent-500" />
       {children}
+      <span aria-hidden="true" className="h-px flex-1 bg-gradient-to-r from-line to-transparent" />
     </h2>
   );
 }
@@ -294,8 +307,10 @@ function TileGroup({ id, title, tiles, tone }: { id: string; title: string; tile
           const Icon = tile.icon;
           const body = (
             <>
+              <span aria-hidden="true" className={cn('absolute inset-x-0 top-0 h-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100', tone === 'accent' ? 'bg-gradient-to-r from-accent-500 to-glow-warm' : 'bg-gradient-to-r from-brand-500 to-brand-300')} />
+              <span aria-hidden="true" className={cn('absolute -right-10 -top-10 -z-10 h-28 w-28 rounded-full opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100', tone === 'accent' ? 'bg-accent-200/60' : 'bg-brand-200/60')} />
               <div className="flex items-start justify-between">
-                <span className={cn('flex h-10 w-10 items-center justify-center rounded-xl ring-1 ring-inset', toneChip[tone])}>
+                <span className={cn('flex h-11 w-11 items-center justify-center rounded-xl ring-1 ring-inset transition-all duration-300 group-hover:scale-105', toneChip[tone])}>
                   <Icon className="h-5 w-5" aria-hidden="true" />
                 </span>
                 {tile.href ? (
@@ -304,12 +319,12 @@ function TileGroup({ id, title, tiles, tone }: { id: string; title: string; tile
                   </span>
                 ) : null}
               </div>
-              <p className="mt-5 font-display text-3xl font-bold tracking-[-0.02em] tabular-nums text-ink-900">{tile.value}</p>
+              <p className="mt-5 font-display text-4xl font-bold tracking-[-0.03em] tabular-nums text-ink-900">{tile.value}</p>
               <p className="mt-1 text-sm font-medium text-ink-700">{tile.label}</p>
               {tile.hint ? <p className="mt-0.5 text-xs text-ink-500">{tile.hint}</p> : null}
             </>
           );
-          const box = 'group flex h-full flex-col rounded-2xl border border-line bg-surface p-5 shadow-card transition-all duration-200';
+          const box = 'group relative isolate flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface p-5 shadow-card transition-all duration-300';
 
           return (
             <li key={tile.label}>

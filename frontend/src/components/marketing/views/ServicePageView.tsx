@@ -1,10 +1,9 @@
 'use client';
 
-import { ArrowRight, CircleCheck, MapPin, Siren, Sparkles, Wrench } from 'lucide-react';
+import { ArrowRight, CircleCheck, Clock, MapPin, Siren, Sparkles, Wrench } from 'lucide-react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/Badge';
 import { ButtonLink } from '@/components/ui/Button';
-import { Card, CardBody } from '@/components/ui/Card';
 import { Container } from '@/components/ui/Container';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { CategoryIcon } from '@/components/marketing/CategoryIcon';
@@ -45,7 +44,7 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
         ]}
         eyebrow={
           <span className="flex flex-wrap items-center gap-2">
-            <span className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-control)] bg-brand-solid text-white">
+            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-md shadow-brand-500/25">
               <CategoryIcon name={category.icon} className="h-5 w-5" />
             </span>
             {category.is_emergency ? (
@@ -72,13 +71,12 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
       </PageHeader>
 
       {banner ? (
-        <Container className="pt-10">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={banner}
-            alt=""
-            className="aspect-[21/9] w-full rounded-[var(--radius-card)] object-cover"
-          />
+        <Container className="pt-12">
+          <div className="relative overflow-hidden rounded-3xl shadow-floating ring-1 ring-line/60">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={banner} alt="" className="aspect-[21/9] w-full object-cover" />
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-950/35 via-transparent to-transparent" />
+          </div>
         </Container>
       ) : null}
 
@@ -89,13 +87,15 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
               <li key={problem}>
                 <Link
                   href={`/ai?q=${encodeURIComponent(problem)}`}
-                  className="flex min-h-14 items-center justify-between gap-3 rounded-[var(--radius-control)] border border-line bg-surface px-4 py-3 text-sm font-medium transition-colors hover:border-brand-400"
+                  className="card-lift group flex min-h-16 items-center justify-between gap-3 rounded-2xl border border-line bg-surface px-4 py-3 text-sm font-medium shadow-xs"
                 >
                   <span className="flex items-center gap-3">
-                    <Wrench className="h-4 w-4 shrink-0 text-brand-600" aria-hidden="true" />
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-brand-100 transition-colors group-hover:bg-brand-solid group-hover:text-white group-hover:ring-transparent">
+                      <Wrench className="h-4 w-4" aria-hidden="true" />
+                    </span>
                     {problem}
                   </span>
-                  <ArrowRight className="h-4 w-4 shrink-0 text-ink-400 rtl:rotate-180" aria-hidden="true" />
+                  <ArrowRight className="h-4 w-4 shrink-0 text-ink-400 transition-all group-hover:translate-x-0.5 group-hover:text-brand-600 rtl:rotate-180 rtl:group-hover:-translate-x-0.5" aria-hidden="true" />
                 </Link>
               </li>
             ))}
@@ -109,21 +109,21 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
             <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {category.services.map((service) => (
                 <li key={service.id}>
-                  <Card className="h-full">
-                    <CardBody className="flex h-full flex-col gap-2">
-                      <h3 className="text-base font-semibold">{service.name}</h3>
+                  <div className="card-lift relative flex h-full flex-col gap-2 overflow-hidden rounded-2xl border border-line bg-surface p-6 shadow-card">
+                      <span aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-brand-500 via-brand-400 to-accent-500" />
+                      <h3 className="font-display text-lg font-bold text-ink-900">{service.name}</h3>
                       {service.description ? <p className="text-sm text-ink-600">{service.description}</p> : null}
-                      <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-3">
-                        <span className="text-lg font-bold text-foreground">{service.price_display}</span>
+                      <div className="mt-auto flex flex-wrap items-end justify-between gap-2 border-t border-line pt-4">
+                        <span className="text-gradient-brand font-display text-3xl font-bold tracking-[-0.02em] tabular-nums">{service.price_display}</span>
                         {service.estimated_minutes ? (
-                          <span className="text-xs text-ink-500">{t(`About ${formatDuration(service.estimated_minutes)}`, `تقریباً ${formatDuration(service.estimated_minutes)}`)}</span>
+                          <span className="inline-flex items-center gap-1 rounded-full bg-surface-muted px-2.5 py-1 text-xs font-medium text-ink-600">
+                            <Clock className="h-3.5 w-3.5" aria-hidden="true" />{t(`About ${formatDuration(service.estimated_minutes)}`, `تقریباً ${formatDuration(service.estimated_minutes)}`)}</span>
                         ) : null}
                       </div>
                       {service.pricing_model === 'visit_fee' ? (
                         <p className="text-xs text-ink-500">{t('Inspection visit; repair quoted on site.', 'معائنہ وزٹ؛ مرمت موقع پر کوٹ کی جائے گی۔')}</p>
                       ) : null}
-                    </CardBody>
-                  </Card>
+                  </div>
                 </li>
               ))}
             </ul>
@@ -131,14 +131,15 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
 
           {category.children.length > 0 ? (
             <div className={category.services.length > 0 ? 'mt-8' : undefined}>
-              <h3 className="mb-3 text-base font-semibold">{t('Specialist services', 'ماہر خدمات')}</h3>
+              <h3 className="mb-4 font-display text-base font-bold text-ink-900">{t('Specialist services', 'ماہر خدمات')}</h3>
               <ul className="flex flex-wrap gap-2">
                 {category.children.map((child) => (
                   <li key={child.id}>
                     <Link
                       href={`/services/${child.slug}`}
-                      className="inline-flex min-h-11 items-center rounded-[var(--radius-pill)] border border-line bg-background px-4 text-sm font-medium hover:border-brand-400 hover:text-brand-700"
+                      className="group inline-flex min-h-11 items-center gap-2 rounded-[var(--radius-pill)] border border-line/70 bg-surface px-4 text-sm font-medium text-ink-700 shadow-xs transition-all hover:-translate-y-px hover:border-brand-300 hover:text-brand-700 hover:shadow-sm"
                     >
+                      <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-brand-500" />
                       {child.name}
                     </Link>
                   </li>
@@ -150,20 +151,23 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
       ) : null}
 
       <Section title={t('How booking works', 'بکنگ کیسے کام کرتی ہے')}>
-        <ol className="grid gap-4 md:grid-cols-3">
+        <ol className="grid gap-5 md:grid-cols-3">
           {[
             { title: t('Tell us what is wrong', 'بتائیں کیا خراب ہے'), body: t('Describe the problem or send a photo. Dangerous problems are flagged straight away.', 'مسئلہ بیان کریں یا تصویر بھیجیں۔ خطرناک مسائل فوراً نشان زد کیے جاتے ہیں۔') },
             { title: t('Choose a verified professional', 'تصدیق شدہ پروفیشنل منتخب کریں'), body: t('Compare ratings, experience and visit fees for professionals who serve your area.', 'اپنے علاقے میں خدمات دینے والے پروفیشنلز کی ریٹنگز، تجربہ اور وزٹ فیس کا موازنہ کریں۔') },
-            { title: t('Agree the price, then the work', 'قیمت طے کریں، پھر کام'), body: t('You approve the quote before any work starts, and the job stays on your home record.', 'کام شروع ہونے سے پہلے آپ کوٹ منظور کرتے ہیں، اور کام آپ کے ہوم ریکارڈ میں محفوظ رہتا ہے۔') },
+            { title: t('Agree the price, then the work', 'قیمت طے کریں، پھر کام'), body: t('You approve the quote before any work starts, and the job stays on your property record.', 'کام شروع ہونے سے پہلے آپ کوٹ منظور کرتے ہیں، اور کام آپ کے پراپرٹی ریکارڈ میں محفوظ رہتا ہے۔') },
           ].map(({ title, body }, index) => (
-            <li key={title} className="flex gap-4">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-solid text-sm font-bold text-white" aria-hidden="true">
-                {index + 1}
+            <li key={title} className="card-lift group relative rounded-2xl border border-line bg-surface p-6 shadow-xs">
+              <span className="text-gradient-brand block font-display text-5xl font-bold leading-none tracking-[-0.04em] opacity-60 transition-opacity group-hover:opacity-100" aria-hidden="true">
+                {String(index + 1).padStart(2, '0')}
               </span>
-              <div>
-                <h3 className="font-semibold">{title}</h3>
-                <p className="mt-1 text-sm text-ink-600">{body}</p>
-              </div>
+              <h3 className="mt-4 font-display text-base font-bold text-ink-900">{title}</h3>
+              <p className="mt-1.5 text-sm leading-relaxed text-ink-600">{body}</p>
+              {index < 2 ? (
+                <span aria-hidden="true" className="absolute -right-3.5 top-1/2 z-10 hidden h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-surface text-brand-600 shadow-xs md:flex rtl:-left-3.5 rtl:right-auto rtl:-scale-x-100">
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </span>
+              ) : null}
             </li>
           ))}
         </ol>
@@ -180,11 +184,11 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
               <li key={city.slug}>
                 <Link
                   href={city.local_path ?? `/find-a-technician?category=${category.slug}&city=${city.slug}`}
-                  className="inline-flex min-h-11 items-center gap-2 rounded-[var(--radius-pill)] border border-line bg-background px-4 text-sm font-medium hover:border-brand-400 hover:text-brand-700"
+                  className="inline-flex min-h-12 items-center gap-2 rounded-[var(--radius-pill)] border border-line/70 bg-surface ps-3 pe-1.5 text-sm font-semibold text-ink-800 shadow-xs transition-all hover:-translate-y-px hover:border-brand-300 hover:text-brand-700 hover:shadow-sm"
                 >
                   <MapPin className="h-4 w-4 text-brand-600" aria-hidden="true" />
                   {city.name}
-                  <span className="text-ink-500">({city.professional_count})</span>
+                  <span className="inline-flex h-8 min-w-8 items-center justify-center rounded-full bg-brand-50 px-2 text-xs font-semibold tabular-nums text-brand-700 ring-1 ring-brand-100">{city.professional_count}</span>
                 </Link>
               </li>
             ))}
@@ -226,20 +230,23 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
       ) : null}
 
       <Section>
-        <Card className="bg-brand-950 text-white">
-          <CardBody className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+        <div className="relative isolate overflow-hidden rounded-3xl border border-white/10 bg-premium-dark text-white shadow-floating">
+          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-grid-dark" />
+          <div aria-hidden="true" className="absolute -right-16 -top-24 -z-10 h-72 w-96 rounded-full bg-brand-500/30 blur-[100px]" />
+          <div className="flex flex-col items-start gap-5 p-7 sm:flex-row sm:items-center sm:justify-between sm:p-10">
             <div>
-              <h2 className="text-xl font-bold">{t(`Not sure it is a ${category.name.toLowerCase()} problem?`, `یقین نہیں کہ یہ ${category.name} کا مسئلہ ہے؟`)}</h2>
-              <p className="mt-1 flex items-center gap-2 text-sm text-brand-100">
-                <CircleCheck className="h-4 w-4 text-accent-400" aria-hidden="true" />
+              <h2 className="font-display text-2xl font-bold tracking-[-0.015em] sm:text-3xl">{t(`Not sure it is a ${category.name.toLowerCase()} problem?`, `یقین نہیں کہ یہ ${category.name} کا مسئلہ ہے؟`)}</h2>
+              <p className="mt-2 flex items-center gap-2 text-sm text-ink-300">
+                <CircleCheck className="h-4 w-4 text-brand-on-dark" aria-hidden="true" />
                 {t('Describe it and PakFix points you to the right service.', 'اسے بیان کریں اور پاک فکس آپ کو صحیح سروس کی طرف رہنمائی کرے گا۔')}
               </p>
             </div>
-            <ButtonLink href="/ai" variant="accent">
+            <ButtonLink href="/ai" size="lg" className="shrink-0 rounded-full shadow-lg shadow-brand-500/30">
+              <Sparkles className="h-4 w-4" aria-hidden="true" />
               {t('Ask PakFix', 'پاک فکس سے پوچھیں')}
             </ButtonLink>
-          </CardBody>
-        </Card>
+          </div>
+        </div>
       </Section>
     </>
   );

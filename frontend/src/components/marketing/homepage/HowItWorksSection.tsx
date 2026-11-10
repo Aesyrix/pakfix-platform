@@ -42,7 +42,7 @@ export function HowItWorksSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-surface-muted border-b border-line">
+    <section className="py-16 sm:py-24 bg-section-glow">
       <Container>
         <div className="max-w-2xl mx-auto text-center space-y-2 mb-12">
           <span className="eyebrow">{t('Simple Process', 'آسان طریقہ')}</span>
@@ -50,7 +50,7 @@ export function HowItWorksSection() {
             {t('From problem to fixed.', 'مسئلے سے حل تک۔')}
           </h2>
           <p className="text-sm text-ink-600">
-            {t('Four easy steps to get any home repair done with complete transparency and trust.', 'مکمل شفافیت اور اعتماد کے ساتھ کوئی بھی گھریلو مرمت کرانے کے چار آسان مراحل۔')}
+            {t('Four easy steps to get any repair done with complete transparency and trust.', 'مکمل شفافیت اور اعتماد کے ساتھ کوئی بھی مرمت کرانے کے چار آسان مراحل۔')}
           </p>
         </div>
 
@@ -61,14 +61,14 @@ export function HowItWorksSection() {
             return (
               <div
                 key={step.num}
-                className="bg-surface rounded-2xl p-6 border border-line shadow-2xs relative flex flex-col justify-between group hover:border-brand-300 hover:shadow-card transition-all"
+                className="card-lift bg-surface rounded-2xl p-6 border border-line shadow-xs relative flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-100 text-brand-800 group-hover:bg-brand-solid group-hover:text-white transition-colors">
                       <Icon className="h-6 w-6" />
                     </div>
-                    <span className="text-2xl font-extrabold text-ink-400 group-hover:text-brand-600 transition-colors">
+                    <span className="text-gradient-brand font-display text-3xl font-bold tabular-nums opacity-50 transition-opacity group-hover:opacity-100">
                       {step.num}
                     </span>
                   </div>
@@ -79,7 +79,7 @@ export function HowItWorksSection() {
 
                 {idx < 3 ? (
                   <div className="hidden lg:block absolute -right-3 top-1/2 -translate-y-1/2 z-10">
-                    <div className="h-6 w-6 rounded-full bg-surface border border-line text-brand-600 flex items-center justify-center text-xs font-bold shadow-2xs">
+                    <div aria-hidden="true" className="h-6 w-6 rounded-full bg-surface border border-line text-brand-600 flex items-center justify-center text-xs font-bold shadow-xs rtl:-scale-x-100">
                       &rarr;
                     </div>
                   </div>

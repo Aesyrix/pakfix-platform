@@ -29,7 +29,7 @@ const ROLE_OPTIONS: Array<{
   hint: string;
   hintUr: string;
 }> = [
-  { value: 'customer', label: 'I need something fixed', labelUr: 'مجھے کچھ ٹھیک کروانا ہے', hint: 'Book repairs and maintenance for your home.', hintUr: 'اپنے گھر کے لیے مرمت اور دیکھ بھال بک کریں۔' },
+  { value: 'customer', label: 'I need something fixed', labelUr: 'مجھے کچھ ٹھیک کروانا ہے', hint: 'Book repairs and maintenance for your home, office or shop.', hintUr: 'اپنے گھر، دفتر یا دکان کے لیے مرمت اور دیکھ بھال بک کریں۔' },
   { value: 'technician', label: 'I am a professional', labelUr: 'میں ایک پروفیشنل ہوں', hint: 'Receive jobs and quote for work near you.', hintUr: 'اپنے قریب کام کے جاب وصول کریں اور کوٹ دیں۔' },
   { value: 'company', label: 'I run a service company', labelUr: 'میں سروس کمپنی چلاتا ہوں', hint: 'Manage a team of technicians and their jobs.', hintUr: 'ٹیکنیشنز کی ٹیم اور ان کے کام سنبھالیں۔' },
   { value: 'property_manager', label: 'I manage properties', labelUr: 'میں پراپرٹیز کا انتظام کرتا ہوں', hint: 'Track maintenance across multiple units.', hintUr: 'متعدد یونٹس میں دیکھ بھال ٹریک کریں۔' },

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Sparkles, MessageSquare, Camera, CheckCircle, AlertCircle, ArrowRight } from 'lucide-react';
+import { MessageSquare, Camera, CheckCircle, AlertCircle, ArrowRight } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { useT, useLocale } from '@/components/i18n/LocaleProvider';
 
@@ -58,16 +58,13 @@ export function AiAssistantFeatureSection() {
   const causes = isUr ? current.causesUr : current.causes;
 
   return (
-    <section className="py-16 sm:py-24 bg-gradient-to-b from-brand-50 via-surface to-surface-muted border-b border-line">
+    <section className="py-16 sm:py-24 bg-gradient-to-b from-brand-50 via-surface to-surface-muted">
       <Container>
         <div className="max-w-3xl mx-auto text-center space-y-3 mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface text-brand-700 text-xs font-bold shadow-2xs">
-            <Sparkles className="h-3.5 w-3.5 text-brand-600" />
-            {t('Smart AI Repair Guidance', 'سمارٹ اے آئی مرمت رہنمائی')}
-          </div>
+          <span className="eyebrow">{t('Smart AI Repair Guidance', 'سمارٹ اے آئی مرمت رہنمائی')}</span>
           <h2 className="section-title text-ink-900">
             {t("Not sure what's wrong?", 'سمجھ نہیں آ رہا کیا مسئلہ ہے؟')}<br />
-            <span className="text-brand-600">{t('Ask PakFix AI.', 'پاک فکس اے آئی سے پوچھیں۔')}</span>
+            <span className="text-gradient-brand">{t('Ask PakFix AI.', 'پاک فکس اے آئی سے پوچھیں۔')}</span>
           </h2>
           <p className="text-sm sm:text-base text-ink-600">
             {t('Describe the symptoms or upload photos. PakFix AI evaluates safety risks, predicts estimated repair costs in PKR, and connects you to the right local professional.', 'علامات بیان کریں یا تصاویر اپلوڈ کریں۔ پاک فکس اے آئی حفاظتی خطرات جانچتا ہے، روپے میں مرمت کی تخمینی لاگت بتاتا ہے، اور آپ کو صحیح مقامی پروفیشنل سے جوڑتا ہے۔')}
@@ -196,7 +193,7 @@ export function AiAssistantFeatureSection() {
 
           {/* CTA Bar */}
           <div className="mt-6 pt-6 border-t border-line flex items-center justify-between">
-            <span className="text-xs text-ink-500">{t('Have a real home issue right now?', 'کیا ابھی کوئی حقیقی گھریلو مسئلہ ہے؟')}</span>
+            <span className="text-xs text-ink-500">{t('Have a real issue right now?', 'کیا ابھی کوئی حقیقی مسئلہ ہے؟')}</span>
             <Link
               href="/ai"
               className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-brand-solid hover:bg-brand-solid-hover text-white text-xs font-bold shadow-xs transition-all"

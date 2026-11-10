@@ -15,13 +15,13 @@ export function AiToProHandoffSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-surface border-b border-line">
+    <section className="py-16 sm:py-24 bg-surface">
       <Container>
         <div className="max-w-2xl mx-auto text-center space-y-2 mb-12">
           <span className="eyebrow">{t('Seamless Handoff', 'بے رکاوٹ منتقلی')}</span>
           <h2 className="section-title text-ink-900">
             {t('From AI diagnosis to job completed.', 'اے آئی تشخیص سے کام مکمل ہونے تک۔')}<br />
-            <span className="text-brand-600">{t('Zero repetitive typing.', 'دوبارہ لکھنے کی ضرورت نہیں۔')}</span>
+            <span className="text-gradient-brand">{t('Zero repetitive typing.', 'دوبارہ لکھنے کی ضرورت نہیں۔')}</span>
           </h2>
           <p className="text-sm text-ink-600">
             {t('When you diagnose an issue with PakFix AI, your photos, safety details and description carry directly into your pro booking request.', 'جب آپ پاک فکس اے آئی سے مسئلے کی تشخیص کرتے ہیں، آپ کی تصاویر، حفاظتی تفصیلات اور بیان براہِ راست آپ کی پروفیشنل بکنگ درخواست میں منتقل ہو جاتے ہیں۔')}
@@ -35,10 +35,10 @@ export function AiToProHandoffSection() {
             return (
               <div
                 key={step.en}
-                className="bg-surface-muted rounded-2xl p-5 border border-line relative flex flex-col justify-between"
+                className="card-lift bg-surface rounded-2xl p-5 border border-line shadow-xs relative flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface border border-line text-brand-600 mb-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-brand-100 mb-3">
                     <Icon className="h-5 w-5" />
                   </div>
                   <h3 className="text-sm font-bold text-ink-900">{t(step.en, step.ur)}</h3>
@@ -46,7 +46,7 @@ export function AiToProHandoffSection() {
                 </div>
 
                 {index < 3 ? (
-                  <div className="hidden lg:block absolute -right-2.5 top-1/2 -translate-y-1/2 z-10 text-brand-600 font-bold">
+                  <div aria-hidden="true" className="hidden lg:flex absolute -right-3 top-1/2 -translate-y-1/2 z-10 h-6 w-6 items-center justify-center rounded-full border border-line bg-surface text-xs font-bold text-brand-600 shadow-xs rtl:-scale-x-100">
                     &rarr;
                   </div>
                 ) : null}

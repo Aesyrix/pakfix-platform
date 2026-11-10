@@ -13,8 +13,8 @@ export function FaqAccordionSection() {
     {
       q: 'What is PakFix?',
       qur: 'پاک فکس کیا ہے؟',
-      a: 'PakFix is Pakistan’s smart home repair and property maintenance platform. It combines AI problem diagnosis with identity-verified local technicians for plumbing, electrical, AC repair, appliance care, and home improvement.',
-      aur: 'پاک فکس پاکستان کا سمارٹ ہوم ریپیئر اور پراپرٹی مینٹیننس پلیٹ فارم ہے۔ یہ اے آئی مسئلہ تشخیص کو شناخت سے تصدیق شدہ مقامی ٹیکنیشنز کے ساتھ جوڑتا ہے — پلمبنگ، الیکٹریکل، اے سی مرمت، آلات کی دیکھ بھال اور گھریلو بہتری کے لیے۔',
+      a: 'PakFix is Pakistan’s smart repair and property maintenance platform for homes, offices and businesses. It combines AI problem diagnosis with identity-verified local technicians for plumbing, electrical, AC repair, appliance care, and improvement work.',
+      aur: 'پاک فکس پاکستان کا گھروں، دفاتر اور کاروباروں کے لیے سمارٹ ریپیئر اور پراپرٹی مینٹیننس پلیٹ فارم ہے۔ یہ اے آئی مسئلہ تشخیص کو شناخت سے تصدیق شدہ مقامی ٹیکنیشنز کے ساتھ جوڑتا ہے — پلمبنگ، الیکٹریکل، اے سی مرمت، آلات کی دیکھ بھال اور بہتری کے کاموں کے لیے۔',
     },
     {
       q: 'How does PakFix AI work?',
@@ -79,7 +79,7 @@ export function FaqAccordionSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-surface-muted border-b border-line">
+    <section className="py-16 sm:py-24 bg-section-glow">
       <Container size="narrow">
         <div className="text-center space-y-2 mb-12">
           <span className="eyebrow">{t('FAQ', 'سوالات')}</span>

@@ -20,7 +20,7 @@ export default function NotFound() {
   const links = [
     { href: '/services', en: 'All services', ur: 'تمام خدمات' },
     { href: '/find-a-technician', en: 'Find a professional', ur: 'پروفیشنل تلاش کریں' },
-    { href: '/blog', en: 'Home guides', ur: 'گھریلو گائیڈز' },
+    { href: '/blog', en: 'Repair guides', ur: 'مرمت کی گائیڈز' },
     { href: '/pricing', en: 'Prices', ur: 'قیمتیں' },
     { href: '/contact', en: 'Contact us', ur: 'ہم سے رابطہ کریں' },
   ];

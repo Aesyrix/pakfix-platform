@@ -68,6 +68,15 @@ export function SiteHeader() {
 
   useEffect(() => () => cancelMegaClose(), []);
 
+  // A soft shadow once the page scrolls, so the bar lifts off the content.
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   const user = useAuthStore((state) => state.user);
   const initialising = useAuthStore((state) => state.initialising);
 
@@ -98,7 +107,14 @@ export function SiteHeader() {
       <TopUtilityBar />
 
       {/* Main Header Navigation Bar */}
-      <div className="border-b border-line/70 bg-surface/80 backdrop-blur-xl backdrop-saturate-150 relative">
+      <div
+        className={cn(
+          'relative border-b bg-surface/80 backdrop-blur-xl backdrop-saturate-150 transition-[box-shadow,border-color] duration-300',
+          scrolled ? 'border-line/70 shadow-[0_8px_30px_-12px_rgb(0_0_0/0.18)]' : 'border-transparent'
+        )}
+      >
+        {/* Emerald hairline along the bottom edge */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-brand-500/40 to-transparent" />
         <Container size="wide">
           <div className="flex h-[74px] items-center justify-between gap-4">
             {/* LEFT: PakFix Brand Logo */}
@@ -113,7 +129,7 @@ export function SiteHeader() {
             {/* CENTER NAVIGATION (Desktop) */}
             <nav
               aria-label={t('Main Navigation', 'مرکزی نیویگیشن')}
-              className="hidden xl:flex items-center gap-0.5"
+              className="hidden xl:flex items-center gap-0.5 rounded-full border border-line/70 bg-surface-muted/70 p-1"
               ref={megaMenuRef}
             >
               {NAV_LINKS.map((link) => {
@@ -128,10 +144,10 @@ export function SiteHeader() {
                         type="button"
                         onClick={() => setMegaOpen(!megaOpen)}
                         className={cn(
-                          'inline-flex items-center gap-1 rounded-xl px-2.5 py-2 text-[13px] font-semibold whitespace-nowrap transition-all cursor-pointer',
+                          'inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-[13px] font-semibold whitespace-nowrap transition-all cursor-pointer',
                           megaOpen || pathname.startsWith('/services')
-                            ? 'bg-brand-50 text-brand-700'
-                            : 'text-ink-600 hover:bg-surface-muted hover:text-ink-900'
+                            ? 'bg-surface text-brand-700 shadow-xs ring-1 ring-line/70'
+                            : 'text-ink-600 hover:bg-surface hover:text-ink-900'
                         )}
                         aria-expanded={megaOpen}
                       >
@@ -156,12 +172,12 @@ export function SiteHeader() {
                     key={link.href}
                     href={link.href}
                     className={cn(
-                      'inline-flex items-center gap-1.5 rounded-xl px-2.5 py-2 text-[13px] font-semibold whitespace-nowrap transition-all',
+                      'inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[13px] font-semibold whitespace-nowrap transition-all',
                       isActive
-                        ? 'bg-brand-50 text-brand-700'
+                        ? 'bg-surface text-brand-700 shadow-xs ring-1 ring-line/70'
                         : link.highlight
-                        ? 'text-accent-600 hover:bg-accent-50'
-                        : 'text-ink-600 hover:bg-surface-muted hover:text-ink-900'
+                        ? 'text-accent-600 hover:bg-surface'
+                        : 'text-ink-600 hover:bg-surface hover:text-ink-900'
                     )}
                   >
                     {link.highlight ? <Sparkles className="h-3.5 w-3.5 text-accent-600" /> : null}
@@ -193,7 +209,7 @@ export function SiteHeader() {
                   <ButtonLink
                     href="/ai"
                     size="sm"
-                    className="px-5"
+                    className="px-5 rounded-full shadow-md shadow-brand-500/25 hover:-translate-y-px"
                   >
                     {t('Get Started', 'شروع کریں')}
                   </ButtonLink>
@@ -207,7 +223,7 @@ export function SiteHeader() {
                 <ButtonLink
                   href="/ai"
                   size="sm"
-                  className="bg-brand-solid text-white px-3.5 py-1.5 text-xs font-semibold rounded-lg"
+                  className="bg-brand-solid text-white px-3.5 py-1.5 text-xs font-semibold rounded-full shadow-sm shadow-brand-500/25"
                 >
                   {t('Get Started', 'شروع کریں')}
                 </ButtonLink>
@@ -229,7 +245,7 @@ export function SiteHeader() {
 
         {/* MOBILE NAVIGATION DRAWER */}
         {mobileOpen ? (
-          <div className="border-t border-line bg-surface shadow-2xl xl:hidden max-h-[calc(100dvh-74px)] overflow-y-auto">
+          <div className="border-t border-line bg-surface/95 backdrop-blur-xl shadow-2xl xl:hidden max-h-[calc(100dvh-74px)] overflow-y-auto">
             <Container className="py-4 space-y-1">
               {NAV_LINKS.map((link) => (
                 <Link
@@ -238,13 +254,13 @@ export function SiteHeader() {
                   className={cn(
                     'flex items-center justify-between rounded-xl px-4 py-3 text-base font-medium transition-colors',
                     pathname.startsWith(link.href)
-                      ? 'bg-brand-100 text-brand-700 font-bold'
+                      ? 'bg-brand-50 text-brand-700 font-semibold ring-1 ring-brand-100'
                       : 'text-ink-900 hover:bg-surface-muted'
                   )}
                 >
                   <span>{t(link.en, link.ur)}</span>
                   {link.highlight ? (
-                    <span className="text-xs font-bold px-2 py-0.5 rounded bg-accent-100 text-accent-600">
+                    <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-accent-50 text-accent-600 ring-1 ring-accent-100">
                       {t('AI Diagnostic', 'اے آئی تشخیص')}
                     </span>
                   ) : null}

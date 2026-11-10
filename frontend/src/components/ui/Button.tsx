@@ -21,7 +21,7 @@ const button = cva(
     variants: {
       variant: {
         primary:
-          'bg-brand-solid text-white shadow-[var(--shadow-sm)] hover:bg-brand-solid-hover hover:shadow-[var(--shadow-brand)] active:bg-brand-solid-hover',
+          'bg-brand-solid text-white shadow-[0_6px_18px_-6px_color-mix(in_oklab,var(--color-brand-500)_50%,transparent)] hover:-translate-y-px hover:bg-brand-solid-hover hover:shadow-[var(--shadow-brand)] active:translate-y-0 active:bg-brand-solid-hover',
         accent:
           'bg-accent-solid text-white shadow-[var(--shadow-sm)] hover:bg-accent-solid-hover active:bg-accent-solid-hover',
         secondary:

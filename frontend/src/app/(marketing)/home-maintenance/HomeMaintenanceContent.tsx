@@ -11,7 +11,7 @@ export function HomeMaintenanceContent() {
   const features = [
     {
       icon: Home,
-      title: { en: 'Digital Home Asset Vault', ur: 'ڈیجیٹل ہوم اثاثہ والٹ' },
+      title: { en: 'Digital Asset Vault', ur: 'ڈیجیٹل اثاثہ والٹ' },
       desc: {
         en: 'Log every AC unit, water motor, refrigerator, solar inverter and geyser in your house with serial numbers & warranty dates.',
         ur: 'اپنے گھر کے ہر اے سی یونٹ، واٹر موٹر، فریج، سولر انورٹر اور گیزر کو سیریل نمبرز اور وارنٹی تاریخوں کے ساتھ درج کریں۔',
@@ -48,27 +48,38 @@ export function HomeMaintenanceContent() {
       <PageHeader
         breadcrumbs={[{ name: t('Home', 'ہوم'), href: '/' }, { name: t('Home Maintenance', 'ہوم مینٹیننس') }]}
         eyebrow={
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-100 text-brand-700 text-xs font-bold">
-            <Home className="h-3.5 w-3.5 text-brand-600" />
-            {t('Property Care System', 'جائیداد کی دیکھ بھال کا نظام')}
-          </div>
+          <span className="eyebrow">{t('Property Care System', 'جائیداد کی دیکھ بھال کا نظام')}</span>
         }
-        title={t('Keep Your Home Maintained, Not Just Repaired', 'اپنے گھر کی دیکھ بھال کریں، صرف مرمت نہیں')}
+        title={t('Keep Your Property Maintained, Not Just Repaired', 'اپنی پراپرٹی کی دیکھ بھال کریں، صرف مرمت نہیں')}
         subtitle={t('Prevent expensive home emergency breakdowns with PakFix structured maintenance tracking, asset history, and seasonal reminders.', 'پاک فکس کی منظم مینٹیننس ٹریکنگ، اثاثہ تاریخ اور موسمی یاد دہانیوں کے ساتھ مہنگی ہنگامی خرابیوں سے بچیں۔')}
       />
 
-      <section className="py-12 sm:py-20 bg-surface">
+      <section className="py-16 sm:py-24 bg-surface">
         <Container>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            {features.map((f) => {
+          <div className="mx-auto mb-16 grid max-w-5xl gap-5 md:grid-cols-2">
+            {features.map((f, index) => {
               const Icon = f.icon;
               return (
-                <div key={f.title.en} className="bg-surface-muted rounded-2xl p-6 border border-line space-y-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-surface border border-line text-brand-600">
-                    <Icon className="h-5 w-5" />
+                <div
+                  key={f.title.en}
+                  className="group flex items-center gap-5 rounded-2xl border border-line/60 bg-surface-muted p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-200 hover:shadow-lifted sm:p-6 motion-reduce:hover:translate-y-0"
+                >
+                  <div className="min-w-0 flex-1 space-y-3">
+                    {/* Title as a dark tag with an emerald square */}
+                    <h3 className="inline-flex items-center gap-2 rounded-md bg-ink-950 px-2.5 py-1.5 [[data-mode=dark]_&]:bg-white/10 [[data-mode=dark]_&]:ring-1 [[data-mode=dark]_&]:ring-white/15 text-[0.6875rem] font-bold uppercase tracking-[0.06em] text-white">
+                      <span aria-hidden="true" className="h-2 w-2 shrink-0 rounded-[2px] bg-brand-on-dark" />
+                      {t(f.title.en, f.title.ur)}
+                    </h3>
+                    <p className="text-sm leading-relaxed text-ink-500">{t(f.desc.en, f.desc.ur)}</p>
                   </div>
-                  <h3 className="text-base font-bold text-ink-900">{t(f.title.en, f.title.ur)}</h3>
-                  <p className="text-xs text-ink-500 leading-relaxed">{t(f.desc.en, f.desc.ur)}</p>
+
+                  {/* Step number in a white tile; the icon sits in its corner */}
+                  <div aria-hidden="true" className="relative flex h-24 w-24 shrink-0 items-center justify-center rounded-xl bg-surface shadow-xs ring-1 ring-line/60 sm:h-28 sm:w-28">
+                    <Icon className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-brand-500 opacity-70" />
+                    <span className="font-display text-5xl font-bold tracking-[-0.04em] text-ink-300 transition-colors duration-300 group-hover:text-brand-500 sm:text-6xl">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                  </div>
                 </div>
               );
             })}
@@ -76,7 +87,7 @@ export function HomeMaintenanceContent() {
 
           <div className="relative isolate overflow-hidden bg-premium-dark text-white rounded-3xl p-8 sm:p-14 border border-white/10 shadow-floating text-center space-y-6">
             <h2 className="section-title text-white">
-              {t('Ready to organize your home care?', 'اپنے گھر کی دیکھ بھال منظم کرنے کے لیے تیار ہیں؟')}
+              {t('Ready to organize your property care?', 'اپنی پراپرٹی کی دیکھ بھال منظم کرنے کے لیے تیار ہیں؟')}
             </h2>
             <p className="text-sm text-ink-300 max-w-xl mx-auto">
               {t('Add your property in seconds to begin logging appliances, viewing repair receipts, and scheduling tune-ups.', 'آلات درج کرنے، مرمت کی رسیدیں دیکھنے اور ٹیون اپ شیڈول کرنے کے لیے سیکنڈوں میں اپنی جائیداد شامل کریں۔')}
@@ -84,7 +95,7 @@ export function HomeMaintenanceContent() {
             <div>
               <Link
                 href="/login"
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-brand-solid hover:bg-brand-solid-hover text-white text-sm font-bold shadow-md transition-all"
+                className="inline-flex min-h-12 items-center gap-2 px-8 rounded-[var(--radius-button)] bg-brand-solid hover:bg-brand-solid-hover text-white text-sm font-semibold shadow-lg shadow-brand-500/25 transition-all hover:-translate-y-0.5"
               >
                 <span>{t('Open Customer Dashboard', 'کسٹمر ڈیش بورڈ کھولیں')}</span>
                 <ArrowRight className="h-4 w-4 rtl:rotate-180" />

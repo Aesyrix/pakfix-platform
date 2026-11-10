@@ -27,7 +27,7 @@ export function ArticleView({ slug: builtSlug, initial }: { slug: string | null;
         error={query.error}
         onRetry={() => query.refetch()}
         notFoundTitle={t('That guide is not available', 'وہ گائیڈ دستیاب نہیں')}
-        notFoundDescription={t('It may have been unpublished. Browse the other home maintenance guides instead.', 'اسے غیر شائع کیا گیا ہو سکتا ہے۔ اس کے بجائے دیگر ہوم مینٹیننس گائیڈز دیکھیں۔')}
+        notFoundDescription={t('It may have been unpublished. Browse the other guides instead.', 'اسے غیر شائع کیا گیا ہو سکتا ہے۔ اس کے بجائے دیگر گائیڈز دیکھیں۔')}
       />
     ) : (
       <PageSkeleton />

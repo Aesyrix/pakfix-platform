@@ -11,8 +11,8 @@ export function AboutContent() {
     <>
       <PageHeader
         breadcrumbs={[{ name: t('Home', 'ہوم'), href: '/' }, { name: t('About Us', 'ہمارے بارے میں') }]}
-        title={t('Reinventing Home Repairs for Pakistan', 'پاکستان کے لیے گھریلو مرمت کو نئے سرے سے متعارف')}
-        subtitle={t('PakFix was built to solve the frustration of unreliable home repairs, hidden fees, and safety concerns.', 'پاک فکس غیر قابلِ اعتماد گھریلو مرمت، چھپی فیسوں اور حفاظتی خدشات کے مسئلے کو حل کرنے کے لیے بنایا گیا۔')}
+        title={t('Reinventing Repairs for Pakistan', 'پاکستان کے لیے مرمت کو نئے سرے سے متعارف')}
+        subtitle={t('PakFix was built to solve the frustration of unreliable repairs, hidden fees, and safety concerns.', 'پاک فکس غیر قابلِ اعتماد مرمت، چھپی فیسوں اور حفاظتی خدشات کے مسئلے کو حل کرنے کے لیے بنایا گیا۔')}
       />
 
       <section className="py-12 sm:py-20 bg-surface">
@@ -20,7 +20,7 @@ export function AboutContent() {
           <div className="max-w-3xl mx-auto space-y-8 text-sm sm:text-base text-ink-600 leading-relaxed">
             <h2 className="text-2xl font-extrabold text-ink-900">{t('Our Mission', 'ہمارا مشن')}</h2>
             <p>
-              {t('Finding a trusted electrician, plumber, or AC mechanic in Pakistani cities used to mean relying on word-of-mouth or dealing with unverified workers who overcharge. PakFix combines cutting-edge AI technology with local technician verification to deliver transparent, reliable, and safe home services.', 'پاکستانی شہروں میں قابلِ اعتماد الیکٹریشن، پلمبر یا اے سی مکینک تلاش کرنے کا مطلب زبانی باتوں پر انحصار یا غیر تصدیق شدہ مزدوروں سے نمٹنا ہوتا تھا جو زیادہ پیسے لیتے ہیں۔ پاک فکس جدید اے آئی ٹیکنالوجی کو مقامی ٹیکنیشن تصدیق کے ساتھ جوڑ کر شفاف، قابلِ اعتماد اور محفوظ گھریلو خدمات فراہم کرتا ہے۔')}
+              {t('Finding a trusted electrician, plumber, or AC mechanic in Pakistani cities used to mean relying on word-of-mouth or dealing with unverified workers who overcharge. PakFix combines cutting-edge AI technology with local technician verification to deliver transparent, reliable, and safe repair services for homes, offices and businesses.', 'پاکستانی شہروں میں قابلِ اعتماد الیکٹریشن، پلمبر یا اے سی مکینک تلاش کرنے کا مطلب زبانی باتوں پر انحصار یا غیر تصدیق شدہ مزدوروں سے نمٹنا ہوتا تھا جو زیادہ پیسے لیتے ہیں۔ پاک فکس جدید اے آئی ٹیکنالوجی کو مقامی ٹیکنیشن تصدیق کے ساتھ جوڑ کر شفاف، قابلِ اعتماد اور گھروں، دفاتر اور کاروباروں کے لیے محفوظ مرمتی خدمات فراہم کرتا ہے۔')}
             </p>
 
             <div className="grid sm:grid-cols-3 gap-6 my-10 text-center">

@@ -14,19 +14,27 @@ only the token classes below. Changing a token restyles the whole site.
 ### Colour
 | Token | Value | Use |
 |---|---|---|
-| `brand-600` | `#0A7A48` | Primary action, links, brand text (5.4:1 on white) |
-| `brand-700` | `#066A3E` | Hover / pressed |
-| `brand-50` / `brand-100` | `#F2FAF5` / `#E4F4EA` | Tints, soft badges |
-| `brand-on-dark` | `#4ADE80` | Green text on dark bands and the footer |
-| `accent-600` | `#2F5BEA` | AI features, informational |
-| `ink-900` | `#131915` | Headings (`text-foreground`) |
-| `ink-600` | `#455049` | Body text |
-| `ink-500` | `#5E6A63` | Muted text (5.7:1 on white) |
-| `line` | `#E2E6E1` | Borders and dividers (`border-line`) |
-| `surface` / `surface-muted` | `#FFFFFF` / `#F6F8F5` | Cards / alternating sections |
+The palette is **Teal + Coral**: deep ocean teal for actions and brand, warm coral for highlights.
+
+| Token | Value | Use |
+|---|---|---|
+| `brand-600` / `brand-solid` | `#0B7A84` | Primary action, links, brand text (5.1:1 on white) |
+| `brand-700` | `#086870` | Hover / pressed |
+| `brand-50` / `brand-100` | `#EFFAFA` / `#DDF3F3` | Tints, soft badges |
+| `brand-500` | `#14A3AB` | Glows and large text only (too light for small text on white) |
+| `brand-on-dark` | `#5EEAD4` | Aqua text on dark bands and the footer |
+| `accent-500` | `#FF6B4A` | Coral fills, stars, glows (not for small text: 2.8:1 on white) |
+| `accent-600` / `accent-solid` | `#C2410C` | Coral text and buttons (5.2:1 on white) |
+| `ink-900` | `#121A1C` | Headings (`text-foreground`) |
+| `ink-600` | `#3F4D51` | Body text |
+| `ink-500` | `#56656A` | Muted text (6.1:1 on white) |
+| `line` | `#DFE6E7` | Borders and dividers (`border-line`) |
+| `surface` / `surface-muted` | `#FFFFFF` / `#F5F8F8` | Cards / alternating sections |
+| `safe-*` | green | "Low risk" and other safety states; stays green on purpose |
 | `warn-*`, `danger-*` | amber / red scales | Status |
 
-Neutrals carry a faint green tint so greys sit comfortably next to the brand.
+Neutrals carry a faint cool teal tint so greys sit comfortably next to the brand.
+`bg-brand-solid` is drawn as a gradient into a deeper teal (so white text only gains contrast).
 
 ## 2. Typography, Radius & Elevation
 
@@ -39,8 +47,8 @@ Neutrals carry a faint green tint so greys sit comfortably next to the brand.
 ### Shared classes (`globals.css`, `@layer components`)
 - `eyebrow` — the small pill label above every section heading.
 - `section-title` — the one size and weight for section headings (use with a colour, e.g. `text-ink-900`).
-- `text-gradient-brand` / `text-gradient-on-dark` — emerald gradient for the emphasised half of a headline.
-- `bg-premium-dark` + `bg-grid-dark` — the deep emerald background used by the hero, the final call to action and, in solid `ink-950`, the footer.
+- `text-gradient-brand` / `text-gradient-on-dark` — teal-to-coral gradient for the emphasised half of a headline.
+- `bg-premium-dark` + `bg-grid-dark` — the deep teal background, lit by aqua and coral glows, used by the hero, dark call-to-action panels and the footer.
 
 ---
 
@@ -60,7 +68,7 @@ Neutrals carry a faint green tint so greys sit comfortably next to the brand.
 
 ### Buttons (`Button.tsx`)
 - Minimum height: `44px` (Touch target compliant).
-- Variants: `primary` (PakFix Green), `accent` (Tech Blue), `secondary` (Outline border), `ghost`, `danger`.
+- Variants: `primary` (Teal), `accent` (Coral), `secondary` (Outline border), `ghost`, `danger`.
 - Focus state: `2px` `brand-600` outline with offset; inputs show a soft `brand-600/15` ring.
 
 ### Verified Badge (`Badge.tsx`)

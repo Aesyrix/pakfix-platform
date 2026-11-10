@@ -19,7 +19,7 @@ export function TermsContent() {
           <div className="rich-text mx-auto">
             <h2>{t('1. Platform Agreement', '1. پلیٹ فارم معاہدہ')}</h2>
             <p>
-              {t('By accessing PakFix.pk or using our AI home diagnostic and technician booking tools, you agree to comply with these Terms of Service.', 'پاک فکس ڈاٹ پی کے تک رسائی یا ہمارے اے آئی ہوم تشخیصی اور ٹیکنیشن بکنگ ٹولز استعمال کر کے آپ ان سروس کی شرائط کی پاسداری پر رضامند ہوتے ہیں۔')}
+              {t('By accessing PakFix.pk or using our AI diagnostic and technician booking tools, you agree to comply with these Terms of Service.', 'پاک فکس ڈاٹ پی کے تک رسائی یا ہمارے اے آئی تشخیصی اور ٹیکنیشن بکنگ ٹولز استعمال کر کے آپ ان سروس کی شرائط کی پاسداری پر رضامند ہوتے ہیں۔')}
             </p>
             <h2>{t('2. Service Bookings & Estimates', '2. سروس بکنگ اور تخمینے')}</h2>
             <p>

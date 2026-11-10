@@ -33,7 +33,7 @@ export function FinalCtaSection() {
               type="text"
               value={text}
               onChange={(e) => setText(e.target.value)}
-              placeholder={t('Describe your home problem...', 'اپنا گھریلو مسئلہ بیان کریں...')}
+              placeholder={t('Describe your problem...', 'اپنا مسئلہ بیان کریں...')}
               className="flex-1 bg-transparent px-4 py-2.5 text-xs text-white placeholder-ink-500 outline-none"
             />
 

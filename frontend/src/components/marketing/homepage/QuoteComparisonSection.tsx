@@ -44,7 +44,7 @@ export function QuoteComparisonSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-surface border-b border-line">
+    <section className="py-16 sm:py-24 bg-surface">
       <Container>
         <div className="max-w-2xl mx-auto text-center space-y-2 mb-12">
           <span className="eyebrow">{t('Transparent Pricing', 'شفاف قیمت')}</span>

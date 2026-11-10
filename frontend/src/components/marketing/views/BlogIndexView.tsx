@@ -41,18 +41,22 @@ export function BlogIndexView({
   return (
     <Container className="py-10 sm:py-14">
       {categories.length > 0 ? (
-        <nav aria-label={t('Article categories', 'مضامین کے زمرے')} className="mb-8">
-          <ul className="flex flex-wrap gap-2">
-            <li>
+        <nav aria-label={t('Article categories', 'مضامین کے زمرے')} className="mb-10">
+          {/* One soft panel; scrolls sideways on phones, wraps on larger screens */}
+          <ul className="-mx-4 flex gap-1.5 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:rounded-2xl sm:border sm:border-line/70 sm:bg-surface-muted/70 sm:p-1.5 sm:pb-1.5 [&::-webkit-scrollbar]:hidden">
+            <li className="shrink-0">
               <CategoryPill href="/blog" active={!categorySlug}>
                 {t('All guides', 'تمام گائیڈز')}
               </CategoryPill>
             </li>
             {categories.map((category) => (
-              <li key={category.slug}>
-                <CategoryPill href={`/blog/category/${category.slug}`} active={categorySlug === category.slug}>
+              <li key={category.slug} className="shrink-0">
+                <CategoryPill
+                  href={`/blog/category/${category.slug}`}
+                  active={categorySlug === category.slug}
+                  count={category.post_count}
+                >
                   {category.name}
-                  <span className="ms-1.5 text-ink-400">{category.post_count}</span>
                 </CategoryPill>
               </li>
             ))}
@@ -99,19 +103,45 @@ export function BlogIndexView({
   );
 }
 
-function CategoryPill({ href, active, children }: { href: string; active: boolean; children: React.ReactNode }) {
+function CategoryPill({
+  href,
+  active,
+  count,
+  children,
+}: {
+  href: string;
+  active: boolean;
+  count?: number;
+  children: React.ReactNode;
+}) {
+  // Categories without guides yet stay clickable, just quieter.
+  const empty = count === 0 && !active;
+
   return (
     <Link
       href={href}
       aria-current={active ? 'page' : undefined}
       className={cn(
-        'inline-flex min-h-11 items-center rounded-[var(--radius-pill)] border px-4 text-sm font-medium transition-colors',
+        'inline-flex min-h-10 items-center gap-2 whitespace-nowrap rounded-[var(--radius-pill)] border ps-4 text-sm font-medium transition-all duration-200',
+        count === undefined ? 'pe-4' : 'pe-1.5',
         active
-          ? 'border-brand-600 bg-brand-100 text-brand-700'
-          : 'border-line bg-surface text-ink-600 hover:border-brand-600 hover:text-brand-700'
+          ? 'border-transparent bg-brand-solid text-white shadow-md shadow-brand-500/25'
+          : empty
+          ? 'border-line/70 bg-surface text-ink-400 hover:border-line hover:text-ink-600'
+          : 'border-line/70 bg-surface text-ink-700 shadow-xs hover:-translate-y-px hover:border-brand-300 hover:text-brand-700 hover:shadow-sm'
       )}
     >
       {children}
+      {count !== undefined ? (
+        <span
+          className={cn(
+            'inline-flex h-7 min-w-7 items-center justify-center rounded-full px-1.5 text-xs font-semibold tabular-nums',
+            active ? 'bg-white/20 text-white' : empty ? 'bg-surface-muted text-ink-400' : 'bg-brand-50 text-brand-700 ring-1 ring-brand-100'
+          )}
+        >
+          {count}
+        </span>
+      ) : null}
     </Link>
   );
 }

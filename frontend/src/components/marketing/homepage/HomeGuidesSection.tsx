@@ -47,16 +47,16 @@ export function HomeGuidesSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-surface border-b border-line">
+    <section className="py-16 sm:py-24 bg-surface">
       <Container>
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-10">
           <div>
-            <span className="eyebrow">{t('Home Guides', 'گھریلو رہنمائی')}</span>
+            <span className="eyebrow">{t('Repair Guides', 'مرمت کی رہنمائی')}</span>
             <h2 className="section-title text-ink-900 mt-3">
-              {t('Help for your home.', 'آپ کے گھر کے لیے مدد۔')}
+              {t('Help for whatever needs fixing.', 'ہر اس چیز کے لیے مدد جسے ٹھیک کرنا ہو۔')}
             </h2>
             <p className="text-sm text-ink-600 mt-1">
-              {t('Expert DIY tips, safety advice and maintenance guides written for Pakistani homes.', 'پاکستانی گھروں کے لیے لکھی گئی ماہرانہ ٹپس، حفاظتی مشورے اور دیکھ بھال کی رہنمائی۔')}
+              {t('Expert DIY tips, safety advice and maintenance guides written for Pakistani homes and businesses.', 'پاکستانی گھروں اور کاروباروں کے لیے لکھی گئی ماہرانہ ٹپس، حفاظتی مشورے اور دیکھ بھال کی رہنمائی۔')}
             </p>
           </div>
 
@@ -64,7 +64,7 @@ export function HomeGuidesSection() {
             href="/blog"
             className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-600 hover:text-brand-700 transition-colors"
           >
-            <span>{t('View All Home Guides', 'تمام رہنمائی دیکھیں')}</span>
+            <span>{t('View All Guides', 'تمام رہنمائی دیکھیں')}</span>
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
@@ -74,7 +74,7 @@ export function HomeGuidesSection() {
             <Link
               key={art.en}
               href={art.href}
-              className="bg-surface-muted rounded-2xl border border-line hover:border-brand-300 p-5 shadow-2xs hover:shadow-card transition-all flex flex-col justify-between group"
+              className="card-lift bg-surface rounded-2xl border border-line p-5 shadow-xs flex flex-col justify-between group"
             >
               <div>
                 <div className="flex items-center justify-between text-[11px] text-ink-500 mb-3">

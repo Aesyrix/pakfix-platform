@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Bell, CalendarCheck, Wind, Droplets, Sun, Bug, Zap, ArrowRight } from 'lucide-react';
+import { CalendarCheck, Wind, Droplets, Sun, Bug, Zap, ArrowRight } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { useT } from '@/components/i18n/LocaleProvider';
 
@@ -16,19 +16,16 @@ export function SmartRemindersSection() {
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-surface border-b border-line">
+    <section className="py-16 sm:py-24 bg-surface">
       <Container>
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-4 mb-10">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-100 text-brand-700 text-xs font-bold mb-2">
-              <Bell className="h-3.5 w-3.5 text-brand-600" />
-              {t('Automated Reminders', 'خودکار یاد دہانیاں')}
-            </div>
+            <span className="eyebrow">{t('Automated Reminders', 'خودکار یاد دہانیاں')}</span>
             <h2 className="section-title text-ink-900">
               {t('PakFix remembers maintenance for you.', 'پاک فکس آپ کے لیے دیکھ بھال یاد رکھتا ہے۔')}
             </h2>
             <p className="text-sm text-ink-600 mt-1">
-              {t('Never miss important seasonal home care schedules.', 'گھریلو دیکھ بھال کے اہم موسمی شیڈول کبھی نہ چھوڑیں۔')}
+              {t('Never miss important seasonal maintenance schedules.', 'دیکھ بھال کے اہم موسمی شیڈول کبھی نہ چھوڑیں۔')}
             </p>
           </div>
 
@@ -47,16 +44,16 @@ export function SmartRemindersSection() {
             return (
               <div
                 key={r.en}
-                className="bg-surface-muted rounded-2xl p-4 border border-line hover:border-brand-300 transition-all space-y-2"
+                className="card-lift bg-surface rounded-2xl p-5 border border-line shadow-xs space-y-2"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface border border-line text-brand-600">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-brand-100">
                   <Icon className="h-5 w-5" />
                 </div>
                 <h3 className="text-sm font-bold text-ink-900">{t(r.en, r.ur)}</h3>
                 <span className="inline-block text-[10px] font-bold px-2 py-0.5 rounded bg-brand-100 text-brand-700">
                   {t(r.cen, r.cur)}
                 </span>
-                <p className="text-[11px] text-ink-500 leading-snug pt-1">{t(r.den, r.dur)}</p>
+                <p className="text-xs text-ink-500 leading-snug pt-1">{t(r.den, r.dur)}</p>
               </div>
             );
           })}
