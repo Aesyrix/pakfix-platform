@@ -116,7 +116,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
       </header>
 
       <Container size="wide" className="flex flex-col gap-6 py-6 lg:flex-row">
-        <nav aria-label={t('Admin sections', 'ایڈمن کے حصے')} className="lg:sticky lg:top-24 lg:w-60 lg:shrink-0 lg:self-start lg:rounded-2xl lg:border lg:border-line lg:bg-surface/80 lg:p-2 lg:shadow-card lg:backdrop-blur-xl">
+        <nav aria-label={t('Admin sections', 'ایڈمن کے حصے')} className="lg:sticky lg:top-24 lg:max-h-[calc(100dvh-7rem)] lg:overflow-y-auto lg:overscroll-contain lg:w-60 lg:shrink-0 lg:self-start lg:rounded-2xl lg:border lg:border-line lg:bg-surface/80 lg:p-2 lg:shadow-card lg:backdrop-blur-xl">
           <ul className="flex gap-1 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible lg:pb-0">
             {visible.map((link) => {
               const active = link.exact ? pathname === link.href : pathname.startsWith(link.href);
