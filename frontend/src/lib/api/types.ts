@@ -50,13 +50,11 @@ export const USER_ROLES = [
 
 export type UserRole = (typeof USER_ROLES)[number];
 
-/** The roles someone may choose at sign-up. Staff roles are granted, not claimed. */
-export const SELF_REGISTERABLE_ROLES = [
-  'customer',
-  'technician',
-  'company',
-  'property_manager',
-] as const satisfies readonly UserRole[];
+/**
+ * The roles someone may choose at sign-up: customer or professional, the
+ * same as the app (and what the server accepts). Staff roles are granted.
+ */
+export const SELF_REGISTERABLE_ROLES = ['customer', 'technician'] as const satisfies readonly UserRole[];
 
 export type SelfRegisterableRole = (typeof SELF_REGISTERABLE_ROLES)[number];
 

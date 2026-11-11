@@ -18,7 +18,7 @@ import { Checkbox, Input, Select } from '@/components/ui/Input';
 import { useToast } from '@/components/ui/Toast';
 import { useT } from '@/components/i18n/LocaleProvider';
 import { ApiError } from '@/lib/api/client';
-import type { City, SelfRegisterableRole } from '@/lib/api/types';
+import { SELF_REGISTERABLE_ROLES, type City, type SelfRegisterableRole } from '@/lib/api/types';
 import { useAuthStore } from '@/stores/auth';
 import { cn } from '@/lib/utils/cn';
 
@@ -36,10 +36,9 @@ const ROLE_OPTIONS: Array<{
   hint: string;
   hintUr: string;
 }> = [
-  { value: 'customer', label: 'I need something fixed', labelUr: 'مجھے کچھ ٹھیک کروانا ہے', hint: 'Book repairs and maintenance for your home, office or shop.', hintUr: 'اپنے گھر، دفتر یا دکان کے لیے مرمت اور دیکھ بھال بک کریں۔' },
-  { value: 'technician', label: 'I am a professional', labelUr: 'میں ایک پروفیشنل ہوں', hint: 'Receive jobs and quote for work near you.', hintUr: 'اپنے قریب کام کے جاب وصول کریں اور کوٹ دیں۔' },
-  { value: 'company', label: 'I run a service company', labelUr: 'میں سروس کمپنی چلاتا ہوں', hint: 'Manage a team of technicians and their jobs.', hintUr: 'ٹیکنیشنز کی ٹیم اور ان کے کام سنبھالیں۔' },
-  { value: 'property_manager', label: 'I manage properties', labelUr: 'میں پراپرٹیز کا انتظام کرتا ہوں', hint: 'Track maintenance across multiple units.', hintUr: 'متعدد یونٹس میں دیکھ بھال ٹریک کریں۔' },
+  // Same two choices and words as the app's sign-up.
+  { value: 'customer', label: 'I need something fixed', labelUr: 'مجھے کچھ ٹھیک کروانا ہے', hint: 'Post repair requests and get offers from verified pros.', hintUr: 'مرمت کی درخواست دیں اور تصدیق شدہ پروفیشنلز سے آفرز لیں۔' },
+  { value: 'technician', label: 'I am a professional', labelUr: 'میں ایک پروفیشنل ہوں', hint: 'Get jobs near you and send your offers.', hintUr: 'اپنے قریب کام حاصل کریں اور اپنی آفر بھیجیں۔' },
 ];
 
 /** Accepts 03xxxxxxxxx, 923xxxxxxxxx or +923xxxxxxxxx, as the API does. */
@@ -62,7 +61,7 @@ function makeSchema(t: (english: string, urdu?: string) => string) {
         .regex(/[a-zA-Z]/, t('Include at least one letter.', 'کم از کم ایک حرف شامل کریں۔'))
         .regex(/\d/, t('Include at least one number.', 'کم از کم ایک نمبر شامل کریں۔')),
       password_confirmation: z.string(),
-      role: z.enum(['customer', 'technician', 'company', 'property_manager']),
+      role: z.enum(SELF_REGISTERABLE_ROLES),
       city_id: z.string().optional(),
       accepts_terms: z.literal(true, {
         message: t('You need to accept the terms to create an account.', 'اکاؤنٹ بنانے کے لیے آپ کو شرائط قبول کرنا ہوں گی۔'),
@@ -219,7 +218,7 @@ export function RegisterForm({
         {/* STEP 1: Role Selection */}
         {stage === 'role' && (
           <fieldset className="flex flex-col gap-3">
-            <legend className="mb-1 text-sm font-bold text-foreground">{t('Select your account type:', 'اپنے اکاؤنٹ کی قسم منتخب کریں:')}</legend>
+            <legend className="mb-1 text-sm font-bold text-foreground">{t('How will you use PakFix?', 'آپ پاک فکس کیسے استعمال کریں گے؟')}</legend>
 
             {ROLE_OPTIONS.map((option) => (
               <label
@@ -243,6 +242,15 @@ export function RegisterForm({
                 </span>
               </label>
             ))}
+
+            {isPro ? (
+              <p className="text-xs text-ink-500">
+                {t(
+                  'Professional accounts start as pending. You can sign in now; you will receive jobs once PakFix verifies your CNIC.',
+                  'پروفیشنل اکاؤنٹ پہلے زیرِ التوا ہوتا ہے۔ آپ ابھی سائن اِن کر سکتے ہیں؛ شناختی کارڈ کی تصدیق کے بعد آپ کو کام ملنا شروع ہوں گے۔'
+                )}
+              </p>
+            ) : null}
 
             <Button type="button" size="lg" block variant="primary" onClick={nextStep} className="mt-4">
               {t('Continue', 'جاری رکھیں')}
