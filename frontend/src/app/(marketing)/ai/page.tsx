@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
-import { PageSkeleton } from '@/components/marketing/PageStates';
-import { AssistantView } from '@/components/marketing/views/AssistantView';
+import { AssistantView, AssistantViewFromUrl } from '@/components/marketing/views/AssistantView';
 import { pageMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
@@ -12,9 +11,11 @@ export const metadata: Metadata = pageMetadata({
 });
 
 export default function AssistantPage() {
+  // The built page is the empty assistant, so it shows at once; the browser
+  // then fills in a question passed in the URL (?q=).
   return (
-    <Suspense fallback={<PageSkeleton />}>
-      <AssistantView />
+    <Suspense fallback={<AssistantView />}>
+      <AssistantViewFromUrl />
     </Suspense>
   );
 }

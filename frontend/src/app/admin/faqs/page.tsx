@@ -121,7 +121,7 @@ export default function AdminFaqsPage() {
         <ul className="flex flex-col gap-3">
           {query.data.map((faq) => (
             <li key={faq.id}>
-              <FaqRow faq={faq} onDeleted={() => remove.mutate(faq.id)} deleting={remove.isPending} />
+              <FaqRow faq={faq} onDeleted={() => remove.mutate(faq.id)} deleting={remove.isPending && remove.variables === faq.id} />
             </li>
           ))}
         </ul>
@@ -170,10 +170,19 @@ function FaqRow({ faq, onDeleted, deleting }: { faq: AdminFaq; onDeleted: () => 
             <Textarea label={t('Answer', 'جواب')} rows={3} value={answer} onChange={(event) => setAnswer(event.target.value)} />
 
             <div className="flex flex-wrap gap-2">
-              <Button onClick={() => save.mutate({ question, answer })} loading={save.isPending} disabled={!dirty}>
+              <Button
+                onClick={() => save.mutate({ question, answer })}
+                loading={save.isPending && save.variables && 'question' in save.variables}
+                disabled={!dirty || save.isPending}
+              >
                 {t('Save', 'محفوظ کریں')}
               </Button>
-              <Button variant="secondary" onClick={() => save.mutate({ is_active: !faq.is_active })} loading={save.isPending}>
+              <Button
+                variant="secondary"
+                onClick={() => save.mutate({ is_active: !faq.is_active })}
+                loading={save.isPending && save.variables && 'is_active' in save.variables}
+                disabled={save.isPending}
+              >
                 {faq.is_active ? t('Hide from the site', 'سائٹ سے چھپائیں') : t('Show on the site', 'سائٹ پر دکھائیں')}
               </Button>
               <Button variant="ghost" className="text-danger-600" onClick={onDeleted} loading={deleting}>

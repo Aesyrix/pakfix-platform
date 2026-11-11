@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter, Noto_Nastaliq_Urdu, Plus_Jakarta_Sans } from 'next/font/google';
 import { Providers } from '@/components/providers/Providers';
+import { NavigationProgress } from '@/components/layout/NavigationProgress';
 import { SkipLink } from '@/components/layout/SkipLink';
 import { localeInitScript } from '@/lib/i18n';
 import { modeInitScript } from '@/lib/theme';
@@ -105,6 +106,8 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: modeInitScript() }} />
         {/* First stop for a keyboard user on every page. */}
         <SkipLink />
+        {/* A thin bar while the next page loads, on every part of the site. */}
+        <NavigationProgress />
         <Providers>{children}</Providers>
       </body>
     </html>

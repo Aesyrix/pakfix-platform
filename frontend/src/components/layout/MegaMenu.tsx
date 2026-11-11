@@ -97,7 +97,8 @@ export function MegaMenu({ onClose }: MegaMenuProps) {
     // The wrapper starts flush with the header so the pointer never crosses a
     // gap; the visible card floats inside it.
     <div className="absolute top-full left-0 z-50 w-full px-3 pt-2 sm:px-6">
-      <div className="mx-auto max-w-[1280px] overflow-hidden rounded-3xl border border-line/70 bg-surface shadow-floating animate-[megaIn_180ms_ease-out] motion-reduce:animate-none">
+      {/* Never taller than the screen below the header; scrolls on its own if it would be. */}
+      <div className="mx-auto max-h-[calc(100dvh-8rem)] max-w-[1280px] overflow-x-hidden overflow-y-auto overscroll-contain rounded-3xl border border-line/70 bg-surface shadow-floating animate-[megaIn_180ms_ease-out] motion-reduce:animate-none">
         <div className="grid grid-cols-1 gap-2 p-4 md:grid-cols-3 lg:p-6">
           {categories.map((col, colIndex) => {
             const ColIcon = columnIcons[colIndex] ?? Wrench;

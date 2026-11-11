@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { useMemo, useState } from 'react';
 import { z } from 'zod';
@@ -35,7 +35,6 @@ export function LoginForm({ className }: { className?: string }) {
   const t = useT();
   const schema = useMemo(() => makeSchema(t), [t]);
   const router = useRouter();
-  const searchParams = useSearchParams();
   const toast = useToast();
 
   const login = useAuthStore((state) => state.login);
@@ -61,7 +60,9 @@ export function LoginForm({ className }: { className?: string }) {
 
       // Honour where the user was heading before the guard bounced them,
       // but only within this site.
-      const next = searchParams.get('next');
+      // Read `?next=` only on submit, so the form itself can be in the built
+      // page instead of waiting for the browser to read the URL.
+      const next = new URLSearchParams(window.location.search).get('next');
       const destination =
         next && next.startsWith('/') && !next.startsWith('//')
           ? next

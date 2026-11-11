@@ -115,7 +115,12 @@ mkdir -p "$APP_DIR"
 
 echo "==> Syncing application files"
 if command -v rsync >/dev/null 2>&1; then
+  # The website's hashed build files from the previous release are kept
+  # (protected from --delete): someone with the site open, or a page cached
+  # in front of the server, can still load them after a deploy instead of
+  # failing and reloading. Files older than a week are pruned below.
   rsync -a --delete \
+    --filter 'P /public/_next/static/**' \
     --exclude '.env' \
     --exclude 'storage/app' \
     --exclude 'storage/logs' \
@@ -127,6 +132,13 @@ if command -v rsync >/dev/null 2>&1; then
 else
   echo "    (rsync not available; extracting over the existing tree)"
   ( cd "$SRC" && tar cf - . ) | ( cd "$APP_DIR" && tar xf - )
+fi
+
+# Old website build files kept above: drop any not part of a build for a week.
+# (This release's files carry its build time, so they are never touched.)
+if [ -d "$APP_DIR/public/_next/static" ]; then
+  find "$APP_DIR/public/_next/static" -type f -mtime +7 -delete 2>/dev/null || true
+  find "$APP_DIR/public/_next/static" -mindepth 1 -type d -empty -delete 2>/dev/null || true
 fi
 
 # Laravel needs these to exist and be writable.
