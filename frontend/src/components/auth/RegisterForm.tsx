@@ -64,7 +64,6 @@ function makeSchema(t: (english: string, urdu?: string) => string) {
       password_confirmation: z.string(),
       role: z.enum(['customer', 'technician', 'company', 'property_manager']),
       city_id: z.string().optional(),
-      referral_code: z.string().optional(),
       accepts_terms: z.literal(true, {
         message: t('You need to accept the terms to create an account.', 'اکاؤنٹ بنانے کے لیے آپ کو شرائط قبول کرنا ہوں گی۔'),
       }),
@@ -149,7 +148,6 @@ export function RegisterForm({
         password_confirmation: parsed.password_confirmation,
         role: parsed.role,
         city_id: parsed.city_id ? Number(parsed.city_id) : null,
-        referral_code: parsed.referral_code || null,
         accepts_terms: true,
         ...(parsed.role === 'technician' ? availabilityPayload(availability) : {}),
       });
@@ -348,13 +346,6 @@ export function RegisterForm({
               error={errors.password_confirmation?.message}
               required
               {...register('password_confirmation')}
-            />
-
-            <Input
-              label={t('Referral code (optional)', 'ریفرل کوڈ (اختیاری)')}
-              placeholder="PAKFIX-XXXX00"
-              error={errors.referral_code?.message}
-              {...register('referral_code')}
             />
 
             <Checkbox

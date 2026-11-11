@@ -58,6 +58,24 @@ class ProAvailabilityTest extends TestCase
             ->assertJsonPath('data.is_available', true);
     }
 
+    public function test_an_unverified_professional_is_told_what_to_do_to_receive_jobs(): void
+    {
+        $token = $this->register(['role' => 'technician'])->assertCreated()->json('data.token');
+
+        $this->withToken($token)->getJson('/api/v1/pro/requests')
+            ->assertForbidden()
+            ->assertJsonPath('message', 'Complete verification to receive jobs. Add your trades, CNIC and a selfie, and PakFix will review them.');
+
+        TechnicianProfile::query()->update(['verification_status' => VerificationStatus::Pending->value]);
+        $this->app['auth']->forgetGuards(); // each real request loads the account fresh
+        $this->withToken($token)->getJson('/api/v1/pro/requests')
+            ->assertForbidden()
+            ->assertJsonPath('message', "We're checking your documents, usually within 24 hours. You'll start receiving jobs once you're verified.");
+
+        // Availability can be set while waiting.
+        $this->withToken($token)->patchJson('/api/v1/pro/availability', ['is_available' => false])->assertOk();
+    }
+
     public function test_without_a_choice_a_professional_gets_alerts_any_time(): void
     {
         $token = $this->register(['role' => 'technician'])->assertCreated()->json('data.token');

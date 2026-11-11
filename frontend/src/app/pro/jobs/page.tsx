@@ -9,6 +9,7 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { ErrorState } from '@/components/ui/ErrorState';
 import { SkeletonCard } from '@/components/ui/Skeleton';
 import { BookingCard, RequestCard } from '@/components/account/AccountLists';
+import { AvailabilityStrip, VerificationNotice } from '@/components/account/ProStatus';
 import { accountApi } from '@/lib/api/endpoints';
 
 /** The professional's real jobs, and open requests nearby once verified. */
@@ -22,6 +23,10 @@ export default function ProJobsPage() {
   return (
     <Container className="py-6 sm:py-8">
       <PageHeader title="Jobs" titleUr="کام" />
+      <div className="mb-4 flex flex-col gap-3">
+        <VerificationNotice status={profile.data?.verification.status} />
+        <AvailabilityStrip />
+      </div>
       {bookings.isPending ? (
         <SkeletonCard />
       ) : bookings.isError || !bookings.data ? (
