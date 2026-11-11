@@ -141,6 +141,44 @@ class PushNotificationsTest extends TestCase
         Http::assertNotSent(fn (HttpRequest $r) => str_contains($r->url(), 'fcm.googleapis.com'));
     }
 
+    public function test_new_job_alerts_follow_working_hours_and_the_available_switch(): void
+    {
+        $this->device($this->pro, 'pro-phone');
+        $profile = $this->pro->technicianProfile;
+        $profile->forceFill(['work_hours' => 'morning'])->save(); // 06:00–14:00 Pakistan time
+
+        // 16:00 in Pakistan (11:00 UTC): outside the morning shift, no alert.
+        $this->travelTo(now()->setTimezone('Asia/Karachi')->setTime(16, 0)->utc());
+        $this->postRequest();
+        Http::assertNotSent(fn (HttpRequest $r) => str_contains($r->url(), 'fcm.googleapis.com'));
+
+        // 09:00 in Pakistan: within the shift, alert sent.
+        $this->travelTo(now()->setTimezone('Asia/Karachi')->addDay()->setTime(9, 0)->utc());
+        $requestId = $this->postRequest();
+        $this->assertPushed('pro-phone', 'New job near you', "/pro/jobs/{$requestId}");
+
+        // Paused: no alert even within the shift.
+        Http::fake([
+            'oauth2.googleapis.com/*' => Http::response(['access_token' => 'test-access-token', 'expires_in' => 3600]),
+            'fcm.googleapis.com/*' => Http::response(['name' => 'projects/pakfix-test/messages/2']),
+        ]);
+        $this->actingAs($this->pro)->patchJson('/api/v1/pro/availability', ['is_available' => false])->assertOk();
+        $this->postRequest();
+        Http::assertNotSent(fn (HttpRequest $r) => str_contains($r->url(), 'fcm.googleapis.com'));
+    }
+
+    public function test_emergency_alerts_reach_only_professionals_who_opted_in(): void
+    {
+        $this->device($this->pro, 'pro-phone');
+
+        $this->postRequest('emergency');
+        Http::assertNotSent(fn (HttpRequest $r) => str_contains($r->url(), 'fcm.googleapis.com'));
+
+        $this->actingAs($this->pro)->patchJson('/api/v1/pro/availability', ['offers_emergency_service' => true])->assertOk();
+        $requestId = $this->postRequest('emergency');
+        $this->assertPushed('pro-phone', 'New job near you', "/pro/jobs/{$requestId}");
+    }
+
     public function test_nothing_is_sent_and_nothing_breaks_without_credentials(): void
     {
         config(['pakfix.push.credentials_path' => '/no/such/file.json']);
@@ -192,7 +230,7 @@ class PushNotificationsTest extends TestCase
         DeviceToken::create(['user_id' => $user->id, 'token' => $token, 'platform' => 'android', 'is_active' => true]);
     }
 
-    private function postRequest(): string
+    private function postRequest(string $urgency = 'standard'): string
     {
         return $this->actingAs($this->customer)->postJson('/api/v1/requests', [
             'service_category_id' => ServiceCategory::where('slug', 'plumbing')->firstOrFail()->uuid,
@@ -201,6 +239,7 @@ class PushNotificationsTest extends TestCase
             'address_line' => 'House 12, Street 4, Saddar',
             'latitude' => 33.5973,
             'longitude' => 73.0479,
+            'urgency' => $urgency,
         ])->assertCreated()->json('data.id');
     }
 

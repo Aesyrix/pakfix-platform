@@ -10,6 +10,7 @@ use App\Models\Referral;
 use App\Models\TechnicianProfile;
 use App\Models\User;
 use App\Models\UserProfile;
+use App\Services\Marketplace\Availability;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -53,7 +54,7 @@ class RegistrationService
                     : null,
             ]);
 
-            $this->createRoleProfile($user, $role);
+            $this->createRoleProfile($user, $role, $data);
 
             if ($referrer) {
                 $this->recordReferral($referrer, $user);
@@ -70,19 +71,21 @@ class RegistrationService
             : User::STATUS_ACTIVE;
     }
 
-    private function createRoleProfile(User $user, UserRole $role): void
+    /** @param array<string, mixed> $data */
+    private function createRoleProfile(User $user, UserRole $role, array $data = []): void
     {
         match ($role) {
             UserRole::Customer, UserRole::PropertyManager => CustomerProfile::create([
                 'user_id' => $user->id,
             ]),
 
-            UserRole::Technician => TechnicianProfile::create([
+            // With the alert preferences chosen at sign-up (hours, emergencies).
+            UserRole::Technician => app(Availability::class)->fill(new TechnicianProfile([
                 'user_id' => $user->id,
                 'slug' => $this->uniqueTechnicianSlug($user->name),
                 'city_id' => $user->city_id,
                 'service_radius_km' => (int) config('pakfix.matching.default_radius_km', 15),
-            ]),
+            ]), $data)->save(),
 
             // A company owner gets their company record when they complete
             // onboarding, because it needs details we have not asked for yet.

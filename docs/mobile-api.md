@@ -360,6 +360,23 @@ Deadlines are applied hourly (`pakfix:settle-jobs`) and whenever a job is opened
 
 ---
 
+## Professional availability
+
+A professional decides when they hear about new jobs. All times are Pakistan time.
+
+| Field | Values |
+|---|---|
+| `work_hours` | `morning` (06:00–14:00), `evening` (14:00–22:00), `always` (24/7), `custom` |
+| `work_start`, `work_end` | `HH:MM`, required for `custom`; the end may be after midnight (`21:00`–`06:00`) |
+| `is_available` | Their own pause switch for alerts, even within their hours |
+| `offers_emergency_service` | Opt in to emergency requests |
+
+- **At sign-up:** send these with `POST /auth/register` when `role` is `technician` (all optional; default is `always`, available, no emergencies).
+- **Later:** `GET /pro/availability` and `PATCH /pro/availability` (any subset of the fields). The response also has `within_hours_now`, `receiving_alerts_now` and the `shifts` table. `GET /pro/profile` includes the same object as `availability`.
+- **Effect:** new-job alerts go out only within their hours while `is_available` is on. Outside them they still see nearby jobs and can send offers. Emergency requests are listed, alerted and biddable only for professionals with `offers_emergency_service`. Pausing never hides the public profile.
+
+---
+
 ## Professional verification
 
 A technician registers as `pending` and cannot see jobs until a person at PakFix verifies them.

@@ -122,10 +122,14 @@ class TechnicianProfile extends Model
             ->whereHas('user', fn (Builder $u) => $u->whereIn('status', [User::STATUS_ACTIVE, User::STATUS_PENDING]));
     }
 
+    /**
+     * Listed in the directory. `is_available` is the professional's own pause
+     * switch for new-job alerts (see Availability), so pausing does not hide
+     * their public profile.
+     */
     public function scopeBookable(Builder $query): Builder
     {
         return $query->publiclyVisible()
-            ->where('is_available', true)
             ->where('is_accepting_jobs', true);
     }
 
@@ -161,7 +165,7 @@ class TechnicianProfile extends Model
 
     public function isBookable(): bool
     {
-        return $this->isVerified() && $this->is_available && $this->is_accepting_jobs;
+        return $this->isVerified() && $this->is_accepting_jobs;
     }
 
     public function displayName(): string

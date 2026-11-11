@@ -60,6 +60,8 @@ class RequestMatcher
 
         return QuoteRequest::query()
             ->acceptingBids()
+            // Emergency requests only for professionals who opted in.
+            ->when(! $profile->offers_emergency_service, fn ($q) => $q->where('urgency', '!=', 'emergency'))
             ->where('customer_id', '!=', $profile->user_id)
             ->whereNotIn('customer_id', app(Safety::class)->blockedIds((int) $profile->user_id))
             ->where(fn ($q) => $q
@@ -89,6 +91,10 @@ class RequestMatcher
             return false;
         }
         if (app(Safety::class)->blockedBetween((int) $request->customer_id, (int) $profile->user_id)) {
+            return false;
+        }
+        // Emergency requests go only to professionals who opted in to them.
+        if ($request->urgency === 'emergency' && ! $profile->offers_emergency_service) {
             return false;
         }
 

@@ -90,6 +90,15 @@ return [
         // the percentage comes from 'commission' above.
         'commission_enabled' => (bool) env('PAKFIX_COMMISSION_ENABLED', false),
 
+        // When professionals get new-job alerts. Times are Pakistan time.
+        'availability' => [
+            'timezone' => 'Asia/Karachi',
+            'shifts' => [
+                'morning' => ['06:00', '14:00'],
+                'evening' => ['14:00', '22:00'],
+            ],
+        ],
+
         // How a job is finished so that neither side can dodge it. Once the
         // professional sets off, a job can only end as completed or through
         // a dispute that PakFix decides.
