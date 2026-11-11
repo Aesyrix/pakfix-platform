@@ -6,6 +6,13 @@ import { useRouter } from 'next/navigation';
 import { useForm, useWatch } from 'react-hook-form';
 import { useMemo, useState } from 'react';
 import { z } from 'zod';
+import {
+  AvailabilityPicker,
+  availabilityComplete,
+  availabilityPayload,
+  DEFAULT_AVAILABILITY,
+  type AvailabilityChoice,
+} from '@/components/account/AvailabilityPicker';
 import { Button } from '@/components/ui/Button';
 import { Checkbox, Input, Select } from '@/components/ui/Input';
 import { useToast } from '@/components/ui/Toast';
@@ -83,7 +90,9 @@ export function RegisterForm({
   const toast = useToast();
   const registerUser = useAuthStore((state) => state.register);
   const [formError, setFormError] = useState<string | null>(null);
-  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [step, setStep] = useState(1);
+  const [availability, setAvailability] = useState<AvailabilityChoice>(DEFAULT_AVAILABILITY);
+  const [availabilityError, setAvailabilityError] = useState<string | null>(null);
 
   const {
     register,
@@ -98,20 +107,33 @@ export function RegisterForm({
   });
 
   const selectedRole = useWatch({ control, name: 'role' });
+  // Professionals get one more step: when they want job alerts, and emergencies.
+  const isPro = selectedRole === 'technician';
+  const totalSteps = isPro ? 4 : 3;
+  const stage: 'role' | 'details' | 'hours' | 'password' =
+    step === 1 ? 'role' : step === 2 ? 'details' : step === 3 && isPro ? 'hours' : 'password';
 
   async function nextStep() {
-    if (step === 1) {
+    if (stage === 'role') {
       setStep(2);
       return;
     }
-    if (step === 2) {
+    if (stage === 'details') {
       const valid = await trigger(['name', 'email', 'phone', 'city_id']);
       if (valid) setStep(3);
+      return;
+    }
+    if (stage === 'hours') {
+      if (!availabilityComplete(availability)) {
+        setAvailabilityError(t('Choose a start and an end time (they must be different).', 'شروع اور ختم کا وقت چنیں (دونوں مختلف ہوں)۔'));
+        return;
+      }
+      setStep(4);
     }
   }
 
   function prevStep() {
-    if (step > 1) setStep((s) => (s - 1) as 1 | 2 | 3);
+    if (step > 1) setStep((s) => s - 1);
   }
 
   async function onSubmit(values: RegisterValues) {
@@ -129,6 +151,7 @@ export function RegisterForm({
         city_id: parsed.city_id ? Number(parsed.city_id) : null,
         referral_code: parsed.referral_code || null,
         accepts_terms: true,
+        ...(parsed.role === 'technician' ? availabilityPayload(availability) : {}),
       });
 
       toast.success(t('Account created! Welcome to PakFix.', 'اکاؤنٹ بن گیا! پاک فکس میں خوش آمدید۔'));
@@ -137,6 +160,14 @@ export function RegisterForm({
     } catch (error) {
       if (error instanceof ApiError) {
         let matched = false;
+
+        // A problem with the chosen hours: back to that step.
+        const hoursError = error.errors.work_end?.[0] ?? error.errors.work_start?.[0] ?? error.errors.work_hours?.[0];
+        if (isPro && hoursError) {
+          setAvailabilityError(hoursError);
+          setStep(3);
+          return;
+        }
 
         for (const [field, messages] of Object.entries(error.errors)) {
           if (field in schema.shape || field === 'password') {
@@ -156,15 +187,23 @@ export function RegisterForm({
       {/* Step Indicator Header */}
       <div className="space-y-2">
         <div className="flex items-center justify-between text-xs font-bold text-ink-500">
-          <span>{t('STEP', 'مرحلہ')} {step} {t('OF 3', 'از 3')}</span>
+          <span>
+            {t('STEP', 'مرحلہ')} {step} {t(`OF ${totalSteps}`, `از ${totalSteps}`)}
+          </span>
           <span className="text-brand-600">
-            {step === 1 ? t('Account Type', 'اکاؤنٹ کی قسم') : step === 2 ? t('Personal Info', 'ذاتی معلومات') : t('Security & Terms', 'سیکیورٹی اور شرائط')}
+            {stage === 'role'
+              ? t('Account Type', 'اکاؤنٹ کی قسم')
+              : stage === 'details'
+                ? t('Personal Info', 'ذاتی معلومات')
+                : stage === 'hours'
+                  ? t('Working Hours', 'کام کے اوقات')
+                  : t('Security & Terms', 'سیکیورٹی اور شرائط')}
           </span>
         </div>
         <div className="h-2 w-full rounded-full bg-surface-muted overflow-hidden">
           <div
             className="h-full bg-gradient-to-r from-brand-600 to-accent-600 transition-all duration-300"
-            style={{ width: `${(step / 3) * 100}%` }}
+            style={{ width: `${(step / totalSteps) * 100}%` }}
           />
         </div>
       </div>
@@ -180,7 +219,7 @@ export function RegisterForm({
         ) : null}
 
         {/* STEP 1: Role Selection */}
-        {step === 1 && (
+        {stage === 'role' && (
           <fieldset className="flex flex-col gap-3">
             <legend className="mb-1 text-sm font-bold text-foreground">{t('Select your account type:', 'اپنے اکاؤنٹ کی قسم منتخب کریں:')}</legend>
 
@@ -214,7 +253,7 @@ export function RegisterForm({
         )}
 
         {/* STEP 2: Personal Details */}
-        {step === 2 && (
+        {stage === 'details' && (
           <div className="flex flex-col gap-4">
             <Input
               label={t('Full name', 'پورا نام')}
@@ -267,8 +306,30 @@ export function RegisterForm({
           </div>
         )}
 
-        {/* STEP 3: Passwords & Terms */}
-        {step === 3 && (
+        {/* Professionals only: when they want job alerts, and emergencies */}
+        {stage === 'hours' && (
+          <div className="flex flex-col gap-4">
+            <AvailabilityPicker
+              value={availability}
+              error={availabilityError}
+              onChange={(next) => {
+                setAvailability(next);
+                setAvailabilityError(null);
+              }}
+            />
+            <div className="flex items-center gap-2 mt-2">
+              <Button type="button" variant="secondary" size="lg" onClick={prevStep} className="w-1/3">
+                {t('Back', 'واپس')}
+              </Button>
+              <Button type="button" variant="primary" size="lg" onClick={nextStep} className="w-2/3">
+                {t('Next Step', 'اگلا مرحلہ')}
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* Last step: Passwords & Terms */}
+        {stage === 'password' && (
           <div className="flex flex-col gap-4">
             <Input
               label={t('Password', 'پاس ورڈ')}

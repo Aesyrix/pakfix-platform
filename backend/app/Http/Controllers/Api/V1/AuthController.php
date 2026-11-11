@@ -218,6 +218,10 @@ class AuthController extends Controller
      */
     private function establishSession(Request $request, User $user, string $tokenName): ?string
     {
+        // From here on this request belongs to the new user, so the reply
+        // describes them as themselves (with home_path, permissions, etc.).
+        $request->setUserResolver(fn () => $user);
+
         if ($request->hasSession()) {
             Auth::guard('web')->login($user);
             $request->session()->regenerate();

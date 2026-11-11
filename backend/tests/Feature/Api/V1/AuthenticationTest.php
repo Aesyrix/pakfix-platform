@@ -66,7 +66,9 @@ class AuthenticationTest extends TestCase
             'password_confirmation' => 'password123',
             'role' => UserRole::Technician->value,
             'accepts_terms' => true,
-        ])->assertCreated();
+        ])->assertCreated()
+            // The reply tells the website where a professional starts.
+            ->assertJsonPath('data.user.home_path', '/pro');
 
         $user = User::where('email', 'ahmed@example.com')->firstOrFail();
 
@@ -117,7 +119,9 @@ class AuthenticationTest extends TestCase
         $this->postJson('/api/v1/auth/login', [
             'login' => 'sana@example.com',
             'password' => 'password123',
-        ])->assertOk()->assertJsonPath('data.user.id', $user->uuid);
+        ])->assertOk()
+            ->assertJsonPath('data.user.id', $user->uuid)
+            ->assertJsonPath('data.user.home_path', '/dashboard');
 
         // The same account, reached by its phone number in local format.
         $this->postJson('/api/v1/auth/login', [
