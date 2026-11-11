@@ -6,12 +6,19 @@ import { useRouter } from 'next/navigation';
 import { useForm, useWatch } from 'react-hook-form';
 import { useMemo, useState } from 'react';
 import { z } from 'zod';
+import {
+  AvailabilityPicker,
+  availabilityComplete,
+  availabilityPayload,
+  DEFAULT_AVAILABILITY,
+  type AvailabilityChoice,
+} from '@/components/account/AvailabilityPicker';
 import { Button } from '@/components/ui/Button';
 import { Checkbox, Input, Select } from '@/components/ui/Input';
 import { useToast } from '@/components/ui/Toast';
 import { useT } from '@/components/i18n/LocaleProvider';
 import { ApiError } from '@/lib/api/client';
-import type { City, SelfRegisterableRole } from '@/lib/api/types';
+import { SELF_REGISTERABLE_ROLES, type City, type SelfRegisterableRole } from '@/lib/api/types';
 import { useAuthStore } from '@/stores/auth';
 import { cn } from '@/lib/utils/cn';
 
@@ -29,10 +36,9 @@ const ROLE_OPTIONS: Array<{
   hint: string;
   hintUr: string;
 }> = [
-  { value: 'customer', label: 'I need something fixed', labelUr: 'مجھے کچھ ٹھیک کروانا ہے', hint: 'Book repairs and maintenance for your home, office or shop.', hintUr: 'اپنے گھر، دفتر یا دکان کے لیے مرمت اور دیکھ بھال بک کریں۔' },
-  { value: 'technician', label: 'I am a professional', labelUr: 'میں ایک پروفیشنل ہوں', hint: 'Receive jobs and quote for work near you.', hintUr: 'اپنے قریب کام کے جاب وصول کریں اور کوٹ دیں۔' },
-  { value: 'company', label: 'I run a service company', labelUr: 'میں سروس کمپنی چلاتا ہوں', hint: 'Manage a team of technicians and their jobs.', hintUr: 'ٹیکنیشنز کی ٹیم اور ان کے کام سنبھالیں۔' },
-  { value: 'property_manager', label: 'I manage properties', labelUr: 'میں پراپرٹیز کا انتظام کرتا ہوں', hint: 'Track maintenance across multiple units.', hintUr: 'متعدد یونٹس میں دیکھ بھال ٹریک کریں۔' },
+  // Same two choices and words as the app's sign-up.
+  { value: 'customer', label: 'I need something fixed', labelUr: 'مجھے کچھ ٹھیک کروانا ہے', hint: 'Post repair requests and get offers from verified pros.', hintUr: 'مرمت کی درخواست دیں اور تصدیق شدہ پروفیشنلز سے آفرز لیں۔' },
+  { value: 'technician', label: 'I am a professional', labelUr: 'میں ایک پروفیشنل ہوں', hint: 'Get jobs near you and send your offers.', hintUr: 'اپنے قریب کام حاصل کریں اور اپنی آفر بھیجیں۔' },
 ];
 
 /** Accepts 03xxxxxxxxx, 923xxxxxxxxx or +923xxxxxxxxx, as the API does. */
@@ -55,9 +61,8 @@ function makeSchema(t: (english: string, urdu?: string) => string) {
         .regex(/[a-zA-Z]/, t('Include at least one letter.', 'کم از کم ایک حرف شامل کریں۔'))
         .regex(/\d/, t('Include at least one number.', 'کم از کم ایک نمبر شامل کریں۔')),
       password_confirmation: z.string(),
-      role: z.enum(['customer', 'technician', 'company', 'property_manager']),
+      role: z.enum(SELF_REGISTERABLE_ROLES),
       city_id: z.string().optional(),
-      referral_code: z.string().optional(),
       accepts_terms: z.literal(true, {
         message: t('You need to accept the terms to create an account.', 'اکاؤنٹ بنانے کے لیے آپ کو شرائط قبول کرنا ہوں گی۔'),
       }),
@@ -83,7 +88,9 @@ export function RegisterForm({
   const toast = useToast();
   const registerUser = useAuthStore((state) => state.register);
   const [formError, setFormError] = useState<string | null>(null);
-  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [step, setStep] = useState(1);
+  const [availability, setAvailability] = useState<AvailabilityChoice>(DEFAULT_AVAILABILITY);
+  const [availabilityError, setAvailabilityError] = useState<string | null>(null);
 
   const {
     register,
@@ -98,20 +105,33 @@ export function RegisterForm({
   });
 
   const selectedRole = useWatch({ control, name: 'role' });
+  // Professionals get one more step: when they want job alerts, and emergencies.
+  const isPro = selectedRole === 'technician';
+  const totalSteps = isPro ? 4 : 3;
+  const stage: 'role' | 'details' | 'hours' | 'password' =
+    step === 1 ? 'role' : step === 2 ? 'details' : step === 3 && isPro ? 'hours' : 'password';
 
   async function nextStep() {
-    if (step === 1) {
+    if (stage === 'role') {
       setStep(2);
       return;
     }
-    if (step === 2) {
+    if (stage === 'details') {
       const valid = await trigger(['name', 'email', 'phone', 'city_id']);
       if (valid) setStep(3);
+      return;
+    }
+    if (stage === 'hours') {
+      if (!availabilityComplete(availability)) {
+        setAvailabilityError(t('Choose a start and an end time (they must be different).', 'شروع اور ختم کا وقت چنیں (دونوں مختلف ہوں)۔'));
+        return;
+      }
+      setStep(4);
     }
   }
 
   function prevStep() {
-    if (step > 1) setStep((s) => (s - 1) as 1 | 2 | 3);
+    if (step > 1) setStep((s) => s - 1);
   }
 
   async function onSubmit(values: RegisterValues) {
@@ -127,8 +147,8 @@ export function RegisterForm({
         password_confirmation: parsed.password_confirmation,
         role: parsed.role,
         city_id: parsed.city_id ? Number(parsed.city_id) : null,
-        referral_code: parsed.referral_code || null,
         accepts_terms: true,
+        ...(parsed.role === 'technician' ? availabilityPayload(availability) : {}),
       });
 
       toast.success(t('Account created! Welcome to PakFix.', 'اکاؤنٹ بن گیا! پاک فکس میں خوش آمدید۔'));
@@ -137,6 +157,14 @@ export function RegisterForm({
     } catch (error) {
       if (error instanceof ApiError) {
         let matched = false;
+
+        // A problem with the chosen hours: back to that step.
+        const hoursError = error.errors.work_end?.[0] ?? error.errors.work_start?.[0] ?? error.errors.work_hours?.[0];
+        if (isPro && hoursError) {
+          setAvailabilityError(hoursError);
+          setStep(3);
+          return;
+        }
 
         for (const [field, messages] of Object.entries(error.errors)) {
           if (field in schema.shape || field === 'password') {
@@ -156,15 +184,23 @@ export function RegisterForm({
       {/* Step Indicator Header */}
       <div className="space-y-2">
         <div className="flex items-center justify-between text-xs font-bold text-ink-500">
-          <span>{t('STEP', 'مرحلہ')} {step} {t('OF 3', 'از 3')}</span>
+          <span>
+            {t('STEP', 'مرحلہ')} {step} {t(`OF ${totalSteps}`, `از ${totalSteps}`)}
+          </span>
           <span className="text-brand-600">
-            {step === 1 ? t('Account Type', 'اکاؤنٹ کی قسم') : step === 2 ? t('Personal Info', 'ذاتی معلومات') : t('Security & Terms', 'سیکیورٹی اور شرائط')}
+            {stage === 'role'
+              ? t('Account Type', 'اکاؤنٹ کی قسم')
+              : stage === 'details'
+                ? t('Personal Info', 'ذاتی معلومات')
+                : stage === 'hours'
+                  ? t('Working Hours', 'کام کے اوقات')
+                  : t('Security & Terms', 'سیکیورٹی اور شرائط')}
           </span>
         </div>
         <div className="h-2 w-full rounded-full bg-surface-muted overflow-hidden">
           <div
             className="h-full bg-gradient-to-r from-brand-600 to-accent-600 transition-all duration-300"
-            style={{ width: `${(step / 3) * 100}%` }}
+            style={{ width: `${(step / totalSteps) * 100}%` }}
           />
         </div>
       </div>
@@ -180,9 +216,9 @@ export function RegisterForm({
         ) : null}
 
         {/* STEP 1: Role Selection */}
-        {step === 1 && (
+        {stage === 'role' && (
           <fieldset className="flex flex-col gap-3">
-            <legend className="mb-1 text-sm font-bold text-foreground">{t('Select your account type:', 'اپنے اکاؤنٹ کی قسم منتخب کریں:')}</legend>
+            <legend className="mb-1 text-sm font-bold text-foreground">{t('How will you use PakFix?', 'آپ پاک فکس کیسے استعمال کریں گے؟')}</legend>
 
             {ROLE_OPTIONS.map((option) => (
               <label
@@ -207,6 +243,15 @@ export function RegisterForm({
               </label>
             ))}
 
+            {isPro ? (
+              <p className="text-xs text-ink-500">
+                {t(
+                  'Professional accounts start as pending. You can sign in now; you will receive jobs once PakFix verifies your CNIC.',
+                  'پروفیشنل اکاؤنٹ پہلے زیرِ التوا ہوتا ہے۔ آپ ابھی سائن اِن کر سکتے ہیں؛ شناختی کارڈ کی تصدیق کے بعد آپ کو کام ملنا شروع ہوں گے۔'
+                )}
+              </p>
+            ) : null}
+
             <Button type="button" size="lg" block variant="primary" onClick={nextStep} className="mt-4">
               {t('Continue', 'جاری رکھیں')}
             </Button>
@@ -214,7 +259,7 @@ export function RegisterForm({
         )}
 
         {/* STEP 2: Personal Details */}
-        {step === 2 && (
+        {stage === 'details' && (
           <div className="flex flex-col gap-4">
             <Input
               label={t('Full name', 'پورا نام')}
@@ -267,8 +312,30 @@ export function RegisterForm({
           </div>
         )}
 
-        {/* STEP 3: Passwords & Terms */}
-        {step === 3 && (
+        {/* Professionals only: when they want job alerts, and emergencies */}
+        {stage === 'hours' && (
+          <div className="flex flex-col gap-4">
+            <AvailabilityPicker
+              value={availability}
+              error={availabilityError}
+              onChange={(next) => {
+                setAvailability(next);
+                setAvailabilityError(null);
+              }}
+            />
+            <div className="flex items-center gap-2 mt-2">
+              <Button type="button" variant="secondary" size="lg" onClick={prevStep} className="w-1/3">
+                {t('Back', 'واپس')}
+              </Button>
+              <Button type="button" variant="primary" size="lg" onClick={nextStep} className="w-2/3">
+                {t('Next Step', 'اگلا مرحلہ')}
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* Last step: Passwords & Terms */}
+        {stage === 'password' && (
           <div className="flex flex-col gap-4">
             <Input
               label={t('Password', 'پاس ورڈ')}
@@ -287,13 +354,6 @@ export function RegisterForm({
               error={errors.password_confirmation?.message}
               required
               {...register('password_confirmation')}
-            />
-
-            <Input
-              label={t('Referral code (optional)', 'ریفرل کوڈ (اختیاری)')}
-              placeholder="PAKFIX-XXXX00"
-              error={errors.referral_code?.message}
-              {...register('referral_code')}
             />
 
             <Checkbox

@@ -13,6 +13,7 @@ use App\Models\QuoteRequest;
 use App\Models\Review;
 use App\Models\TechnicianProfile;
 use App\Models\User;
+use App\Services\Marketplace\Availability;
 use App\Services\Marketplace\RequestMatcher;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -43,7 +44,11 @@ class Notifier
 
     public const REVIEW = 'review';
 
-    public function __construct(private readonly Fcm $fcm, private readonly RequestMatcher $matcher) {}
+    public function __construct(
+        private readonly Fcm $fcm,
+        private readonly RequestMatcher $matcher,
+        private readonly Availability $availability,
+    ) {}
 
     /** A customer posted a request: tell verified professionals who can bid on it. */
     public function newRequest(QuoteRequest $request): void
@@ -64,7 +69,11 @@ class Notifier
                 ->with('user')
                 ->limit($max * 3)
                 ->get()
-                ->filter(fn (TechnicianProfile $p) => $p->user !== null && $this->matcher->canBid($p, $request))
+                // Only within each professional's working hours, while they are
+                // available, and (for emergencies) if they opted in.
+                ->filter(fn (TechnicianProfile $p) => $p->user !== null
+                    && $this->availability->receivesAlerts($p, $request->urgency === 'emergency')
+                    && $this->matcher->canBid($p, $request))
                 ->take($max)
                 ->each(fn (TechnicianProfile $p) => $this->push($p->user, self::NEW_JOB, [
                     'en' => ['New job near you', $this->summary($request)],

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\V1\Marketplace;
 
 use App\Enums\QuoteStatus;
+use App\Enums\VerificationStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Marketplace\StoreQuoteRequest;
 use App\Http\Resources\V1\JobRequestResource;
@@ -104,7 +105,12 @@ class ProRequestController extends Controller
         }
 
         if ($requireVerified && ! $profile->isVerified()) {
-            abort(403, 'Your account is awaiting verification. You will see nearby jobs once PakFix verifies your CNIC.');
+            // Same wording as the app and the website's Jobs pages.
+            abort(403, match ($profile->verification_status) {
+                VerificationStatus::Pending => "We're checking your documents, usually within 24 hours. You'll start receiving jobs once you're verified.",
+                VerificationStatus::Rejected, VerificationStatus::MoreInfoRequested => 'Your verification needs attention. Open Verification to see what to fix and send it again.',
+                default => 'Complete verification to receive jobs. Add your trades, CNIC and a selfie, and PakFix will review them.',
+            });
         }
 
         return $profile;

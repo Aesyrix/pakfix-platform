@@ -72,7 +72,10 @@ class ProOnboarding
                 'latitude' => $data['latitude'] ?? $city->latitude,
                 'longitude' => $data['longitude'] ?? $city->longitude,
                 'service_radius_km' => (int) ($data['service_radius_km'] ?? config('pakfix.marketplace.default_radius_km', 20)),
-                'offers_emergency_service' => (bool) ($data['offers_emergency_service'] ?? false),
+                // Only when sent: the choice is also made at sign-up and in availability settings.
+                'offers_emergency_service' => array_key_exists('offers_emergency_service', $data) && $data['offers_emergency_service'] !== null
+                    ? (bool) $data['offers_emergency_service']
+                    : (bool) $profile->offers_emergency_service,
             ])->save();
 
             // Trades: replace the set, keeping rows that stay so their history is kept.

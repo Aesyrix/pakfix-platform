@@ -44,7 +44,11 @@ class AuthController extends Controller
     public function register(RegisterRequest $request): JsonResponse
     {
         $user = $this->registration->register(
-            $request->safe()->only(['name', 'email', 'phone', 'password', 'city_id', 'referral_code']),
+            $request->safe()->only([
+                'name', 'email', 'phone', 'password', 'city_id', 'referral_code',
+                // A professional's alert preferences (ignored for other roles).
+                'work_hours', 'work_start', 'work_end', 'is_available', 'offers_emergency_service',
+            ]),
             $request->role()
         );
 
@@ -214,6 +218,10 @@ class AuthController extends Controller
      */
     private function establishSession(Request $request, User $user, string $tokenName): ?string
     {
+        // From here on this request belongs to the new user, so the reply
+        // describes them as themselves (with home_path, permissions, etc.).
+        $request->setUserResolver(fn () => $user);
+
         if ($request->hasSession()) {
             Auth::guard('web')->login($user);
             $request->session()->regenerate();

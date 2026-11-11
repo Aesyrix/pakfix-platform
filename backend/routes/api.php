@@ -199,6 +199,8 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
         Route::prefix('pro')->name('pro.')->middleware('permission:technicians.manage.own')->group(function (): void {
             Route::get('profile', [Marketplace\ProProfileController::class, 'show'])->name('profile.show');
             Route::put('profile', [Marketplace\ProProfileController::class, 'update'])->middleware('throttle:30,1')->name('profile.update');
+            Route::get('availability', [Marketplace\ProProfileController::class, 'availability'])->name('availability.show');
+            Route::patch('availability', [Marketplace\ProProfileController::class, 'updateAvailability'])->middleware('throttle:30,1,availability')->name('availability.update');
             Route::post('verification/documents', [Marketplace\ProProfileController::class, 'upload'])->middleware('throttle:20,1')->name('verification.upload');
             Route::post('verification/submit', [Marketplace\ProProfileController::class, 'submit'])->middleware('throttle:10,1')->name('verification.submit');
         });

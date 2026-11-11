@@ -33,9 +33,14 @@ enum UserRole: string
     }
 
     /** Roles that may sign up through the public registration endpoint. */
+    /**
+     * What someone can sign up as, on the website and in the app alike:
+     * a customer or a professional. Company and property-manager accounts
+     * are not offered yet.
+     */
     public static function selfRegisterable(): array
     {
-        return [self::Customer, self::Technician, self::Company, self::PropertyManager];
+        return [self::Customer, self::Technician];
     }
 
     /** Roles that reach the internal admin surface. */

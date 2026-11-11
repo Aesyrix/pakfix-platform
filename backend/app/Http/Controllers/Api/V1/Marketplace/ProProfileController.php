@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api\V1\Marketplace;
 
 use App\Http\Controllers\Controller;
 use App\Models\TechnicianProfile;
+use App\Services\Marketplace\Availability;
 use App\Services\Marketplace\ProOnboarding;
 use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
@@ -19,8 +20,10 @@ use Illuminate\Validation\Rule;
  */
 class ProProfileController extends Controller
 {
-    public function __construct(private readonly ProOnboarding $onboarding)
-    {
+    public function __construct(
+        private readonly ProOnboarding $onboarding,
+        private readonly Availability $availability,
+    ) {
     }
 
     /** `GET /pro/profile` */
@@ -53,6 +56,25 @@ class ProProfileController extends Controller
         $profile = $this->onboarding->updateProfile($this->profile($request), $data);
 
         return ApiResponse::success($this->payload($profile), 'Profile saved.');
+    }
+
+    /** `GET /pro/availability` — working hours, the Available switch and emergency opt-in. */
+    public function availability(Request $request): JsonResponse
+    {
+        return ApiResponse::success($this->availability->present($this->profile($request)));
+    }
+
+    /**
+     * `PATCH /pro/availability` — any of `work_hours` (morning|evening|always|custom),
+     * `work_start`/`work_end` (H:i, for custom), `is_available`, `offers_emergency_service`.
+     */
+    public function updateAvailability(Request $request): JsonResponse
+    {
+        $data = $request->validate(Availability::rules(), Availability::messages());
+        $profile = $this->availability->fill($this->profile($request), $data);
+        $profile->save();
+
+        return ApiResponse::success($this->availability->present($profile), 'Availability saved.');
     }
 
     /** `POST /pro/verification/documents` — multipart: `type`, `file`. */
@@ -119,6 +141,7 @@ class ProProfileController extends Controller
             'longitude' => $profile->longitude,
             'service_radius_km' => (int) $profile->service_radius_km,
             'offers_emergency_service' => (bool) $profile->offers_emergency_service,
+            'availability' => $this->availability->present($profile),
             'categories' => $profile->services
                 ->where('is_active', true)
                 ->filter(fn ($s) => $s->category !== null)

@@ -2,6 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { Briefcase, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { AvailabilityStrip, VerificationNotice } from '@/components/account/ProStatus';
 import { PageHeader, StatTile } from '@/components/dashboard/DashboardPage';
 import { useT } from '@/components/i18n/LocaleProvider';
 import { Container } from '@/components/ui/Container';
@@ -51,6 +52,10 @@ export default function ProOverviewPage() {
         />
       ) : (
         <>
+          <div className="mb-4 flex flex-col gap-3">
+            <VerificationNotice status={status} />
+            <AvailabilityStrip />
+          </div>
           <div className="grid gap-4 sm:grid-cols-3">
             <StatTile icon={<ShieldCheck className="h-4 w-4" />} label="Verification" labelUr="تصدیق" value={t(label, labelUr)} />
             <StatTile icon={<Briefcase className="h-4 w-4" />} label="Active jobs" labelUr="جاری کام" value={String(jobs.filter((job) => job.is_active).length)} />

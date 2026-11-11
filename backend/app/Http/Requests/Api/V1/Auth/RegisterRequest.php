@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests\Api\V1\Auth;
 
 use App\Enums\UserRole;
+use App\Services\Marketplace\Availability;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
@@ -46,6 +47,10 @@ class RegisterRequest extends FormRequest
             'city_id' => ['nullable', 'integer', 'exists:cities,id'],
             'referral_code' => ['nullable', 'string', 'max:32', 'exists:users,referral_code'],
             'accepts_terms' => ['accepted'],
+
+            // Professionals choose when they want new-job alerts (optional;
+            // "any time" if not given). Ignored for other roles.
+            ...Availability::rules(),
         ];
     }
 
@@ -76,6 +81,7 @@ class RegisterRequest extends FormRequest
             'phone.regex' => 'Enter a valid Pakistani mobile number, for example 0300 1234567.',
             'referral_code.exists' => 'That referral code does not exist.',
             'accepts_terms.accepted' => 'You need to accept the terms to create an account.',
+            ...Availability::messages(),
         ];
     }
 

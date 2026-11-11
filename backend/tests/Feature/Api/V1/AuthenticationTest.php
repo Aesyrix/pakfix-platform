@@ -66,7 +66,9 @@ class AuthenticationTest extends TestCase
             'password_confirmation' => 'password123',
             'role' => UserRole::Technician->value,
             'accepts_terms' => true,
-        ])->assertCreated();
+        ])->assertCreated()
+            // The reply tells the website where a professional starts.
+            ->assertJsonPath('data.user.home_path', '/pro');
 
         $user = User::where('email', 'ahmed@example.com')->firstOrFail();
 
@@ -95,6 +97,21 @@ class AuthenticationTest extends TestCase
         $this->assertDatabaseMissing('users', ['email' => 'sneaky@example.com']);
     }
 
+    public function test_only_customer_and_professional_accounts_can_be_created(): void
+    {
+        foreach ([UserRole::Company, UserRole::PropertyManager] as $i => $role) {
+            $this->postJson('/api/v1/auth/register', [
+                'name' => 'Not Offered',
+                'email' => "not-offered-{$i}@example.com",
+                'phone' => "0300888777{$i}",
+                'password' => 'password123',
+                'password_confirmation' => 'password123',
+                'role' => $role->value,
+                'accepts_terms' => true,
+            ])->assertStatus(422)->assertJsonValidationErrors('role');
+        }
+    }
+
     public function test_registration_rejects_a_duplicate_email_and_a_bad_phone(): void
     {
         User::factory()->create(['email' => 'taken@example.com']);
@@ -117,7 +134,9 @@ class AuthenticationTest extends TestCase
         $this->postJson('/api/v1/auth/login', [
             'login' => 'sana@example.com',
             'password' => 'password123',
-        ])->assertOk()->assertJsonPath('data.user.id', $user->uuid);
+        ])->assertOk()
+            ->assertJsonPath('data.user.id', $user->uuid)
+            ->assertJsonPath('data.user.home_path', '/dashboard');
 
         // The same account, reached by its phone number in local format.
         $this->postJson('/api/v1/auth/login', [

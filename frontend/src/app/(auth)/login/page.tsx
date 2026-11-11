@@ -18,8 +18,8 @@ export default function LoginPage() {
         <AuthIntro
           title="Welcome back"
           titleUr="خوش آمدید"
-          description="Sign in with the email address or phone number on your account."
-          descriptionUr="اپنے اکاؤنٹ کے ای میل پتے یا فون نمبر سے سائن ان کریں۔"
+          description="Sign in with the email or phone number on your account."
+          descriptionUr="اپنے اکاؤنٹ کے ای میل یا فون نمبر سے سائن اِن کریں۔"
         />
 
         {/* The form reads `?next=` only when submitted, so it is part of the built page. */}

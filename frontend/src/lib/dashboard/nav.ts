@@ -3,7 +3,7 @@ import {
   Briefcase,
   Building2,
   CalendarCheck,
-  CalendarDays,
+  Clock,
   CreditCard,
   FileText,
   Heart,
@@ -102,7 +102,7 @@ export const PRO_NAV: NavSection[] = [
     heading: 'Work',
     headingUr: 'کام',
     items: [
-      { href: '/pro/schedule', label: 'Schedule', labelUr: 'شیڈول', icon: CalendarDays },
+      { href: '/pro/schedule', label: 'Availability', labelUr: 'دستیابی', icon: Clock },
       { href: '/pro/earnings', label: 'Earnings', labelUr: 'کمائی', icon: Wallet },
       { href: '/pro/reviews', label: 'Reviews', labelUr: 'جائزے', icon: Star },
     ],
@@ -122,7 +122,7 @@ export const PRO_NAV: NavSection[] = [
 export const PRO_BOTTOM_NAV: NavItem[] = [
   { href: '/pro', label: 'Home', labelUr: 'ہوم', icon: LayoutDashboard, exact: true },
   { href: '/pro/jobs', label: 'Jobs', labelUr: 'کام', icon: Briefcase },
-  { href: '/pro/schedule', label: 'Schedule', labelUr: 'شیڈول', icon: CalendarDays },
+  { href: '/pro/schedule', label: 'Availability', labelUr: 'دستیابی', icon: Clock },
   { href: '/pro/earnings', label: 'Earnings', labelUr: 'کمائی', icon: Wallet },
   { href: '/pro/profile', label: 'Profile', labelUr: 'پروفائل', icon: User },
 ];

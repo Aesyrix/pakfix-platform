@@ -72,6 +72,25 @@ export interface RegisterInput {
   city_id?: number | null;
   referral_code?: string | null;
   accepts_terms: boolean;
+  /** A professional's alert preferences (ignored for other roles). */
+  work_hours?: WorkHours;
+  work_start?: string;
+  work_end?: string;
+  offers_emergency_service?: boolean;
+}
+
+export type WorkHours = 'morning' | 'evening' | 'always' | 'custom';
+
+/** When a professional gets new-job alerts (`/pro/availability`). Times are Pakistan time, HH:MM. */
+export interface ProAvailability {
+  work_hours: WorkHours;
+  work_start: string | null;
+  work_end: string | null;
+  is_available: boolean;
+  offers_emergency_service: boolean;
+  within_hours_now: boolean;
+  receiving_alerts_now: boolean;
+  shifts: Record<string, [string, string]>;
 }
 
 export interface LoginInput {
@@ -205,6 +224,13 @@ export const accountApi = {
   proBookings: () => apiRequest<MarketplaceBooking[]>('pro/bookings', { query: { per_page: 50 } }),
   proNearby: () => apiRequest<MarketplaceRequest[]>('pro/requests'),
   proProfile: () => api.get<ProProfileSummary>('pro/profile'),
+  proAvailability: () => api.get<ProAvailability>('pro/availability'),
+  saveProAvailability: (
+    input: Partial<Pick<ProAvailability, 'work_hours' | 'is_available' | 'offers_emergency_service'>> & {
+      work_start?: string;
+      work_end?: string;
+    }
+  ) => apiRequest<ProAvailability>('pro/availability', { method: 'PATCH', body: input }),
 };
 
 export const adminApi = {
