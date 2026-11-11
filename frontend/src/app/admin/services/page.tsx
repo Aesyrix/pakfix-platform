@@ -196,10 +196,20 @@ function CategoryEditor({ category, onClose }: { category: AdminServiceCategory;
           <Button onClick={() => save.mutate()} loading={save.isPending}>
             {t('Save service', 'سروس محفوظ کریں')}
           </Button>
-          <Button variant="secondary" onClick={() => toggle.mutate({ is_popular: !category.is_popular })} loading={toggle.isPending}>
+          <Button
+            variant="secondary"
+            onClick={() => toggle.mutate({ is_popular: !category.is_popular })}
+            loading={toggle.isPending && toggle.variables && 'is_popular' in toggle.variables}
+            disabled={toggle.isPending}
+          >
             {category.is_popular ? t('Remove from homepage', 'ہوم پیج سے ہٹائیں') : t('Show on homepage', 'ہوم پیج پر دکھائیں')}
           </Button>
-          <Button variant="secondary" onClick={() => toggle.mutate({ is_active: !category.is_active })} loading={toggle.isPending}>
+          <Button
+            variant="secondary"
+            onClick={() => toggle.mutate({ is_active: !category.is_active })}
+            loading={toggle.isPending && toggle.variables && 'is_active' in toggle.variables}
+            disabled={toggle.isPending}
+          >
             {category.is_active ? t('Switch off', 'بند کریں') : t('Switch on', 'آن کریں')}
           </Button>
           <Button variant="ghost" onClick={onClose}>

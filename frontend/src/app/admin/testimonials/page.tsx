@@ -146,7 +146,7 @@ export default function AdminTestimonialsPage() {
                     <Button
                       variant="secondary"
                       size="sm"
-                      loading={update.isPending}
+                      loading={update.isPending && update.variables?.id === testimonial.id}
                       onClick={() => update.mutate({ id: testimonial.id, input: { is_published: !testimonial.is_published } })}
                     >
                       {testimonial.is_published ? t('Hide', 'چھپائیں') : t('Publish', 'شائع کریں')}
@@ -155,7 +155,7 @@ export default function AdminTestimonialsPage() {
                       variant="ghost"
                       size="sm"
                       className="text-danger-600"
-                      loading={remove.isPending}
+                      loading={remove.isPending && remove.variables === testimonial.id}
                       onClick={() => remove.mutate(testimonial.id)}
                     >
                       <Trash2 className="h-4 w-4" aria-hidden="true" />

@@ -142,16 +142,34 @@ function MessageCard({ message }: { message: AdminContactMessage }) {
         />
 
         <div className="flex flex-wrap gap-2">
-          <Button size="sm" variant="secondary" loading={update.isPending} onClick={() => update.mutate({ internal_note: note })}>
+          {/* Only the button that was pressed spins; the others wait, disabled. */}
+          <Button
+            size="sm"
+            variant="secondary"
+            loading={update.isPending && update.variables?.status === undefined}
+            disabled={update.isPending}
+            onClick={() => update.mutate({ internal_note: note })}
+          >
             {t('Save note', 'نوٹ محفوظ کریں')}
           </Button>
           {message.status !== 'in_progress' ? (
-            <Button size="sm" variant="secondary" loading={update.isPending} onClick={() => update.mutate({ status: 'in_progress', internal_note: note })}>
+            <Button
+              size="sm"
+              variant="secondary"
+              loading={update.isPending && update.variables?.status === 'in_progress'}
+              disabled={update.isPending}
+              onClick={() => update.mutate({ status: 'in_progress', internal_note: note })}
+            >
               {t('Mark in progress', 'جاری کے طور پر نشان زد کریں')}
             </Button>
           ) : null}
           {message.status !== 'handled' ? (
-            <Button size="sm" loading={update.isPending} onClick={() => update.mutate({ status: 'handled', internal_note: note })}>
+            <Button
+              size="sm"
+              loading={update.isPending && update.variables?.status === 'handled'}
+              disabled={update.isPending}
+              onClick={() => update.mutate({ status: 'handled', internal_note: note })}
+            >
               {t('Mark handled', 'نمٹا گیا نشان زد کریں')}
             </Button>
           ) : (
