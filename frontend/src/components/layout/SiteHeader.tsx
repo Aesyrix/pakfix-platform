@@ -207,7 +207,7 @@ export function SiteHeader() {
                     {t('Sign In', 'سائن اِن')}
                   </ButtonLink>
                   <ButtonLink
-                    href="/ai"
+                    href="/register"
                     size="sm"
                     className="px-5 rounded-full shadow-md shadow-brand-500/25 hover:-translate-y-px"
                   >
@@ -221,7 +221,7 @@ export function SiteHeader() {
             <div className="flex items-center gap-2 xl:hidden">
               {!user && (
                 <ButtonLink
-                  href="/ai"
+                  href="/register"
                   size="sm"
                   className="bg-brand-solid text-white px-3.5 py-1.5 text-xs font-semibold rounded-full shadow-sm shadow-brand-500/25"
                 >
