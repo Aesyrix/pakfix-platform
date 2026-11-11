@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
-import { PageSkeleton } from '@/components/marketing/PageStates';
-import { DirectoryView } from '@/components/marketing/views/DirectoryView';
+import { DirectoryView, DirectoryViewFromUrl } from '@/components/marketing/views/DirectoryView';
 import { catalogueApi, locationApi } from '@/lib/api/endpoints';
 import { safeFetch } from '@/lib/api/safe';
 import { pageMetadata } from '@/lib/seo';
@@ -19,9 +18,11 @@ export default async function FindATechnicianPage() {
     safeFetch(() => catalogueApi.categories(), [], 'categories'),
   ]);
 
+  // The built page is the unfiltered directory, so it shows at once; the
+  // browser then applies any filters in the URL.
   return (
-    <Suspense fallback={<PageSkeleton />}>
-      <DirectoryView cities={cities} categories={categories} />
+    <Suspense fallback={<DirectoryView cities={cities} categories={categories} />}>
+      <DirectoryViewFromUrl cities={cities} categories={categories} />
     </Suspense>
   );
 }

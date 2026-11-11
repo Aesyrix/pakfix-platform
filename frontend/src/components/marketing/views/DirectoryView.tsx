@@ -17,16 +17,34 @@ import { technicianApi, type TechnicianFilters } from '@/lib/api/endpoints';
 import type { City, ServiceCategory } from '@/lib/api/types';
 
 const PER_PAGE = 12;
+const NO_PARAMS = new URLSearchParams();
 
 /**
  * The public directory. Filters live in the URL, so a filtered list can be
  * shared, bookmarked, and linked to from service and city pages.
  */
-export function DirectoryView({ cities, categories }: { cities: City[]; categories: ServiceCategory[] }) {
+/** The directory with its filters read from the URL (needs a Suspense boundary). */
+export function DirectoryViewFromUrl(props: { cities: City[]; categories: ServiceCategory[] }) {
+  return <DirectoryView {...props} params={useSearchParams()} />;
+}
+
+/**
+ * The directory for given filters. With no filters it is what the page is
+ * built with, so visitors see the page straight away instead of "Loading"
+ * while the browser reads the URL.
+ */
+export function DirectoryView({
+  cities,
+  categories,
+  params = NO_PARAMS,
+}: {
+  cities: City[];
+  categories: ServiceCategory[];
+  params?: Pick<URLSearchParams, 'get' | 'toString'>;
+}) {
   const t = useT();
   const router = useRouter();
   const pathname = usePathname();
-  const params = useSearchParams();
 
   const filters: TechnicianFilters = {
     city: params.get('city') ?? undefined,

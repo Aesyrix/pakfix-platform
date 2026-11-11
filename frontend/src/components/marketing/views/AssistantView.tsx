@@ -128,10 +128,20 @@ const ORBIT_ICONS = [Wrench, Zap, Droplets, Wind];
 
 /* ------------------------------------------------------------------------- */
 
-export function AssistantView() {
+/** The assistant with `?q=` / `?input=` read from the URL (needs a Suspense boundary). */
+export function AssistantViewFromUrl() {
+  return <AssistantView params={useSearchParams()} />;
+}
+
+const NO_PARAMS = new URLSearchParams();
+
+/**
+ * The assistant. Without URL parameters it is what the page is built with,
+ * so visitors see it straight away instead of "Loading".
+ */
+export function AssistantView({ params = NO_PARAMS }: { params?: Pick<URLSearchParams, 'get'> }) {
   const t = useT();
   const { locale } = useLocale();
-  const params = useSearchParams();
   const initialQuery = params.get('q') ?? '';
   const inputMode = params.get('input');
 

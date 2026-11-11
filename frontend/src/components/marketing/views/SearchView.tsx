@@ -16,9 +16,15 @@ import { SiteSearchBox } from '@/components/marketing/SiteSearchBox';
 import { useT } from '@/components/i18n/LocaleProvider';
 import { searchApi } from '@/lib/api/endpoints';
 
-export function SearchView() {
+/** Search for the `?q=` in the URL (needs a Suspense boundary). */
+export function SearchViewFromUrl() {
+  return <SearchView q={useSearchParams().get('q') ?? ''} />;
+}
+
+/** Search results for `q`; with no query it is the built page (search box, no results yet). */
+export function SearchView({ q: rawQuery = '' }: { q?: string }) {
   const t = useT();
-  const q = (useSearchParams().get('q') ?? '').trim();
+  const q = rawQuery.trim();
   const enabled = q.length >= 2;
 
   const query = useQuery({

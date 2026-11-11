@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
-import { PageSkeleton } from '@/components/marketing/PageStates';
-import { SearchView } from '@/components/marketing/views/SearchView';
+import { SearchView, SearchViewFromUrl } from '@/components/marketing/views/SearchView';
 import { pageMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
@@ -13,9 +12,11 @@ export const metadata: Metadata = pageMetadata({
 });
 
 export default function SearchPage() {
+  // The built page is the empty search, so it shows at once; the browser
+  // then runs the query from the URL (?q=).
   return (
-    <Suspense fallback={<PageSkeleton />}>
-      <SearchView />
+    <Suspense fallback={<SearchView />}>
+      <SearchViewFromUrl />
     </Suspense>
   );
 }

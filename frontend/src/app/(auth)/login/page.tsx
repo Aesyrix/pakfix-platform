@@ -1,10 +1,8 @@
 import type { Metadata } from 'next';
-import { Suspense } from 'react';
 import { AuthIntro } from '@/components/auth/AuthIntro';
 import { AuthSwitch } from '@/components/auth/AuthSwitch';
 import { LoginForm } from '@/components/auth/LoginForm';
 import { Card, CardBody } from '@/components/ui/Card';
-import { Skeleton } from '@/components/ui/Skeleton';
 
 export const metadata: Metadata = {
   title: 'Sign in',
@@ -24,14 +22,8 @@ export default function LoginPage() {
           descriptionUr="اپنے اکاؤنٹ کے ای میل پتے یا فون نمبر سے سائن ان کریں۔"
         />
 
-        {/*
-          The form reads `?next=` to resume an interrupted journey, which opts
-          it out of prerendering. The boundary keeps the rest of the page
-          static and shows the form's shape rather than a blank gap.
-        */}
-        <Suspense fallback={<LoginFormSkeleton />}>
-          <LoginForm className="mt-6" />
-        </Suspense>
+        {/* The form reads `?next=` only when submitted, so it is part of the built page. */}
+        <LoginForm className="mt-6" />
 
         <AuthSwitch
           prompt="New to PakFix?"
@@ -42,17 +34,5 @@ export default function LoginPage() {
         />
       </CardBody>
     </Card>
-  );
-}
-
-function LoginFormSkeleton() {
-  return (
-    <div className="mt-6 flex flex-col gap-4" aria-hidden="true">
-      <Skeleton className="h-4 w-28" />
-      <Skeleton className="h-12 w-full" />
-      <Skeleton className="h-4 w-20" />
-      <Skeleton className="h-12 w-full" />
-      <Skeleton className="h-14 w-full" />
-    </div>
   );
 }
