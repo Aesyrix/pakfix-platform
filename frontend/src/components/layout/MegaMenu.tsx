@@ -18,6 +18,12 @@ import {
   Camera,
   Grid,
   ArrowRight,
+  Car,
+  Bike,
+  Tv,
+  Laptop,
+  Smartphone,
+  Siren,
 } from 'lucide-react';
 import { useT } from '@/components/i18n/LocaleProvider';
 
@@ -88,10 +94,24 @@ export function MegaMenu({ onClose }: MegaMenuProps) {
         { href: '/services/solar-installation', en: 'Solar Panel Setup', ur: 'سولر پینل کی تنصیب', icon: Sun, badge: { en: 'Trending', ur: 'رائج' } },
       ],
     },
+    {
+      en: 'Car, Bike & Electronics',
+      ur: 'گاڑی، بائیک اور الیکٹرانکس',
+      descriptionEn: 'Help on the road, and repairs for your gadgets.',
+      descriptionUr: 'سڑک پر مدد، اور آپ کے آلات کی مرمت۔',
+      items: [
+        { href: '/services/roadside-help', en: 'Roadside Help', ur: 'سڑک پر مدد', icon: Siren, badge: { en: 'New', ur: 'نیا' } },
+        { href: '/services/car-mechanic', en: 'Car Mechanic', ur: 'کار مکینک', icon: Car },
+        { href: '/services/bike-mechanic', en: 'Bike Mechanic', ur: 'بائیک مکینک', icon: Bike },
+        { href: '/services/tv-led-repair', en: 'TV & LED Repair', ur: 'ٹی وی اور ایل ای ڈی مرمت', icon: Tv },
+        { href: '/services/laptop-computer-repair', en: 'Laptop & Computer', ur: 'لیپ ٹاپ اور کمپیوٹر', icon: Laptop },
+        { href: '/services/mobile-phone-repair', en: 'Mobile Phone Repair', ur: 'موبائل فون مرمت', icon: Smartphone },
+      ],
+    },
   ];
 
   // One accent icon per column heading.
-  const columnIcons = [Wrench, ShieldCheck, Sparkles];
+  const columnIcons = [Wrench, ShieldCheck, Sparkles, Car];
 
   return (
     // The wrapper starts flush with the header so the pointer never crosses a
@@ -99,7 +119,7 @@ export function MegaMenu({ onClose }: MegaMenuProps) {
     <div className="absolute top-full left-0 z-50 w-full px-3 pt-2 sm:px-6">
       {/* Never taller than the screen below the header; scrolls on its own if it would be. */}
       <div className="mx-auto max-h-[calc(100dvh-8rem)] max-w-[1280px] overflow-x-hidden overflow-y-auto overscroll-contain rounded-3xl border border-line/70 bg-surface shadow-floating animate-[megaIn_180ms_ease-out] motion-reduce:animate-none">
-        <div className="grid grid-cols-1 gap-2 p-4 md:grid-cols-3 lg:p-6">
+        <div className="grid grid-cols-1 gap-2 p-4 md:grid-cols-2 lg:p-6 xl:grid-cols-4">
           {categories.map((col, colIndex) => {
             const ColIcon = columnIcons[colIndex] ?? Wrench;
             return (

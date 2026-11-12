@@ -152,6 +152,8 @@ export interface ServiceCategory {
   id: string;
   name: string;
   slug: string;
+  /** home, vehicle or electronics. Optional so older cached replies still type-check. */
+  section?: string;
   description: string | null;
   icon: string | null;
   color: string | null;

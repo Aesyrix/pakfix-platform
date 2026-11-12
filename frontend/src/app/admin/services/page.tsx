@@ -9,7 +9,8 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card, CardBody } from '@/components/ui/Card';
 import { ErrorState } from '@/components/ui/ErrorState';
-import { Input, Textarea } from '@/components/ui/Input';
+import { Input, Select, Textarea } from '@/components/ui/Input';
+import { CATALOGUE_SECTIONS } from '@/lib/catalogue-sections';
 import { SkeletonCard } from '@/components/ui/Skeleton';
 import { useToast } from '@/components/ui/Toast';
 import { ApiError } from '@/lib/api/client';
@@ -95,6 +96,7 @@ function CategoryEditor({ category, onClose }: { category: AdminServiceCategory;
   const queryClient = useQueryClient();
 
   const [name, setName] = useState(category.name);
+  const [section, setSection] = useState(category.section ?? 'home');
   const [description, setDescription] = useState(category.description ?? '');
   const [tradeSlug, setTradeSlug] = useState(category.trade_slug ?? '');
   const [tradeName, setTradeName] = useState(category.trade_name ?? '');
@@ -107,6 +109,7 @@ function CategoryEditor({ category, onClose }: { category: AdminServiceCategory;
     mutationFn: () =>
       adminApi.updateCategory(category.id, {
         name,
+        section,
         description: description || null,
         trade_slug: tradeSlug || null,
         trade_name: tradeName || null,
@@ -145,6 +148,15 @@ function CategoryEditor({ category, onClose }: { category: AdminServiceCategory;
         <h2 className="font-semibold">{t(`Editing ${category.name}`, `${category.name} میں ترمیم`)}</h2>
 
         <Input label={t('Name', 'نام')} value={name} onChange={(event) => setName(event.target.value)} error={errors.name} />
+        {category.parent ? null : (
+          <Select label={t('Section', 'سیکشن')} value={section} onChange={(event) => setSection(event.target.value)} error={errors.section}>
+            {CATALOGUE_SECTIONS.map((s) => (
+              <option key={s.key} value={s.key}>
+                {t(s.en, s.ur)}
+              </option>
+            ))}
+          </Select>
+        )}
         <Textarea label={t('Description', 'تفصیل')} rows={2} value={description} onChange={(event) => setDescription(event.target.value)} />
 
         <div className="grid gap-4 sm:grid-cols-2">

@@ -29,7 +29,7 @@ export function HeroSection() {
   const quickExamples = [
     { en: 'Tap is leaking in bathroom', ur: 'باتھ روم میں نل سے پانی ٹپک رہا ہے' },
     { en: 'AC is running but not cooling', ur: 'اے سی چل رہا ہے مگر ٹھنڈا نہیں کر رہا' },
-    { en: 'Washing machine making loud noise', ur: 'واشنگ مشین زور سے آواز کر رہی ہے' },
+    { en: 'Car battery is dead, need a jump start', ur: 'گاڑی کی بیٹری ختم ہو گئی، جمپ سٹارٹ چاہیے' },
     { en: 'Power keeps tripping constantly', ur: 'بجلی بار بار ٹرپ ہو رہی ہے' },
   ];
 

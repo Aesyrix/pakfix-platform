@@ -422,6 +422,7 @@ export interface AdminServiceCategory {
   id: string;
   name: string;
   slug: string;
+  section: string;
   parent: { name: string; slug: string } | null;
   trade_slug: string | null;
   trade_name: string | null;
