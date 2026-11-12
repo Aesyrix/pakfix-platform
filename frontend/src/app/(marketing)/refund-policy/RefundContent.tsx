@@ -1,58 +1,94 @@
 'use client';
 
-import { RichText } from '@/components/marketing/Cards';
-import { PageHeader } from '@/components/marketing/PageHeader';
-import { Container } from '@/components/ui/Container';
-import { useFormatDate, useT } from '@/components/i18n/LocaleProvider';
+import Link from 'next/link';
+import { LegalPage } from '@/components/marketing/legal/LegalPage';
 
-export function RefundContent({
-  title,
-  updatedAt,
-  bodyHtml,
-}: {
-  title?: string | null;
-  updatedAt?: string | null;
-  bodyHtml?: string | null;
-}) {
-  const t = useT();
-  const formatDate = useFormatDate();
-  const updated = updatedAt ? formatDate(updatedAt) : null;
+/** Text: "PakFix Legal Pages" draft, 13 November 2026, section 3. Awaiting legal approval. */
+const CUSTOMER_CANCELLING: [string, string, string][] = [
+  ['While offers are coming in', 'Yes, any time', 'Free'],
+  ['After you accept an offer, before the professional sets off', 'Yes', 'Free'],
+  ['After the professional sets off', 'No. The job ends when it is confirmed, or through a dispute PakFix reviews', 'See sections 4 and 5'],
+];
 
+export function RefundContent() {
   return (
-    <>
-      <PageHeader
-        breadcrumbs={[{ name: t('Home', 'ہوم'), href: '/' }, { name: t('Refund Policy', 'رقم کی واپسی کی پالیسی') }]}
-        title={title ?? t('Refund Policy', 'رقم کی واپسی کی پالیسی')}
-        subtitle={updated ? t(`Last updated ${updated}`, `آخری تازہ کاری ${updated}`) : undefined}
-        size="narrow"
-      />
+    <LegalPage title="Cancellation and Refund Policy" titleUr="منسوخی اور رقم واپسی کی پالیسی">
+      <h2>1. How payment works</h2>
+      <p>
+        All jobs on PakFix are paid in cash, directly to the professional, when the work is done. PakFix does not take or hold
+        customers&apos; money. This is why it matters to pay only for work you have agreed in the app and that is finished.
+      </p>
 
-      <Container size="narrow" className="py-12 sm:py-16">
-        {bodyHtml ? (
-          <RichText html={bodyHtml} />
-        ) : (
-          <div className="rich-text">
-            <p>
-              {t('If a job is not done properly, raise a dispute from the booking within PakFix. Support reviews the evidence from both sides and can order a partial or full refund.', 'اگر کام صحیح طریقے سے نہ ہوا ہو، تو پاک فکس میں بکنگ سے تنازعہ اٹھائیں۔ سپورٹ دونوں فریقوں کے ثبوت کا جائزہ لیتا ہے اور جزوی یا مکمل رقم کی واپسی کا حکم دے سکتا ہے۔')}
-            </p>
-            <h2>{t('Before work starts', 'کام شروع ہونے سے پہلے')}</h2>
-            <p>
-              {t('Cancel a booking before the professional sets off and nothing is charged. If they have already travelled, the visit fee shown on the booking may still apply.', 'پروفیشنل کے روانہ ہونے سے پہلے بکنگ منسوخ کریں تو کچھ وصول نہیں کیا جاتا۔ اگر وہ سفر کر چکے ہوں تو بکنگ میں دکھائی گئی وزٹ فیس لاگو ہو سکتی ہے۔')}
-            </p>
-            <h2>{t('After work is done', 'کام مکمل ہونے کے بعد')}</h2>
-            <p>
-              {t('You have the chance to confirm the work. If something is wrong, raise a dispute rather than confirming, and support will look at it.', 'آپ کو کام کی تصدیق کا موقع ملتا ہے۔ اگر کچھ غلط ہو تو تصدیق کرنے کے بجائے تنازعہ اٹھائیں، اور سپورٹ اس کا جائزہ لے گا۔')}
-            </p>
-            <h2>{t('How refunds are paid', 'رقم کی واپسی کیسے کی جاتی ہے')}</h2>
-            <p>
-              {t('A refund goes back the way you paid. Cash jobs are refunded by bank transfer or Easypaisa, usually within five working days of a decision.', 'رقم اسی طریقے سے واپس کی جاتی ہے جس سے آپ نے ادائیگی کی۔ نقد کاموں کی رقم بینک ٹرانسفر یا ایزی پیسہ کے ذریعے واپس کی جاتی ہے، عموماً فیصلے کے پانچ کاروباری دنوں کے اندر۔')}
-            </p>
-            <p>
-              <strong>{t('This page is a placeholder and must be reviewed by a Pakistani legal adviser before launch.', 'یہ صفحہ ایک عارضی مسودہ ہے اور لانچ سے پہلے کسی پاکستانی قانونی مشیر سے اس کا جائزہ لازمی ہے۔')}</strong>
-            </p>
-          </div>
-        )}
-      </Container>
-    </>
+      <h2>2. Cancelling as a customer</h2>
+      <div className="overflow-x-auto">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">When</th>
+              <th scope="col">Can you cancel?</th>
+              <th scope="col">Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            {CUSTOMER_CANCELLING.map(([when, can, cost]) => (
+              <tr key={when}>
+                <td>{when}</td>
+                <td>{can}</td>
+                <td>{cost}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h2>3. Cancelling as a professional</h2>
+      <p>
+        A professional can cancel a booked job until they arrive, but cancelling after setting off counts as a strike. Not arriving at all
+        counts as a strike too. With 3 strikes a professional cannot send new offers until PakFix reviews the account.
+      </p>
+
+      <h2>4. Price changes and the visit fee</h2>
+      <p>
+        If the job turns out bigger than described, the professional must send a revised price in the app. Nothing changes until you
+        approve it. If you decline the revised price, the job ends and you pay only the visit fee that was shown in the professional&apos;s
+        original offer. If the offer showed no visit fee, nothing is due.
+      </p>
+
+      <h2>5. If the work was not done or not done properly</h2>
+      <ol>
+        <li>Do not pay for work that is not finished.</li>
+        <li>
+          Report a problem from the job in the app. You can do this before the job is confirmed, and for 72 hours after it is confirmed. A
+          job marked done is confirmed automatically after 72 hours if you do not confirm it or report a problem.
+        </li>
+        <li>
+          PakFix reviews what both sides say, the chat, and where the professional was when they marked &ldquo;arrived&rdquo; and
+          &ldquo;done&rdquo;.
+        </li>
+        <li>
+          PakFix decides the outcome: for example the professional returns to finish the work, the price is reduced, or the job is
+          cancelled.
+        </li>
+      </ol>
+
+      <h2>6. Refunds</h2>
+      <p>
+        Because payment is in cash between customer and professional, PakFix does not hold money to refund. If PakFix decides that money
+        should be returned after a dispute, the professional must return it to the customer, and PakFix will help arrange it. A
+        professional who does not follow PakFix&apos;s decision may lose their account.
+      </p>
+
+      <h2>7. Fees paid to PakFix</h2>
+      <p>
+        Customers pay PakFix nothing. Professionals&apos; commission, when it starts, is described in the{' '}
+        <Link href="/terms-of-service">Terms of Service</Link>, section 7.
+      </p>
+
+      <h2>8. Contact</h2>
+      <p>
+        For help with a cancellation or dispute, use the job in the app or email <a href="mailto:support@pakfix.pk">support@pakfix.pk</a>{' '}
+        with the job reference (it starts with PF).
+      </p>
+    </LegalPage>
   );
 }

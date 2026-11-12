@@ -1,10 +1,10 @@
 'use client';
 
-import { CheckCircle2, Smartphone, Trash2 } from 'lucide-react';
-import Link from 'next/link';
+import { FileWarning, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { PageHeader } from '@/components/marketing/PageHeader';
-import { useT } from '@/components/i18n/LocaleProvider';
+import { useLocale, useT } from '@/components/i18n/LocaleProvider';
+import { LEGAL_DRAFT } from '@/components/marketing/legal/LegalPage';
 import { Button, ButtonLink } from '@/components/ui/Button';
 import { Card, CardBody } from '@/components/ui/Card';
 import { Container } from '@/components/ui/Container';
@@ -16,70 +16,61 @@ import { useAuthStore } from '@/stores/auth';
 /**
  * Google Play requires a web page where people can delete their account
  * without the app. Signed-in visitors can do it here; everyone else sees how.
+ *
+ * Text: "PakFix Legal Pages" draft, 13 November 2026, section 5. Awaiting
+ * legal approval, so it is English only for now (like the other legal pages).
  */
 export function DeleteAccountContent() {
   const t = useT();
-
-  const erased = [
-    [t('Your name, email address and phone number', 'آپ کا نام، ای میل اور فون نمبر')],
-    [t('Your profile photo, saved addresses and properties', 'آپ کی پروفائل تصویر، محفوظ پتے اور پراپرٹیز')],
-    [t('For professionals: your CNIC number, CNIC photos and selfie', 'پروفیشنلز کے لیے: شناختی کارڈ نمبر، شناختی کارڈ کی تصاویر اور سیلفی')],
-    [t('Your open requests and offers (they are cancelled)', 'آپ کی کھلی درخواستیں اور آفرز (منسوخ ہو جاتی ہیں)')],
-    [t('Every device you are signed in on', 'ہر وہ ڈیوائس جس پر آپ سائن ان ہیں')],
-  ];
+  const { locale } = useLocale();
 
   return (
     <>
       <PageHeader
-        title={t('Delete your account', 'اپنا اکاؤنٹ حذف کریں')}
-        subtitle={t(
-          'You can delete your PakFix account and personal data at any time, from the app or from this page.',
-          'آپ کسی بھی وقت اپنا پاک فکس اکاؤنٹ اور ذاتی ڈیٹا ایپ سے یا اس صفحے سے حذف کر سکتے ہیں۔'
-        )}
+        title={t('Delete your PakFix account', 'اپنا پاک فکس اکاؤنٹ حذف کریں')}
+        subtitle={t('You can delete your PakFix account at any time.', 'آپ کسی بھی وقت اپنا پاک فکس اکاؤنٹ حذف کر سکتے ہیں۔')}
       />
       <Container className="grid gap-6 py-10 lg:grid-cols-2">
-        <div className="flex flex-col gap-6">
-          <Card>
-            <CardBody className="flex flex-col gap-3">
-              <h2 className="flex items-center gap-2 text-lg font-semibold">
-                <Smartphone className="h-5 w-5 text-brand-600" aria-hidden="true" />
-                {t('In the PakFix app', 'پاک فکس ایپ میں')}
-              </h2>
-              <p className="text-sm text-ink-600">
-                {t(
-                  'Open the app, go to Account, tap Delete account, and confirm with your password.',
-                  'ایپ کھولیں، اکاؤنٹ میں جائیں، "اکاؤنٹ حذف کریں" پر ٹیپ کریں، اور اپنے پاس ورڈ سے تصدیق کریں۔'
-                )}
+        <div className="flex flex-col gap-4">
+          {LEGAL_DRAFT ? (
+            <div role="note" dir="ltr" lang="en" className="flex items-start gap-3 rounded-2xl border border-warn-200 bg-warn-50 p-4 text-sm text-warn-800">
+              <FileWarning className="mt-0.5 h-5 w-5 shrink-0" aria-hidden="true" />
+              <p>
+                <strong>Draft for legal review.</strong> This text has not yet been approved by a lawyer.
               </p>
-            </CardBody>
-          </Card>
+            </div>
+          ) : null}
+          {locale === 'ur' ? (
+            <p className="rounded-2xl border border-line bg-surface-muted p-4 text-sm text-ink-600">
+              یہ صفحہ فی الحال صرف انگریزی میں دستیاب ہے۔ اردو ترجمہ قانونی منظوری کے بعد شامل کیا جائے گا۔
+            </p>
+          ) : null}
 
           <Card>
-            <CardBody className="flex flex-col gap-3">
-              <h2 className="text-lg font-semibold">{t('What is deleted straight away', 'فوراً کیا حذف ہوتا ہے')}</h2>
-              <ul className="flex flex-col gap-2 text-sm">
-                {erased.map(([line]) => (
-                  <li key={line} className="flex gap-2">
-                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-brand-600" aria-hidden="true" />
-                    {line}
-                  </li>
-                ))}
+            <CardBody dir="ltr" lang="en" className="rich-text max-w-none">
+              <ul>
+                <li>
+                  <strong>In the app:</strong> open Account, then Delete account. Enter your password and confirm.
+                </li>
+                <li>
+                  <strong>On the website:</strong> sign in at pakfix.pk, open Settings, then Delete account.
+                </li>
+                <li>
+                  <strong>Cannot sign in?</strong> Email <a href="mailto:support@pakfix.pk">support@pakfix.pk</a> from the email address on
+                  your account, with the subject &ldquo;Delete my account&rdquo;. We will confirm it is you and delete the account within 7
+                  days.
+                </li>
               </ul>
-              <h2 className="mt-2 text-lg font-semibold">{t('What PakFix keeps', 'پاک فکس کیا رکھتا ہے')}</h2>
-              <p className="text-sm text-ink-600">
-                {t(
-                  'Records of jobs that already happened (the booking, price, reviews and chat) stay, shown as "Deleted user", because the other person and our accounts rely on them and the law may require them. They no longer carry your name or contact details.',
-                  'جو کام ہو چکے ہیں ان کا ریکارڈ (بکنگ، قیمت، ریویوز اور چیٹ) "حذف شدہ صارف" کے نام سے باقی رہتا ہے، کیونکہ دوسرا فریق اور ہمارا حساب کتاب ان پر انحصار کرتا ہے اور قانون بھی تقاضا کر سکتا ہے۔ ان میں آپ کا نام یا رابطہ نہیں رہتا۔'
-                )}
+              <p>You cannot delete your account while a job is in progress. Finish or cancel it first.</p>
+              <p>
+                <strong>Deleted straight away:</strong> your name, email, phone number, profile photo, saved addresses, all signed-in
+                devices and, for professionals, your CNIC number, CNIC photos and selfie.
               </p>
-              <p className="text-sm text-ink-600">
-                {t('You cannot delete your account while a job is in progress. Finish or cancel it first.', 'جب کوئی کام جاری ہو تو اکاؤنٹ حذف نہیں ہو سکتا۔ پہلے اسے مکمل یا منسوخ کریں۔')}{' '}
-                {t('Questions?', 'سوالات؟')}{' '}
-                <Link href="/contact" className="font-medium text-brand-600 underline">
-                  {t('Contact us', 'ہم سے رابطہ کریں')}
-                </Link>
-                .
+              <p>
+                <strong>Kept without your name:</strong> records of jobs that already happened (booking, price, reviews and chat) stay,
+                shown as &ldquo;Deleted user&rdquo;, because the other person and our records rely on them.
               </p>
+              <p>Deletion cannot be undone. To use PakFix again you will need a new account.</p>
             </CardBody>
           </Card>
         </div>

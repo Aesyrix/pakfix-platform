@@ -107,8 +107,10 @@ export function SiteFooter({ popularCategories }: SiteFooterProps) {
               <li><Link href="/contact" className="inline-block transition-all hover:translate-x-0.5 hover:text-white rtl:hover:-translate-x-0.5">{t('Contact Support', 'مدد سے رابطہ')}</Link></li>
               <li><Link href="/safety" className="inline-block transition-all hover:translate-x-0.5 hover:text-white rtl:hover:-translate-x-0.5">{t('Safety Rules', 'حفاظتی اصول')}</Link></li>
               <li><Link href="/faq" className="inline-block transition-all hover:translate-x-0.5 hover:text-white rtl:hover:-translate-x-0.5">{t('FAQs', 'عام سوالات')}</Link></li>
-              <li><Link href="/privacy-policy" className="inline-block transition-all hover:translate-x-0.5 hover:text-white rtl:hover:-translate-x-0.5">{t('Privacy Policy', 'پرائیویسی پالیسی')}</Link></li>
-              <li><Link href="/terms-of-service" className="inline-block transition-all hover:translate-x-0.5 hover:text-white rtl:hover:-translate-x-0.5">{t('Terms of Service', 'شرائطِ خدمت')}</Link></li>
+              <li><Link href="/terms-of-service" className="inline-block transition-all hover:translate-x-0.5 hover:text-white rtl:hover:-translate-x-0.5">{t('Terms', 'شرائط')}</Link></li>
+              <li><Link href="/privacy-policy" className="inline-block transition-all hover:translate-x-0.5 hover:text-white rtl:hover:-translate-x-0.5">{t('Privacy', 'رازداری')}</Link></li>
+              <li><Link href="/refund-policy" className="inline-block transition-all hover:translate-x-0.5 hover:text-white rtl:hover:-translate-x-0.5">{t('Cancellations and refunds', 'منسوخی اور رقم واپسی')}</Link></li>
+              <li><Link href="/community-guidelines" className="inline-block transition-all hover:translate-x-0.5 hover:text-white rtl:hover:-translate-x-0.5">{t('Community guidelines', 'کمیونٹی رہنما اصول')}</Link></li>
               <li><Link href="/delete-account" className="inline-block transition-all hover:translate-x-0.5 hover:text-white rtl:hover:-translate-x-0.5">{t('Delete account', 'اکاؤنٹ حذف کریں')}</Link></li>
             </ul>
           </div>
