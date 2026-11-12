@@ -197,6 +197,38 @@ class ProVerificationTest extends TestCase
 
     // -----------------------------------------------------------------
     // Helpers
+    public function test_a_verified_professional_can_change_their_services_without_reverification(): void
+    {
+        $pro = $this->submittedPro();
+        $profile = $pro->technicianProfile;
+        $this->actingAs($this->staff(UserRole::Admin))->postJson("/api/v1/admin/verifications/{$profile->uuid}/approve")->assertOk();
+
+        $carAc = ServiceCategory::where('slug', 'car-ac')->firstOrFail()->uuid;
+        $plumbing = ServiceCategory::where('slug', 'plumbing')->firstOrFail()->uuid;
+
+        $this->actingAs($pro)->patchJson('/api/v1/pro/services', ['category_ids' => [$plumbing, $carAc]])
+            ->assertOk()
+            ->assertJsonPath('data.verification.status', 'verified')
+            ->assertJsonCount(2, 'data.categories');
+
+        // Dropping one keeps the other; none at all is refused.
+        $this->actingAs($pro)->patchJson('/api/v1/pro/services', ['category_ids' => [$carAc]])
+            ->assertOk()
+            ->assertJsonPath('data.categories.0.slug', 'car-ac')
+            ->assertJsonCount(1, 'data.categories');
+        $this->actingAs($pro)->patchJson('/api/v1/pro/services', ['category_ids' => []])
+            ->assertUnprocessable()
+            ->assertJsonPath('errors.category_ids.0', 'Choose at least one trade.');
+
+        // Still verified, still sees jobs.
+        $this->assertNotNull($profile->refresh()->verified_at);
+        $this->actingAs($pro)->getJson('/api/v1/pro/requests')->assertOk();
+
+        // Customers cannot use it.
+        $customer = $this->staff(UserRole::Customer);
+        $this->actingAs($customer)->patchJson('/api/v1/pro/services', ['category_ids' => [$carAc]])->assertForbidden();
+    }
+
     // -----------------------------------------------------------------
 
     private function registerPro(): User

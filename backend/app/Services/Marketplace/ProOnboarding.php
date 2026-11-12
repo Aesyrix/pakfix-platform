@@ -78,15 +78,7 @@ class ProOnboarding
                     : (bool) $profile->offers_emergency_service,
             ])->save();
 
-            // Trades: replace the set, keeping rows that stay so their history is kept.
-            $categoryIds = ServiceCategory::whereIn('uuid', $data['category_ids'])->pluck('id')->all();
-            $profile->services()->whereNotIn('service_category_id', $categoryIds)->whereNull('service_id')->delete();
-            foreach ($categoryIds as $id) {
-                TechnicianService::updateOrCreate(
-                    ['technician_profile_id' => $profile->id, 'service_category_id' => $id, 'service_id' => null],
-                    ['is_active' => true, 'experience_years' => $profile->years_experience],
-                );
-            }
+            $this->replaceTrades($profile, $data['category_ids']);
 
             // Their base city is always a service area.
             TechnicianServiceArea::updateOrCreate(
@@ -98,6 +90,39 @@ class ProOnboarding
 
             return $profile->refresh();
         });
+    }
+
+    /**
+     * The services a professional offers, changeable at any time (also after
+     * verification: verification checks who they are, not each trade).
+     *
+     * @param  list<string>  $categoryUuids
+     */
+    public function updateTrades(TechnicianProfile $profile, array $categoryUuids): TechnicianProfile
+    {
+        return DB::transaction(function () use ($profile, $categoryUuids): TechnicianProfile {
+            $this->replaceTrades($profile, $categoryUuids);
+            $this->refreshOnboardingPercent($profile);
+
+            return $profile->refresh();
+        });
+    }
+
+    /**
+     * Replaces the set of trades, keeping rows that stay so their history is kept.
+     *
+     * @param  list<string>  $categoryUuids
+     */
+    private function replaceTrades(TechnicianProfile $profile, array $categoryUuids): void
+    {
+        $categoryIds = ServiceCategory::whereIn('uuid', $categoryUuids)->pluck('id')->all();
+        $profile->services()->whereNotIn('service_category_id', $categoryIds)->whereNull('service_id')->delete();
+        foreach ($categoryIds as $id) {
+            TechnicianService::updateOrCreate(
+                ['technician_profile_id' => $profile->id, 'service_category_id' => $id, 'service_id' => null],
+                ['is_active' => true, 'experience_years' => $profile->years_experience],
+            );
+        }
     }
 
     public function uploadDocument(TechnicianProfile $profile, string $type, UploadedFile $file): TechnicianDocument
