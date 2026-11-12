@@ -20,7 +20,7 @@ export function MobilePwaSection() {
             </h2>
 
             <p className="text-sm text-ink-600 leading-relaxed">
-              {t('Install the PakFix Web App on your phone in seconds. Access AI diagnosis, live job tracking, technician messaging and maintenance alerts anywhere.', 'پاک فکس ویب ایپ سیکنڈوں میں اپنے فون پر انسٹال کریں۔ اے آئی تشخیص، لائیو جاب ٹریکنگ، ٹیکنیشن پیغام رسانی اور دیکھ بھال کے الرٹس کہیں بھی حاصل کریں۔')}
+              {t('Add PakFix to your phone home screen. Ask PakFix AI and check your jobs and offers anywhere.', 'پاک فکس کو اپنے فون کی ہوم اسکرین پر شامل کریں۔ پاک فکس اے آئی سے پوچھیں اور کہیں بھی اپنے کام اور آفرز دیکھیں۔')}
             </p>
 
             <div className="grid sm:grid-cols-2 gap-3 pt-2">
@@ -30,11 +30,11 @@ export function MobilePwaSection() {
               </div>
               <div className="flex items-center gap-2 text-xs font-semibold text-ink-900">
                 <CheckCircle2 className="h-4 w-4 text-brand-600" />
-                <span>{t('Live Technician Tracking', 'لائیو ٹیکنیشن ٹریکنگ')}</span>
+                <span>{t('Job updates step by step', 'کام کی قدم بہ قدم اپ ڈیٹس')}</span>
               </div>
               <div className="flex items-center gap-2 text-xs font-semibold text-ink-900">
                 <CheckCircle2 className="h-4 w-4 text-brand-600" />
-                <span>{t('Smart Maintenance Reminders', 'سمارٹ دیکھ بھال یاد دہانیاں')}</span>
+                <span>{t('Alerts for new offers', 'نئی آفرز کی اطلاع')}</span>
               </div>
               <div className="flex items-center gap-2 text-xs font-semibold text-ink-900">
                 <CheckCircle2 className="h-4 w-4 text-brand-600" />

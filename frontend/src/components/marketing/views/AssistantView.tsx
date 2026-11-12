@@ -1,7 +1,7 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
-import { ArrowRight, Camera, Droplets, Mic, MicOff, Phone, ShieldAlert, ShieldCheck, Sparkles, TriangleAlert, Wind, Wrench, Zap } from 'lucide-react';
+import { ArrowRight, Droplets, Mic, MicOff, Phone, ShieldAlert, ShieldCheck, Sparkles, TriangleAlert, Wind, Wrench, Zap } from 'lucide-react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type FormEvent } from 'react';
@@ -143,7 +143,6 @@ export function AssistantView({ params = NO_PARAMS }: { params?: Pick<URLSearchP
   const t = useT();
   const { locale } = useLocale();
   const initialQuery = params.get('q') ?? '';
-  const inputMode = params.get('input');
 
   const [description, setDescription] = useState(initialQuery);
   const [listening, setListening] = useState(false);
@@ -277,25 +276,12 @@ export function AssistantView({ params = NO_PARAMS }: { params?: Pick<URLSearchP
             <span className="text-gradient-on-dark">{t('What needs fixing?', 'کیا ٹھیک کرنا ہے؟')}</span>
           </h1>
           <p className="anim-rise mx-auto mt-5 max-w-2xl text-base leading-relaxed text-ink-300 sm:text-lg" style={{ '--d': '240ms' } as CSSProperties}>
-            {t('Describe the problem in your own words (English or Roman Urdu) or upload a photo. PakFix AI checks for hazards, estimates repair costs, and connects you with top-rated local pros.', 'اپنے الفاظ میں مسئلہ بیان کریں (انگریزی یا رومن اردو) یا تصویر اپ لوڈ کریں۔ پاک فکس اے آئی خطرات چیک کرتا ہے، مرمت کے اخراجات کا اندازہ لگاتا ہے، اور آپ کو اعلیٰ درجہ بند مقامی پروفیشنلز سے جوڑتا ہے۔')}
+            {t('Describe the problem in your own words (English or Roman Urdu). PakFix AI checks for hazards, suggests the right service and its usual price range, and helps you get offers from verified pros.', 'اپنے الفاظ میں (انگریزی یا رومن اردو) مسئلہ بیان کریں۔ پاک فکس اے آئی خطرات دیکھتا ہے، درست سروس اور اس کی عام قیمت بتاتا ہے، اور تصدیق شدہ پروفیشنلز سے آفرز لینے میں مدد دیتا ہے۔')}
           </p>
         </Container>
       </section>
 
       <Container size="narrow" className="relative z-10 -mt-36 pb-16 sm:pb-24">
-        {inputMode === 'camera' ? (
-          <div className="anim-rise mb-4 flex items-start gap-3 rounded-2xl border border-accent-200 bg-surface p-4 text-sm text-ink-700 shadow-lifted">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent-50 text-accent-600 ring-1 ring-accent-100">
-              <Camera className="h-5 w-5" aria-hidden="true" />
-            </span>
-            <div>
-              <p className="font-bold text-foreground">{t('Photo Diagnostic Mode Active', 'فوٹو تشخیصی موڈ فعال')}</p>
-              <p className="text-xs text-ink-600 mt-0.5">
-                {t('Snap or upload a photo of the leaking pipe, noisy AC, or faulty socket. Describe what happens when it runs.', 'لیک ہوتے پائپ، شور کرتے اے سی یا خراب ساکٹ کی تصویر لیں یا اپ لوڈ کریں۔ بتائیں چلنے پر کیا ہوتا ہے۔')}
-              </p>
-            </div>
-          </div>
-        ) : null}
 
         {/* The console */}
         <form

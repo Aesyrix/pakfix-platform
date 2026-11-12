@@ -258,10 +258,10 @@ PakFix exists to make that simpler.
 
 ## What PakFix does
 
-- **Helps you understand the problem.** Describe it or send a photo, and get a plain-language explanation of what is likely wrong, how serious it is, and what it typically costs to fix.
+- **Helps you understand the problem.** Describe it in your own words and get a plain-language explanation of what is likely wrong, how serious it is, and the right service to call.
 - **Connects you with verified professionals.** Every professional on PakFix has had their identity checked by a person before they can take a job.
-- **Keeps the price clear.** You see a quote and accept it before work starts.
-- **Remembers your home.** Every repair, appliance and service date stays on your property's record.
+- **Lets you choose the price.** Verified professionals send offers, or you name your own price, and you accept one before work starts. You pay in cash when the job is done.
+- **Keeps your jobs in one place.** Every job, offer and chat stays in your account.
 
 ## What we will not do
 
@@ -269,7 +269,7 @@ We will not talk you through a dangerous repair. Gas leaks, exposed wiring, stru
 
 ## Where we work
 
-PakFix is live in Lahore, Karachi, Islamabad, Rawalpindi, Faisalabad, Multan, Peshawar, Quetta, Gujranwala, Sialkot, Hyderabad and Abbottabad, and growing.
+PakFix is starting in Islamabad and Rawalpindi, and will grow city by city.
 MD;
     }
 }

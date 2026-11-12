@@ -23,27 +23,27 @@ export function HowItWorksContent() {
       icon: MessageSquareText,
       title: { en: "1. Tell Us What's Wrong", ur: '1. بتائیں کیا خراب ہے' },
       desc: {
-        en: 'Type a brief description of the problem, upload photos or video, or use PakFix AI to check safety hazards and causes automatically.',
-        ur: 'مسئلے کی مختصر تفصیل لکھیں، تصاویر یا ویڈیو اپ لوڈ کریں، یا پاک فکس اے آئی سے خودکار طور پر حفاظتی خطرات اور وجوہات چیک کروائیں۔',
+        en: 'Type a short description of the problem in English or Roman Urdu, or ask PakFix AI to check for safety hazards and likely causes first.',
+        ur: 'انگریزی یا رومن اردو میں مسئلے کی مختصر تفصیل لکھیں، یا پہلے پاک فکس اے آئی سے حفاظتی خطرات اور ممکنہ وجوہات چیک کروائیں۔',
       },
       details: [
-        { en: 'Voice dictation in English or Roman Urdu', ur: 'انگریزی یا رومن اردو میں آواز سے تحریر' },
-        { en: 'Photo & video diagnostic upload', ur: 'تصویر اور ویڈیو تشخیصی اپ لوڈ' },
+        { en: 'Write in English or Roman Urdu', ur: 'انگریزی یا رومن اردو میں لکھیں' },
+        { en: 'Name your own price if you like', ur: 'چاہیں تو اپنی قیمت بتائیں' },
         { en: 'Automatic safety hazard assessment', ur: 'خودکار حفاظتی خطرے کی جانچ' },
       ],
     },
     {
       num: '02',
       icon: SlidersHorizontal,
-      title: { en: '2. Compare Quotes & Prices', ur: '2. کوٹیشن اور قیمتوں کا موازنہ کریں' },
+      title: { en: '2. Get Offers', ur: '2. آفرز لیں' },
       desc: {
-        en: 'Receive upfront PKR price ranges for labour and materials. Compare multiple itemized quotes side by side before scheduling.',
-        ur: 'مزدوری اور سامان کے لیے پیشگی روپے قیمت کی حدود حاصل کریں۔ شیڈول کرنے سے پہلے متعدد تفصیلی کوٹیشنز کا ساتھ ساتھ موازنہ کریں۔',
+        en: 'Verified pros near you send offers with their visit fee, labour and materials. Compare them side by side, or accept a pro who takes your price.',
+        ur: 'قریبی تصدیق شدہ پروفیشنلز وزٹ فیس، مزدوری اور سامان کے ساتھ آفرز بھیجتے ہیں۔ ان کا موازنہ کریں، یا آپ کی قیمت قبول کرنے والے پروفیشنل کو منتخب کریں۔',
       },
       details: [
-        { en: 'Transparent labor and material cost estimates', ur: 'شفاف مزدوری اور سامان لاگت کا تخمینہ' },
-        { en: 'No hidden surprise fees on site', ur: 'موقع پر کوئی چھپی حیران کن فیس نہیں' },
-        { en: 'Side-by-side technician quote comparison', ur: 'ٹیکنیشن کوٹیشن کا ساتھ ساتھ موازنہ' },
+        { en: 'Visit fee, labour and materials shown in each offer', ur: 'ہر آفر میں وزٹ فیس، مزدوری اور سامان' },
+        { en: 'Any change in price needs your approval first', ur: 'قیمت میں کوئی بھی تبدیلی پہلے آپ کی منظوری سے' },
+        { en: 'Compare offers side by side', ur: 'آفرز کا ساتھ ساتھ موازنہ' },
       ],
     },
     {
@@ -51,13 +51,13 @@ export function HowItWorksContent() {
       icon: UserCheck,
       title: { en: '3. Match With Verified Professionals', ur: '3. تصدیق شدہ پروفیشنلز سے میچ ہوں' },
       desc: {
-        en: 'PakFix matches your job with top-rated, identity-checked local technicians in your city.',
-        ur: 'پاک فکس آپ کے کام کو آپ کے شہر کے اعلیٰ درجہ بند، شناخت جانچے گئے مقامی ٹیکنیشنز سے میچ کرتا ہے۔',
+        en: 'You choose from identity-checked pros near you, with their ratings and reviews.',
+        ur: 'آپ قریبی شناخت شدہ پروفیشنلز میں سے ان کی ریٹنگ اور ریویوز دیکھ کر انتخاب کرتے ہیں۔',
       },
       details: [
         { en: 'CNIC and selfie reviewed by our team', ur: 'شناختی کارڈ اور سیلفی کی جانچ ہماری ٹیم کرتی ہے' },
         { en: 'Real customer ratings & completed job history', ur: 'حقیقی گاہک ریٹنگز اور مکمل شدہ کاموں کی تاریخ' },
-        { en: 'Plumbers, electricians, AC and appliance specialists', ur: 'پلمبر، الیکٹریشن، اے سی اور آلات کے ماہرین' },
+        { en: 'Home, car and bike, and electronics repairs', ur: 'گھر، گاڑی اور بائیک، اور الیکٹرانکس کی مرمت' },
       ],
     },
     {
@@ -69,7 +69,7 @@ export function HowItWorksContent() {
         ur: 'کام کا ہر مرحلہ دیکھیں، مکمل کام چیک کریں، نقد ادائیگی کریں اور اپنے کاموں کی تاریخ رکھیں۔',
       },
       details: [
-        { en: 'Real-time job tracking and arrival updates', ur: 'حقیقی وقت میں جاب ٹریکنگ اور آمد کی اپڈیٹس' },
+        { en: 'Step-by-step job updates', ur: 'کام کی قدم بہ قدم اپ ڈیٹس' },
         { en: 'Pay cash once you confirm the job is done', ur: 'کام کی تصدیق کے بعد نقد ادائیگی' },
         { en: 'Your job history in one place', ur: 'آپ کے کاموں کی تاریخ ایک جگہ' },
       ],
@@ -84,7 +84,7 @@ export function HowItWorksContent() {
           <span className="eyebrow">{t('Simple 4-Step Process', 'آسان 4 مرحلوں کا عمل')}</span>
         }
         title={t('How PakFix Works', 'پاک فکس کیسے کام کرتا ہے')}
-        subtitle={t('From problem diagnosis to completed job. We take the guesswork, hassle, and unfair pricing out of repairs.', 'مسئلے کی تشخیص سے کام مکمل ہونے تک۔ ہم مرمت سے اندازہ، جھنجھٹ اور غیر منصفانہ قیمت ختم کر دیتے ہیں۔')}
+        subtitle={t('From describing the problem to a finished job, with a fair price you agree.', 'مسئلہ بیان کرنے سے مکمل کام تک، اس منصفانہ قیمت پر جس پر آپ متفق ہوں۔')}
       />
 
       {/* Main Steps Timeline */}
@@ -134,7 +134,7 @@ export function HowItWorksContent() {
                         </span>
                       </div>
                       <p className="text-sm text-ink-600 leading-relaxed">
-                        {t('Every step is backed by identity verification, automated price guidelines, and real-time support.', 'ہر مرحلہ شناخت کی تصدیق، خودکار قیمت کے رہنما اصولوں اور حقیقی وقت کی معاونت سے مضبوط ہے۔')}
+                        {t('Every step is backed by identity checks, price guides and a support team you can message.', 'ہر قدم کے پیچھے شناخت کی جانچ، قیمت کی رہنمائی اور ایک سپورٹ ٹیم ہے جسے آپ پیغام بھیج سکتے ہیں۔')}
                       </p>
                     </div>
                   </div>
@@ -162,7 +162,7 @@ export function HowItWorksContent() {
             <div className="card-lift bg-surface p-7 rounded-2xl border border-line shadow-xs space-y-3">
               <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-brand-100"><PhoneCall className="h-6 w-6" aria-hidden="true" /></span>
               <h3 className="font-display text-base font-bold text-ink-900">{t('Help When You Need It', 'جب ضرورت ہو مدد')}</h3>
-              <p className="text-sm text-ink-500">{t('Message our support team any time.', 'ہماری سپورٹ ٹیم کو کسی بھی وقت پیغام بھیجیں۔')}</p>
+              <p className="text-sm text-ink-500">{t('Message our support team.', 'ہماری سپورٹ ٹیم کو پیغام بھیجیں۔')}</p>
             </div>
           </div>
 

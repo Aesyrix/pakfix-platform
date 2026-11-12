@@ -67,7 +67,7 @@ export function AiAssistantFeatureSection() {
             <span className="text-gradient-brand">{t('Ask PakFix AI.', 'پاک فکس اے آئی سے پوچھیں۔')}</span>
           </h2>
           <p className="text-sm sm:text-base text-ink-600">
-            {t('Describe the symptoms or upload photos. PakFix AI evaluates safety risks, predicts estimated repair costs in PKR, and connects you to the right local professional.', 'علامات بیان کریں یا تصاویر اپلوڈ کریں۔ پاک فکس اے آئی حفاظتی خطرات جانچتا ہے، روپے میں مرمت کی تخمینی لاگت بتاتا ہے، اور آپ کو صحیح مقامی پروفیشنل سے جوڑتا ہے۔')}
+            {t('Describe the symptoms in English or Roman Urdu. PakFix AI checks for safety risks, suggests the right service and its usual price range, and helps you post the job to verified pros.', 'انگریزی یا رومن اردو میں علامات بیان کریں۔ پاک فکس اے آئی حفاظتی خطرات دیکھتا ہے، درست سروس اور اس کی عام قیمت بتاتا ہے، اور تصدیق شدہ پروفیشنلز کو کام پوسٹ کرنے میں مدد دیتا ہے۔')}
           </p>
         </div>
 
@@ -88,8 +88,8 @@ export function AiAssistantFeatureSection() {
               <Camera className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-ink-900">{t('2. Show It', '٢. دکھائیں')}</h3>
-              <p className="text-xs text-ink-500 mt-0.5">{t('Upload photos or short video clips of the issue.', 'مسئلے کی تصاویر یا مختصر ویڈیو کلپس اپلوڈ کریں۔')}</p>
+              <h3 className="text-sm font-bold text-ink-900">{t('2. Stay Safe', '2. محفوظ رہیں')}</h3>
+              <p className="text-xs text-ink-500 mt-0.5">{t('Get safety steps to follow while you wait for a pro.', 'پروفیشنل کے آنے تک حفاظتی اقدامات جانیں۔')}</p>
             </div>
           </div>
 
@@ -99,7 +99,7 @@ export function AiAssistantFeatureSection() {
             </div>
             <div>
               <h3 className="text-sm font-bold text-ink-900">{t('3. Get Guidance', '٣. رہنمائی حاصل کریں')}</h3>
-              <p className="text-xs text-ink-500 mt-0.5">{t('Receive safety level, PKR cost estimate & matching pro.', 'حفاظتی سطح، روپے میں لاگت کا تخمینہ اور موزوں پروفیشنل حاصل کریں۔')}</p>
+              <p className="text-xs text-ink-500 mt-0.5">{t('See the right service and its usual price range.', 'درست سروس اور اس کی عام قیمت دیکھیں۔')}</p>
             </div>
           </div>
         </div>
@@ -151,7 +151,7 @@ export function AiAssistantFeatureSection() {
               <span className="font-semibold text-ink-900">&quot;{isUr ? current.queryUr : current.query}&quot;</span>
             </div>
             <span className="text-[11px] font-bold px-2 py-1 rounded bg-brand-100 text-brand-700">
-              {t('Verified AI Output', 'تصدیق شدہ اے آئی نتیجہ')}
+              {t('Example AI answer', 'اے آئی جواب کی مثال')}
             </span>
           </div>
 
@@ -185,7 +185,7 @@ export function AiAssistantFeatureSection() {
                 <span className="font-bold text-brand-600">{isUr ? current.proUr : current.pro}</span>
               </div>
               <div className="flex justify-between pt-2 border-t border-line">
-                <span className="text-brand-700 font-bold">{t('Estimated Cost:', 'تخمینی لاگت:')}</span>
+                <span className="text-brand-700 font-bold">{t('Usually:', 'عموماً:')}</span>
                 <span className="font-extrabold text-sm text-brand-700">{current.estimate}</span>
               </div>
             </div>

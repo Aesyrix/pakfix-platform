@@ -8,10 +8,10 @@ import { useT } from '@/components/i18n/LocaleProvider';
 export function AiToProHandoffSection() {
   const t = useT();
   const steps = [
-    { en: '1. AI Diagnosis', ur: '١. اے آئی تشخیص', den: 'Photos & symptoms analyzed automatically', dur: 'تصاویر اور علامات خودکار تجزیہ ہوتی ہیں', icon: Sparkles },
-    { en: '2. Recommended Service', ur: '٢. تجویز کردہ سروس', den: 'Identifies exact technician skill needed', dur: 'مطلوبہ ٹیکنیشن مہارت کی نشاندہی کرتا ہے', icon: ShieldCheck },
-    { en: '3. Request Quotes', ur: '٣. تخمینے طلب کریں', den: 'Diagnosis attached automatically without retyping', dur: 'تشخیص خودکار منسلک، دوبارہ لکھنے کی ضرورت نہیں', icon: FileText },
-    { en: '4. Book Professional', ur: '٤. پروفیشنل بک کریں', den: 'Select verified pro and track arrival', dur: 'تصدیق شدہ پروفیشنل منتخب کریں اور آمد ٹریک کریں', icon: UserCheck },
+    { en: '1. Describe it', ur: '١. مسئلہ بیان کریں', den: 'PakFix AI reads your description and checks for danger', dur: 'پاک فکس اے آئی آپ کی تفصیل پڑھ کر خطرہ دیکھتا ہے', icon: Sparkles },
+    { en: '2. Recommended Service', ur: '٢. تجویز کردہ سروس', den: 'Suggests the service you need', dur: 'آپ کو درکار سروس تجویز کرتا ہے', icon: ShieldCheck },
+    { en: '3. Post your job', ur: '٣. اپنا کام پوسٹ کریں', den: 'Your description comes with you, no retyping', dur: 'آپ کی تفصیل ساتھ جاتی ہے، دوبارہ لکھنے کی ضرورت نہیں', icon: FileText },
+    { en: '4. Choose an offer', ur: '٤. آفر منتخب کریں', den: 'Pick a verified pro and follow the job step by step', dur: 'تصدیق شدہ پروفیشنل منتخب کریں اور کام قدم بہ قدم دیکھیں', icon: UserCheck },
   ];
 
   return (
@@ -24,7 +24,7 @@ export function AiToProHandoffSection() {
             <span className="text-gradient-brand">{t('Zero repetitive typing.', 'دوبارہ لکھنے کی ضرورت نہیں۔')}</span>
           </h2>
           <p className="text-sm text-ink-600">
-            {t('When you diagnose an issue with PakFix AI, your photos, safety details and description carry directly into your pro booking request.', 'جب آپ پاک فکس اے آئی سے مسئلے کی تشخیص کرتے ہیں، آپ کی تصاویر، حفاظتی تفصیلات اور بیان براہِ راست آپ کی پروفیشنل بکنگ درخواست میں منتقل ہو جاتے ہیں۔')}
+            {t('When you ask PakFix AI in the app, your description and the suggested service carry straight into your job post.', 'جب آپ ایپ میں پاک فکس اے آئی سے پوچھتے ہیں تو آپ کی تفصیل اور تجویز کردہ سروس سیدھا آپ کی جاب پوسٹ میں آ جاتی ہے۔')}
           </p>
         </div>
 

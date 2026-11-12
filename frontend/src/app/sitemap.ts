@@ -26,7 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticPaths = [
     '', '/services', '/how-it-works', '/find-a-technician', '/become-a-technician',
-    '/for-service-companies', '/for-property-managers', '/pricing', '/about',
+    '/pricing', '/about',
     '/contact', '/blog', '/faq', '/safety', '/terms-of-service', '/privacy-policy',
     '/refund-policy',
   ];

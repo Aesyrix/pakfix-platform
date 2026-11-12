@@ -29,7 +29,6 @@ const NAV_LINKS: NavLinkItem[] = [
   { href: '/ai', en: 'AI Diagnosis', ur: 'اے آئی تشخیص', highlight: true },
   { href: '/how-it-works', en: 'How It Works', ur: 'یہ کیسے کام کرتا ہے' },
   { href: '/find-a-technician', en: 'Find a Pro', ur: 'پروفیشنل تلاش کریں' },
-  { href: '/home-maintenance', en: 'Home Maintenance', ur: 'گھر کی دیکھ بھال' },
   { href: '/become-a-technician', en: 'For Professionals', ur: 'پروفیشنلز کے لیے' },
   { href: '/blog', en: 'Resources', ur: 'رہنمائی' },
 ];

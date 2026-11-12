@@ -149,9 +149,9 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
       <Section title={t('How booking works', 'بکنگ کیسے کام کرتی ہے')}>
         <ol className="grid gap-5 md:grid-cols-3">
           {[
-            { title: t('Tell us what is wrong', 'بتائیں کیا خراب ہے'), body: t('Describe the problem or send a photo. Dangerous problems are flagged straight away.', 'مسئلہ بیان کریں یا تصویر بھیجیں۔ خطرناک مسائل فوراً نشان زد کیے جاتے ہیں۔') },
+            { title: t('Tell us what is wrong', 'بتائیں کیا خراب ہے'), body: t('Describe the problem in your own words. Dangerous problems are flagged straight away.', 'اپنے الفاظ میں مسئلہ بیان کریں۔ خطرناک مسائل فوراً نشان زد ہو جاتے ہیں۔') },
             { title: t('Choose a verified professional', 'تصدیق شدہ پروفیشنل منتخب کریں'), body: t('Compare ratings, experience and visit fees for professionals who serve your area.', 'اپنے علاقے میں خدمات دینے والے پروفیشنلز کی ریٹنگز، تجربہ اور وزٹ فیس کا موازنہ کریں۔') },
-            { title: t('Agree the price, then the work', 'قیمت طے کریں، پھر کام'), body: t('You approve the quote before any work starts, and the job stays on your property record.', 'کام شروع ہونے سے پہلے آپ کوٹ منظور کرتے ہیں، اور کام آپ کے پراپرٹی ریکارڈ میں محفوظ رہتا ہے۔') },
+            { title: t('Agree the price, then the work', 'قیمت طے کریں، پھر کام'), body: t('You choose an offer before any work starts, and any change in price needs your approval.', 'کام شروع ہونے سے پہلے آپ آفر منتخب کرتے ہیں، اور قیمت میں کسی بھی تبدیلی کے لیے آپ کی منظوری ضروری ہے۔') },
           ].map(({ title, body }, index) => (
             <li key={title} className="card-lift group relative rounded-2xl border border-line bg-surface p-6 shadow-xs">
               <span className="text-gradient-brand block font-display text-5xl font-bold leading-none tracking-[-0.04em] opacity-60 transition-opacity group-hover:opacity-100" aria-hidden="true">
@@ -200,7 +200,7 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
 
       {professionals.length > 0 ? (
         <Section
-          title={t('Top-rated professionals', 'اعلیٰ درجہ بند پروفیشنلز')}
+          title={t('Verified professionals', 'تصدیق شدہ پروفیشنلز')}
           action={
             <Link href={`/find-a-technician?category=${category.slug}`} className="text-sm font-semibold text-brand-600 hover:text-brand-700">
               {t('See all', 'سب دیکھیں')} &rarr;

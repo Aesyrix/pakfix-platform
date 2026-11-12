@@ -24,7 +24,7 @@ export function FinalCtaSection() {
           </h2>
 
           <p className="text-sm sm:text-base text-ink-300 max-w-lg mx-auto">
-            {t('Show PakFix the problem and get an instant AI diagnosis or book a trusted professional today.', 'پاک فکس کو مسئلہ دکھائیں اور فوری اے آئی تشخیص حاصل کریں یا آج ہی قابلِ اعتماد پروفیشنل بک کریں۔')}
+            {t('Tell PakFix the problem for quick AI guidance, or post your job and get offers from verified pros.', 'پاک فکس کو مسئلہ بتائیں اور فوری اے آئی رہنمائی لیں، یا اپنا کام پوسٹ کریں اور تصدیق شدہ پروفیشنلز سے آفرز لیں۔')}
           </p>
 
           {/* Quick Input Bar inside Dark CTA */}

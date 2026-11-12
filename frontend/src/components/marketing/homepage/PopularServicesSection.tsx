@@ -44,7 +44,7 @@ export function PopularServicesSection() {
               {t('Whatever needs fixing, start here.', 'جو بھی ٹھیک کرانا ہو، یہاں سے شروع کریں۔')}
             </h2>
             <p className="text-sm text-ink-600 mt-1">
-              {t('Find the right verified professional for common repairs across Pakistan.', 'پاکستان بھر میں عام مرمت کے لیے صحیح تصدیق شدہ پروفیشنل تلاش کریں۔')}
+              {t('Find the right verified professional for common repairs in Islamabad and Rawalpindi.', 'اسلام آباد اور راولپنڈی میں عام مرمت کے لیے درست تصدیق شدہ پروفیشنل تلاش کریں۔')}
             </p>
           </div>
 
