@@ -67,6 +67,11 @@ class ServiceCategoryController extends Controller
         $original = $category->getOriginal();
         $category->fill($data)->save();
 
+        // Sub-services live in their parent's section.
+        if ($category->wasChanged('section')) {
+            ServiceCategory::where('parent_id', $category->id)->update(['section' => $category->section]);
+        }
+
         $this->published('service_category.updated', $category, $original, "Edited the {$category->name} category");
 
         return ApiResponse::success($this->present($category->load('parent')), 'Category saved.');
@@ -80,6 +85,7 @@ class ServiceCategoryController extends Controller
             'name' => [$required, 'string', 'min:2', 'max:80'],
             'slug' => ['sometimes', 'nullable', 'string', 'max:80', 'alpha_dash', Rule::unique('service_categories', 'slug')->ignore($category?->id)],
             'parent_slug' => ['nullable', 'string', 'exists:service_categories,slug'],
+            'section' => ['nullable', 'string', Rule::in(['home', 'vehicle', 'electronics'])],
             'trade_slug' => [
                 'nullable', 'string', 'max:64', 'alpha_dash',
                 Rule::unique('service_categories', 'trade_slug')->ignore($category?->id),
@@ -117,6 +123,14 @@ class ServiceCategoryController extends Controller
 
         if (array_key_exists('common_problems', $data) && is_array($data['common_problems'])) {
             $data['common_problems'] = array_values(array_filter(array_map('trim', $data['common_problems'])));
+        }
+
+        if (array_key_exists('section', $data)) {
+            $data['section'] ??= 'home';
+        }
+        // A sub-service always sits in its parent's section.
+        if (! empty($data['parent_id'])) {
+            $data['section'] = ServiceCategory::whereKey($data['parent_id'])->value('section') ?? 'home';
         }
 
         unset($data['parent_slug']);
@@ -161,6 +175,7 @@ class ServiceCategoryController extends Controller
             'id' => $category->uuid,
             'name' => $category->name,
             'slug' => $category->slug,
+            'section' => $category->section ?? 'home',
             'parent' => $category->relationLoaded('parent') && $category->parent
                 ? ['name' => $category->parent->name, 'slug' => $category->parent->slug]
                 : null,

@@ -20,6 +20,8 @@ class ServiceCategoryResource extends JsonResource
             'id' => $this->uuid,
             'name' => $this->name,
             'slug' => $this->slug,
+            // home, vehicle or electronics: how the website and the app group the catalogue.
+            'section' => $this->section ?? 'home',
             'description' => $this->description,
             'icon' => $this->icon,
             'color' => $this->color,

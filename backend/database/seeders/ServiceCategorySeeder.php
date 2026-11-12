@@ -21,8 +21,9 @@ use Illuminate\Support\Str;
 class ServiceCategorySeeder extends Seeder
 {
     /**
-     * name, icon, popular, emergency, [typical min, typical max] in rupees,
-     * children, and services.
+     * name, icon, section (home, vehicle or electronics; home when left
+     * out), popular, emergency, [typical min, typical max] in rupees,
+     * children (a name, or an entry of their own), and services.
      */
     private function catalogue(): array
     {
@@ -146,11 +147,13 @@ class ServiceCategorySeeder extends Seeder
                 'name' => 'Cleaning', 'icon' => 'sparkles', 'popular' => true,
                 'range' => [3000, 25000],
                 'description' => 'Routine home and office cleaning.',
-            ],
-            [
-                'name' => 'Deep Cleaning', 'icon' => 'spray-can', 'range' => [8000, 45000],
-                'description' => 'Full-house deep clean including kitchen and bathrooms.',
-                'services' => [['Full home deep clean', 'quote_only', null, 360]],
+                'children' => [
+                    [
+                        'name' => 'Deep Cleaning', 'icon' => 'spray-can', 'range' => [8000, 45000],
+                        'description' => 'Full-house deep clean including kitchen and bathrooms.',
+                        'services' => [['Full home deep clean', 'quote_only', null, 360]],
+                    ],
+                ],
             ],
             [
                 'name' => 'Bathroom Repair', 'icon' => 'shower-head', 'range' => [3000, 60000],
@@ -199,10 +202,12 @@ class ServiceCategorySeeder extends Seeder
             [
                 'name' => 'Construction', 'icon' => 'crane', 'range' => [50000, 2000000],
                 'description' => 'New structures, extensions and major civil work.',
-            ],
-            [
-                'name' => 'Masonry', 'icon' => 'layers', 'range' => [5000, 100000],
-                'description' => 'Brickwork, plastering and concrete repairs.',
+                'children' => [
+                    [
+                        'name' => 'Masonry', 'icon' => 'layers', 'range' => [5000, 100000],
+                        'description' => 'Brickwork, plastering and concrete repairs.',
+                    ],
+                ],
             ],
             [
                 'name' => 'Tiles', 'icon' => 'grid-3x3', 'range' => [8000, 150000],
@@ -215,10 +220,12 @@ class ServiceCategorySeeder extends Seeder
             [
                 'name' => 'Ceiling', 'icon' => 'panel-top', 'range' => [8000, 120000],
                 'description' => 'Ceiling repair, finishing and water-damage restoration.',
-            ],
-            [
-                'name' => 'False Ceiling', 'icon' => 'panels-top-left', 'range' => [15000, 200000],
-                'description' => 'Gypsum and PoP false ceiling design and installation.',
+                'children' => [
+                    [
+                        'name' => 'False Ceiling', 'icon' => 'panels-top-left', 'range' => [15000, 200000],
+                        'description' => 'Gypsum and PoP false ceiling design and installation.',
+                    ],
+                ],
             ],
             [
                 'name' => 'Home Renovation', 'icon' => 'construction', 'range' => [100000, 5000000],
@@ -229,51 +236,95 @@ class ServiceCategorySeeder extends Seeder
                 'emergency' => true, 'range' => [3000, 50000],
                 'description' => 'Urgent problems that cannot wait: burst pipes, power failure, lockouts.',
             ],
+
+            // Car & Bike: the professional comes to wherever the vehicle is.
+            [
+                'name' => 'Roadside Help', 'icon' => 'truck', 'section' => 'vehicle', 'popular' => true,
+                'emergency' => true, 'range' => [1500, 15000],
+                'description' => 'Stuck on the road: dead battery, flat tyre, no fuel, locked out or needing a tow.',
+                'children' => ['Battery Jump-Start', 'Flat Tyre & Puncture', 'Fuel Delivery', 'Car Lockout', 'Towing'],
+                'services' => [
+                    ['Car battery jump-start', 'fixed', 1500, 30],
+                    ['Flat tyre change', 'fixed', 1500, 30],
+                    ['Car towing within the city', 'quote_only', null, 60],
+                ],
+            ],
+            [
+                'name' => 'Car Mechanic', 'icon' => 'car', 'section' => 'vehicle', 'popular' => true,
+                'range' => [2000, 40000],
+                'description' => 'Engine, brakes, suspension, oil changes and tuning, at your home or office.',
+                'children' => ['Engine Check-up', 'Brakes & Suspension', 'Oil Change & Tuning'],
+                'services' => [
+                    ['Car engine check-up', 'visit_fee', 1500, 60],
+                    ['Car oil change at home', 'fixed', 2000, 45],
+                ],
+            ],
+            [
+                'name' => 'Car Electrician', 'icon' => 'car-front', 'section' => 'vehicle',
+                'range' => [1500, 25000],
+                'description' => 'Battery and charging, self-starter, lights, horn and wiring faults.',
+                'children' => ['Battery & Charging', 'Self-Starter Repair', 'Car Lights & Wiring'],
+                'services' => [['Car electrical fault diagnosis', 'visit_fee', 1500, 45]],
+            ],
+            [
+                'name' => 'Car AC', 'icon' => 'snowflake', 'section' => 'vehicle',
+                'range' => [3000, 30000],
+                'description' => 'Car AC not cooling, gas refill, compressor and leak repair.',
+                'children' => ['Car AC Gas Refill', 'Car AC Repair'],
+                'services' => [['Car AC gas refill', 'fixed', 4500, 60]],
+            ],
+            [
+                'name' => 'Car Wash & Detailing', 'icon' => 'droplets', 'section' => 'vehicle',
+                'range' => [1500, 15000],
+                'description' => 'Wash at your doorstep, interior cleaning, polish and wax.',
+                'children' => ['Car Wash at Home', 'Interior Detailing', 'Polish & Wax'],
+                'services' => [
+                    ['Car wash at home', 'fixed', 1500, 45],
+                    ['Car interior detailing', 'fixed', 5000, 150],
+                ],
+            ],
+            [
+                'name' => 'Bike Mechanic', 'icon' => 'bike', 'section' => 'vehicle',
+                'range' => [500, 10000],
+                'description' => 'Motorcycle tuning, punctures, chain, brakes and electrical faults.',
+                'children' => ['Bike Tuning', 'Bike Puncture', 'Bike Electrical'],
+                'services' => [
+                    ['Bike tuning', 'fixed', 800, 45],
+                    ['Bike puncture repair', 'fixed', 500, 20],
+                ],
+            ],
+
+            // Electronics
+            [
+                'name' => 'TV & LED Repair', 'icon' => 'tv', 'section' => 'electronics',
+                'range' => [2000, 30000],
+                'description' => 'LED, LCD and smart TV faults: no picture, no sound, power and board repair, wall mounting.',
+                'children' => ['TV Screen & Panel Repair', 'TV Board Repair', 'TV Wall Mounting'],
+                'services' => [
+                    ['LED TV repair diagnosis', 'visit_fee', 1500, 60],
+                    ['TV wall mounting', 'fixed', 2000, 45],
+                ],
+            ],
+            [
+                'name' => 'Laptop & Computer Repair', 'icon' => 'laptop', 'section' => 'electronics',
+                'range' => [1500, 40000],
+                'description' => 'Slow or dead laptops and PCs, screens, keyboards, Windows, viruses and printers.',
+                'children' => ['Laptop Repair', 'Desktop & Printer Repair', 'Software & Virus Removal'],
+                'services' => [['Laptop or PC diagnosis', 'visit_fee', 1500, 60]],
+            ],
+            [
+                'name' => 'Mobile Phone Repair', 'icon' => 'smartphone', 'section' => 'electronics',
+                'range' => [1500, 40000],
+                'description' => 'Broken screens, batteries, charging ports and water damage, repaired at your place or picked up.',
+                'children' => ['Phone Screen Replacement', 'Phone Battery Replacement', 'Charging Port Repair'],
+                'services' => [['Phone repair diagnosis', 'visit_fee', 1000, 30]],
+            ],
         ];
     }
 
     public function run(): void
     {
-        $sort = 0;
-
-        foreach ($this->catalogue() as $entry) {
-            $category = $this->upsertCategory($entry, null, $sort++);
-
-            $childSort = 0;
-            foreach ($entry['children'] ?? [] as $childName) {
-                $this->upsertCategory(
-                    [
-                        'name' => $childName,
-                        'icon' => $entry['icon'] ?? null,
-                        'emergency' => $entry['emergency'] ?? false,
-                        'range' => $entry['range'] ?? null,
-                    ],
-                    $category->id,
-                    $childSort++
-                );
-            }
-
-            $serviceSort = 0;
-            foreach ($entry['services'] ?? [] as [$name, $pricing, $price, $minutes]) {
-                Service::updateOrCreate(
-                    ['slug' => Str::slug($name)],
-                    [
-                        'service_category_id' => $category->id,
-                        'name' => $name,
-                        'pricing_model' => $pricing,
-                        'base_price_minor' => $price === null ? null : $price * 100,
-                        'visit_fee_minor' => $pricing === Service::PRICING_VISIT_FEE
-                            ? $price * 100
-                            : null,
-                        'estimated_minutes' => $minutes,
-                        'is_emergency' => $entry['emergency'] ?? false,
-                        'is_active' => true,
-                        'sort_order' => $serviceSort++,
-                        'seo_title' => sprintf('%s in Pakistan | PakFix', $name),
-                    ]
-                );
-            }
-        }
+        $this->sync(onlyMissing: false);
 
         $this->command?->info(sprintf(
             'Seeded %d categories (%d top level) and %d services.',
@@ -281,6 +332,90 @@ class ServiceCategorySeeder extends Seeder
             ServiceCategory::whereNull('parent_id')->count(),
             Service::count()
         ));
+    }
+
+    /**
+     * For a live database: adds the categories, sub-services and services
+     * that do not exist yet, sets every listed category's section, and folds
+     * a former top-level category under its new parent. Anything an admin
+     * has edited (names, prices, descriptions, order) is left alone.
+     */
+    public function addMissing(): void
+    {
+        $this->sync(onlyMissing: true);
+    }
+
+    private function sync(bool $onlyMissing): void
+    {
+        $sort = 0;
+
+        foreach ($this->catalogue() as $entry) {
+            $entry['section'] ??= 'home';
+            $category = $this->category($entry, null, $sort++, $onlyMissing);
+            $this->services($entry, $category, $onlyMissing);
+
+            $childSort = 0;
+            foreach ($entry['children'] ?? [] as $child) {
+                $child = is_string($child) ? ['name' => $child] : $child;
+                // A sub-service inherits what it does not say for itself.
+                $child += [
+                    'icon' => $entry['icon'] ?? null,
+                    'emergency' => $entry['emergency'] ?? false,
+                    'range' => $entry['range'] ?? null,
+                    'section' => $entry['section'],
+                ];
+                $childCategory = $this->category($child, $category->id, $childSort++, $onlyMissing);
+                $this->services($child, $childCategory, $onlyMissing);
+            }
+        }
+    }
+
+    private function category(array $entry, ?int $parentId, int $sort, bool $onlyMissing): ServiceCategory
+    {
+        // Includes categories an admin deleted: those stay deleted.
+        $existing = $onlyMissing
+            ? ServiceCategory::withTrashed()->where('slug', Str::slug($entry['name']))->first()
+            : null;
+
+        if ($existing !== null) {
+            $changes = ['section' => $entry['section']];
+            if ($parentId !== null && $existing->parent_id === null) {
+                $changes['parent_id'] = $parentId;
+            }
+            $existing->forceFill($changes)->save();
+
+            return $existing;
+        }
+
+        return $this->upsertCategory($entry, $parentId, $sort);
+    }
+
+    private function services(array $entry, ServiceCategory $category, bool $onlyMissing): void
+    {
+        $serviceSort = 0;
+        foreach ($entry['services'] ?? [] as [$name, $pricing, $price, $minutes]) {
+            $sort = $serviceSort++;
+            if ($onlyMissing && Service::withTrashed()->where('slug', Str::slug($name))->exists()) {
+                continue;
+            }
+            Service::updateOrCreate(
+                ['slug' => Str::slug($name)],
+                [
+                    'service_category_id' => $category->id,
+                    'name' => $name,
+                    'pricing_model' => $pricing,
+                    'base_price_minor' => $price === null ? null : $price * 100,
+                    'visit_fee_minor' => $pricing === Service::PRICING_VISIT_FEE
+                        ? $price * 100
+                        : null,
+                    'estimated_minutes' => $minutes,
+                    'is_emergency' => $entry['emergency'] ?? false,
+                    'is_active' => true,
+                    'sort_order' => $sort,
+                    'seo_title' => sprintf('%s in Pakistan | PakFix', $name),
+                ]
+            );
+        }
     }
 
     private function upsertCategory(array $entry, ?int $parentId, int $sort): ServiceCategory
@@ -292,6 +427,7 @@ class ServiceCategorySeeder extends Seeder
             [
                 'parent_id' => $parentId,
                 'name' => $entry['name'],
+                'section' => $entry['section'] ?? 'home',
                 'description' => $entry['description'] ?? null,
                 'icon' => $entry['icon'] ?? null,
                 'is_emergency' => $entry['emergency'] ?? false,

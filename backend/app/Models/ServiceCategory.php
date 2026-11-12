@@ -24,7 +24,7 @@ class ServiceCategory extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'parent_id', 'name', 'slug', 'trade_slug', 'trade_name', 'description',
+        'parent_id', 'section', 'name', 'slug', 'trade_slug', 'trade_name', 'description',
         'common_problems', 'icon', 'image_path', 'color',
         'is_emergency', 'is_popular', 'is_active', 'sort_order',
         'typical_min_minor', 'typical_max_minor', 'seo_title', 'seo_description',

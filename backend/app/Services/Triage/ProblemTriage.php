@@ -178,7 +178,21 @@ class ProblemTriage
         'tiles' => ['tile', 'tiles', 'grout'],
         'glass-work' => ['glass', 'mirror', 'window glass'],
         'gardening' => ['garden', 'lawn', 'plants', 'grass'],
+        // Car & Bike
+        'roadside-help' => ['jump start', 'jumpstart', 'car battery', 'flat tyre', 'flat tire', 'puncture', 'tyre', 'tire', 'tow', 'towing', 'car breakdown', 'car broke down', 'car not starting', 'car won t start', 'car wont start', 'out of fuel', 'out of petrol', 'locked out of car', 'keys locked in car', 'stuck on road'],
+        'car-mechanic' => ['car mechanic', 'mechanic', 'car engine', 'brake', 'brakes', 'suspension', 'oil change', 'clutch', 'gearbox', 'radiator', 'car tuning', 'car service'],
+        'car-electrician' => ['car electrician', 'self starter', 'self-starter', 'alternator', 'headlight', 'car lights', 'car wiring', 'horn', 'dashboard light'],
+        'car-ac' => ['car ac', 'car aircon', 'car air conditioner', 'car ac gas', 'car cooling'],
+        'car-wash-detailing' => ['car wash', 'wash my car', 'car detailing', 'detailing', 'car polish', 'car wax', 'car interior', 'car cleaning'],
+        'bike-mechanic' => ['bike', 'motorcycle', 'motorbike', 'motor cycle', 'bike puncture', 'bike tuning', 'cd 70', 'cd70', 'honda 125'],
+        // Electronics
+        'tv-led-repair' => ['tv', 'led tv', 'lcd', 'television', 'smart tv', 'tv screen', 'no picture', 'tv wall mount'],
+        'laptop-computer-repair' => ['laptop', 'computer', 'pc', 'desktop', 'printer', 'virus', 'keyboard'],
+        'mobile-phone-repair' => ['mobile', 'phone', 'smartphone', 'iphone', 'cracked screen', 'screen broken', 'broken screen', 'charging port'],
     ];
+
+    /** Words that say the problem is with a vehicle, not the house. */
+    private const VEHICLE_WORDS = ['car', 'gari', 'gaari', 'vehicle', 'bike', 'motorcycle', 'motorbike', 'suzuki', 'corolla', 'civic', 'mehran', 'alto', 'cultus'];
 
     /**
      * @return array{
@@ -288,8 +302,14 @@ class ProblemTriage
             ->get()
             ->keyBy('slug');
 
+        // "Car AC not cooling" is about the car: when a vehicle is named and a
+        // Car & Bike category matched, the home ones (AC, electrical, locks) drop out.
+        $aboutVehicle = collect(self::VEHICLE_WORDS)->contains(fn (string $word) => $this->contains($text, $word))
+            && $categories->contains(fn (ServiceCategory $c) => $c->section === 'vehicle');
+
         return collect($scores)
             ->filter(fn ($_, string $slug) => $categories->has($slug))
+            ->filter(fn ($_, string $slug) => ! $aboutVehicle || $categories[$slug]->section === 'vehicle')
             ->map(fn (array $entry, string $slug) => [
                 'category' => $categories[$slug],
                 'score' => $entry['score'],

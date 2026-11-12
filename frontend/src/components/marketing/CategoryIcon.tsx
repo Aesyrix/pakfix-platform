@@ -1,5 +1,12 @@
 import {
   Armchair,
+  Bike,
+  Car,
+  CarFront,
+  Laptop,
+  Smartphone,
+  Snowflake,
+  Tv,
   BatteryCharging,
   Brush,
   Bug,
@@ -86,6 +93,16 @@ const ICONS: Record<string, LucideIcon> = {
   'panels-top-left': PanelsTopLeft,
   construction: Construction,
   siren: Siren,
+  // Car & Bike and Electronics
+  truck: Truck,
+  car: Car,
+  'car-front': CarFront,
+  snowflake: Snowflake,
+  droplets: Droplet,
+  bike: Bike,
+  tv: Tv,
+  laptop: Laptop,
+  smartphone: Smartphone,
 };
 
 export function CategoryIcon({

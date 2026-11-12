@@ -9,6 +9,7 @@ import { PageHeader, Section } from '@/components/marketing/PageHeader';
 import { SiteSearchBox } from '@/components/marketing/SiteSearchBox';
 import { useT } from '@/components/i18n/LocaleProvider';
 import type { ServiceCategory } from '@/lib/api/types';
+import { groupBySection } from '@/lib/catalogue-sections';
 
 export function ServicesContent({ categories }: { categories: ServiceCategory[] }) {
   const t = useT();
@@ -42,45 +43,56 @@ export function ServicesContent({ categories }: { categories: ServiceCategory[] 
         </Section>
       ) : null}
 
-      <Section title={t('All services', 'تمام خدمات')} muted>
-        {categories.length === 0 ? (
+      {categories.length === 0 ? (
+        <Section title={t('All services', 'تمام خدمات')} muted>
           <EmptyState title={t('Services are being updated', 'خدمات اپ ڈیٹ کی جا رہی ہیں')} description={t('The service list could not be loaded. Please try again shortly.', 'خدمات کی فہرست لوڈ نہیں ہو سکی۔ براہِ کرم تھوڑی دیر بعد دوبارہ کوشش کریں۔')} />
-        ) : (
-          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {categories.map((category) => (
-              <li key={category.id}>
-                <Card interactive className="relative h-full">
-                  <CardBody className="flex h-full flex-col gap-3">
-                    <div className="flex items-start gap-3">
-                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[var(--radius-control)] bg-brand-50 text-brand-700">
-                        <CategoryIcon name={category.icon} className="h-5 w-5" />
-                      </span>
-                      <div className="min-w-0">
-                        <h3 className="font-semibold">
-                          <Link href={`/services/${category.slug}`} className="after:absolute after:inset-0 hover:text-brand-700">
-                            {category.name}
-                          </Link>
-                        </h3>
-                        {category.typical_price ? <p className="text-sm text-ink-500">{category.typical_price.display}</p> : null}
-                      </div>
-                    </div>
-                    {category.description ? <p className="flex-1 text-sm text-ink-600">{category.description}</p> : null}
-                    {category.children.length > 0 ? (
-                      <div className="flex flex-wrap gap-1.5">
-                        {category.children.slice(0, 4).map((child) => (
-                          <Badge key={child.id} tone="neutral">
-                            {child.name}
-                          </Badge>
-                        ))}
-                      </div>
-                    ) : null}
-                  </CardBody>
-                </Card>
-              </li>
-            ))}
-          </ul>
-        )}
-      </Section>
+        </Section>
+      ) : (
+        // Home, Car & Bike, Electronics: the same groups as the app.
+        groupBySection(categories).map((group, index) => (
+          <Section key={group.key} title={t(group.en, group.ur)} subtitle={t(group.blurbEn, group.blurbUr)} muted={index % 2 === 0}>
+            <CategoryCards categories={group.categories} />
+          </Section>
+        ))
+      )}
     </>
+  );
+}
+
+function CategoryCards({ categories }: { categories: ServiceCategory[] }) {
+  return (
+    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {categories.map((category) => (
+        <li key={category.id}>
+          <Card interactive className="relative h-full">
+            <CardBody className="flex h-full flex-col gap-3">
+              <div className="flex items-start gap-3">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[var(--radius-control)] bg-brand-50 text-brand-700">
+                  <CategoryIcon name={category.icon} className="h-5 w-5" />
+                </span>
+                <div className="min-w-0">
+                  <h3 className="font-semibold">
+                    <Link href={`/services/${category.slug}`} className="after:absolute after:inset-0 hover:text-brand-700">
+                      {category.name}
+                    </Link>
+                  </h3>
+                  {category.typical_price ? <p className="text-sm text-ink-500">{category.typical_price.display}</p> : null}
+                </div>
+              </div>
+              {category.description ? <p className="flex-1 text-sm text-ink-600">{category.description}</p> : null}
+              {category.children.length > 0 ? (
+                <div className="flex flex-wrap gap-1.5">
+                  {category.children.slice(0, 4).map((child) => (
+                    <Badge key={child.id} tone="neutral">
+                      {child.name}
+                    </Badge>
+                  ))}
+                </div>
+              ) : null}
+            </CardBody>
+          </Card>
+        </li>
+      ))}
+    </ul>
   );
 }

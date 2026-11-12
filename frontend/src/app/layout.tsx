@@ -40,11 +40,13 @@ export const metadata: Metadata = {
     template: '%s | PakFix',
   },
   description:
-    'Upload a photo, describe the problem, or book a verified professional near you. Repair, maintenance and appliance care for homes, offices and businesses across Pakistan.',
+    'Upload a photo, describe the problem, or book a verified professional near you. Repairs for homes, offices, cars, bikes and gadgets across Pakistan, including help on the road.',
   applicationName: 'PakFix',
   keywords: [
     'repair services Pakistan',
     'home repair Pakistan',
+    'car mechanic at home',
+    'roadside assistance Pakistan',
     'office repair Pakistan',
     'plumber Lahore',
     'electrician Karachi',
