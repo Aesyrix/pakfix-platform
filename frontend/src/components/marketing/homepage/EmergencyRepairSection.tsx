@@ -33,7 +33,7 @@ export function EmergencyRepairSection() {
               </h2>
 
               <p className="text-sm text-ink-300 leading-relaxed">
-                {t('Create an urgent service request with photo, location and contact info to dispatch local emergency repair technicians.', 'تصویر، مقام اور رابطہ معلومات کے ساتھ ہنگامی درخواست بنائیں تاکہ مقامی ہنگامی مرمت ٹیکنیشنز بھیجے جا سکیں۔')}
+                {t('Post an urgent request with your location. Verified pros nearby who take emergency jobs are alerted first.', 'اپنے مقام کے ساتھ ہنگامی درخواست پوسٹ کریں۔ قریبی تصدیق شدہ پروفیشنلز جو ہنگامی کام لیتے ہیں انہیں پہلے اطلاع ملتی ہے۔')}
               </p>
 
               <div className="flex flex-wrap items-center gap-3 pt-2">

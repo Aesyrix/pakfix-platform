@@ -13,8 +13,8 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
   const steps = [
     {
       icon: Camera,
-      title: t('Show the problem', 'مسئلہ دکھائیں'),
-      body: t('Describe it or upload a photo. PakFix explains what is likely wrong.', 'بیان کریں یا تصویر اپلوڈ کریں۔ پاک فکس بتاتا ہے کہ ممکنہ مسئلہ کیا ہے۔'),
+      title: t('Tell us the problem', 'مسئلہ بتائیں'),
+      body: t('Describe it in your own words. PakFix explains what is likely wrong.', 'اپنے الفاظ میں بیان کریں۔ پاک فکس بتاتا ہے کہ مسئلہ کیا ہو سکتا ہے۔'),
     },
     {
       icon: Users,

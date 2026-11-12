@@ -25,8 +25,8 @@ export function SafetyContent() {
     {
       title: { en: '3. Upfront Price Transparency', ur: '3. پیشگی قیمت کی شفافیت' },
       desc: {
-        en: 'Technicians confirm labor & material estimates prior to starting work to eliminate disputes.',
-        ur: 'ٹیکنیشن کام شروع کرنے سے پہلے مزدوری اور سامان کا تخمینہ تصدیق کرتے ہیں تاکہ تنازعات ختم ہوں۔',
+        en: 'Pros send their price before any work starts, and any change needs your approval.',
+        ur: 'پروفیشنلز کام شروع ہونے سے پہلے اپنی قیمت بھیجتے ہیں، اور کسی بھی تبدیلی کے لیے آپ کی منظوری ضروری ہے۔',
       },
     },
     {

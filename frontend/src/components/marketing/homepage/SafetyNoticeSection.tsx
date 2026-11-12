@@ -29,7 +29,7 @@ export function SafetyNoticeSection() {
                 {t('Some repairs should', 'کچھ مرمتیں')} <span className="text-danger-600">{t('never be DIY.', 'ہرگز خود نہ کریں۔')}</span>
               </h2>
               <p className="text-xs sm:text-sm text-ink-600 leading-relaxed">
-                {t('PakFix AI strictly classifies high-hazard situations as High Risk and instantly connects you with licensed professionals to protect your people and property.', 'پاک فکس اے آئی شدید خطرے والے حالات کو ہائی رسک قرار دیتا ہے اور آپ کے لوگوں اور پراپرٹی کی حفاظت کے لیے فوراً لائسنس یافتہ پروفیشنلز سے جوڑ دیتا ہے۔')}
+                {t('PakFix AI marks dangerous situations as High Risk, tells you what to do first, and points you to a verified professional.', 'پاک فکس اے آئی خطرناک صورتحال کو زیادہ خطرہ قرار دیتا ہے، بتاتا ہے کہ پہلے کیا کریں، اور تصدیق شدہ پروفیشنل کی طرف رہنمائی کرتا ہے۔')}
               </p>
               <div className="pt-2">
                 <Link

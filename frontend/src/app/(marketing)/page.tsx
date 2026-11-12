@@ -9,13 +9,9 @@ import { QuickBookingFormSection } from '@/components/marketing/homepage/QuickBo
 import { FindProfessionalsSection } from '@/components/marketing/homepage/FindProfessionalsSection';
 import { QuoteComparisonSection } from '@/components/marketing/homepage/QuoteComparisonSection';
 import { EmergencyRepairSection } from '@/components/marketing/homepage/EmergencyRepairSection';
-import { HomeMaintenanceSection } from '@/components/marketing/homepage/HomeMaintenanceSection';
-import { SmartRemindersSection } from '@/components/marketing/homepage/SmartRemindersSection';
-import { CustomerDashboardPreviewSection } from '@/components/marketing/homepage/CustomerDashboardPreviewSection';
 import { AiToProHandoffSection } from '@/components/marketing/homepage/AiToProHandoffSection';
 import { CustomerReviewsSection } from '@/components/marketing/homepage/CustomerReviewsSection';
 import { CitiesSection } from '@/components/marketing/homepage/CitiesSection';
-import { CostEstimatorSection } from '@/components/marketing/homepage/CostEstimatorSection';
 import { ForProfessionalsSection } from '@/components/marketing/homepage/ForProfessionalsSection';
 import { MobilePwaSection } from '@/components/marketing/homepage/MobilePwaSection';
 import { HomeGuidesSection } from '@/components/marketing/homepage/HomeGuidesSection';
@@ -75,15 +71,6 @@ export default function HomePage() {
       {/* Section 11: Emergency Repair */}
       <EmergencyRepairSection />
 
-      {/* Section 12: Home Maintenance & Property Assets */}
-      <HomeMaintenanceSection />
-
-      {/* Section 13: Smart Reminders */}
-      <SmartRemindersSection />
-
-      {/* Section 14: Customer Dashboard Preview */}
-      <CustomerDashboardPreviewSection />
-
       {/* Section 15: AI-to-Professional Handoff */}
       <AiToProHandoffSection />
 
@@ -92,9 +79,6 @@ export default function HomePage() {
 
       {/* Section 17: Cities */}
       <CitiesSection />
-
-      {/* Section 18: Cost Estimator */}
-      <CostEstimatorSection />
 
       {/* Section 19: For Professionals & Companies */}
       <ForProfessionalsSection />

@@ -79,8 +79,7 @@ export function SiteFooter({ popularCategories }: SiteFooterProps) {
               <li><Link href="/ai" className="inline-block transition-all hover:translate-x-0.5 hover:text-white rtl:hover:-translate-x-0.5">{t('AI Assistant', 'اے آئی معاون')}</Link></li>
               <li><Link href="/how-it-works" className="inline-block transition-all hover:translate-x-0.5 hover:text-white rtl:hover:-translate-x-0.5">{t('How It Works', 'یہ کیسے کام کرتا ہے')}</Link></li>
               <li><Link href="/find-a-technician" className="inline-block transition-all hover:translate-x-0.5 hover:text-white rtl:hover:-translate-x-0.5">{t('Find a Pro', 'پروفیشنل تلاش کریں')}</Link></li>
-              <li><Link href="/home-maintenance" className="inline-block transition-all hover:translate-x-0.5 hover:text-white rtl:hover:-translate-x-0.5">{t('Home Maintenance', 'گھر کی دیکھ بھال')}</Link></li>
-              <li><Link href="/pricing" className="inline-block transition-all hover:translate-x-0.5 hover:text-white rtl:hover:-translate-x-0.5">{t('Pricing & Estimates', 'قیمتیں اور اندازے')}</Link></li>
+              <li><Link href="/pricing" className="inline-block transition-all hover:translate-x-0.5 hover:text-white rtl:hover:-translate-x-0.5">{t('How Pricing Works', 'قیمتیں کیسے طے ہوتی ہیں')}</Link></li>
             </ul>
           </div>
 
@@ -91,7 +90,6 @@ export function SiteFooter({ popularCategories }: SiteFooterProps) {
             </h3>
             <ul className="space-y-2.5 text-sm text-ink-400">
               <li><Link href="/become-a-technician" className="inline-block transition-all hover:translate-x-0.5 hover:text-white rtl:hover:-translate-x-0.5">{t('Become a Pro', 'پروفیشنل بنیں')}</Link></li>
-              <li><Link href="/for-service-companies" className="inline-block transition-all hover:translate-x-0.5 hover:text-white rtl:hover:-translate-x-0.5">{t('Service Companies', 'سروس کمپنیاں')}</Link></li>
               <li><Link href="/login" className="inline-block transition-all hover:translate-x-0.5 hover:text-white rtl:hover:-translate-x-0.5">{t('Pro Portal Login', 'پرو پورٹل لاگ اِن')}</Link></li>
               <li><Link href="/safety" className="inline-block transition-all hover:translate-x-0.5 hover:text-white rtl:hover:-translate-x-0.5">{t('Verification Process', 'تصدیق کا عمل')}</Link></li>
             </ul>
@@ -131,7 +129,7 @@ export function SiteFooter({ popularCategories }: SiteFooterProps) {
           <div className="flex items-center gap-1 text-ink-400">
             <span>{t('Made with', 'بنایا گیا')}</span>
             <Heart className="h-3 w-3 text-danger-500 fill-danger-500" />
-            <span>{t('for homes and businesses across Pakistan.', 'پاکستان بھر کے گھروں اور کاروباروں کے لیے۔')}</span>
+            <span>{t('for homes, cars and gadgets in Pakistan.', 'پاکستان میں گھروں، گاڑیوں اور آلات کے لیے۔')}</span>
           </div>
         </div>
       </Container>

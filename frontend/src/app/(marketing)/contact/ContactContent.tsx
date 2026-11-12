@@ -35,7 +35,7 @@ export function ContactContent() {
       <PageHeader
         breadcrumbs={[{ name: t('Home', 'ہوم'), href: '/' }, { name: t('Contact Us', 'ہم سے رابطہ') }]}
         title={t('We are here to help', 'ہم مدد کے لیے حاضر ہیں')}
-        subtitle={t('Have a question about a booking, service price, or AI diagnosis? Reach out to our team anytime.', 'بکنگ، سروس قیمت یا اے آئی تشخیص کے بارے میں کوئی سوال ہے؟ کسی بھی وقت ہماری ٹیم سے رابطہ کریں۔')}
+        subtitle={t('Have a question about a job, an offer or PakFix AI? Send us a message.', 'کسی کام، آفر یا پاک فکس اے آئی کے بارے میں سوال ہے؟ ہمیں پیغام بھیجیں۔')}
       />
 
       <section className="py-16 sm:py-24 bg-section-glow">
@@ -118,7 +118,7 @@ export function ContactContent() {
                     <option value="Booking Question">{t('Booking & Service Inquiry', 'بکنگ اور سروس استفسار')}</option>
                     <option value="AI Diagnosis Help">{t('AI Diagnosis Assistance', 'اے آئی تشخیص معاونت')}</option>
                     <option value="Pro Onboarding">{t('Technician Onboarding', 'ٹیکنیشن آن بورڈنگ')}</option>
-                    <option value="Corporate Partnership">{t('Corporate & B2B Partnership', 'کارپوریٹ اور B2B شراکت')}</option>
+                    <option value="Corporate Partnership">{t('Partnership or something else', 'شراکت یا کچھ اور')}</option>
                   </select>
                   <ChevronDown aria-hidden="true" className="pointer-events-none absolute end-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400" />
                 </Field>

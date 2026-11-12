@@ -5,10 +5,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import {
   Sparkles,
-  Camera,
-  Upload,
-  Video,
-  Mic,
   ArrowRight,
   ShieldCheck,
   CheckCircle2,
@@ -24,7 +20,6 @@ import { HERO_IMAGE } from '@/lib/images';
 export function HeroSection() {
   const t = useT();
   const [problemText, setProblemText] = useState('');
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const quickExamples = [
     { en: 'Tap is leaking in bathroom', ur: 'باتھ روم میں نل سے پانی ٹپک رہا ہے' },
@@ -35,12 +30,6 @@ export function HeroSection() {
 
   const handleExampleClick = (example: string) => {
     setProblemText(example);
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setSelectedFile(e.target.files[0]);
-    }
   };
 
   return (
@@ -64,15 +53,15 @@ export function HeroSection() {
 
             {/* Main Heading */}
             <h1 className="anim-rise text-4xl sm:text-5xl lg:text-[3.3rem] font-bold text-white tracking-[-0.025em] leading-[1.06]" style={{ '--d': '90ms' } as React.CSSProperties}>
-              {t('Show the Problem.', 'مسئلہ دکھائیں۔')}<br />
+              {t('Tell Us the Problem.', 'مسئلہ بتائیں۔')}<br />
               <span className="text-gradient-on-dark">{t('PakFix Helps You Fix It.', 'پاک فکس اسے ٹھیک کرنے میں مدد کرتا ہے۔')}</span>
             </h1>
 
             {/* Subheading */}
             <p className="anim-rise text-base sm:text-lg text-ink-300 leading-relaxed max-w-xl" style={{ '--d': '180ms' } as React.CSSProperties}>
               {t(
-                'Describe the issue, upload a photo or video, and PakFix can help identify the problem and connect you with a trusted local professional.',
-                'مسئلہ بیان کریں، تصویر یا ویڈیو اپلوڈ کریں، اور پاک فکس مسئلے کی نشاندہی کر کے آپ کو قابلِ اعتماد مقامی پروفیشنل سے جوڑنے میں مدد کرتا ہے۔'
+                'Describe the issue in your own words. PakFix AI suggests what it could be and what to do safely, then verified pros near you send offers.',
+                'مسئلہ اپنے الفاظ میں بیان کریں۔ پاک فکس اے آئی بتاتا ہے کہ مسئلہ کیا ہو سکتا ہے اور محفوظ طریقے سے کیا کریں، پھر قریبی تصدیق شدہ پروفیشنلز آفرز بھیجتے ہیں۔'
               )}
             </p>
 
@@ -98,52 +87,8 @@ export function HeroSection() {
                 />
               </div>
 
-              {/* File Attachment Pill Preview */}
-              {selectedFile ? (
-                <div className="flex items-center justify-between bg-brand-100 px-3 py-1.5 rounded-lg text-xs text-brand-700">
-                  <span className="truncate max-w-[200px] font-medium">{t('Attached:', 'منسلک:')} {selectedFile.name}</span>
-                  <button
-                    type="button"
-                    onClick={() => setSelectedFile(null)}
-                    className="text-danger-700 font-bold hover:underline cursor-pointer"
-                  >
-                    {t('Remove', 'ہٹائیں')}
-                  </button>
-                </div>
-              ) : null}
-
               {/* Input Action Bar */}
-              <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
-                {/* Media Actions */}
-                <div className="flex items-center gap-2">
-                  <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-surface-muted border border-line text-xs font-semibold text-ink-600 hover:bg-brand-100 hover:text-brand-700 transition-colors cursor-pointer">
-                    <Camera className="h-3.5 w-3.5 text-brand-600" />
-                    <span>{t('Camera', 'کیمرہ')}</span>
-                    <input type="file" accept="image/*" capture="environment" onChange={handleFileChange} className="hidden" />
-                  </label>
-
-                  <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-surface-muted border border-line text-xs font-semibold text-ink-600 hover:bg-brand-100 hover:text-brand-700 transition-colors cursor-pointer">
-                    <Upload className="h-3.5 w-3.5 text-brand-600" />
-                    <span>{t('Upload Photo', 'تصویر اپلوڈ کریں')}</span>
-                    <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
-                  </label>
-
-                  <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-surface-muted border border-line text-xs font-semibold text-ink-600 hover:bg-brand-100 hover:text-brand-700 transition-colors cursor-pointer hidden sm:inline-flex">
-                    <Video className="h-3.5 w-3.5 text-accent-600" />
-                    <span>{t('Upload Video', 'ویڈیو اپلوڈ کریں')}</span>
-                    <input type="file" accept="video/*" onChange={handleFileChange} className="hidden" />
-                  </label>
-
-                  <button
-                    type="button"
-                    onClick={() => setProblemText((prev) => prev + t(' [Voice note recorded]', ' [وائس نوٹ ریکارڈ ہوا]'))}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-surface-muted border border-line text-xs font-semibold text-ink-600 hover:bg-brand-100 hover:text-brand-700 transition-colors cursor-pointer hidden sm:inline-flex"
-                  >
-                    <Mic className="h-3.5 w-3.5 text-brand-600" />
-                    <span>{t('Voice', 'آواز')}</span>
-                  </button>
-                </div>
-
+              <div className="flex flex-wrap items-center justify-end gap-3 pt-1">
                 {/* Primary CTA Button */}
                 <Link
                   href={{ pathname: '/ai', query: { text: problemText } }}
@@ -197,7 +142,7 @@ export function HeroSection() {
                   unoptimized
                 />
                 <div className="absolute top-2 right-2 bg-black/70 text-white text-[10px] font-bold px-2 py-1 rounded backdrop-blur-xs">
-                  {t('Photo Analyzed', 'تصویر کا تجزیہ ہو گیا')}
+                  {t('Problem checked', 'مسئلہ چیک ہو گیا')}
                 </div>
               </div>
 
@@ -221,7 +166,7 @@ export function HeroSection() {
                 </div>
 
                 <div className="flex items-center justify-between p-2 rounded-lg bg-brand-100">
-                  <span className="text-brand-700 font-semibold">{t('Estimated Repair:', 'تخمینی مرمت:')}</span>
+                  <span className="text-brand-700 font-semibold">{t('Usually:', 'عموماً:')}</span>
                   <span className="font-extrabold text-brand-700 text-sm">PKR 1,500 – 3,000</span>
                 </div>
               </div>
@@ -238,7 +183,7 @@ export function HeroSection() {
                   href="/find-a-technician"
                   className="inline-flex items-center justify-center text-xs font-bold py-2.5 rounded-xl bg-brand-solid text-white hover:bg-brand-solid-hover transition-colors shadow-xs"
                 >
-                  {t('Book Plumber', 'پلمبر بک کریں')}
+                  {t('Get offers', 'آفرز لیں')}
                 </Link>
               </div>
 

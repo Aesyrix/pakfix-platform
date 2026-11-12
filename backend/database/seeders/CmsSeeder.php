@@ -94,14 +94,6 @@ class CmsSeeder extends Seeder
                 'cta_url' => '/become-a-technician',
             ],
             [
-                'key' => 'home.property_manager_cta',
-                'type' => 'banner',
-                'title' => 'Managing more than one property?',
-                'subtitle' => 'Track maintenance, costs and history across every unit you look after.',
-                'cta_label' => 'PakFix for Property Managers',
-                'cta_url' => '/for-property-managers',
-            ],
-            [
                 'key' => 'home.final_cta',
                 'type' => 'hero',
                 'title' => 'Something broken at home?',
@@ -148,14 +140,13 @@ class CmsSeeder extends Seeder
     private function seedFaqs(): void
     {
         $faqs = [
-            ['How does the AI diagnosis work?', 'You describe the problem or send a photo. PakFix returns the likely cause, how urgent it is, a realistic cost range and the kind of professional you need. It is guidance, not a guarantee -- the professional confirms on site.', 'general'],
-            ['Is PakFix free to use?', 'Creating an account, asking the assistant and requesting quotes are free. You only pay for the work you agree to.', 'general'],
-            ['How are professionals verified?', 'Every professional submits identity documents and, where relevant, trade certificates. A member of the PakFix team reviews each one by hand before the profile goes live.', 'safety'],
-            ['What if I am not happy with the work?', 'Raise a dispute from the booking within the platform. Support reviews the evidence from both sides and can order a partial or full refund.', 'safety'],
-            ['How do I pay?', 'Cash on service and bank transfer are available everywhere. Card, JazzCash and Easypaisa are enabled city by city.', 'payments'],
-            ['Which cities does PakFix cover?', 'PakFix is live in Lahore, Karachi, Islamabad, Rawalpindi, Faisalabad, Multan, Peshawar, Quetta, Gujranwala, Sialkot, Hyderabad and Abbottabad, and is expanding.', 'general'],
-            ['Can I use PakFix for a rented home?', 'Yes. Mark the property as rented when you add it, and keep the maintenance history with you.', 'general'],
-            ['What happens in an emergency?', 'Choose Emergency Repair. The request is raised as high priority and sent to professionals who offer emergency call-outs. PakFix does not promise a fixed response time.', 'safety'],
+            ['How does the AI diagnosis work?', 'You describe the problem in your own words, in English or Roman Urdu. PakFix AI suggests the likely cause, how urgent it is, the right service and its usual price range. It is guidance, not a diagnosis: the professional checks on site.', 'general'],
+            ['Is PakFix free to use?', 'For customers, yes: creating an account, asking PakFix AI, posting a job and getting offers are free. You pay the professional, in cash, only for the work you agree to.', 'general'],
+            ['How are professionals verified?', 'Every professional submits their CNIC (front and back) and a selfie. A member of the PakFix team reviews them by hand before the professional can offer on jobs.', 'safety'],
+            ['What if I am not happy with the work?', 'Report a problem from the job in the app. The PakFix team reviews what both sides say and helps resolve it. Payment is in cash between you and the professional, so do not pay until you are satisfied the work is done.', 'safety'],
+            ['How do I pay?', 'In cash, to the professional, after you confirm the work is done. Online payments are not available yet.', 'payments'],
+            ['Which cities does PakFix cover?', 'PakFix is starting in Islamabad and Rawalpindi. More cities will follow.', 'general'],
+            ['What happens in an emergency?', 'Choose Emergency Repair, or Roadside Help for a car or bike. The request goes first to verified professionals nearby who take emergency jobs. PakFix does not promise a fixed response time.', 'safety'],
         ];
 
         foreach ($faqs as $index => [$question, $answer, $group]) {
@@ -173,11 +164,8 @@ class CmsSeeder extends Seeder
 
     private function seedTestimonials(): void
     {
-        $testimonials = [
-            ['Ayesha S.', 'Lahore', 5, 'I sent a photo of the leak under my sink at 9pm and had a plumber booked for the next morning. The price was what the app said it would be.'],
-            ['Bilal A.', 'Karachi', 5, 'The AC diagnosis was right -- low gas, not the compressor. Saved me from being sold a repair I did not need.'],
-            ['Sana M.', 'Islamabad', 4, 'Having every repair on the property record is the part I did not expect to like this much.'],
-        ];
+        // No sample testimonials: only real customers' words may be published.
+        $testimonials = [];
 
         foreach ($testimonials as $index => [$name, $location, $rating, $quote]) {
             Testimonial::firstOrCreate(
