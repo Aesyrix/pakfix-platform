@@ -28,7 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '', '/services', '/how-it-works', '/find-a-technician', '/become-a-technician',
     '/pricing', '/about',
     '/contact', '/blog', '/faq', '/safety', '/terms-of-service', '/privacy-policy',
-    '/refund-policy',
+    '/refund-policy', '/community-guidelines', '/delete-account',
   ];
 
   return [
