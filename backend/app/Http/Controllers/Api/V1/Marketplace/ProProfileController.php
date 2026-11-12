@@ -58,6 +58,23 @@ class ProProfileController extends Controller
         return ApiResponse::success($this->payload($profile), 'Profile saved.');
     }
 
+    /** `PATCH /pro/services` — `category_ids`: the services this professional offers. */
+    public function updateServices(Request $request): JsonResponse
+    {
+        $data = $request->validate([
+            'category_ids' => ['required', 'array', 'min:1', 'max:10'],
+            'category_ids.*' => ['string', Rule::exists('service_categories', 'uuid')->where('is_active', true)],
+        ], [
+            'category_ids.required' => 'Choose at least one trade.',
+            'category_ids.min' => 'Choose at least one trade.',
+            'category_ids.max' => 'Choose up to 10 trades.',
+        ]);
+
+        $profile = $this->onboarding->updateTrades($this->profile($request), $data['category_ids']);
+
+        return ApiResponse::success($this->payload($profile), 'Services saved.');
+    }
+
     /** `GET /pro/availability` — working hours, the Available switch and emergency opt-in. */
     public function availability(Request $request): JsonResponse
     {

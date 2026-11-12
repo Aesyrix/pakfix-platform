@@ -225,6 +225,9 @@ export const accountApi = {
   proNearby: () => apiRequest<MarketplaceRequest[]>('pro/requests'),
   proProfile: () => api.get<ProProfileSummary>('pro/profile'),
   proAvailability: () => api.get<ProAvailability>('pro/availability'),
+  /** The services (trades) the professional offers; allowed at any time, also after verification. */
+  saveProServices: (categoryIds: string[]) =>
+    apiRequest<ProProfileSummary>('pro/services', { method: 'PATCH', body: { category_ids: categoryIds } }),
   saveProAvailability: (
     input: Partial<Pick<ProAvailability, 'work_hours' | 'is_available' | 'offers_emergency_service'>> & {
       work_start?: string;
