@@ -53,7 +53,7 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
                 {t('Emergency call-outs available', 'ہنگامی کال آؤٹ دستیاب')}
               </Badge>
             ) : null}
-            {category.typical_price ? <Badge tone="accent">{t(`Typically ${category.typical_price.display}`, `عموماً ${category.typical_price.display}`)}</Badge> : null}
+            {category.typical_price ? <Badge tone="accent">{t(`Usually ${category.typical_price.display}`, `عموماً ${category.typical_price.display}`)}</Badge> : null}
           </span>
         }
         title={t(`${category.name} services`, `${category.name} خدمات`)}
@@ -104,7 +104,7 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
       ) : null}
 
       {category.services.length > 0 || category.children.length > 0 ? (
-        <Section title={t('Services and prices', 'خدمات اور قیمتیں')} subtitle={t('Fixed prices are what you pay for that job. Everything else is quoted after inspection, before work starts.', 'مقررہ قیمت وہ ہے جو آپ اس کام کے لیے ادا کرتے ہیں۔ باقی سب معائنے کے بعد، کام شروع ہونے سے پہلے کوٹ کیا جاتا ہے۔')} muted>
+        <Section title={t('Common jobs', 'عام کام')} subtitle={t('PakFix does not set prices. Post your job and verified pros send you offers; you choose one, or name your own price.', 'پاک فکس قیمتیں مقرر نہیں کرتا۔ اپنا کام پوسٹ کریں اور تصدیق شدہ پروفیشنلز آپ کو آفرز بھیجیں گے؛ آپ ایک منتخب کریں، یا اپنی قیمت بتائیں۔')} muted>
           {category.services.length > 0 ? (
             <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {category.services.map((service) => (
@@ -114,15 +114,11 @@ export function ServicePageView({ slug: builtSlug, initial }: { slug: string | n
                       <h3 className="font-display text-lg font-bold text-ink-900">{service.name}</h3>
                       {service.description ? <p className="text-sm text-ink-600">{service.description}</p> : null}
                       <div className="mt-auto flex flex-wrap items-end justify-between gap-2 border-t border-line pt-4">
-                        <span className="text-gradient-brand font-display text-3xl font-bold tracking-[-0.02em] tabular-nums">{service.price_display}</span>
                         {service.estimated_minutes ? (
                           <span className="inline-flex items-center gap-1 rounded-full bg-surface-muted px-2.5 py-1 text-xs font-medium text-ink-600">
                             <Clock className="h-3.5 w-3.5" aria-hidden="true" />{t(`About ${formatDuration(service.estimated_minutes)}`, `تقریباً ${formatDuration(service.estimated_minutes)}`)}</span>
                         ) : null}
                       </div>
-                      {service.pricing_model === 'visit_fee' ? (
-                        <p className="text-xs text-ink-500">{t('Inspection visit; repair quoted on site.', 'معائنہ وزٹ؛ مرمت موقع پر کوٹ کی جائے گی۔')}</p>
-                      ) : null}
                   </div>
                 </li>
               ))}

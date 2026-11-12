@@ -8,7 +8,7 @@ import { ServicesContent } from './ServicesContent';
 export const metadata: Metadata = pageMetadata({
   title: 'Repair and Maintenance Services in Pakistan',
   description:
-    'Plumbing, electrical, AC repair, appliances, pest control, painting and more. Browse every PakFix service, with typical prices and verified professionals.',
+    'Plumbing, electrical, AC repair, appliances, pest control, painting and more. Browse every PakFix service. Post your job and verified professionals send you offers.',
   path: '/services',
 });
 

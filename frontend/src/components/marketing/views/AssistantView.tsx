@@ -503,7 +503,7 @@ function TriageOutcome({ result }: { result: TriageResult }) {
                         <p className="font-display text-base font-bold text-ink-900">{match.category.name}</p>
                         <p className="text-sm text-ink-500">
                           {match.confidence === 'high' ? t('Strong match', 'مضبوط مطابقت') : match.confidence === 'medium' ? t('Likely match', 'غالباً مطابقت') : t('Possible match', 'ممکنہ مطابقت')}
-                          {match.category.typical_price ? t(` · typically ${match.category.typical_price.display}`, ` · عام طور پر ${match.category.typical_price.display}`) : ''}
+                          {match.category.typical_price ? t(` · usually ${match.category.typical_price.display}`, ` · عموماً ${match.category.typical_price.display}`) : ''}
                         </p>
                       </div>
                     </div>
