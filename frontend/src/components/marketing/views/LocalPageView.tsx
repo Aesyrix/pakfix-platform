@@ -76,7 +76,7 @@ export function LocalPageView({
                 {t(`${data.average_rating.toFixed(1)} average rating`, `${data.average_rating.toFixed(1)} اوسط ریٹنگ`)}
               </Badge>
             ) : null}
-            {data.category.typical_price ? <Badge tone="neutral">{t(`Typically ${data.category.typical_price.display}`, `عموماً ${data.category.typical_price.display}`)}</Badge> : null}
+            {data.category.typical_price ? <Badge tone="neutral">{t(`Usually ${data.category.typical_price.display}`, `عموماً ${data.category.typical_price.display}`)}</Badge> : null}
           </span>
         }
         title={t(`${tradeName} in ${data.city.name}`, `${data.city.name} میں ${tradeName}`)}
@@ -126,7 +126,7 @@ export function LocalPageView({
       </Section>
 
       {data.category.services.length > 0 ? (
-        <Section title={t('Typical jobs and prices', 'عام کام اور قیمتیں')}>
+        <Section title={t('Common jobs', 'عام کام')}>
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {data.category.services.map((service) => (
               <li key={service.id}>
@@ -134,14 +134,13 @@ export function LocalPageView({
                   <CardBody className="flex h-full flex-col gap-2">
                     <h3 className="font-semibold">{service.name}</h3>
                     {service.description ? <p className="text-sm text-ink-600">{service.description}</p> : null}
-                    <p className="mt-auto pt-3 text-lg font-bold">{service.price_display}</p>
                   </CardBody>
                 </Card>
               </li>
             ))}
           </ul>
           <p className="mt-4 text-sm text-ink-500">
-            {t(`Prices are typical for ${data.city.name}. Your professional confirms the price before starting.`, `${data.city.name} کے لیے قیمتیں عام ہیں۔ آپ کا پروفیشنل شروع کرنے سے پہلے قیمت کی تصدیق کرتا ہے۔`)}
+            {t('Post your job and pros send you offers. You choose, or name your own price.', 'اپنا کام پوسٹ کریں اور پروفیشنلز آپ کو آفرز بھیجیں گے۔ آپ منتخب کریں، یا اپنی قیمت بتائیں۔')}
           </p>
         </Section>
       ) : null}

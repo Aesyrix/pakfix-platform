@@ -7,6 +7,7 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { CategoryIcon } from '@/components/marketing/CategoryIcon';
 import { useT } from '@/components/i18n/LocaleProvider';
 import type { ServiceCategory } from '@/lib/api/types';
+import { priceGuide } from '@/lib/price-guide';
 
 /**
  * The service grid. Rendered entirely from the API, so adding a category in
@@ -48,7 +49,7 @@ export function ServiceCategoryGrid({
               <div className="flex-1">
                 <h3 className="text-sm font-semibold leading-snug">{category.name}</h3>
                 {category.typical_price ? (
-                  <p className="mt-1 text-xs text-ink-500">{category.typical_price.display}</p>
+                  <p className="mt-1 text-xs text-ink-500">{priceGuide(t, category.typical_price)}</p>
                 ) : null}
               </div>
 

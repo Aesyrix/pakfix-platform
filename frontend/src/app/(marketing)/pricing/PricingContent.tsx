@@ -1,48 +1,55 @@
 'use client';
 
-import { Container } from '@/components/ui/Container';
-import { PageHeader } from '@/components/marketing/PageHeader';
-import { CostEstimatorSection } from '@/components/marketing/homepage/CostEstimatorSection';
+import Link from 'next/link';
+import { Banknote, HandCoins, ListChecks, MessageSquareText } from 'lucide-react';
 import { useT } from '@/components/i18n/LocaleProvider';
+import { CategoryIcon } from '@/components/marketing/CategoryIcon';
+import { PageHeader, Section } from '@/components/marketing/PageHeader';
+import { Card, CardBody } from '@/components/ui/Card';
+import type { ServiceCategory } from '@/lib/api/types';
+import { groupBySection } from '@/lib/catalogue-sections';
+import { priceGuide } from '@/lib/price-guide';
 
-export function PricingContent() {
+/**
+ * How prices work on PakFix: offers, not a rate card. The same flow as the
+ * app (post a job, optional own price, pros offer, customer chooses, cash).
+ * Guide ranges come from the catalogue, so they match the service pages.
+ */
+export function PricingContent({ categories }: { categories: ServiceCategory[] }) {
   const t = useT();
-  const priceGrid = [
+
+  const steps = [
     {
-      service: { en: 'Plumbing Repair', ur: 'پلمبنگ مرمت' },
-      visitFee: { en: 'PKR 500 – 1,000', ur: 'روپے 500 – 1,000' },
-      labour: { en: 'PKR 1,000 – 2,500', ur: 'روپے 1,000 – 2,500' },
-      time: { en: '1-2 Hours', ur: '1-2 گھنٹے' },
+      icon: ListChecks,
+      title: t('Post your job', 'اپنا کام پوسٹ کریں'),
+      body: t(
+        'Describe the problem and where you are. If you like, name the price you want to pay.',
+        'مسئلہ اور اپنی جگہ بتائیں۔ چاہیں تو وہ قیمت بھی بتائیں جو آپ دینا چاہتے ہیں۔'
+      ),
     },
     {
-      service: { en: 'Electrical Wiring / DB', ur: 'الیکٹریکل وائرنگ / ڈی بی' },
-      visitFee: { en: 'PKR 500 – 1,000', ur: 'روپے 500 – 1,000' },
-      labour: { en: 'PKR 1,200 – 3,000', ur: 'روپے 1,200 – 3,000' },
-      time: { en: '1-3 Hours', ur: '1-3 گھنٹے' },
+      icon: HandCoins,
+      title: t('Pros send offers', 'پروفیشنلز آفرز بھیجتے ہیں'),
+      body: t(
+        'Verified professionals nearby accept your price or send their own offer.',
+        'قریبی تصدیق شدہ پروفیشنلز آپ کی قیمت قبول کرتے ہیں یا اپنی آفر بھیجتے ہیں۔'
+      ),
     },
     {
-      service: { en: 'AC Master Service', ur: 'اے سی ماسٹر سروس' },
-      visitFee: { en: 'PKR 500 – 1,000', ur: 'روپے 500 – 1,000' },
-      labour: { en: 'PKR 1,500 – 2,500', ur: 'روپے 1,500 – 2,500' },
-      time: { en: '1-2 Hours', ur: '1-2 گھنٹے' },
+      icon: MessageSquareText,
+      title: t('You choose', 'آپ منتخب کرتے ہیں'),
+      body: t(
+        'Compare offers, ratings and reviews, then pick one. If the job turns out bigger, the pro must send a new price and you approve it first.',
+        'آفرز، ریٹنگ اور ریویوز کا موازنہ کریں، پھر ایک منتخب کریں۔ اگر کام بڑا نکلے تو پروفیشنل کو نئی قیمت بھیجنی ہوگی اور پہلے آپ اسے منظور کریں گے۔'
+      ),
     },
     {
-      service: { en: 'AC Gas Refill', ur: 'اے سی گیس ری فل' },
-      visitFee: { en: 'Included', ur: 'شامل' },
-      labour: { en: 'PKR 3,500 – 5,500', ur: 'روپے 3,500 – 5,500' },
-      time: { en: '1 Hour', ur: '1 گھنٹہ' },
-    },
-    {
-      service: { en: 'Appliance Repair', ur: 'آلات کی مرمت' },
-      visitFee: { en: 'PKR 500 – 1,200', ur: 'روپے 500 – 1,200' },
-      labour: { en: 'PKR 1,500 – 4,000', ur: 'روپے 1,500 – 4,000' },
-      time: { en: '1-2 Hours', ur: '1-2 گھنٹے' },
-    },
-    {
-      service: { en: 'Water Motor Pump', ur: 'واٹر موٹر پمپ' },
-      visitFee: { en: 'PKR 500 – 1,000', ur: 'روپے 500 – 1,000' },
-      labour: { en: 'PKR 1,500 – 3,000', ur: 'روپے 1,500 – 3,000' },
-      time: { en: '1-2 Hours', ur: '1-2 گھنٹے' },
+      icon: Banknote,
+      title: t('Pay in cash when done', 'کام مکمل ہونے پر نقد ادائیگی'),
+      body: t(
+        'You pay the professional in cash after the work is finished. PakFix does not charge customers.',
+        'کام مکمل ہونے کے بعد آپ پروفیشنل کو نقد ادائیگی کرتے ہیں۔ پاک فکس کسٹمرز سے کوئی فیس نہیں لیتا۔'
+      ),
     },
   ];
 
@@ -50,46 +57,65 @@ export function PricingContent() {
     <>
       <PageHeader
         breadcrumbs={[{ name: t('Home', 'ہوم'), href: '/' }, { name: t('Pricing', 'قیمتیں') }]}
-        title={t('Transparent Market Pricing', 'شفاف مارکیٹ قیمتیں')}
-        subtitle={t('Upfront market price ranges for labor and inspection. Know what to expect before booking.', 'مزدوری اور معائنے کے لیے پیشگی مارکیٹ قیمت کی حدود۔ بکنگ سے پہلے جانیں کیا توقع رکھنی ہے۔')}
+        title={t('How pricing works', 'قیمتیں کیسے طے ہوتی ہیں')}
+        subtitle={t(
+          'PakFix does not set prices. Professionals send offers for your job and you choose, or name your own price.',
+          'پاک فکس قیمتیں مقرر نہیں کرتا۔ پروفیشنلز آپ کے کام کے لیے آفرز بھیجتے ہیں اور آپ منتخب کرتے ہیں، یا اپنی قیمت بتاتے ہیں۔'
+        )}
       />
 
-      <section className="py-12 sm:py-20 bg-surface">
-        <Container>
-          <div className="max-w-4xl mx-auto space-y-12">
-            {/* Price Table Card */}
-            <div className="bg-surface rounded-3xl border border-line p-6 sm:p-8 shadow-lifted space-y-6">
-              <h2 className="text-xl font-extrabold text-ink-900">{t('Standard Service Rate Card (PKR)', 'معیاری سروس ریٹ کارڈ (روپے)')}</h2>
+      <Section title={t('Four steps', 'چار مراحل')}>
+        <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {steps.map((step, index) => (
+            <li key={step.title}>
+              <Card className="h-full">
+                <CardBody className="flex h-full flex-col gap-2">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-control)] bg-brand-50 text-brand-700">
+                    <step.icon className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                  <h3 className="font-semibold">
+                    {index + 1}. {step.title}
+                  </h3>
+                  <p className="text-sm text-ink-600">{step.body}</p>
+                </CardBody>
+              </Card>
+            </li>
+          ))}
+        </ol>
+      </Section>
 
-              <div className="overflow-x-auto">
-                <table className="w-full text-start text-xs sm:text-sm">
-                  <thead>
-                    <tr className="border-b border-line text-ink-500 uppercase tracking-wider font-bold">
-                      <th className="py-3 px-4 text-start">{t('Service', 'سروس')}</th>
-                      <th className="py-3 px-4 text-start">{t('Inspection / Visit Fee', 'معائنہ / وزٹ فیس')}</th>
-                      <th className="py-3 px-4 text-start">{t('Standard Labour Range', 'معیاری مزدوری کی حد')}</th>
-                      <th className="py-3 px-4 text-start">{t('Est. Duration', 'تخمینہ دورانیہ')}</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-line font-medium text-ink-900">
-                    {priceGrid.map((row) => (
-                      <tr key={row.service.en} className="hover:bg-surface transition-colors">
-                        <td className="py-3.5 px-4 font-bold text-brand-600">{t(row.service.en, row.service.ur)}</td>
-                        <td className="py-3.5 px-4">{t(row.visitFee.en, row.visitFee.ur)}</td>
-                        <td className="py-3.5 px-4 font-bold">{t(row.labour.en, row.labour.ur)}</td>
-                        <td className="py-3.5 px-4 text-ink-500">{t(row.time.en, row.time.ur)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+      {categories.some((c) => c.typical_price) ? (
+        <Section
+          title={t('What jobs usually cost', 'کام عموماً کتنے کے ہوتے ہیں')}
+          subtitle={t(
+            'A guide to help you name a fair price. Your job may cost more or less; the offer you accept is the price.',
+            'منصفانہ قیمت بتانے میں مدد کے لیے رہنمائی۔ آپ کا کام اس سے کم یا زیادہ کا ہو سکتا ہے؛ جو آفر آپ قبول کریں وہی قیمت ہے۔'
+          )}
+          muted
+        >
+          <div className="flex flex-col gap-8">
+            {groupBySection(categories.filter((c) => c.typical_price)).map((group) => (
+              <div key={group.key}>
+                <h3 className="mb-3 font-display text-base font-bold text-ink-900">{t(group.en, group.ur)}</h3>
+                <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                  {group.categories.map((c) => (
+                    <li key={c.id}>
+                      <Link
+                        href={`/services/${c.slug}`}
+                        className="flex items-center gap-3 rounded-[var(--radius-control)] border border-line bg-surface px-3 py-2.5 hover:border-brand-300"
+                      >
+                        <CategoryIcon name={c.icon} className="h-4 w-4 shrink-0 text-brand-600" />
+                        <span className="min-w-0 flex-1 text-sm font-medium">{c.name}</span>
+                        <span className="shrink-0 text-xs text-ink-500">{priceGuide(t, c.typical_price)}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </div>
-
-            {/* Interactive Calculator Component */}
-            <CostEstimatorSection />
+            ))}
           </div>
-        </Container>
-      </section>
+        </Section>
+      ) : null}
     </>
   );
 }

@@ -109,7 +109,7 @@ export function SearchView({ q: rawQuery = '' }: { q?: string }) {
                           {service.name}
                         </Link>
                         <p className="mt-1 text-sm text-ink-500">
-                          {service.category?.name} · {service.price_display}
+                          {service.category?.name}
                         </p>
                       </CardBody>
                     </Card>

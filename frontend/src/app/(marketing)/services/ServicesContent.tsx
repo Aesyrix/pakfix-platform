@@ -10,6 +10,7 @@ import { SiteSearchBox } from '@/components/marketing/SiteSearchBox';
 import { useT } from '@/components/i18n/LocaleProvider';
 import type { ServiceCategory } from '@/lib/api/types';
 import { groupBySection } from '@/lib/catalogue-sections';
+import { priceGuide } from '@/lib/price-guide';
 
 export function ServicesContent({ categories }: { categories: ServiceCategory[] }) {
   const t = useT();
@@ -20,7 +21,7 @@ export function ServicesContent({ categories }: { categories: ServiceCategory[] 
       <PageHeader
         breadcrumbs={[{ name: t('Home', 'ہوم'), href: '/' }, { name: t('Services', 'خدمات') }]}
         title={t('Every service, one place', 'ہر خدمت، ایک جگہ')}
-        subtitle={t('Prices shown are typical ranges across Pakistan. Your professional confirms the price before any work starts.', 'دکھائی گئی قیمتیں پاکستان بھر میں عام حدود ہیں۔ کام شروع ہونے سے پہلے آپ کا پروفیشنل قیمت کی تصدیق کرتا ہے۔')}
+        subtitle={t('Post your job and verified pros send you offers. You choose the one you like, or name your own price. Ranges shown are only a guide.', 'اپنا کام پوسٹ کریں اور تصدیق شدہ پروفیشنلز آپ کو آفرز بھیجیں گے۔ جو پسند ہو وہ منتخب کریں، یا اپنی قیمت بتائیں۔ دکھائی گئی حدیں صرف رہنمائی کے لیے ہیں۔')}
       >
         <SiteSearchBox placeholder={t('Search for a service, e.g. geyser, termites, CCTV', 'خدمت تلاش کریں، مثلاً گیزر، دیمک، سی سی ٹی وی')} />
       </PageHeader>
@@ -60,6 +61,7 @@ export function ServicesContent({ categories }: { categories: ServiceCategory[] 
 }
 
 function CategoryCards({ categories }: { categories: ServiceCategory[] }) {
+  const t = useT();
   return (
     <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {categories.map((category) => (
@@ -76,7 +78,7 @@ function CategoryCards({ categories }: { categories: ServiceCategory[] }) {
                       {category.name}
                     </Link>
                   </h3>
-                  {category.typical_price ? <p className="text-sm text-ink-500">{category.typical_price.display}</p> : null}
+                  {category.typical_price ? <p className="text-sm text-ink-500">{priceGuide(t, category.typical_price)}</p> : null}
                 </div>
               </div>
               {category.description ? <p className="flex-1 text-sm text-ink-600">{category.description}</p> : null}
