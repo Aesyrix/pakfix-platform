@@ -42,7 +42,7 @@ export default function ProVerificationPage() {
             {verification?.rejection_reason ? <p className="text-sm text-danger-700">{verification.rejection_reason}</p> : null}
             {verification?.status !== 'verified' ? (
               <p className="text-sm text-ink-600">
-                {t('Your profile, CNIC photos and selfie are submitted in the PakFix mobile app.', 'آپ کی پروفائل، شناختی کارڈ کی تصاویر اور سیلفی پاک فکس موبائل ایپ میں جمع کرائی جاتی ہیں۔')}
+                {t('Your profile, CNIC photos and a selfie (plain, or holding your CNIC) are submitted in the PakFix mobile app.', 'آپ کی پروفائل، شناختی کارڈ کی تصاویر اور سیلفی (سادہ، یا شناختی کارڈ کے ساتھ) پاک فکس موبائل ایپ میں جمع کرائی جاتی ہیں۔')}
               </p>
             ) : null}
           </CardBody>

@@ -22,14 +22,19 @@ use Illuminate\Validation\ValidationException;
 
 /**
  * A professional getting verified: set up the profile, upload CNIC (both
- * sides) and a selfie, then submit for a person at PakFix to review.
+ * sides) and a selfie (plain, or holding the CNIC), then submit for a
+ * person at PakFix to review.
  *
  * Documents live on the private disk and are never served by a public URL;
  * reviewers fetch them through a permission-checked admin endpoint.
  */
 class ProOnboarding
 {
-    /** Documents every professional must provide (management rule 3.1). */
+    /**
+     * Documents every professional must provide (management rule 3.1). The
+     * selfie may be a plain selfie (photo) or a selfie holding the CNIC
+     * (selfie_cnic); while neither is in, `photo` is reported missing.
+     */
     public const REQUIRED_DOCUMENTS = [
         TechnicianDocument::TYPE_CNIC_FRONT,
         TechnicianDocument::TYPE_CNIC_BACK,
@@ -41,7 +46,14 @@ class ProOnboarding
         TechnicianDocument::TYPE_CNIC_FRONT,
         TechnicianDocument::TYPE_CNIC_BACK,
         TechnicianDocument::TYPE_PHOTO,
+        TechnicianDocument::TYPE_SELFIE_CNIC,
         TechnicianDocument::TYPE_CERTIFICATE,
+    ];
+
+    /** Either of these is the selfie. */
+    public const SELFIE_DOCUMENTS = [
+        TechnicianDocument::TYPE_PHOTO,
+        TechnicianDocument::TYPE_SELFIE_CNIC,
     ];
 
     private const DISK = 'local';
@@ -171,7 +183,7 @@ class ProOnboarding
         }
         if ($checklist['missing_documents'] !== []) {
             throw ValidationException::withMessages([
-                'documents' => 'Upload your CNIC (both sides) and a selfie before submitting.',
+                'documents' => 'Upload your CNIC (both sides) and a selfie (a selfie holding your CNIC is quickest to check) before submitting.',
             ]);
         }
 
@@ -199,7 +211,9 @@ class ProOnboarding
     public function checklist(TechnicianProfile $profile): array
     {
         $uploaded = $profile->verification?->documents()->pluck('type')->unique()->values()->all() ?? [];
-        $missing = array_values(array_diff(self::REQUIRED_DOCUMENTS, $uploaded));
+        // A selfie holding the CNIC counts as the selfie.
+        $have = array_intersect(self::SELFIE_DOCUMENTS, $uploaded) !== [] ? [...$uploaded, TechnicianDocument::TYPE_PHOTO] : $uploaded;
+        $missing = array_values(array_diff(self::REQUIRED_DOCUMENTS, $have));
         $profileComplete = $profile->city_id !== null
             && $profile->latitude !== null
             && $profile->services()->where('is_active', true)->exists();

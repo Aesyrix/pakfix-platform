@@ -11,7 +11,7 @@ const COLLECTED: [string, string, string][] = [
   ['Chat messages and photos sent in job chat', 'Customers and professionals', 'To let the two people on a job talk without sharing phone numbers, and to check reports'],
   ['Ratings and reviews', 'Customers and professionals', 'To show others the quality of work and conduct'],
   ['Reports and blocks', 'Anyone who reports or blocks', 'To keep people safe and act on rule breaks'],
-  ['CNIC number, CNIC photos (front and back), a selfie, optional trade certificate', 'Professionals only', 'To verify identity before they can offer on jobs'],
+  ['CNIC number, CNIC photos (front and back), a selfie (plain, or holding the CNIC), optional trade certificate', 'Professionals only', 'To verify identity before they can offer on jobs'],
   ['Services offered, working hours, service radius, base location, availability', 'Professionals only', 'To send only matching jobs and show jobs within reach'],
   ['Precise location at "arrived" and "done", and when setting a base location', 'Professionals only, with permission', 'To confirm they were at the job and to measure distance to jobs'],
   ['Where a professional works today: their current location (when they tap "Use my current location", or each time they open Jobs if they turn on "Update automatically") or a city they choose', 'Professionals only, with permission', 'To send them jobs near where they are working that day. Never shown to customers; replaced each time and cleared when they go back to their base'],

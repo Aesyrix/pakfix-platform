@@ -101,7 +101,7 @@ export function TermsContent() {
       <p>If you use PakFix as a professional, these extra terms apply.</p>
       <ul>
         <li>
-          <strong>Verification.</strong> You must submit your CNIC (front and back) and a selfie. A trade certificate is optional. Our team
+          <strong>Verification.</strong> You must submit your CNIC (front and back) and a selfie (a plain selfie, or one holding your CNIC). A trade certificate is optional. Our team
           reviews them by hand, usually within 24 hours. You can send offers only after you are verified. We may refuse or remove
           verification if documents are unclear, false or do not match.
         </li>

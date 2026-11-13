@@ -17,6 +17,8 @@ class TechnicianDocument extends Model
     public const TYPE_CNIC_FRONT = 'cnic_front';
     public const TYPE_CNIC_BACK = 'cnic_back';
     public const TYPE_PHOTO = 'photo';
+    /** A selfie holding the CNIC next to the face: counts as the selfie, and is quicker to check. */
+    public const TYPE_SELFIE_CNIC = 'selfie_cnic';
     public const TYPE_CERTIFICATE = 'certificate';
     public const TYPE_UTILITY_BILL = 'utility_bill';
     public const TYPE_BUSINESS_REGISTRATION = 'business_registration';

@@ -122,6 +122,41 @@ class ProVerificationTest extends TestCase
         $this->assertStringNotContainsString('1234567', json_encode($this->actingAs($pro)->getJson('/api/v1/pro/profile')->json()));
     }
 
+    public function test_a_selfie_holding_the_cnic_counts_as_the_selfie(): void
+    {
+        $pro = $this->registerPro();
+        $this->actingAs($pro)->putJson('/api/v1/pro/profile', $this->profilePayload())->assertOk();
+        $this->upload($pro, 'cnic_front');
+        $this->upload($pro, 'cnic_back');
+
+        $this->actingAs($pro)->getJson('/api/v1/pro/profile')
+            ->assertJsonPath('data.checklist.missing_documents', ['photo'])
+            ->assertJsonPath('data.checklist.can_submit', false);
+
+        $this->upload($pro, 'selfie_cnic')->assertOk();
+        $this->actingAs($pro)->getJson('/api/v1/pro/profile')
+            ->assertJsonPath('data.checklist.missing_documents', [])
+            ->assertJsonPath('data.checklist.can_submit', true)
+            ->assertJsonPath('data.onboarding_percent', 100);
+        $this->assertContains('selfie_cnic', $this->actingAs($pro)->getJson('/api/v1/pro/profile')->json('data.checklist.documents'));
+
+        $this->actingAs($pro)->postJson('/api/v1/pro/verification/submit', ['cnic' => '37405-1234567-1'])
+            ->assertOk()->assertJsonPath('data.verification.status', 'pending');
+
+        // Reviewers see it with the other documents.
+        $types = collect($this->actingAs($this->staff(UserRole::Admin))->getJson('/api/v1/admin/verifications/'.$pro->technicianProfile->uuid)->assertOk()->json('data.documents'))->pluck('type');
+        $this->assertTrue($types->contains('selfie_cnic'));
+    }
+
+    public function test_a_selfie_with_cnic_must_be_a_photo(): void
+    {
+        $pro = $this->registerPro();
+        $this->actingAs($pro)->postJson('/api/v1/pro/verification/documents', [
+            'type' => 'selfie_cnic',
+            'file' => UploadedFile::fake()->create('selfie.pdf', 100, 'application/pdf'),
+        ])->assertUnprocessable()->assertJsonValidationErrors('file');
+    }
+
     public function test_an_admin_reviews_the_documents_and_approves(): void
     {
         $pro = $this->submittedPro();
