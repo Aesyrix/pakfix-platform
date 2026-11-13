@@ -102,6 +102,10 @@ class RolePermissionSeeder extends Seeder
             'reviews.respond',
             'messages.send',
             'support.tickets.create',
+            // Customer mode: a professional can book help for themselves too
+            // (never on their own request: RequestMatcher::canBid refuses that).
+            'bookings.view.own', 'bookings.create', 'bookings.update', 'bookings.cancel',
+            'quotes.respond', 'ai.use', 'reviews.create',
         ],
         UserRole::Company->value => [
             'bookings.view.assigned', 'bookings.assign', 'bookings.update.status',

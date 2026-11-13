@@ -92,11 +92,21 @@ class MarketplaceBiddingTest extends TestCase
             ->assertJsonPath('errors.latitude.0', 'The job location must be in Pakistan.');
     }
 
-    public function test_a_professional_cannot_post_a_request(): void
+    public function test_a_professional_in_customer_mode_can_post_but_never_bid_on_their_own_job(): void
     {
         [$proUser] = $this->professional();
 
-        $this->actingAs($proUser)->postJson('/api/v1/requests', $this->requestPayload())->assertForbidden();
+        $requestId = $this->actingAs($proUser)->postJson('/api/v1/requests', $this->requestPayload())
+            ->assertCreated()->json('data.id');
+
+        // Their own job is not in their feed and cannot be bid on.
+        $this->assertNotContains($requestId, array_column($this->actingAs($proUser)->getJson('/api/v1/pro/requests')->json('data'), 'id'));
+        $this->actingAs($proUser)->postJson("/api/v1/pro/requests/{$requestId}/quotes", ['labour_minor' => 100000])
+            ->assertUnprocessable()->assertJsonValidationErrors('quote');
+
+        // Customer-mode pages work for them too.
+        $this->actingAs($proUser)->getJson('/api/v1/requests')->assertOk();
+        $this->actingAs($proUser)->getJson('/api/v1/bookings')->assertOk();
     }
 
     // -----------------------------------------------------------------
