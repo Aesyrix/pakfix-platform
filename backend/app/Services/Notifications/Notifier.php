@@ -8,6 +8,7 @@ use App\Enums\BookingStatus;
 use App\Models\Booking;
 use App\Models\BookingMessage;
 use App\Models\DeviceToken;
+use App\Models\InboxNotification;
 use App\Models\Quote;
 use App\Models\QuoteRequest;
 use App\Models\Review;
@@ -20,11 +21,16 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 /**
- * Who gets a push notification for what, in their own language.
+ * Who is told about what, in their own language.
+ *
+ * Every notification goes into the person's inbox (InboxNotification, shown
+ * in the app and on the website), except chat messages, which have their own
+ * unread count. It is also sent as a push notification when push is set up
+ * and the person has not turned that type off.
  *
  * Every method schedules the work with `defer()`, so it runs after the
- * response has been sent and only when the request succeeded; a Firebase
- * problem is logged and never breaks the action that caused it.
+ * response has been sent and only when the request succeeded; a problem is
+ * logged and never breaks the action that caused it.
  *
  * `data.route` is the app screen a tap opens.
  */
@@ -228,10 +234,6 @@ class Notifier
     /** Runs after the response, never failing the request. */
     private function later(callable $work): void
     {
-        if (! config('pakfix.push.enabled') || ! $this->fcm->isConfigured()) {
-            return;
-        }
-
         defer(function () use ($work): void {
             try {
                 $work();
@@ -247,7 +249,23 @@ class Notifier
      */
     private function push(?User $user, string $type, array $text, array $data = []): void
     {
-        if ($user === null || $user->status === User::STATUS_DELETED || ! $this->wants($user, $type)) {
+        if ($user === null || $user->status === User::STATUS_DELETED) {
+            return;
+        }
+
+        if ($type !== self::MESSAGE) {
+            InboxNotification::create([
+                'user_id' => $user->id,
+                'type' => $type,
+                'title_en' => Str::limit($text['en'][0], 157),
+                'body_en' => Str::limit($text['en'][1], 297),
+                'title_ur' => Str::limit($text['ur'][0], 157),
+                'body_ur' => Str::limit($text['ur'][1], 297),
+                'route' => $data['route'] ?? null,
+            ]);
+        }
+
+        if (! $this->pushReady() || ! $this->wants($user, $type)) {
             return;
         }
 
@@ -260,6 +278,14 @@ class Notifier
                     $device->forceFill(['is_active' => false])->save();
                 }
             });
+    }
+
+    private ?bool $pushReady = null;
+
+    /** Push is switched on and Firebase is set up (checked once per request). */
+    private function pushReady(): bool
+    {
+        return $this->pushReady ??= (bool) config('pakfix.push.enabled') && $this->fcm->isConfigured();
     }
 
     /** Respects `notification_preferences` (push on unless turned off). */

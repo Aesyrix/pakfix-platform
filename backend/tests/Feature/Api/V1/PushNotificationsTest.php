@@ -114,6 +114,63 @@ class PushNotificationsTest extends TestCase
         $this->assertPushed('customer-phone', 'Pro Fahad', "/chat/{$bookingId}", 'Reaching in 10 minutes');
     }
 
+    public function test_every_notification_except_chat_goes_into_the_inbox(): void
+    {
+        $requestId = $this->postRequest();
+        $quoteId = $this->actingAs($this->pro)->postJson("/api/v1/pro/requests/{$requestId}/quotes", ['labour_minor' => 250000])
+            ->assertCreated()->json('data.id');
+        $bookingId = $this->actingAs($this->customer)->postJson("/api/v1/quotes/{$quoteId}/accept")->assertOk()->json('data.booking.id');
+        $this->actingAs($this->pro)->postJson("/api/v1/pro/bookings/{$bookingId}/status", ['step' => 'on_way'])->assertOk();
+        $this->actingAs($this->pro)->postJson("/api/v1/bookings/{$bookingId}/messages", ['body' => 'Reaching in 10 minutes'])->assertCreated();
+
+        // The customer: the offer and "on the way", newest first; no chat message.
+        $customer = $this->actingAs($this->customer)->getJson('/api/v1/notifications')->assertOk();
+        $customer->assertJsonPath('meta.unread', 2)
+            ->assertJsonPath('data.0.type', 'job_update')
+            ->assertJsonPath('data.0.title.en', 'On the way')
+            ->assertJsonPath('data.0.title.ur', 'راستے میں')
+            ->assertJsonPath('data.0.route', "/bookings/{$bookingId}")
+            ->assertJsonPath('data.0.web_path', "/dashboard/bookings/view?id={$bookingId}")
+            ->assertJsonPath('data.1.type', 'new_offer')
+            ->assertJsonPath('data.1.web_path', "/dashboard/requests/view?id={$requestId}")
+            ->assertJsonPath('data.1.read', false);
+        $this->assertCount(2, $customer->json('data'));
+
+        // The professional: the new job and the accepted offer.
+        $this->actingAs($this->pro)->getJson('/api/v1/notifications')
+            ->assertJsonPath('meta.unread', 2)
+            ->assertJsonPath('data.0.type', 'offer_accepted')
+            ->assertJsonPath('data.0.web_path', "/pro/bookings/view?id={$bookingId}")
+            ->assertJsonPath('data.1.type', 'new_job')
+            ->assertJsonPath('data.1.web_path', "/pro/jobs/view?id={$requestId}");
+
+        // Reading: one, then all; someone else's is not found.
+        $first = $customer->json('data.0.id');
+        $this->actingAs($this->pro)->postJson("/api/v1/notifications/{$first}/read")->assertNotFound();
+        $this->actingAs($this->customer)->postJson("/api/v1/notifications/{$first}/read")
+            ->assertOk()->assertJsonPath('data.read', true)->assertJsonPath('meta.unread', 1);
+        $this->actingAs($this->customer)->getJson('/api/v1/notifications/unread')->assertJsonPath('data.unread', 1);
+        $this->actingAs($this->customer)->postJson('/api/v1/notifications/read-all')->assertOk()->assertJsonPath('data.unread', 0);
+        $this->actingAs($this->customer)->getJson('/api/v1/notifications/unread')->assertJsonPath('data.unread', 0);
+
+        $this->forgetAuthenticatedUser();
+        $this->getJson('/api/v1/notifications')->assertUnauthorized();
+    }
+
+    public function test_the_inbox_fills_even_when_push_is_off(): void
+    {
+        config(['pakfix.push.enabled' => false]);
+        $this->device($this->customer, 'customer-phone');
+
+        $requestId = $this->postRequest();
+        $this->actingAs($this->pro)->postJson("/api/v1/pro/requests/{$requestId}/quotes", ['labour_minor' => 100000])->assertCreated();
+
+        Http::assertNotSent(fn (HttpRequest $r) => str_contains($r->url(), 'fcm.googleapis.com'));
+        $this->actingAs($this->customer)->getJson('/api/v1/notifications')
+            ->assertJsonPath('meta.unread', 1)
+            ->assertJsonPath('data.0.title.en', 'New offer: Rs 1,000');
+    }
+
     public function test_urdu_speakers_get_urdu_and_dead_tokens_are_switched_off(): void
     {
         $this->customer->forceFill(['locale' => 'ur'])->save();

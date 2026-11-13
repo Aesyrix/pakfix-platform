@@ -58,6 +58,10 @@ class AccountDeletionTest extends TestCase
         $requestId = $this->postRequest();
         $email = $this->customer->email;
         $token = $this->customer->createToken('phone')->plainTextToken;
+        \App\Models\InboxNotification::create([
+            'user_id' => $this->customer->id, 'type' => 'new_offer',
+            'title_en' => 'New offer', 'title_ur' => 'نئی آفر', 'route' => "/requests/{$requestId}",
+        ]);
 
         $this->withToken($token)->deleteJson('/api/v1/account', ['password' => 'wrong'])
             ->assertUnprocessable()->assertJsonValidationErrors('password');
@@ -73,6 +77,7 @@ class AccountDeletionTest extends TestCase
         $this->assertNull($user->phone);
         $this->assertSame(User::STATUS_DELETED, $user->status);
         $this->assertSame(0, $user->tokens()->count(), 'every device is signed out');
+        $this->assertSame(0, \App\Models\InboxNotification::where('user_id', $user->id)->count(), 'the inbox is erased');
         $this->assertSame(QuoteRequest::STATUS_CLOSED, QuoteRequest::where('uuid', $requestId)->value('status'), 'open requests are cancelled');
 
         // The old token and the old login no longer work.

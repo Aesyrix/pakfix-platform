@@ -9,6 +9,7 @@ use App\Enums\QuoteStatus;
 use App\Enums\VerificationStatus;
 use App\Models\Booking;
 use App\Models\DeviceToken;
+use App\Models\InboxNotification;
 use App\Models\Property;
 use App\Models\Quote;
 use App\Models\QuoteRequest;
@@ -117,6 +118,7 @@ class AccountDeletion
 
             $user->tokens()->delete();
             DeviceToken::query()->where('user_id', $user->id)->delete();
+            InboxNotification::query()->where('user_id', $user->id)->delete();
             $user->forceFill([
                 'name' => self::DELETED_NAME,
                 'email' => 'deleted-'.($user->uuid ?? Str::uuid()).'@deleted.pakfix.invalid',
