@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 use App\Models\BlogCategory;
-use App\Models\CmsPage;
 use App\Models\ContentBlock;
 use App\Models\Faq;
 use App\Models\Testimonial;
@@ -24,7 +23,6 @@ class CmsSeeder extends Seeder
         $this->seedHomepage();
         $this->seedFaqs();
         $this->seedTestimonials();
-        $this->seedLegalPages();
         $this->seedBlogCategories();
     }
 
@@ -180,28 +178,6 @@ class CmsSeeder extends Seeder
         }
     }
 
-    private function seedLegalPages(): void
-    {
-        $pages = [
-            ['Terms of Service', 'Placeholder terms. Replace with copy reviewed by a Pakistani legal adviser before launch.'],
-            ['Privacy Policy', 'Placeholder privacy policy. Must describe how CNIC documents, addresses and payment data are stored and who can access them.'],
-            ['Refund Policy', 'Placeholder refund policy covering disputes, partial refunds and the window in which a customer can raise one.'],
-            ['Safety', 'How PakFix classifies dangerous problems, what the assistant will not talk you through, and what to do in an emergency.'],
-        ];
-
-        foreach ($pages as [$title, $body]) {
-            CmsPage::firstOrCreate(
-                ['slug' => Str::slug($title)],
-                [
-                    'title' => $title,
-                    'body' => $body,
-                    'seo_title' => sprintf('%s | PakFix', $title),
-                    'is_system' => true,
-                    'is_published' => true,
-                ]
-            );
-        }
-    }
 
     private function seedBlogCategories(): void
     {

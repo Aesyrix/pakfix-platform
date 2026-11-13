@@ -49,4 +49,12 @@ class PublicContentTruthTest extends TestCase
         $this->get('/for-property-managers')->assertStatus(301)->assertRedirect('/how-it-works');
         $this->get('/home-maintenance')->assertStatus(301)->assertRedirect('/services');
     }
+
+    public function test_the_old_placeholder_legal_pages_are_gone(): void
+    {
+        foreach (['terms-of-service', 'privacy-policy', 'refund-policy', 'safety'] as $slug) {
+            $this->getJson("/api/v1/content/pages/{$slug}")->assertNotFound();
+            $this->get("/pages/{$slug}")->assertStatus(301)->assertRedirect("/{$slug}");
+        }
+    }
 }
