@@ -61,7 +61,7 @@ export function PrivacyContent() {
       <p>
         The app asks for location permission only while you use it, and only for the features in the table above. We do not track location
         in the background. You can refuse or turn off location in your phone settings; a job you post then uses your city centre, and some
-        professional features (marking arrival, setting a base location or today's work location by GPS) need you to choose the place by hand or will not work.
+        professional features (marking arrival, setting a base location or today&apos;s work location by GPS) need you to choose the place by hand or will not work.
       </p>
 
       <h2>4. What other people can see</h2>
