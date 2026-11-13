@@ -112,22 +112,22 @@ class AdminContentTest extends TestCase
 
     public function test_system_pages_can_be_edited_but_not_deleted_or_unpublished(): void
     {
-        $privacy = CmsPage::where('slug', 'privacy-policy')->firstOrFail();
+        $about = CmsPage::where('slug', 'about')->firstOrFail();
 
-        $this->actingAs($this->admin)->patchJson("/api/v1/admin/pages/{$privacy->uuid}", [
-            'body' => "## Your data\n\nWe store what we need to run your bookings.",
+        $this->actingAs($this->admin)->patchJson("/api/v1/admin/pages/{$about->uuid}", [
+            'body' => "## Who we are\n\nPakFix connects you with verified professionals.",
             'is_published' => false,
             'slug' => 'something-else',
         ])->assertOk()
-            ->assertJsonPath('data.slug', 'privacy-policy')
+            ->assertJsonPath('data.slug', 'about')
             ->assertJsonPath('data.is_published', true);
 
-        $this->actingAs($this->admin)->deleteJson("/api/v1/admin/pages/{$privacy->uuid}")->assertStatus(422);
+        $this->actingAs($this->admin)->deleteJson("/api/v1/admin/pages/{$about->uuid}")->assertStatus(422);
 
         $this->forgetAuthenticatedUser();
         $this->assertStringContainsString(
-            '<h2>Your data</h2>',
-            $this->getJson('/api/v1/content/pages/privacy-policy')->json('data.body_html')
+            '<h2>Who we are</h2>',
+            $this->getJson('/api/v1/content/pages/about')->json('data.body_html')
         );
     }
 

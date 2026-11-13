@@ -18,3 +18,10 @@ use Illuminate\Support\Facades\Route;
 Route::permanentRedirect('/for-service-companies', '/become-a-technician');
 Route::permanentRedirect('/for-property-managers', '/how-it-works');
 Route::permanentRedirect('/home-maintenance', '/services');
+
+// The first seed's placeholder CMS copies of the legal and safety pages; the
+// real pages have their own addresses.
+Route::permanentRedirect('/pages/terms-of-service', '/terms-of-service');
+Route::permanentRedirect('/pages/privacy-policy', '/privacy-policy');
+Route::permanentRedirect('/pages/refund-policy', '/refund-policy');
+Route::permanentRedirect('/pages/safety', '/safety');

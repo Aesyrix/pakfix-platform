@@ -159,11 +159,14 @@ class PublicCatalogueTest extends TestCase
         $this->assertStringNotContainsString('openai_api_key', $body);
     }
 
-    public function test_legal_pages_are_served_from_the_cms(): void
+    public function test_cms_pages_are_served(): void
     {
-        $this->getJson('/api/v1/content/pages/privacy-policy')
+        // The legal pages are part of the website itself; the CMS serves pages an admin writes.
+        \App\Models\CmsPage::create(['slug' => 'careers', 'title' => 'Careers', 'body' => 'We are hiring.', 'is_published' => true]);
+
+        $this->getJson('/api/v1/content/pages/careers')
             ->assertOk()
-            ->assertJsonPath('data.title', 'Privacy Policy');
+            ->assertJsonPath('data.title', 'Careers');
 
         $this->getJson('/api/v1/content/pages/nonexistent-page')->assertNotFound();
     }
