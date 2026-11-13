@@ -319,6 +319,13 @@ class ServiceCategorySeeder extends Seeder
                 'children' => ['Phone Screen Replacement', 'Phone Battery Replacement', 'Charging Port Repair'],
                 'services' => [['Phone repair diagnosis', 'visit_fee', 1000, 30]],
             ],
+
+            // Custom requests: for a job that is not in the list. Kept out of public
+            // lists; goes to professionals who take custom requests.
+            [
+                'name' => 'Something else', 'icon' => 'circle-help', 'custom' => true,
+                'description' => 'Not in the list? Describe the job, and nearby professionals who take custom requests will send offers.',
+            ],
         ];
     }
 
@@ -431,6 +438,7 @@ class ServiceCategorySeeder extends Seeder
                 'description' => $entry['description'] ?? null,
                 'icon' => $entry['icon'] ?? null,
                 'is_emergency' => $entry['emergency'] ?? false,
+                'is_custom' => $entry['custom'] ?? false,
                 'is_popular' => $entry['popular'] ?? false,
                 'is_active' => true,
                 'sort_order' => $sort,

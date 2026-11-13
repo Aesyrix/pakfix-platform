@@ -47,7 +47,7 @@ class AuthController extends Controller
             $request->safe()->only([
                 'name', 'email', 'phone', 'password', 'city_id', 'referral_code',
                 // A professional's alert preferences (ignored for other roles).
-                'work_hours', 'work_start', 'work_end', 'is_available', 'offers_emergency_service',
+                'work_hours', 'work_start', 'work_end', 'is_available', 'offers_emergency_service', 'accepts_custom_requests',
             ]),
             $request->role()
         );

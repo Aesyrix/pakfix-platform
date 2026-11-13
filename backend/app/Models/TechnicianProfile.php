@@ -30,7 +30,7 @@ class TechnicianProfile extends Model
         'languages', 'skills', 'city_id', 'base_address', 'latitude', 'longitude',
         'service_radius_km', 'hourly_rate_minor', 'visit_fee_minor',
         'commission_percentage', 'verification_status', 'verified_at',
-        'offers_emergency_service', 'is_available', 'is_accepting_jobs',
+        'offers_emergency_service', 'accepts_custom_requests', 'is_available', 'is_accepting_jobs',
         'availability', 'onboarding_percent',
     ];
 
@@ -45,6 +45,7 @@ class TechnicianProfile extends Model
             'latitude' => 'float',
             'longitude' => 'float',
             'offers_emergency_service' => 'boolean',
+            'accepts_custom_requests' => 'boolean',
             'is_available' => 'boolean',
             'is_accepting_jobs' => 'boolean',
             'rating_average' => 'float',

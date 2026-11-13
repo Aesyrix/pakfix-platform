@@ -46,7 +46,8 @@ class ProProfileController extends Controller
             'service_radius_km' => ['nullable', 'integer', 'min:5', 'max:50'],
             'offers_emergency_service' => ['nullable', 'boolean'],
             'category_ids' => ['required', 'array', 'min:1', 'max:10'],
-            'category_ids.*' => ['string', Rule::exists('service_categories', 'uuid')->where('is_active', true)],
+            // A trade, never "Something else" (that is the Custom requests switch).
+            'category_ids.*' => ['string', Rule::exists('service_categories', 'uuid')->where('is_active', true)->where('is_custom', 0)],
         ], [
             'category_ids.required' => 'Choose at least one trade.',
             'category_ids.min' => 'Choose at least one trade.',
@@ -63,7 +64,8 @@ class ProProfileController extends Controller
     {
         $data = $request->validate([
             'category_ids' => ['required', 'array', 'min:1', 'max:10'],
-            'category_ids.*' => ['string', Rule::exists('service_categories', 'uuid')->where('is_active', true)],
+            // A trade, never "Something else" (that is the Custom requests switch).
+            'category_ids.*' => ['string', Rule::exists('service_categories', 'uuid')->where('is_active', true)->where('is_custom', 0)],
         ], [
             'category_ids.required' => 'Choose at least one trade.',
             'category_ids.min' => 'Choose at least one trade.',

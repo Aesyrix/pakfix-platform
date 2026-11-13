@@ -1,5 +1,6 @@
 import {
   Armchair,
+  CircleHelp,
   Bike,
   Car,
   CarFront,
@@ -103,6 +104,7 @@ const ICONS: Record<string, LucideIcon> = {
   tv: Tv,
   laptop: Laptop,
   smartphone: Smartphone,
+  'circle-help': CircleHelp,
 };
 
 export function CategoryIcon({

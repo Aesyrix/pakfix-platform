@@ -28,6 +28,8 @@ class ServiceCategoryResource extends JsonResource
             'image_url' => $this->image_path ? Storage::url($this->image_path) : null,
             'is_emergency' => (bool) $this->is_emergency,
             'is_popular' => (bool) $this->is_popular,
+            // "Something else": offered only when posting a request.
+            'is_custom' => (bool) $this->is_custom,
             // Money always crosses the wire as minor units plus a formatted
             // string, so no client has to know PKR formatting rules.
             'typical_price' => $this->when(

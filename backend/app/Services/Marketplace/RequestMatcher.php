@@ -12,7 +12,8 @@ use Illuminate\Support\Collection;
  * Decides which open requests a professional may see and bid on.
  *
  * A request is in reach when the professional offers its category (or the
- * category's parent, so an "AC / HVAC" pro sees "AC Gas Refilling"), and its
+ * category's parent, so an "AC / HVAC" pro sees "AC Gas Refilling"), or it is
+ * a custom request ("Something else") and they take custom requests; and its
  * location is within the professional's service radius. The database narrows
  * by a bounding box first; the exact great-circle distance is checked in PHP,
  * which keeps the query portable across SQLite, MySQL and PostgreSQL.
@@ -48,7 +49,8 @@ class RequestMatcher
     public function nearby(TechnicianProfile $profile, int $limit = 50): Collection
     {
         $categoryIds = $this->categoryIdsFor($profile);
-        if ($categoryIds === [] || $profile->isSuspendedByStrikes() || $profile->latitude === null || $profile->longitude === null) {
+        $custom = (bool) $profile->accepts_custom_requests;
+        if (($categoryIds === [] && ! $custom) || $profile->isSuspendedByStrikes() || $profile->latitude === null || $profile->longitude === null) {
             return collect();
         }
 
@@ -66,7 +68,9 @@ class RequestMatcher
             ->whereNotIn('customer_id', app(Safety::class)->blockedIds((int) $profile->user_id))
             ->where(fn ($q) => $q
                 ->whereIn('service_category_id', $categoryIds)
-                ->orWhereHas('category', fn ($c) => $c->whereIn('parent_id', $categoryIds)))
+                ->orWhereHas('category', fn ($c) => $c->whereIn('parent_id', $categoryIds))
+                // Custom requests reach every professional who takes them.
+                ->when($custom, fn ($q) => $q->orWhereHas('category', fn ($c) => $c->where('is_custom', true))))
             ->whereBetween('latitude', [$lat - $dLat, $lat + $dLat])
             ->whereBetween('longitude', [$lng - $dLng, $lng + $dLng])
             ->with(['category', 'city', 'area'])
@@ -100,8 +104,10 @@ class RequestMatcher
 
         $categoryIds = $this->categoryIdsFor($profile);
         $request->loadMissing('category');
-        $inTrade = in_array((int) $request->service_category_id, $categoryIds, true)
-            || in_array((int) $request->category?->parent_id, $categoryIds, true);
+        $inTrade = $request->category?->is_custom
+            ? (bool) $profile->accepts_custom_requests
+            : in_array((int) $request->service_category_id, $categoryIds, true)
+                || in_array((int) $request->category?->parent_id, $categoryIds, true);
 
         $distance = $profile->distanceTo($request->latitude, $request->longitude);
 

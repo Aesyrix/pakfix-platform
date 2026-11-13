@@ -26,7 +26,7 @@ class ServiceCategory extends Model
     protected $fillable = [
         'parent_id', 'section', 'name', 'slug', 'trade_slug', 'trade_name', 'description',
         'common_problems', 'icon', 'image_path', 'color',
-        'is_emergency', 'is_popular', 'is_active', 'sort_order',
+        'is_emergency', 'is_custom', 'is_popular', 'is_active', 'sort_order',
         'typical_min_minor', 'typical_max_minor', 'seo_title', 'seo_description',
     ];
 
@@ -35,6 +35,7 @@ class ServiceCategory extends Model
         return [
             'common_problems' => 'array',
             'is_emergency' => 'boolean',
+            'is_custom' => 'boolean',
             'is_popular' => 'boolean',
             'is_active' => 'boolean',
             'typical_min_minor' => 'integer',
@@ -80,6 +81,12 @@ class ServiceCategory extends Model
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('is_active', true);
+    }
+
+    /** Shown in public lists: active and not the custom-request category. */
+    public function scopeListed(Builder $query): Builder
+    {
+        return $query->where('is_active', true)->where('is_custom', false);
     }
 
     public function scopeTopLevel(Builder $query): Builder

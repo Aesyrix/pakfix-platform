@@ -37,6 +37,7 @@ class Availability
             'work_end' => ['nullable', 'required_if:work_hours,custom', 'date_format:H:i', 'different:work_start'],
             'is_available' => ['sometimes', 'boolean'],
             'offers_emergency_service' => ['sometimes', 'boolean'],
+            'accepts_custom_requests' => ['sometimes', 'boolean'],
         ];
     }
 
@@ -70,6 +71,9 @@ class Availability
         }
         if (array_key_exists('offers_emergency_service', $data)) {
             $profile->forceFill(['offers_emergency_service' => (bool) $data['offers_emergency_service']]);
+        }
+        if (array_key_exists('accepts_custom_requests', $data)) {
+            $profile->forceFill(['accepts_custom_requests' => (bool) $data['accepts_custom_requests']]);
         }
 
         return $profile;
@@ -115,6 +119,8 @@ class Availability
             'work_end' => $end,
             'is_available' => (bool) $profile->is_available,
             'offers_emergency_service' => (bool) $profile->offers_emergency_service,
+            // Jobs not in the list ("Something else"), whatever the trades.
+            'accepts_custom_requests' => (bool) $profile->accepts_custom_requests,
             'within_hours_now' => $this->isWithinHours($profile),
             'receiving_alerts_now' => $this->receivesAlerts($profile),
             'shifts' => config('pakfix.marketplace.availability.shifts'),

@@ -88,6 +88,7 @@ export interface ProAvailability {
   work_end: string | null;
   is_available: boolean;
   offers_emergency_service: boolean;
+  accepts_custom_requests: boolean;
   within_hours_now: boolean;
   receiving_alerts_now: boolean;
   shifts: Record<string, [string, string]>;
@@ -140,10 +141,15 @@ export const contentApi = {
 };
 
 export const catalogueApi = {
-  categories: (options: { flat?: boolean; popular?: boolean } = {}) =>
+  /** `withCustom` adds "Something else", for the request form only. */
+  categories: (options: { flat?: boolean; popular?: boolean; withCustom?: boolean } = {}) =>
     api.get<ServiceCategory[]>('services/categories', {
       ...PUBLIC,
-      query: { flat: options.flat ? 1 : undefined, popular: options.popular ? 1 : undefined },
+      query: {
+        flat: options.flat ? 1 : undefined,
+        popular: options.popular ? 1 : undefined,
+        with_custom: options.withCustom ? 1 : undefined,
+      },
     }),
 
   category: (slug: string) => api.get<ServicePagePayload>(`services/categories/${slug}`, PUBLIC),
@@ -229,7 +235,7 @@ export const accountApi = {
   saveProServices: (categoryIds: string[]) =>
     apiRequest<ProProfileSummary>('pro/services', { method: 'PATCH', body: { category_ids: categoryIds } }),
   saveProAvailability: (
-    input: Partial<Pick<ProAvailability, 'work_hours' | 'is_available' | 'offers_emergency_service'>> & {
+    input: Partial<Pick<ProAvailability, 'work_hours' | 'is_available' | 'offers_emergency_service' | 'accepts_custom_requests'>> & {
       work_start?: string;
       work_end?: string;
     }

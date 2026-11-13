@@ -160,6 +160,8 @@ export interface ServiceCategory {
   image_url: string | null;
   is_emergency: boolean;
   is_popular: boolean;
+  /** "Something else": offered only in the request form. */
+  is_custom?: boolean;
   typical_price?: {
     min_minor: number;
     max_minor: number | null;
