@@ -35,8 +35,9 @@ export function RequireAuth({
     if (initialising) return;
 
     if (!user) {
-      // Remember where they were going, so sign-in can finish the journey.
-      router.replace(`/login?next=${encodeURIComponent(pathname)}`);
+      // Remember where they were going (with its ?id=), so sign-in can finish the journey.
+      const next = typeof window !== 'undefined' ? `${window.location.pathname}${window.location.search}` : pathname;
+      router.replace(`/login?next=${encodeURIComponent(next)}`);
       return;
     }
 

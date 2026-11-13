@@ -1,16 +1,16 @@
 'use client';
 
-import { MessageSquare } from 'lucide-react';
-import { NotOnWebsiteYet } from '@/components/account/NotOnWebsiteYet';
+import { ConversationList } from '@/components/jobs/Chat';
+import { Container } from '@/components/ui/Container';
+import { useAppText } from '@/lib/i18n/app-text';
 
-export default function ProMessagesPage() {
+/** Chats with the other person on each job (the app's Messages). */
+export default function MessagesPage() {
+  const t = useAppText();
   return (
-    <NotOnWebsiteYet
-      title="Messages"
-      titleUr="پیغامات"
-      description="Chat with customers about your jobs. It will be available in the PakFix mobile app."
-      descriptionUr="اپنے کاموں کے بارے میں کسٹمرز سے چیٹ۔ یہ پاک فکس موبائل ایپ میں دستیاب ہو گا۔"
-      icon={<MessageSquare className="h-5 w-5" />}
-    />
+    <Container className="max-w-3xl py-6 sm:py-8">
+      <h1 className="mb-5 font-display text-2xl font-bold">{t('navMessages')}</h1>
+      <ConversationList area="pro" />
+    </Container>
   );
 }

@@ -14,6 +14,7 @@ const COLLECTED: [string, string, string][] = [
   ['CNIC number, CNIC photos (front and back), a selfie, optional trade certificate', 'Professionals only', 'To verify identity before they can offer on jobs'],
   ['Services offered, working hours, service radius, base location, availability', 'Professionals only', 'To send only matching jobs and show jobs within reach'],
   ['Precise location at "arrived" and "done", and when setting a base location', 'Professionals only, with permission', 'To confirm they were at the job and to measure distance to jobs'],
+  ['Precise location when posting a job, only if you tap "Use my current location" (otherwise the city centre is used)', 'Customers, with permission', 'To show the job to professionals who are actually nearby'],
   ['Device push token and app language and theme settings', 'App users', 'To send notifications about your jobs and show the app your way'],
   ['Text you type into PakFix AI', 'Anyone who uses it', 'To suggest causes, safety steps and the right service'],
   ['Messages sent through the contact form', 'Anyone who writes to us', 'To answer you'],
@@ -58,8 +59,8 @@ export function PrivacyContent() {
       <h2>3. Location</h2>
       <p>
         The app asks for location permission only while you use it, and only for the features in the table above. We do not track location
-        in the background. You can refuse or turn off location in your phone settings; some professional features (marking arrival, setting
-        a base location by GPS) then need you to enter the place by hand or will not work.
+        in the background. You can refuse or turn off location in your phone settings; a job you post then uses your city centre, and some
+        professional features (marking arrival, setting a base location by GPS) need you to enter the place by hand or will not work.
       </p>
 
       <h2>4. What other people can see</h2>

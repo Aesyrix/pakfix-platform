@@ -10,6 +10,7 @@ import { ModeToggle } from '@/components/theme/ModeToggle';
 import { useT } from '@/components/i18n/LocaleProvider';
 import { useAuthStore } from '@/stores/auth';
 import { cn } from '@/lib/utils/cn';
+import { badgeText, useNavCounts } from '@/lib/dashboard/useNavCounts';
 import type { NavSection } from '@/lib/dashboard/nav';
 
 /**
@@ -28,6 +29,7 @@ export function AppSidebar({
   ariaLabelUr?: string;
 }) {
   const t = useT();
+  const counts = useNavCounts();
   const pathname = usePathname();
   const router = useRouter();
   const toast = useToast();
@@ -60,9 +62,12 @@ export function AppSidebar({
 
             <ul className="flex flex-col gap-0.5">
               {section.items.map((item) => {
+                // A prefix match yields to an item that matches the page exactly
+                // ("Post a request" over "Requests").
+                const exactElsewhere = sections.some((s) => s.items.some((o) => o !== item && o.exact && pathname === o.href));
                 const active = item.exact
                   ? pathname === item.href
-                  : pathname.startsWith(item.href);
+                  : pathname.startsWith(item.href) && !exactElsewhere;
                 const Icon = item.icon;
 
                 return (
@@ -74,6 +79,11 @@ export function AppSidebar({
                     >
                       <Icon className="h-4.5 w-4.5 shrink-0" aria-hidden="true" />
                       {t(item.label, item.labelUr)}
+                      {item.count && counts[item.count] > 0 ? (
+                        <span className="ms-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-accent-solid px-1.5 text-[11px] font-bold text-white">
+                          {badgeText(counts[item.count])}
+                        </span>
+                      ) : null}
                     </Link>
                   </li>
                 );

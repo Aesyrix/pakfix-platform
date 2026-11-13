@@ -1,24 +1,22 @@
 import {
   Bell,
   Briefcase,
-  Building2,
   CalendarCheck,
   Clock,
-  CreditCard,
   FileText,
-  Heart,
+  HandCoins,
   LayoutDashboard,
   MessageCircle,
+  PlusCircle,
+  Repeat,
   Settings,
   ShieldCheck,
   Sparkles,
-  Star,
   User,
-  Wallet,
-  Wrench,
   type LucideIcon,
 } from 'lucide-react';
 import type { UserRole } from '@/lib/api/types';
+import type { NavCountKey } from '@/lib/dashboard/useNavCounts';
 
 /**
  * Navigation shared by the account dashboards.
@@ -34,6 +32,8 @@ export interface NavItem {
   icon: LucideIcon;
   /** Match the path exactly instead of by prefix. */
   exact?: boolean;
+  /** Shows an unread badge from useNavCounts. */
+  count?: NavCountKey;
 }
 
 export interface NavSection {
@@ -42,35 +42,29 @@ export interface NavSection {
   items: NavItem[];
 }
 
-/** Customer and property-manager sidebar. */
+/**
+ * Customer sidebar: the app's tabs (Home, Requests, Messages, Account) plus
+ * the pages the app reaches from them. Pages the website does not offer yet
+ * stay out of the menu. A professional in Customer mode sees the same menu.
+ */
 export const CUSTOMER_NAV: NavSection[] = [
   {
     heading: null,
     headingUr: null,
     items: [
-      { href: '/dashboard', label: 'Overview', labelUr: 'جائزہ', icon: LayoutDashboard, exact: true },
-      { href: '/ai', label: 'Ask PakFix AI', labelUr: 'پاک فکس اے آئی سے پوچھیں', icon: Sparkles },
+      { href: '/dashboard', label: 'Home', labelUr: 'ہوم', icon: LayoutDashboard, exact: true },
+      { href: '/dashboard/requests/new', label: 'Post a request', labelUr: 'درخواست دیں', icon: PlusCircle, exact: true },
+      { href: '/dashboard/requests', label: 'Requests', labelUr: 'درخواستیں', icon: FileText },
       { href: '/dashboard/bookings', label: 'Bookings', labelUr: 'بکنگ', icon: CalendarCheck },
-    ],
-  },
-  {
-    heading: 'My home',
-    headingUr: 'میرا گھر',
-    items: [
-      { href: '/dashboard/properties', label: 'Properties', labelUr: 'پراپرٹیز', icon: Building2 },
-      { href: '/dashboard/maintenance', label: 'Maintenance', labelUr: 'دیکھ بھال', icon: Wrench },
-      { href: '/dashboard/quotes', label: 'Quotes', labelUr: 'کوٹیشن', icon: FileText },
+      { href: '/dashboard/messages', label: 'Messages', labelUr: 'پیغامات', icon: MessageCircle, count: 'messages' },
+      { href: '/dashboard/notifications', label: 'Notifications', labelUr: 'اطلاعات', icon: Bell, count: 'notifications' },
+      { href: '/ai', label: 'Ask PakFix AI', labelUr: 'پاک فکس اے آئی سے پوچھیں', icon: Sparkles },
     ],
   },
   {
     heading: 'Account',
     headingUr: 'اکاؤنٹ',
     items: [
-      { href: '/dashboard/messages', label: 'Messages', labelUr: 'پیغامات', icon: MessageCircle },
-      { href: '/dashboard/payments', label: 'Payments', labelUr: 'ادائیگیاں', icon: CreditCard },
-      { href: '/dashboard/saved', label: 'Saved professionals', labelUr: 'محفوظ پروفیشنلز', icon: Heart },
-      { href: '/dashboard/reviews', label: 'Reviews', labelUr: 'جائزے', icon: Star },
-      { href: '/dashboard/notifications', label: 'Notifications', labelUr: 'اطلاعات', icon: Bell },
       { href: '/dashboard/profile', label: 'Profile', labelUr: 'پروفائل', icon: User },
       { href: '/dashboard/settings', label: 'Settings', labelUr: 'ترتیبات', icon: Settings },
     ],
@@ -79,23 +73,27 @@ export const CUSTOMER_NAV: NavSection[] = [
 
 export const CUSTOMER_BOTTOM_NAV: NavItem[] = [
   { href: '/dashboard', label: 'Home', labelUr: 'ہوم', icon: LayoutDashboard, exact: true },
-  { href: '/ai', label: 'Ask AI', labelUr: 'اے آئی سے پوچھیں', icon: Sparkles },
-  { href: '/dashboard/bookings', label: 'Bookings', labelUr: 'بکنگ', icon: CalendarCheck },
-  { href: '/dashboard/messages', label: 'Messages', labelUr: 'پیغامات', icon: MessageCircle },
-  { href: '/dashboard/profile', label: 'Profile', labelUr: 'پروفائل', icon: User },
+  { href: '/dashboard/requests', label: 'Requests', labelUr: 'درخواستیں', icon: FileText },
+  { href: '/dashboard/messages', label: 'Messages', labelUr: 'پیغامات', icon: MessageCircle, count: 'messages' },
+  { href: '/dashboard/notifications', label: 'Notifications', labelUr: 'اطلاعات', icon: Bell, count: 'notifications' },
+  { href: '/dashboard/profile', label: 'Account', labelUr: 'اکاؤنٹ', icon: User },
 ];
 
 /**
- * Technician and service-company sidebar. Their whole working day lives under
- * `/pro`, so those are the only links that appear.
+ * Professional sidebar: the app's Pro tabs (Jobs, Offers, My jobs, Account)
+ * and their pages, plus a way into Customer mode.
  */
 export const PRO_NAV: NavSection[] = [
   {
     heading: null,
     headingUr: null,
     items: [
-      { href: '/pro', label: 'Overview', labelUr: 'جائزہ', icon: LayoutDashboard, exact: true },
-      { href: '/pro/jobs', label: 'Job board', labelUr: 'جاب بورڈ', icon: Briefcase },
+      { href: '/pro', label: 'Home', labelUr: 'ہوم', icon: LayoutDashboard, exact: true },
+      { href: '/pro/jobs', label: 'Jobs', labelUr: 'کام', icon: Briefcase },
+      { href: '/pro/offers', label: 'My offers', labelUr: 'میری آفرز', icon: HandCoins },
+      { href: '/pro/bookings', label: 'My jobs', labelUr: 'میرے کام', icon: CalendarCheck },
+      { href: '/pro/messages', label: 'Messages', labelUr: 'پیغامات', icon: MessageCircle, count: 'messages' },
+      { href: '/pro/notifications', label: 'Notifications', labelUr: 'اطلاعات', icon: Bell, count: 'notifications' },
     ],
   },
   {
@@ -103,28 +101,26 @@ export const PRO_NAV: NavSection[] = [
     headingUr: 'کام',
     items: [
       { href: '/pro/schedule', label: 'Availability', labelUr: 'دستیابی', icon: Clock },
-      { href: '/pro/earnings', label: 'Earnings', labelUr: 'کمائی', icon: Wallet },
-      { href: '/pro/reviews', label: 'Reviews', labelUr: 'جائزے', icon: Star },
+      { href: '/pro/verification', label: 'Verification', labelUr: 'تصدیق', icon: ShieldCheck },
     ],
   },
   {
     heading: 'Account',
     headingUr: 'اکاؤنٹ',
     items: [
-      { href: '/pro/verification', label: 'Verification', labelUr: 'تصدیق', icon: ShieldCheck },
-      { href: '/pro/messages', label: 'Messages', labelUr: 'پیغامات', icon: MessageCircle },
-      { href: '/pro/profile', label: 'Public profile', labelUr: 'عوامی پروفائل', icon: User },
+      { href: '/pro/profile', label: 'Profile', labelUr: 'پروفائل', icon: User },
       { href: '/pro/settings', label: 'Settings', labelUr: 'ترتیبات', icon: Settings },
+      { href: '/dashboard', label: 'Switch to customer mode', labelUr: 'کسٹمر موڈ پر جائیں', icon: Repeat, exact: true },
     ],
   },
 ];
 
 export const PRO_BOTTOM_NAV: NavItem[] = [
-  { href: '/pro', label: 'Home', labelUr: 'ہوم', icon: LayoutDashboard, exact: true },
   { href: '/pro/jobs', label: 'Jobs', labelUr: 'کام', icon: Briefcase },
-  { href: '/pro/schedule', label: 'Availability', labelUr: 'دستیابی', icon: Clock },
-  { href: '/pro/earnings', label: 'Earnings', labelUr: 'کمائی', icon: Wallet },
-  { href: '/pro/profile', label: 'Profile', labelUr: 'پروفائل', icon: User },
+  { href: '/pro/offers', label: 'Offers', labelUr: 'آفرز', icon: HandCoins },
+  { href: '/pro/bookings', label: 'My jobs', labelUr: 'میرے کام', icon: CalendarCheck },
+  { href: '/pro/messages', label: 'Messages', labelUr: 'پیغامات', icon: MessageCircle, count: 'messages' },
+  { href: '/pro/profile', label: 'Account', labelUr: 'اکاؤنٹ', icon: User },
 ];
 
 /** True when the user belongs to the customer-style dashboard. */
