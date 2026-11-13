@@ -100,6 +100,9 @@ class WorkLocation
 
         if (array_key_exists('follow_location', $data)) {
             $profile->forceFill(['follow_location' => (bool) $data['follow_location']]);
+        } elseif ($mode === 'city' || $mode === 'base') {
+            // A place they chose: stop replacing it with their position.
+            $profile->forceFill(['follow_location' => false]);
         }
 
         $profile->save();

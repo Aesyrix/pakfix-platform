@@ -215,12 +215,12 @@ class MarketplaceBiddingTest extends TestCase
             ->assertOk()
             ->assertJsonPath('data.work_location.source', 'city')
             ->assertJsonPath('data.work_location.city_name', 'Islamabad')
-            ->assertJsonPath('data.work_location.follow_location', true);
+            ->assertJsonPath('data.work_location.follow_location', false); // a chosen city is not replaced by their position
         $this->actingAs($pro->fresh())->getJson('/api/v1/pro/requests')->assertJsonPath('data.0.id', $request->uuid); // ~10 km away
         $this->bid($pro->fresh(), $request, 200000);
 
         // Back to base: Lahore again, the Rawalpindi job is out of reach.
-        $this->actingAs($pro)->patchJson('/api/v1/pro/work-location', ['mode' => 'base', 'follow_location' => false])
+        $this->actingAs($pro)->patchJson('/api/v1/pro/work-location', ['mode' => 'base'])
             ->assertOk()
             ->assertJsonPath('data.work_location.source', 'base')
             ->assertJsonPath('data.work_location.updated_at', null);

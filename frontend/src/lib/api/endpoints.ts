@@ -92,7 +92,25 @@ export interface ProAvailability {
   within_hours_now: boolean;
   receiving_alerts_now: boolean;
   shifts: Record<string, [string, string]>;
+  /** Where jobs are matched around today. */
+  work_location?: WorkLocation;
 }
+
+/** Where a professional works today: their base, their position, or a city they chose. */
+export interface WorkLocation {
+  source: 'base' | 'here' | 'city';
+  /** The city it is in or near (the profile's city for the base). */
+  city_name: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  updated_at: string | null;
+  /** The app or website sends the current position each time Jobs opens. */
+  follow_location: boolean;
+  service_radius_km: number;
+}
+
+/** What PATCH pro/work-location takes as the place. */
+export type WorkPlace = { mode: 'here' } | { mode: 'city'; city_id: number } | { mode: 'base' };
 
 export interface LoginInput {
   login: string;
@@ -240,6 +258,14 @@ export const accountApi = {
       work_end?: string;
     }
   ) => apiRequest<ProAvailability>('pro/availability', { method: 'PATCH', body: input }),
+  /** Where jobs are matched around today and/or the auto-update switch. */
+  saveWorkLocation: (input: {
+    mode?: WorkPlace['mode'];
+    latitude?: number;
+    longitude?: number;
+    city_id?: number;
+    follow_location?: boolean;
+  }) => apiRequest<ProAvailability>('pro/work-location', { method: 'PATCH', body: input }),
 };
 
 export const adminApi = {

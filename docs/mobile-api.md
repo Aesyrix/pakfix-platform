@@ -370,10 +370,30 @@ A professional decides when they hear about new jobs. All times are Pakistan tim
 | `work_start`, `work_end` | `HH:MM`, required for `custom`; the end may be after midnight (`21:00`–`06:00`) |
 | `is_available` | Their own pause switch for alerts, even within their hours |
 | `offers_emergency_service` | Opt in to emergency requests |
+| `accepts_custom_requests` | Takes "Something else" requests (jobs not in the list), whatever the trades. On by default |
 
 - **At sign-up:** send these with `POST /auth/register` when `role` is `technician` (all optional; default is `always`, available, no emergencies).
 - **Later:** `GET /pro/availability` and `PATCH /pro/availability` (any subset of the fields). The response also has `within_hours_now`, `receiving_alerts_now` and the `shifts` table. `GET /pro/profile` includes the same object as `availability`.
 - **Effect:** new-job alerts go out only within their hours while `is_available` is on. Outside them they still see nearby jobs and can send offers. Emergency requests are listed, alerted and biddable only for professionals with `offers_emergency_service`. Pausing never hides the public profile.
+
+### Where they work today
+
+Jobs and new-job alerts are matched within the service radius around the professional's **base**
+(the profile's location) unless they say they are working somewhere else today:
+
+`PATCH /pro/work-location`
+
+| Body | Does |
+|---|---|
+| `{ "mode": "here", "latitude": 33.6, "longitude": 73.05 }` | Their current position (inside Pakistan) |
+| `{ "mode": "city", "city_id": 3 }` | The centre of a city PakFix works in |
+| `{ "mode": "base" }` | Back to the base |
+| `follow_location` (optional, with or without `mode`) | When on, the app sends `mode: here` each time Jobs is opened, only while the app is open. Choosing a city or the base turns it off |
+
+The response is the availability object; its `work_location` block is
+`{ source: base|here|city, city_name, latitude, longitude, updated_at, follow_location, service_radius_km }`
+(`city_name` is the city it is in or near, or the profile's city for the base). The position is never
+shown to customers, and nothing is tracked in the background.
 
 ---
 
