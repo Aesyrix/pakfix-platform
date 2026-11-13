@@ -380,7 +380,7 @@ export function AssistantView({ params = NO_PARAMS }: { params?: Pick<URLSearchP
             </p>
           ) : null}
 
-          {triage.data && !triage.isPending ? <TriageOutcome result={triage.data} /> : null}
+          {triage.data && !triage.isPending ? <TriageOutcome result={triage.data} description={triage.variables ?? description} /> : null}
         </div>
       </Container>
     </>
@@ -411,7 +411,7 @@ function Analyzing() {
   );
 }
 
-function TriageOutcome({ result }: { result: TriageResult }) {
+function TriageOutcome({ result, description }: { result: TriageResult; description: string }) {
   const t = useT();
   const SAFETY: Record<SafetyLevel, { label: string; tone: 'safe' | 'warn' | 'danger' }> = {
     low: { label: t('Low risk: safe to inspect', 'کم خطرہ: معائنہ محفوظ ہے'), tone: 'safe' },
@@ -497,8 +497,12 @@ function TriageOutcome({ result }: { result: TriageResult }) {
                       <ButtonLink href={`/services/${match.category.slug}`} variant="secondary" size="sm">
                         {t('About this service', 'اس خدمت کے بارے میں')}
                       </ButtonLink>
-                      <ButtonLink href={`/find-a-technician?category=${match.category.slug}`} size="sm">
-                        {t('Find a professional', 'پروفیشنل تلاش کریں')}
+                      {/* Like the app: the description and the suggested service carry into the job post. */}
+                      <ButtonLink
+                        href={`/dashboard/requests/new?category=${encodeURIComponent(match.category.slug)}&description=${encodeURIComponent(description.slice(0, 2000))}`}
+                        size="sm"
+                      >
+                        {t('Post a request', 'درخواست دیں')}
                       </ButtonLink>
                     </div>
                   </div>

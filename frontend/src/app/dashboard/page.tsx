@@ -69,14 +69,14 @@ export default function DashboardPage() {
             href="/ai"
             icon={<Sparkles className="h-5 w-5" />}
             label="Ask PakFix AI"
-            description="Describe or photograph a problem"
+            description="Describe a problem, get guidance"
             emphasis
           />
           <QuickAction
-            href="/find-a-technician"
+            href="/dashboard/requests/new"
             icon={<Wrench className="h-5 w-5" />}
-            label="Book a professional"
-            description="Find someone verified nearby"
+            label="Post a request"
+            description="Verified pros nearby send you offers"
           />
           <QuickAction
             href="/dashboard/bookings"
@@ -85,7 +85,7 @@ export default function DashboardPage() {
             description="See every job and its status"
           />
           <QuickAction
-            href="/dashboard/quotes"
+            href="/dashboard/requests"
             icon={<FileText className="h-5 w-5" />}
             label="My requests"
             description="See requests and offers"

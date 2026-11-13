@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { LocaleToggle } from '@/components/i18n/LocaleToggle';
 import { useT } from '@/components/i18n/LocaleProvider';
 import { cn } from '@/lib/utils/cn';
+import { badgeText, useNavCounts } from '@/lib/dashboard/useNavCounts';
 import type { NavItem } from '@/lib/dashboard/nav';
 
 /**
@@ -22,6 +23,7 @@ export function AppBottomNav({
   ariaLabelUr?: string;
 }) {
   const t = useT();
+  const counts = useNavCounts();
   const pathname = usePathname();
 
   return (
@@ -48,6 +50,11 @@ export function AppBottomNav({
                 )}
               >
                 {active && <span className="absolute top-0 h-0.5 w-8 rounded-full bg-brand-solid" />}
+                {item.count && counts[item.count] > 0 ? (
+                  <span className="absolute end-[calc(50%-1.25rem)] top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent-solid px-1 text-[10px] font-bold text-white">
+                    {badgeText(counts[item.count])}
+                  </span>
+                ) : null}
                 <Icon
                   className={cn(
                     'h-5 w-5 transition-transform',

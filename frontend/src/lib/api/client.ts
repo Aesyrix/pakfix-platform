@@ -212,7 +212,7 @@ function buildUrl(path: string, query?: RequestOptions['query']): string {
 export async function apiRequest<T>(
   path: string,
   options: RequestOptions = {}
-): Promise<{ data: T; message: string; pagination?: Pagination }> {
+): Promise<{ data: T; message: string; pagination?: Pagination; meta?: Record<string, unknown> }> {
   const { method = 'GET', body, query, token, next, headers, ...rest } = options;
 
   const isFormData = typeof FormData !== 'undefined' && body instanceof FormData;
@@ -284,6 +284,8 @@ export async function apiRequest<T>(
     data: envelope.data,
     message: envelope.message,
     pagination: envelope.meta?.pagination,
+    // Everything else the API sends beside the data (unread counts, chat details).
+    meta: envelope.meta,
   };
 }
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\Api\V1\Admin;
 use App\Http\Controllers\Api\V1\AccountController;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\NotificationController;
 use App\Http\Controllers\Api\V1\PushTokenController;
 use App\Services\Notifications\Fcm;
 use App\Http\Controllers\Api\V1\BlogController;
@@ -181,6 +182,14 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
 
         // Booking chat: the customer and the professional on a job. Who you
         // are on the booking is checked in the service (anyone else: 404).
+        // The notifications inbox (same list in the app and on the website).
+        Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
+        Route::get('notifications/unread', [NotificationController::class, 'unread'])->name('notifications.unread');
+        Route::post('notifications/read-all', [NotificationController::class, 'readAll'])
+            ->middleware('throttle:30,1,notifications')->name('notifications.read-all');
+        Route::post('notifications/{uuid}/read', [NotificationController::class, 'read'])
+            ->middleware('throttle:120,1,notifications')->name('notifications.read');
+
         Route::get('conversations', [Marketplace\ChatController::class, 'index'])->name('conversations.index');
         Route::get('conversations/unread', [Marketplace\ChatController::class, 'unread'])->name('conversations.unread');
         Route::get('bookings/{uuid}/messages', [Marketplace\ChatController::class, 'messages'])->name('bookings.messages');
