@@ -236,6 +236,20 @@ class PushNotificationsTest extends TestCase
         $this->assertPushed('pro-phone', 'New job near you', "/pro/jobs/{$requestId}");
     }
 
+    public function test_new_job_alerts_follow_where_the_pro_works_today(): void
+    {
+        $this->device($this->pro, 'pro-phone');
+        // Based in Lahore: a Rawalpindi job is out of reach.
+        $this->pro->technicianProfile->forceFill(['latitude' => 31.5204, 'longitude' => 74.3587])->save();
+        $this->postRequest();
+        Http::assertNotSent(fn (HttpRequest $r) => str_contains($r->url(), 'fcm.googleapis.com'));
+
+        // Working in Rawalpindi today: alerted there.
+        $this->actingAs($this->pro)->patchJson('/api/v1/pro/work-location', ['mode' => 'city', 'city_id' => $this->rawalpindi->id])->assertOk();
+        $requestId = $this->postRequest();
+        $this->assertPushed('pro-phone', 'New job near you', "/pro/jobs/{$requestId}");
+    }
+
     public function test_nothing_is_sent_and_nothing_breaks_without_credentials(): void
     {
         config(['pakfix.push.credentials_path' => '/no/such/file.json']);

@@ -32,7 +32,14 @@ class TechnicianProfile extends Model
         'commission_percentage', 'verification_status', 'verified_at',
         'offers_emergency_service', 'accepts_custom_requests', 'is_available', 'is_accepting_jobs',
         'availability', 'onboarding_percent',
+        'work_latitude', 'work_longitude', 'work_location_source', 'work_city_id',
+        'work_location_at', 'follow_location',
     ];
+
+    /** Where the professional works today: their position, or a city they chose. */
+    public const WORK_HERE = 'here';
+
+    public const WORK_CITY = 'city';
 
     protected function casts(): array
     {
@@ -44,6 +51,10 @@ class TechnicianProfile extends Model
             'verified_at' => 'datetime',
             'latitude' => 'float',
             'longitude' => 'float',
+            'work_latitude' => 'float',
+            'work_longitude' => 'float',
+            'work_location_at' => 'datetime',
+            'follow_location' => 'boolean',
             'offers_emergency_service' => 'boolean',
             'accepts_custom_requests' => 'boolean',
             'is_available' => 'boolean',
@@ -76,6 +87,11 @@ class TechnicianProfile extends Model
     public function city(): BelongsTo
     {
         return $this->belongsTo(City::class);
+    }
+
+    public function workCity(): BelongsTo
+    {
+        return $this->belongsTo(City::class, 'work_city_id');
     }
 
     public function verification(): HasOne
@@ -143,6 +159,25 @@ class TechnicianProfile extends Model
         });
     }
 
+    /**
+     * Professionals who work today inside a box: around their work location
+     * while one is set, else around their base. (Columns are compared
+     * directly so the database keeps their numeric type.)
+     */
+    public function scopeWorkingWithin(Builder $query, float $minLat, float $maxLat, float $minLng, float $maxLng): Builder
+    {
+        return $query->where(function (Builder $q) use ($minLat, $maxLat, $minLng, $maxLng): void {
+            $q->where(fn (Builder $w) => $w
+                ->whereNotNull('work_latitude')->whereNotNull('work_longitude')
+                ->whereBetween('work_latitude', [$minLat, $maxLat])
+                ->whereBetween('work_longitude', [$minLng, $maxLng]))
+                ->orWhere(fn (Builder $b) => $b
+                    ->where(fn (Builder $n) => $n->whereNull('work_latitude')->orWhereNull('work_longitude'))
+                    ->whereBetween('latitude', [$minLat, $maxLat])
+                    ->whereBetween('longitude', [$minLng, $maxLng]));
+        });
+    }
+
     public function scopeForCategory(Builder $query, int $categoryId): Builder
     {
         return $query->whereHas('services', fn (Builder $s) => $s
@@ -174,22 +209,45 @@ class TechnicianProfile extends Model
         return $this->business_name ?: (string) $this->user?->name;
     }
 
+    /** True while jobs are matched around a work location instead of the base. */
+    public function hasWorkLocation(): bool
+    {
+        return $this->work_latitude !== null && $this->work_longitude !== null;
+    }
+
+    /** Latitude jobs are matched around: today's work location, else the base. */
+    public function workLatitude(): ?float
+    {
+        return $this->hasWorkLocation() ? $this->work_latitude : $this->latitude;
+    }
+
+    /** Longitude jobs are matched around: today's work location, else the base. */
+    public function workLongitude(): ?float
+    {
+        return $this->hasWorkLocation() ? $this->work_longitude : $this->longitude;
+    }
+
+
     /**
-     * Great-circle distance in kilometres to a point, or null when either end
-     * has no coordinates. Used for display; the matcher filters in SQL first.
+     * Great-circle distance in kilometres to a point from where the
+     * professional works today (their work location, else their base), or
+     * null when either end has no coordinates. Used for display; the matcher
+     * filters in SQL first.
      */
     public function distanceTo(?float $lat, ?float $lng): ?float
     {
-        if ($lat === null || $lng === null || $this->latitude === null || $this->longitude === null) {
+        $fromLat = $this->workLatitude();
+        $fromLng = $this->workLongitude();
+        if ($lat === null || $lng === null || $fromLat === null || $fromLng === null) {
             return null;
         }
 
         $earthRadiusKm = 6371;
-        $dLat = deg2rad($lat - $this->latitude);
-        $dLng = deg2rad($lng - $this->longitude);
+        $dLat = deg2rad($lat - $fromLat);
+        $dLng = deg2rad($lng - $fromLng);
 
         $a = sin($dLat / 2) ** 2
-            + cos(deg2rad($this->latitude)) * cos(deg2rad($lat)) * sin($dLng / 2) ** 2;
+            + cos(deg2rad($fromLat)) * cos(deg2rad($lat)) * sin($dLng / 2) ** 2;
 
         return round($earthRadiusKm * 2 * atan2(sqrt($a), sqrt(1 - $a)), 2);
     }

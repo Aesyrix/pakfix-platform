@@ -124,6 +124,8 @@ class Availability
             'within_hours_now' => $this->isWithinHours($profile),
             'receiving_alerts_now' => $this->receivesAlerts($profile),
             'shifts' => config('pakfix.marketplace.availability.shifts'),
+            // Where jobs are matched around today (see WorkLocation).
+            'work_location' => app(WorkLocation::class)->present($profile),
         ];
     }
 
