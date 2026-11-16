@@ -42,7 +42,7 @@ class SearchService
         }
 
         return [
-            'categories' => $this->matching(ServiceCategory::active(), ['name', 'description', 'trade_name'], $term)
+            'categories' => $this->matching(ServiceCategory::listed(), ['name', 'description', 'trade_name'], $term)
                 ->orderBy('sort_order')
                 ->limit($perType)
                 ->get(),

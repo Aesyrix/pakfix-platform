@@ -1,6 +1,6 @@
 'use client';
 
-import { Clock, Moon, Siren, Sun, Timer } from 'lucide-react';
+import { CircleHelp, Clock, Moon, Siren, Sun, Timer } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { useT } from '@/components/i18n/LocaleProvider';
 import { Checkbox, Input } from '@/components/ui/Input';
@@ -13,6 +13,8 @@ export interface AvailabilityChoice {
   work_start: string;
   work_end: string;
   offers_emergency_service: boolean;
+  /** Custom requests ("Something else"), whatever the trades. On by default. */
+  accepts_custom_requests: boolean;
 }
 
 export const DEFAULT_AVAILABILITY: AvailabilityChoice = {
@@ -20,6 +22,7 @@ export const DEFAULT_AVAILABILITY: AvailabilityChoice = {
   work_start: '',
   work_end: '',
   offers_emergency_service: false,
+  accepts_custom_requests: true,
 };
 
 /** Custom hours need a start and a different end. */
@@ -32,6 +35,7 @@ export function availabilityPayload(c: AvailabilityChoice) {
   return {
     work_hours: c.work_hours,
     offers_emergency_service: c.offers_emergency_service,
+    accepts_custom_requests: c.accepts_custom_requests,
     ...(c.work_hours === 'custom' ? { work_start: c.work_start, work_end: c.work_end } : {}),
   };
 }
@@ -138,6 +142,27 @@ export function AvailabilityPicker({
           }
           checked={value.offers_emergency_service}
           onChange={(event) => onChange({ ...value, offers_emergency_service: event.target.checked })}
+        />
+      </div>
+
+      <div className="rounded-2xl border border-line p-3.5">
+        <Checkbox
+          label={
+            <span className="flex items-start gap-2">
+              <CircleHelp className="mt-0.5 h-4 w-4 shrink-0 text-brand-600" aria-hidden="true" />
+              <span>
+                <span className="block font-bold">{t('Custom requests', 'حسبِ ضرورت درخواستیں')}</span>
+                <span className="block text-xs font-normal text-ink-500">
+                  {t(
+                    'Get jobs that are not in our list ("Something else"), whatever your trades.',
+                    'ایسے کام جو ہماری فہرست میں نہیں ("کچھ اور")، چاہے آپ کی خدمات کچھ بھی ہوں۔'
+                  )}
+                </span>
+              </span>
+            </span>
+          }
+          checked={value.accepts_custom_requests}
+          onChange={(event) => onChange({ ...value, accepts_custom_requests: event.target.checked })}
         />
       </div>
     </div>

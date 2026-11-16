@@ -48,6 +48,7 @@ function toChoice(a: ProAvailability): AvailabilityChoice {
     work_start: a.work_hours === 'custom' ? (a.work_start ?? '') : '',
     work_end: a.work_hours === 'custom' ? (a.work_end ?? '') : '',
     offers_emergency_service: a.offers_emergency_service,
+    accepts_custom_requests: a.accepts_custom_requests !== false,
   };
 }
 

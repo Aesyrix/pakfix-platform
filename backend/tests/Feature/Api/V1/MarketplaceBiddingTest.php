@@ -110,6 +110,62 @@ class MarketplaceBiddingTest extends TestCase
     }
 
     // -----------------------------------------------------------------
+    // Custom requests ("Something else")
+    // -----------------------------------------------------------------
+
+    public function test_something_else_is_offered_only_where_a_request_is_posted(): void
+    {
+        $listed = array_column($this->getJson('/api/v1/services/categories')->assertOk()->json('data'), 'slug');
+        $this->assertNotContains('something-else', $listed);
+
+        $form = collect($this->getJson('/api/v1/services/categories?with_custom=1')->assertOk()->json('data'));
+        $custom = $form->firstWhere('slug', 'something-else');
+        $this->assertNotNull($custom);
+        $this->assertTrue($custom['is_custom']);
+        $this->assertFalse($form->firstWhere('slug', 'plumbing')['is_custom']);
+
+        $this->assertSame([], $this->getJson('/api/v1/search?q=something')->json('data.categories') ?? []);
+    }
+
+    public function test_a_custom_request_reaches_pros_who_take_them_whatever_their_trade(): void
+    {
+        $custom = ServiceCategory::where('slug', 'something-else')->firstOrFail();
+        [$takes] = $this->professional(category: 'carpentry');
+        [$declines, $declinesProfile] = $this->professional(category: 'electrical');
+        $declinesProfile->forceFill(['accepts_custom_requests' => false])->save();
+
+        $request = $this->postRequest([
+            'service_category_id' => $custom->uuid,
+            'description' => 'Need someone to assemble a flat-pack cupboard and hang two shelves.',
+        ]);
+
+        $seen = fn (User $pro) => array_column($this->actingAs($pro)->getJson('/api/v1/pro/requests')->json('data'), 'id');
+        $this->assertContains($request->uuid, $seen($takes));
+        $this->assertNotContains($request->uuid, $seen($declines));
+
+        $this->bid($takes, $request, 150000);
+        $this->actingAs($declines)->postJson("/api/v1/pro/requests/{$request->uuid}/quotes", ['labour_minor' => 100000])
+            ->assertUnprocessable();
+
+        // A normal request still needs the trade: custom requests open nothing else.
+        $plumbing = $this->postRequest();
+        $this->assertNotContains($plumbing->uuid, $seen($takes));
+    }
+
+    public function test_pros_switch_custom_requests_in_availability_and_cannot_pick_it_as_a_trade(): void
+    {
+        [$pro] = $this->professional();
+
+        $this->actingAs($pro)->getJson('/api/v1/pro/availability')->assertJsonPath('data.accepts_custom_requests', true);
+        $this->actingAs($pro)->patchJson('/api/v1/pro/availability', ['accepts_custom_requests' => false])
+            ->assertOk()->assertJsonPath('data.accepts_custom_requests', false);
+
+        $custom = ServiceCategory::where('slug', 'something-else')->firstOrFail();
+        $this->actingAs($pro)->patchJson('/api/v1/pro/services', ['category_ids' => [$custom->uuid]])
+            ->assertUnprocessable()->assertJsonValidationErrors('category_ids.0');
+    }
+
+    // -----------------------------------------------------------------
     // Who sees a request
     // -----------------------------------------------------------------
 

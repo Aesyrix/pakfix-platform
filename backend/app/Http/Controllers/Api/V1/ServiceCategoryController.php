@@ -31,17 +31,22 @@ class ServiceCategoryController extends Controller
     {
     }
 
-    /** The category tree. `?flat=1` un-nests; `?popular=1` filters. */
+    /**
+     * The category tree. `?flat=1` un-nests; `?popular=1` filters;
+     * `?with_custom=1` adds "Something else" (the request form wants it,
+     * public lists do not).
+     */
     public function index(Request $request): JsonResponse
     {
         $flat = $request->boolean('flat');
         $popularOnly = $request->boolean('popular');
+        $withCustom = $request->boolean('with_custom') && ! $popularOnly;
 
         $payload = ContentCache::remember(
-            sprintf('catalogue:categories:%s:%s', $flat ? 'flat' : 'tree', $popularOnly ? 'popular' : 'all'),
+            sprintf('catalogue:categories:%s:%s:%s', $flat ? 'flat' : 'tree', $popularOnly ? 'popular' : 'all', $withCustom ? 'custom' : 'listed'),
             self::CACHE_TTL,
-            function () use ($flat, $popularOnly, $request): array {
-                $query = ServiceCategory::active()->orderBy('sort_order');
+            function () use ($flat, $popularOnly, $withCustom, $request): array {
+                $query = ($withCustom ? ServiceCategory::active() : ServiceCategory::listed())->orderBy('sort_order');
 
                 if ($popularOnly) {
                     $query->where('is_popular', true)->topLevel();

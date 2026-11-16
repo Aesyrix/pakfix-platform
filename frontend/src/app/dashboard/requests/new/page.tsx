@@ -51,17 +51,23 @@ function PostRequest() {
   const preset = useSearchParams().get('category');
   const presetDescription = useSearchParams().get('description') ?? '';
 
-  const categories = useQuery({ queryKey: ['catalogue-categories'], queryFn: () => catalogueApi.categories(), staleTime: 300_000 });
+  const categories = useQuery({
+    queryKey: ['catalogue-categories-with-custom'],
+    queryFn: () => catalogueApi.categories({ withCustom: true }),
+    staleTime: 300_000,
+  });
   const cities = useQuery({ queryKey: ['cities-served'], queryFn: () => locationApi.cities(true), staleTime: 300_000 });
 
   const flat = useMemo(() => {
     const out: Array<{ c: ServiceCategory; child: boolean }> = [];
-    for (const c of categories.data ?? []) {
+    for (const c of (categories.data ?? []).filter((c) => !c.is_custom)) {
       out.push({ c, child: false });
       for (const child of c.children ?? []) out.push({ c: child, child: true });
     }
     return out;
   }, [categories.data]);
+  // "Something else": a job that is not in the list.
+  const customCategory = (categories.data ?? []).find((c) => c.is_custom) ?? null;
   const served = useMemo(() => (cities.data ?? []).filter((c) => c.is_served), [cities.data]);
 
   const [categoryId, setCategoryId] = useState<string>('');
@@ -80,7 +86,9 @@ function PostRequest() {
   const [busy, setBusy] = useState(false);
 
   // Defaults, like the app: the category from the link, and Rawalpindi.
-  const chosenCategory = categoryId || flat.find((f) => f.c.slug === preset)?.c.id || '';
+  const chosenCategory =
+    categoryId || flat.find((f) => f.c.slug === preset)?.c.id || (customCategory && customCategory.slug === preset ? customCategory.id : '') || '';
+  const customChosen = customCategory !== null && chosenCategory === customCategory.id;
   const chosenCity = cityId ?? served.find((c) => c.slug === 'rawalpindi')?.id ?? served[0]?.id ?? null;
   const guide = flat.find((f) => f.c.id === chosenCategory)?.c.typical_price?.display?.replace(' - ', ' – ');
 
@@ -191,7 +199,9 @@ function PostRequest() {
                   </optgroup>
                 );
               })}
+              {customCategory ? <option value={customCategory.id}>{t('postSomethingElse')}</option> : null}
             </Select>
+            {customChosen ? <p className="-mt-3 text-sm text-brand-700">{t('postCustomHelp')}</p> : null}
 
             <Textarea
               label={t('postDescription')}
