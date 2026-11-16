@@ -27,6 +27,7 @@ const DOCUMENT_LABELS: Record<string, [string, string]> = {
   cnic_front: ['CNIC front', 'شناختی کارڈ سامنے'],
   cnic_back: ['CNIC back', 'شناختی کارڈ پیچھے'],
   photo: ['Selfie', 'سیلفی'],
+  selfie_cnic: ['Selfie with CNIC', 'شناختی کارڈ کے ساتھ سیلفی'],
   certificate: ['Trade certificate', 'ہنر کا سرٹیفکیٹ'],
 };
 
@@ -50,7 +51,7 @@ export default function AdminVerificationsPage() {
       <AdminPageHeader
         title={t('Verifications', 'تصدیق')}
         description={t(
-          'Professionals who submitted their CNIC and a selfie. Check the name and photo match, then approve so they can receive jobs, or send it back with a reason they will see.',
+          'Professionals who submitted their CNIC and a selfie (plain, or holding the CNIC). Check the name and photo match, then approve so they can receive jobs, or send it back with a reason they will see.',
           'وہ پروفیشنلز جنہوں نے شناختی کارڈ اور سیلفی جمع کرائی۔ نام اور تصویر ملائیں، پھر منظور کریں تاکہ انہیں کام ملیں، یا وجہ کے ساتھ واپس بھیجیں جو انہیں نظر آئے گی۔'
         )}
       />
