@@ -211,6 +211,7 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
             Route::patch('services', [Marketplace\ProProfileController::class, 'updateServices'])->middleware('throttle:30,1,pro-services')->name('services.update');
             Route::get('availability', [Marketplace\ProProfileController::class, 'availability'])->name('availability.show');
             Route::patch('availability', [Marketplace\ProProfileController::class, 'updateAvailability'])->middleware('throttle:30,1,availability')->name('availability.update');
+            Route::patch('work-location', [Marketplace\ProProfileController::class, 'updateWorkLocation'])->middleware('throttle:30,1,work-location')->name('work-location.update');
             Route::post('verification/documents', [Marketplace\ProProfileController::class, 'upload'])->middleware('throttle:20,1')->name('verification.upload');
             Route::post('verification/submit', [Marketplace\ProProfileController::class, 'submit'])->middleware('throttle:10,1')->name('verification.submit');
         });

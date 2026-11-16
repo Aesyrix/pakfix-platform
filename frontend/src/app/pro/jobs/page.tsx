@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Briefcase, Clock, MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { AvailabilityStrip, VerificationNotice } from '@/components/account/ProStatus';
+import { describeJobsRadius, useFollowWorkLocation } from '@/components/account/WorkLocationCard';
 import { CategoryIcon } from '@/components/marketing/CategoryIcon';
 import { OfferStatusBadge, formatTimeLeft } from '@/components/jobs/JobParts';
 import { Badge } from '@/components/ui/Badge';
@@ -22,6 +23,9 @@ export default function ProJobsPage() {
   const t = useAppText();
   const profile = useQuery({ queryKey: ['account-pro-profile'], queryFn: accountApi.proProfile, staleTime: 15_000 });
   const nearby = useQuery({ queryKey: ['pro-nearby'], queryFn: proApi.nearby, refetchInterval: 30_000, retry: false });
+  const availability = useQuery({ queryKey: ['pro-availability'], queryFn: accountApi.proAvailability, staleTime: 15_000 });
+  // Sends this device's position when they turned on "Update automatically".
+  useFollowWorkLocation(availability.data);
   const status = profile.data?.verification.status;
   // A professional who is not verified gets 403: the notice above explains what to do.
   const forbidden = nearby.error instanceof ApiError && nearby.error.status === 403;
@@ -40,7 +44,15 @@ export default function ProJobsPage() {
         <ErrorState description={nearby.error instanceof ApiError ? nearby.error.message : t('errorGeneric')} onRetry={() => nearby.refetch()} />
       ) : (
         <>
-          <p className="mb-3 text-sm font-semibold text-brand-700">{t('jobsRadius', { km: nearby.data.radiusKm })}</p>
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <p className="text-sm font-semibold text-brand-700">
+              {describeJobsRadius(t, availability.data?.work_location, nearby.data.radiusKm)}
+            </p>
+            {/* Working somewhere else today? Change where jobs come from. */}
+            <Link href="/pro/schedule" className="shrink-0 text-sm font-semibold text-brand-600 underline-offset-4 hover:underline">
+              {t('jobsChangePlace')}
+            </Link>
+          </div>
           {nearby.data.items.length === 0 ? (
             <EmptyState
               icon={<Briefcase className="h-5 w-5" />}

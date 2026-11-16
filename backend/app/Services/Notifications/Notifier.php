@@ -70,8 +70,11 @@ class Notifier
             TechnicianProfile::query()
                 ->publiclyVisible()
                 ->where('is_accepting_jobs', true)
-                ->whereBetween('latitude', [(float) $request->latitude - $dLat, (float) $request->latitude + $dLat])
-                ->whereBetween('longitude', [(float) $request->longitude - $dLng, (float) $request->longitude + $dLng])
+                // Around where each professional works today (work location, else base).
+                ->workingWithin(
+                    (float) $request->latitude - $dLat, (float) $request->latitude + $dLat,
+                    (float) $request->longitude - $dLng, (float) $request->longitude + $dLng,
+                )
                 ->with('user')
                 ->limit($max * 3)
                 ->get()

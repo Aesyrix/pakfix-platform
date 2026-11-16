@@ -14,6 +14,7 @@ const COLLECTED: [string, string, string][] = [
   ['CNIC number, CNIC photos (front and back), a selfie, optional trade certificate', 'Professionals only', 'To verify identity before they can offer on jobs'],
   ['Services offered, working hours, service radius, base location, availability', 'Professionals only', 'To send only matching jobs and show jobs within reach'],
   ['Precise location at "arrived" and "done", and when setting a base location', 'Professionals only, with permission', 'To confirm they were at the job and to measure distance to jobs'],
+  ['Where a professional works today: their current location (when they tap "Use my current location", or each time they open Jobs if they turn on "Update automatically") or a city they choose', 'Professionals only, with permission', 'To send them jobs near where they are working that day. Never shown to customers; replaced each time and cleared when they go back to their base'],
   ['Precise location when posting a job, only if you tap "Use my current location" (otherwise the city centre is used)', 'Customers, with permission', 'To show the job to professionals who are actually nearby'],
   ['Device push token and app language and theme settings', 'App users', 'To send notifications about your jobs and show the app your way'],
   ['Text you type into PakFix AI', 'Anyone who uses it', 'To suggest causes, safety steps and the right service'],
@@ -60,7 +61,7 @@ export function PrivacyContent() {
       <p>
         The app asks for location permission only while you use it, and only for the features in the table above. We do not track location
         in the background. You can refuse or turn off location in your phone settings; a job you post then uses your city centre, and some
-        professional features (marking arrival, setting a base location by GPS) need you to enter the place by hand or will not work.
+        professional features (marking arrival, setting a base location or today&apos;s work location by GPS) need you to choose the place by hand or will not work.
       </p>
 
       <h2>4. What other people can see</h2>

@@ -189,6 +189,64 @@ class MarketplaceBiddingTest extends TestCase
         }
     }
 
+    public function test_a_pro_working_in_another_city_today_gets_jobs_there_and_can_go_back_to_base(): void
+    {
+        $request = $this->postRequest();
+        [$pro, $profile] = $this->professional(lat: 31.5204, lng: 74.3587); // based in Lahore
+
+        $this->actingAs($pro)->getJson('/api/v1/pro/availability')
+            ->assertJsonPath('data.work_location.source', 'base')
+            ->assertJsonPath('data.work_location.city_name', 'Rawalpindi') // the profile's city
+            ->assertJsonPath('data.work_location.follow_location', false);
+        $this->actingAs($pro->fresh())->getJson('/api/v1/pro/requests')->assertJsonCount(0, 'data');
+
+        // Here: their position in Rawalpindi, labelled with the nearest city.
+        $this->actingAs($pro)->patchJson('/api/v1/pro/work-location', ['mode' => 'here', 'latitude' => 33.6, 'longitude' => 73.05, 'follow_location' => true])
+            ->assertOk()
+            ->assertJsonPath('data.work_location.source', 'here')
+            ->assertJsonPath('data.work_location.city_name', 'Rawalpindi')
+            ->assertJsonPath('data.work_location.follow_location', true)
+            ->assertJsonPath('data.work_location.service_radius_km', 20);
+        $this->actingAs($pro->fresh())->getJson('/api/v1/pro/requests')->assertJsonPath('data.0.id', $request->uuid);
+
+        // A chosen city: its centre.
+        $islamabad = City::where('slug', 'islamabad')->firstOrFail();
+        $this->actingAs($pro)->patchJson('/api/v1/pro/work-location', ['mode' => 'city', 'city_id' => $islamabad->id])
+            ->assertOk()
+            ->assertJsonPath('data.work_location.source', 'city')
+            ->assertJsonPath('data.work_location.city_name', 'Islamabad')
+            ->assertJsonPath('data.work_location.follow_location', false); // a chosen city is not replaced by their position
+        $this->actingAs($pro->fresh())->getJson('/api/v1/pro/requests')->assertJsonPath('data.0.id', $request->uuid); // ~10 km away
+        $this->bid($pro->fresh(), $request, 200000);
+
+        // Back to base: Lahore again, the Rawalpindi job is out of reach.
+        $this->actingAs($pro)->patchJson('/api/v1/pro/work-location', ['mode' => 'base'])
+            ->assertOk()
+            ->assertJsonPath('data.work_location.source', 'base')
+            ->assertJsonPath('data.work_location.updated_at', null);
+        $this->actingAs($pro->fresh())->getJson('/api/v1/pro/requests')->assertJsonCount(0, 'data');
+        $this->assertFalse($profile->refresh()->hasWorkLocation());
+    }
+
+    public function test_a_work_location_must_be_in_pakistan_and_a_city_must_be_live(): void
+    {
+        [$pro] = $this->professional();
+
+        $this->actingAs($pro)->patchJson('/api/v1/pro/work-location', ['mode' => 'here', 'latitude' => 51.5, 'longitude' => -0.12])
+            ->assertUnprocessable()->assertJsonValidationErrors(['latitude', 'longitude']);
+        $this->actingAs($pro)->patchJson('/api/v1/pro/work-location', ['mode' => 'here'])
+            ->assertUnprocessable()->assertJsonValidationErrors(['latitude', 'longitude']);
+        $this->actingAs($pro)->patchJson('/api/v1/pro/work-location', ['mode' => 'city', 'city_id' => City::where('is_served', false)->value('id')])
+            ->assertUnprocessable()->assertJsonValidationErrors('city_id');
+        $this->actingAs($pro)->patchJson('/api/v1/pro/work-location', [])
+            ->assertUnprocessable()->assertJsonValidationErrors('mode');
+        $this->actingAs($this->customer)->patchJson('/api/v1/pro/work-location', ['mode' => 'base'])->assertForbidden();
+
+        // The switch alone.
+        $this->actingAs($pro)->patchJson('/api/v1/pro/work-location', ['follow_location' => true])
+            ->assertOk()->assertJsonPath('data.work_location.source', 'base')->assertJsonPath('data.work_location.follow_location', true);
+    }
+
     public function test_a_professional_in_the_parent_trade_sees_a_subcategory_request(): void
     {
         $gasRefill = ServiceCategory::where('slug', 'ac-gas-refilling')->firstOrFail();

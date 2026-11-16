@@ -8,6 +8,7 @@ import {
   availabilityPayload,
   type AvailabilityChoice,
 } from '@/components/account/AvailabilityPicker';
+import { WorkLocationCard } from '@/components/account/WorkLocationCard';
 import { PageHeader } from '@/components/dashboard/DashboardPage';
 import { useT } from '@/components/i18n/LocaleProvider';
 import { Button } from '@/components/ui/Button';
@@ -21,7 +22,8 @@ import { accountApi, type ProAvailability } from '@/lib/api/endpoints';
 import { cn } from '@/lib/utils/cn';
 
 /**
- * When the professional gets new-job alerts: the Available switch, working
+ * When and where the professional gets new-job alerts: the Available switch,
+ * where they work today, working
  * hours and emergency jobs. Same settings as the app (Account › Availability).
  */
 export default function ProAvailabilityPage() {
@@ -122,6 +124,8 @@ function AvailabilityForm({ initial }: { initial: ProAvailability }) {
           </button>
         </CardBody>
       </Card>
+
+      <WorkLocationCard value={saved} onSaved={onSaved} />
 
       <Card>
         <CardBody className="flex flex-col gap-4">

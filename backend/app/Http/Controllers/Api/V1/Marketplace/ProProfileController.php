@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\TechnicianProfile;
 use App\Services\Marketplace\Availability;
 use App\Services\Marketplace\ProOnboarding;
+use App\Services\Marketplace\WorkLocation;
 use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -94,6 +95,20 @@ class ProProfileController extends Controller
         $profile->save();
 
         return ApiResponse::success($this->availability->present($profile), 'Availability saved.');
+    }
+
+    /**
+     * `PATCH /pro/work-location` — where jobs are matched around today:
+     * `mode` here (with `latitude`/`longitude`), city (with `city_id`) or base,
+     * and/or `follow_location` (the app updates "here" each time it opens).
+     * Returns the availability payload, whose `work_location` block shows it.
+     */
+    public function updateWorkLocation(Request $request): JsonResponse
+    {
+        $data = $request->validate(WorkLocation::rules(), WorkLocation::messages());
+        $profile = app(WorkLocation::class)->update($this->profile($request), $data);
+
+        return ApiResponse::success($this->availability->present($profile), 'Work location saved.');
     }
 
     /** `POST /pro/verification/documents` — multipart: `type`, `file`. */

@@ -50,13 +50,14 @@ class RequestMatcher
     {
         $categoryIds = $this->categoryIdsFor($profile);
         $custom = (bool) $profile->accepts_custom_requests;
-        if (($categoryIds === [] && ! $custom) || $profile->isSuspendedByStrikes() || $profile->latitude === null || $profile->longitude === null) {
+        if (($categoryIds === [] && ! $custom) || $profile->isSuspendedByStrikes() || $profile->workLatitude() === null || $profile->workLongitude() === null) {
             return collect();
         }
 
         $radius = $this->radiusFor($profile);
-        $lat = (float) $profile->latitude;
-        $lng = (float) $profile->longitude;
+        // Around where they work today: their work location, else their base.
+        $lat = (float) $profile->workLatitude();
+        $lng = (float) $profile->workLongitude();
         $dLat = $radius / self::KM_PER_DEGREE_LAT;
         $dLng = $radius / (self::KM_PER_DEGREE_LAT * max(cos(deg2rad($lat)), 0.01));
 
