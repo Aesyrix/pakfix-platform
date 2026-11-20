@@ -1,4 +1,5 @@
 import { RequireAuth } from '@/components/auth/RequireAuth';
+import { AcceptedOfferWatcher } from '@/components/layout/AcceptedOfferWatcher';
 import { ProBottomNav } from '@/components/layout/ProBottomNav';
 import { ProSidebar } from '@/components/layout/ProSidebar';
 
@@ -12,6 +13,8 @@ import { ProSidebar } from '@/components/layout/ProSidebar';
 export default function ProLayout({ children }: { children: React.ReactNode }) {
   return (
     <RequireAuth roles={['technician', 'company']}>
+      {/* A customer accepts an offer while this is open: open the new job. */}
+      <AcceptedOfferWatcher />
       <div className="flex min-h-dvh app-canvas">
         <ProSidebar />
 
