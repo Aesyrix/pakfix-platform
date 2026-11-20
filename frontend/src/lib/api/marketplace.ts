@@ -122,7 +122,8 @@ export type BookingAction =
   | 'accept_quote'
   | 'reject_quote'
   | 'mark_done'
-  | 'no_show';
+  | 'no_show'
+  | 'rate_customer';
 
 export interface Booking {
   id: string;

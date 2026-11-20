@@ -26,11 +26,13 @@ import {
   ProCancelDialog,
   ReportDialog,
   RevisedPriceDialog,
+  RateCustomer,
   ReviewSummary,
   currentPositionOrNull,
   errorText,
   type DisputeKind,
 } from '@/components/jobs/JobDialogs';
+import { CustomerRecordCard } from '@/components/jobs/TrackRecordLine';
 import { Button, ButtonLink } from '@/components/ui/Button';
 import { Card, CardBody } from '@/components/ui/Card';
 import { Container } from '@/components/ui/Container';
@@ -125,6 +127,13 @@ function BookingBody({ booking: b, onUpdate }: { booking: Booking; onUpdate: (b:
       </Card>
 
       {b.dispute ? <DisputeStatusCard dispute={b.dispute} /> : null}
+
+      {b.customer_record ? <CustomerRecordCard record={b.customer_record} /> : null}
+      {can('rate_customer') ? (
+        <RateCustomer booking={b} onDone={onUpdate} />
+      ) : b.customer_rating ? (
+        <p className="text-sm text-ink-500">{t('rateCustomerDone', { n: b.customer_rating.rating })}</p>
+      ) : null}
 
       <NextStep booking={b} onUpdate={onUpdate} openDialog={setDialog} openDispute={openDispute} locale={locale} />
 

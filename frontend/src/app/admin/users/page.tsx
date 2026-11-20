@@ -8,6 +8,7 @@ import { AdminPageHeader } from '@/components/admin/AdminShell';
 import { formatAdminDate, initialSearch, Pager, useDebounced } from '@/components/admin/AdminBits';
 import { useT } from '@/components/i18n/LocaleProvider';
 import { Badge } from '@/components/ui/Badge';
+import { TrackRecordLine } from '@/components/jobs/TrackRecordLine';
 import { Button } from '@/components/ui/Button';
 import { Card, CardBody } from '@/components/ui/Card';
 import { EmptyState } from '@/components/ui/EmptyState';
@@ -229,6 +230,39 @@ function UserDetail({ id }: { id: string }) {
           </ul>
         )}
       </div>
+
+      {u.track_record ? (
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div className="rounded-[var(--radius-control)] border border-line p-3">
+            <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-ink-500">{t('As a customer', 'بطور کسٹمر')}</p>
+            <TrackRecordLine record={u.track_record.as_customer} />
+          </div>
+          {u.track_record.as_pro ? (
+            <div className="rounded-[var(--radius-control)] border border-line p-3">
+              <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-ink-500">
+                {t('As a professional', 'بطور پروفیشنل')} · {t(`${u.track_record.as_pro.strikes} strikes`, `${u.track_record.as_pro.strikes} اسٹرائیکس`)}
+              </p>
+              <TrackRecordLine record={u.track_record.as_pro} />
+            </div>
+          ) : null}
+          <p className="text-ink-600 sm:col-span-2">
+            {t(`Reports against them: ${u.track_record.reports_against} (${u.track_record.reports_open} open) · Disputes: ${u.track_record.disputes}`, `ان کے خلاف شکایات: ${u.track_record.reports_against} (${u.track_record.reports_open} کھلی) · تنازعات: ${u.track_record.disputes}`)}
+          </p>
+          {u.track_record.pro_notes.length > 0 ? (
+            <div className="sm:col-span-2">
+              <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-ink-500">{t('Private notes from professionals', 'پروفیشنلز کے نجی نوٹس')}</p>
+              <ul className="flex flex-col gap-1 text-ink-600">
+                {u.track_record.pro_notes.map((n, i) => (
+                  <li key={i}>
+                    {n.at ? `${formatAdminDate(n.at)} · ` : ''}
+                    <span className="font-semibold">{'★'.repeat(n.rating)}</span> · {n.note}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+        </div>
+      ) : null}
 
       {u.reports.length > 0 ? (
         <div>
