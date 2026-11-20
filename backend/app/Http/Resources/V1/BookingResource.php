@@ -9,6 +9,7 @@ use App\Enums\QuoteStatus;
 use App\Models\Booking;
 use App\Services\Marketplace\BookingFlow;
 use App\Services\Marketplace\JobCompletion;
+use App\Services\Marketplace\TrackRecord;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
@@ -152,12 +153,14 @@ class BookingResource extends JsonResource
 
                     return [
                         'id' => $p->uuid,
+                        'slug' => $p->slug,
                         'name' => $p->displayName(),
                         'avatar_url' => $avatar ? Storage::url($avatar) : null,
                         'is_verified' => $p->isVerified(),
                         'rating_average' => round((float) $p->rating_average, 1),
                         'rating_count' => (int) $p->rating_count,
                         'completed_jobs_count' => (int) $p->completed_jobs_count,
+                        'record' => app(TrackRecord::class)->forPro($p),
                     ];
                 }),
             ]),
@@ -167,6 +170,11 @@ class BookingResource extends JsonResource
                     'customer',
                     fn () => strtok((string) $this->customer->name, ' ') ?: null
                 ),
+                'customer_record' => $this->whenLoaded('customer', fn () => app(TrackRecord::class)->forCustomer($this->customer)),
+                // The pro's own rating of this customer, once given.
+                'customer_rating' => $this->relationLoaded('customerRating') && $this->customerRating !== null
+                    ? ['rating' => $this->customerRating->rating]
+                    : null,
             ]),
         ];
     }

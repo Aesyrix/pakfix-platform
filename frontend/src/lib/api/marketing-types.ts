@@ -46,6 +46,8 @@ export interface TechnicianProfile extends TechnicianCard {
   hourly_rate: Money | null;
   verified_at: string | null;
   member_since: string | null;
+  /** Jobs done, cancellations, rating and flags (server TrackRecord). */
+  record?: import('./marketplace').TrackRecord | null;
   service_areas: Array<{ city: string | null; city_slug: string | null; area: string | null }>;
   working_days: string[];
   portfolio: Array<{
@@ -320,6 +322,15 @@ export interface AdminUserDetail extends AdminUser {
   active_bookings: number;
   reports: Array<{ reason: string; details: string | null; status: string; by: string | null; created_at: string }>;
   disputes_lost: number;
+  /** Both sides of their record, strikes, reports, disputes and pros' private notes. */
+  track_record?: {
+    as_customer: import('./marketplace').TrackRecord;
+    as_pro: (import('./marketplace').TrackRecord & { strikes: number }) | null;
+    reports_against: number;
+    reports_open: number;
+    disputes: number;
+    pro_notes: Array<{ rating: number; note: string; at: string | null }>;
+  };
 }
 
 /** One booked job, as the admin sees it. */

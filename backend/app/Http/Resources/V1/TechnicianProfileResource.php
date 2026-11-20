@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Resources\V1;
 
+use App\Services\Marketplace\TrackRecord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -35,6 +36,8 @@ class TechnicianProfileResource extends TechnicianCardResource
             ],
             'verified_at' => $this->verified_at?->toDateString(),
             'member_since' => $this->created_at?->format('F Y'),
+            // Jobs done, cancellations, rating and flags, the same as on offers.
+            'record' => app(TrackRecord::class)->forPro($this->resource),
             'service_areas' => $this->relationLoaded('serviceAreas')
                 ? $this->serviceAreas
                     ->map(fn ($area) => [

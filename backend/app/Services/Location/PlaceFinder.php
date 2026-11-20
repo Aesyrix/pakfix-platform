@@ -53,7 +53,7 @@ class PlaceFinder
 
         $address = $street['address'] ?? null;
         if ($address === null || $address === '') {
-            $address = $city ? "Near {$city->name}" : 'Pinned location';
+            $address = 'Pinned on the map'; // The city is always shown beside it.
         }
 
         return [
@@ -91,6 +91,8 @@ class PlaceFinder
                     'lon' => round($lng, 6),
                     'zoom' => 18,
                     'addressdetails' => 1,
+                    // English street and sector names ("G-9", not the Urdu spelling).
+                    'accept-language' => 'en',
                 ]);
         } catch (\Throwable $e) {
             Log::info('Address lookup failed: '.$e->getMessage());

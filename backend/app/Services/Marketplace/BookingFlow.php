@@ -86,6 +86,10 @@ class BookingFlow
             if ($this->completion()->canDispute($booking, 'technician')) {
                 $actions[] = 'dispute';
             }
+            // A confirmed job: rate the customer, once.
+            if ($status === BookingStatus::CustomerConfirmed && ! $booking->customerRating()->exists()) {
+                $actions[] = 'rate_customer';
+            }
 
             return $actions;
         }

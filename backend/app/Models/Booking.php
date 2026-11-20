@@ -156,6 +156,12 @@ class Booking extends Model
         return $this->hasOne(Review::class);
     }
 
+    /** The professional's rating of the customer on this job. */
+    public function customerRating(): HasOne
+    {
+        return $this->hasOne(CustomerRating::class);
+    }
+
     public function disputes(): HasMany
     {
         return $this->hasMany(Dispute::class);

@@ -10,6 +10,7 @@ import { Initials, ReviewList, StarRating } from '@/components/marketing/Cards';
 import { Breadcrumbs, Section } from '@/components/marketing/PageHeader';
 import { PageLoadError, PageSkeleton } from '@/components/marketing/PageStates';
 import { useFormatDate, useT } from '@/components/i18n/LocaleProvider';
+import { TrackRecordExtras } from '@/components/jobs/TrackRecordLine';
 import { professionalImage } from '@/lib/images';
 import { usePublicData, useResolvedSlug } from '@/hooks/usePublicData';
 import { technicianApi } from '@/lib/api/endpoints';
@@ -108,6 +109,11 @@ export function ProfessionalView({ slug: builtSlug, initial }: { slug: string | 
                 </span>
                 <span className="text-sm text-ink-500">{t(`${professional.completed_jobs_count} ${professional.completed_jobs_count === 1 ? 'job' : 'jobs'} completed`, `${professional.completed_jobs_count} مکمل کام`)}</span>
               </div>
+              {professional.record ? (
+                <div className="mt-3">
+                  <TrackRecordExtras record={professional.record} />
+                </div>
+              ) : null}
 
               <div className="mt-5 flex flex-wrap gap-2">
                 {professional.offers_emergency_service ? (

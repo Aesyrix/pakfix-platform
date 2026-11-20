@@ -681,3 +681,68 @@ export function RevisedPriceDialog({
     </Dialog>
   );
 }
+
+/**
+ * "Rate the customer": shown to the professional once a job is confirmed
+ * (RateCustomerCard). Other pros see the stars as part of the customer's
+ * record; the note goes to PakFix only.
+ */
+export function RateCustomer({ booking, onDone }: { booking: Booking; onDone: (b: Booking) => void }) {
+  const t = useAppText();
+  const toast = useToast();
+  const [rating, setRating] = useState(0);
+  const [note, setNote] = useState('');
+  const [error, setError] = useState<string>();
+  const [busy, setBusy] = useState(false);
+  const starLabels: AppStringKey[] = ['rvStar1', 'rvStar2', 'rvStar3', 'rvStar4', 'rvStar5'];
+
+  async function submit() {
+    if (rating < 1) {
+      setError(t('rateCustomerPick'));
+      return;
+    }
+    setBusy(true);
+    setError(undefined);
+    try {
+      const updated = await proApi.rateCustomer(booking.id, rating, note);
+      toast.success(t('rateCustomerThanks'));
+      onDone(updated);
+    } catch (e) {
+      setError(errorText(e, 'rating'));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <section className="rounded-2xl border border-line bg-surface p-5">
+      <h3 className="font-semibold">{t('rateCustomerTitle')}</h3>
+      <p className="mt-1 text-sm text-ink-600">{t('rateCustomerBody', { name: booking.customer_first_name ?? '' })}</p>
+      <div className="mt-4 flex items-center gap-1" role="radiogroup" aria-label={t('rateCustomerTitle')}>
+        {[1, 2, 3, 4, 5].map((n) => (
+          <button
+            key={n}
+            type="button"
+            role="radio"
+            aria-checked={rating === n}
+            aria-label={t(starLabels[n - 1])}
+            onClick={() => setRating(n)}
+            className="rounded-lg p-1 hover:bg-surface-muted"
+          >
+            <Star className={cn('h-8 w-8', n <= rating ? 'fill-warn-500 text-warn-500' : 'text-ink-300')} aria-hidden="true" />
+          </button>
+        ))}
+        {rating > 0 ? <span className="ms-2 text-sm font-medium text-ink-700">{t(starLabels[rating - 1])}</span> : null}
+      </div>
+      <div className="mt-4 flex flex-col gap-3">
+        <Textarea rows={2} maxLength={500} placeholder={t('rateCustomerNote')} value={note} onChange={(e) => setNote(e.target.value)} />
+        {error ? <p role="alert" className="text-sm text-danger-600">{error}</p> : null}
+        <div>
+          <Button onClick={submit} loading={busy}>
+            {t('rateCustomerSend')}
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
+}

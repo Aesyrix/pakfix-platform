@@ -74,7 +74,7 @@ class PostingLocationTest extends TestCase
     {
         Http::fake(['nominatim.openstreetmap.org/*' => Http::response('', 500)]);
 
-        $this->assertSame('Near Islamabad', $this->postJob(['address_line' => null])->address_line);
+        $this->assertSame('Pinned on the map', $this->postJob(['address_line' => null])->address_line);
     }
 
     public function test_a_pin_far_from_any_pakfix_city_is_refused(): void

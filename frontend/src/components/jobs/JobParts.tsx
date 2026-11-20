@@ -1,9 +1,11 @@
 'use client';
 
 import { Banknote, Check, CircleAlert, Clock, MapPin, Navigation, Star } from 'lucide-react';
+import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { useLocale } from '@/components/i18n/LocaleProvider';
 import { Badge } from '@/components/ui/Badge';
+import { TrackRecordLine } from '@/components/jobs/TrackRecordLine';
 import { Card, CardBody } from '@/components/ui/Card';
 import type { Booking, Money, Offer, ProfessionalCard, RequestState } from '@/lib/api/marketplace';
 import { useAppText, type AppStringKey } from '@/lib/i18n/app-text';
@@ -303,14 +305,21 @@ export function ProSummary({ pro, label }: { pro: ProfessionalCard; label?: stri
         <p className="font-semibold">{pro.name}</p>
         <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-ink-600">
           {pro.is_verified ? <Badge tone="brand">{t('verified')}</Badge> : null}
-          {pro.rating_count > 0 ? (
+          {pro.rating_count > 0 && !pro.record ? (
             <span className="inline-flex items-center gap-1">
               <Star className="h-3.5 w-3.5 fill-warn-500 text-warn-500" aria-hidden="true" />
               {t('ratingCount', { rating: pro.rating_average.toFixed(1), count: pro.rating_count })}
             </span>
           ) : null}
-          {pro.completed_jobs_count > 0 ? <span>{t('jobsDone', { count: pro.completed_jobs_count })}</span> : null}
+          {pro.completed_jobs_count > 0 && !pro.record ? <span>{t('jobsDone', { count: pro.completed_jobs_count })}</span> : null}
         </div>
+        {/* Their track record and a link to their profile and reviews. */}
+        {pro.record ? <TrackRecordLine record={pro.record} className="mt-1.5" /> : null}
+        {pro.slug ? (
+          <Link href={`/professionals/${pro.slug}`} className="mt-1 inline-block text-sm font-semibold text-brand-600 hover:text-brand-700">
+            {t('proProfileView')}
+          </Link>
+        ) : null}
       </div>
     </div>
   );

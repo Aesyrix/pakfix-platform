@@ -15,6 +15,7 @@ use App\Models\QuoteRequest;
 use App\Models\TechnicianProfile;
 use App\Services\Marketplace\Bidding;
 use App\Services\Marketplace\RequestMatcher;
+use App\Services\Marketplace\TrackRecord;
 use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -37,6 +38,10 @@ class ProRequestController extends Controller
         $profile = $this->profile($request);
         $requests = $this->matcher->nearby($profile);
         $this->attachMyQuotes($profile, $requests->all());
+
+        // Each customer's track record, with a few grouped queries for the whole list.
+        $records = app(TrackRecord::class)->forCustomers($requests->pluck('customer_id')->all());
+        $requests->each(fn ($r) => $r->setAttribute('customer_record', $records[$r->customer_id] ?? null));
 
         return ApiResponse::success(JobRequestResource::collection($requests), meta: [
             'radius_km' => $this->matcher->radiusFor($profile),

@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\V1\Marketplace;
 
+use App\Enums\BookingStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\BookingResource;
 use App\Models\Booking;
+use App\Models\CustomerRating;
 use App\Models\TechnicianProfile;
 use App\Services\Marketplace\BookingFlow;
 use App\Services\Marketplace\JobCompletion;
@@ -15,6 +17,7 @@ use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 /**
  * The professional's booked jobs: move each one forward step by step, send a
@@ -23,7 +26,7 @@ use Illuminate\Validation\Rule;
  */
 class ProBookingController extends Controller
 {
-    private const WITH = ['category', 'city', 'customer', 'statusHistory', 'quotes', 'review', 'disputes'];
+    private const WITH = ['category', 'city', 'customer', 'statusHistory', 'quotes', 'review', 'disputes', 'customerRating'];
 
     public function __construct(
         private readonly BookingFlow $flow,
@@ -144,6 +147,39 @@ class ProBookingController extends Controller
         $this->reviews->respond($review, $data['response']);
 
         return $this->respond($booking, 'Reply posted.');
+    }
+
+    /**
+     * `POST /pro/bookings/{uuid}/rate-customer` — `rating` 1–5 and an optional
+     * `note` only PakFix sees. Once per finished job.
+     */
+    public function rateCustomer(Request $request, string $uuid): JsonResponse
+    {
+        $data = $request->validate([
+            'rating' => ['required', 'integer', 'between:1,5'],
+            'note' => ['nullable', 'string', 'max:500'],
+        ], [
+            'rating.required' => 'Choose 1 to 5 stars.',
+            'rating.between' => 'Choose 1 to 5 stars.',
+        ]);
+        $booking = $this->assigned($request, $uuid);
+
+        if ($booking->status !== BookingStatus::CustomerConfirmed) {
+            throw ValidationException::withMessages(['rating' => 'You can rate the customer once the job is confirmed as done.']);
+        }
+        if ($booking->customerRating()->exists()) {
+            throw ValidationException::withMessages(['rating' => 'You have already rated this customer for this job.']);
+        }
+
+        CustomerRating::create([
+            'booking_id' => $booking->id,
+            'customer_id' => $booking->customer_id,
+            'technician_profile_id' => $booking->technician_profile_id,
+            'rating' => (int) $data['rating'],
+            'note' => isset($data['note']) && trim((string) $data['note']) !== '' ? trim((string) $data['note']) : null,
+        ]);
+
+        return $this->respond($booking, 'Thanks. Your rating helps other professionals.');
     }
 
     private function profile(Request $request): TechnicianProfile

@@ -24,6 +24,17 @@ export interface CategoryRef {
   icon: string | null;
 }
 
+/** How someone has behaved on PakFix (server TrackRecord), the same for customers and pros. */
+export interface TrackRecord {
+  member_since: string | null;
+  jobs_done: number;
+  cancellations: number;
+  rating_average: number | null;
+  rating_count: number;
+  /** new · often_cancels · low_rated · top_rated */
+  flags: string[];
+}
+
 export interface ProfessionalCard {
   id: string;
   slug?: string;
@@ -35,6 +46,7 @@ export interface ProfessionalCard {
   completed_jobs_count: number;
   years_experience?: number | null;
   city?: string | null;
+  record?: TrackRecord | null;
 }
 
 /** sent · accepted · rejected · withdrawn · expired */
@@ -89,6 +101,8 @@ export interface JobRequest {
   // A professional looking at it:
   distance_km?: number | null;
   customer_first_name?: string | null;
+  /** The customer's track record (professional view only). */
+  customer_record?: TrackRecord | null;
   my_quote?: Offer | null;
 }
 
@@ -108,7 +122,8 @@ export type BookingAction =
   | 'accept_quote'
   | 'reject_quote'
   | 'mark_done'
-  | 'no_show';
+  | 'no_show'
+  | 'rate_customer';
 
 export interface Booking {
   id: string;
@@ -184,6 +199,10 @@ export interface Booking {
   } | null;
   professional?: ProfessionalCard | null;
   customer_first_name?: string | null;
+  /** The customer's track record (professional view only). */
+  customer_record?: TrackRecord | null;
+  /** The stars this professional gave the customer, once rated. */
+  customer_rating?: { rating: number } | null;
   /** Each status change: who made it and when (loaded on the detail page). */
   timeline?: Array<{ status: string; actor_role: string | null; note: string | null; at: string | null }>;
 }
@@ -323,6 +342,9 @@ export const proApi = {
   dispute: (id: string, kind: 'not_paid' | 'not_done' | 'problem', description: string) =>
     api.post<Booking>(`pro/bookings/${id}/dispute`, { kind, description }),
   respondToReview: (id: string, response: string) => api.post<Booking>(`pro/bookings/${id}/review-response`, { response }),
+  /** Rate the customer (1–5) once the job is confirmed; the note is for PakFix only. */
+  rateCustomer: (id: string, rating: number, note: string | null) =>
+    api.post<Booking>(`pro/bookings/${id}/rate-customer`, { rating, note: note && note.trim() ? note.trim() : null }),
 };
 
 /** Chat between the two people on a booking. */
