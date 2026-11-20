@@ -240,7 +240,9 @@ export interface InboxNotification {
 export interface NewJobRequest {
   service_category_id: string;
   description: string;
-  city_id: number;
+  /** A hint only: the server takes the city from the pin. */
+  city_id?: number | null;
+  /** Filled from the pin on the server when empty. */
   address_line: string;
   landmark: string | null;
   latitude: number;

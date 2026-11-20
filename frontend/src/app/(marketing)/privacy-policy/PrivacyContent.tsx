@@ -15,7 +15,7 @@ const COLLECTED: [string, string, string][] = [
   ['Services offered, working hours, service radius, base location, availability', 'Professionals only', 'To send only matching jobs and show jobs within reach'],
   ['Precise location at "arrived" and "done", and when setting a base location', 'Professionals only, with permission', 'To confirm they were at the job and to measure distance to jobs'],
   ['Where a professional works today: their current location (when they tap "Use my current location", or each time they open Jobs if they turn on "Update automatically") or a city they choose', 'Professionals only, with permission', 'To send them jobs near where they are working that day. Never shown to customers; replaced each time and cleared when they go back to their base'],
-  ['Precise location when posting a job, only if you tap "Use my current location" (otherwise the city centre is used)', 'Customers, with permission', 'To show the job to professionals who are actually nearby'],
+  ['The job\'s place, set by moving a pin on the map (your device\'s location is used only to start the map there, if you allow it)', 'Customers', 'To show the job to professionals who are actually nearby, and to fill in the address'],
   ['Device push token and app language and theme settings', 'App users', 'To send notifications about your jobs and show the app your way'],
   ['Text you type into PakFix AI', 'Anyone who uses it', 'To suggest causes, safety steps and the right service'],
   ['Messages sent through the contact form', 'Anyone who writes to us', 'To answer you'],
@@ -98,6 +98,11 @@ export function PrivacyContent() {
           <strong>Service providers</strong> who process data for us under contract: our web hosting provider (servers and database) and
           Google Firebase Cloud Messaging (to deliver push notifications to your device). The app loads its fonts from Google Fonts, which
           receives your device&apos;s IP address.
+        </li>
+        <li>
+          <strong>OpenStreetMap</strong>: maps in the app and on the website load from OpenStreetMap, which receives your device&apos;s IP
+          address and the map area shown. To fill in a job&apos;s address, our server sends only the pin&apos;s coordinates to
+          OpenStreetMap&apos;s address service, never your name or account.
         </li>
         <li>
           <strong>Authorities</strong>, when the law requires it or to protect someone&apos;s safety.

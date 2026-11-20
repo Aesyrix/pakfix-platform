@@ -4,10 +4,17 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Api\V1\Marketplace;
 
+use App\Services\Location\PlaceFinder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-/** A customer posting a job for nearby professionals to bid on. */
+/**
+ * A customer posting a job for nearby professionals to bid on.
+ *
+ * The map pin decides the place: the city is the PakFix city the pin is in
+ * (a city the client sends is replaced, so a job is never labelled with the
+ * wrong city), and when no address is typed it is filled from the pin.
+ */
 class StoreJobRequestRequest extends FormRequest
 {
     public function authorize(): bool
@@ -23,9 +30,10 @@ class StoreJobRequestRequest extends FormRequest
                 Rule::exists('service_categories', 'uuid')->where('is_active', true),
             ],
             'description' => ['required', 'string', 'min:10', 'max:2000'],
-            'city_id' => ['required', 'integer', 'exists:cities,id'],
+            'city_id' => ['required', 'integer', Rule::exists('cities', 'id')->where('is_served', 1)],
             'area_id' => ['nullable', 'integer', 'exists:areas,id'],
-            'address_line' => ['required', 'string', 'min:5', 'max:255'],
+            // Filled from the pin when left empty; typed details (house, street) win.
+            'address_line' => ['required', 'string', 'min:3', 'max:255'],
             'landmark' => ['nullable', 'string', 'max:255'],
 
             // Pakistan's bounding box, so a mistyped or default (0,0) pin is caught.
@@ -40,9 +48,29 @@ class StoreJobRequestRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation(): void
+    {
+        $lat = $this->input('latitude');
+        $lng = $this->input('longitude');
+        if (! is_numeric($lat) || ! is_numeric($lng)) {
+            return;
+        }
+
+        $places = app(PlaceFinder::class);
+        $merge = ['city_id' => $places->nearestCity((float) $lat, (float) $lng, servedOnly: true)?->id];
+
+        if (trim((string) $this->input('address_line')) === '') {
+            $merge['address_line'] = $places->describe((float) $lat, (float) $lng)['address'];
+        }
+
+        $this->merge($merge);
+    }
+
     public function messages(): array
     {
         return [
+            'city_id.required' => 'PakFix is not taking jobs in this area yet. Move the pin to a city we work in.',
+            'city_id.exists' => 'PakFix is not taking jobs in this area yet. Move the pin to a city we work in.',
             'service_category_id.required' => 'Choose the service you need.',
             'service_category_id.exists' => 'That service is not available.',
             'description.min' => 'Describe the problem in a little more detail, so professionals can price it.',
