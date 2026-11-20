@@ -7,6 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
 import { CategoryIcon } from '@/components/marketing/CategoryIcon';
 import { MoneyBreakdown, OfferStatusBadge, formatTimeLeft, offerRows } from '@/components/jobs/JobParts';
+import { CustomerRecordCard } from '@/components/jobs/TrackRecordLine';
 import { ConfirmDialog, MoneyField, errorText, rupeesToMinor } from '@/components/jobs/JobDialogs';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -100,6 +101,8 @@ function JobBody({ request: r }: { request: JobRequest }) {
           </div>
         </CardBody>
       </Card>
+
+      {r.customer_record ? <CustomerRecordCard record={r.customer_record} /> : null}
 
       {r.my_quote ? (
         <MyOfferCard offer={r.my_quote} requestId={r.id} />

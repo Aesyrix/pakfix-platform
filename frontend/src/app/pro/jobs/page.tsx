@@ -7,6 +7,7 @@ import { AvailabilityStrip, VerificationNotice } from '@/components/account/ProS
 import { describeJobsRadius, useFollowWorkLocation } from '@/components/account/WorkLocationCard';
 import { CategoryIcon } from '@/components/marketing/CategoryIcon';
 import { OfferStatusBadge, formatTimeLeft } from '@/components/jobs/JobParts';
+import { TrackRecordLine } from '@/components/jobs/TrackRecordLine';
 import { Badge } from '@/components/ui/Badge';
 import { Card, CardBody } from '@/components/ui/Card';
 import { Container } from '@/components/ui/Container';
@@ -95,6 +96,7 @@ function JobCard({ request: r }: { request: JobRequest }) {
             {r.my_quote ? <OfferStatusBadge offer={r.my_quote} /> : null}
           </div>
           <p className="line-clamp-3 text-sm text-ink-700">{r.description}</p>
+          {r.customer_record ? <TrackRecordLine record={r.customer_record} /> : null}
           <div className="flex flex-wrap gap-2">
             {r.urgency === 'emergency' ? <Badge tone="danger">{t('urgencyEmergency')}</Badge> : null}
             {r.urgency === 'urgent' ? <Badge tone="warn">{t('urgencyUrgent')}</Badge> : null}
