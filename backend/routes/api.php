@@ -232,6 +232,8 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
                     ->middleware('throttle:10,60,dispute')->name('bookings.dispute');
                 Route::post('bookings/{uuid}/review-response', [Marketplace\ProBookingController::class, 'respondToReview'])
                     ->middleware('permission:reviews.respond')->name('bookings.review.respond');
+                Route::post('bookings/{uuid}/rate-customer', [Marketplace\ProBookingController::class, 'rateCustomer'])
+                    ->middleware('throttle:20,1')->name('bookings.rate-customer');
             });
         });
 

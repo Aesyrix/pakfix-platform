@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Resources\V1;
 
 use App\Models\Quote;
+use App\Services\Marketplace\TrackRecord;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
@@ -56,6 +57,8 @@ class QuoteResource extends JsonResource
                     'completed_jobs_count' => (int) $p->completed_jobs_count,
                     'years_experience' => $p->years_experience,
                     'city' => $p->relationLoaded('city') ? $p->city?->name : null,
+                    // Jobs done, cancellations, rating and flags ("often cancels"), for the customer to weigh.
+                    'record' => app(TrackRecord::class)->forPro($p),
                 ];
             }),
         ];

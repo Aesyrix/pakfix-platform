@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Resources\V1;
 
 use App\Models\QuoteRequest;
+use App\Services\Marketplace\TrackRecord;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -71,6 +72,9 @@ class JobRequestResource extends JsonResource
                     'customer',
                     fn () => strtok((string) $this->customer->name, ' ') ?: null
                 ),
+                // The customer's track record (jobs done, cancellations, rating from pros, flags).
+                'customer_record' => $this->resource->getAttribute('customer_record')
+                    ?? $this->whenLoaded('customer', fn () => app(TrackRecord::class)->forCustomer($this->customer)),
                 'my_quote' => $this->when(
                     $this->resource->relationLoaded('myQuote'),
                     fn () => $this->myQuote ? new QuoteResource($this->myQuote) : null

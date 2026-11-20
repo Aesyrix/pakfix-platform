@@ -10,6 +10,7 @@ use App\Models\Dispute;
 use App\Models\User;
 use App\Models\UserReport;
 use App\Services\Account\AccountModeration;
+use App\Services\Marketplace\TrackRecord;
 use App\Support\ApiResponse;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
@@ -90,6 +91,8 @@ class UserController extends Controller
             'disputes_lost' => $profileId
                 ? Dispute::query()->where('technician_profile_id', $profileId)->where('strike_given', true)->count()
                 : 0,
+            // Both sides of their record, strikes, reports, disputes and pros' private notes.
+            'track_record' => app(TrackRecord::class)->forAdmin($user),
         ]);
     }
 
