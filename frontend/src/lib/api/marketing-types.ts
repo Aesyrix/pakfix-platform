@@ -207,6 +207,8 @@ export interface TriageResult {
     confidence: ConfidenceLevel;
     matched_terms: string[];
   }>;
+  /** "Something else": offered when nothing matched, and as "None of these?" otherwise. */
+  custom_category?: ServiceCategory | null;
   disclaimer: string;
 }
 
