@@ -15,6 +15,7 @@ import { ApiError } from '@/lib/api/client';
 import { triageApi } from '@/lib/api/endpoints';
 import type { SafetyLevel, TriageResult } from '@/lib/api/types';
 import type { CSSProperties } from 'react';
+import { useAppText } from '@/lib/i18n/app-text';
 import { cn } from '@/lib/utils/cn';
 
 const EXAMPLES = [
@@ -413,6 +414,10 @@ function Analyzing() {
 
 function TriageOutcome({ result, description }: { result: TriageResult; description: string }) {
   const t = useT();
+  const appText = useAppText();
+  const somethingElseHref = result.custom_category
+    ? `/dashboard/requests/new?category=${encodeURIComponent(result.custom_category.slug)}&description=${encodeURIComponent(description.slice(0, 2000))}`
+    : null;
   const SAFETY: Record<SafetyLevel, { label: string; tone: 'safe' | 'warn' | 'danger' }> = {
     low: { label: t('Low risk: safe to inspect', 'کم خطرہ: معائنہ محفوظ ہے'), tone: 'safe' },
     medium: { label: t('Medium: take care', 'درمیانہ: احتیاط کریں'), tone: 'warn' },
@@ -510,19 +515,25 @@ function TriageOutcome({ result, description }: { result: TriageResult; descript
               </li>
             ))}
           </ul>
+          {somethingElseHref ? (
+            <Link href={somethingElseHref} className="mt-3 block text-center text-sm font-semibold text-brand-600 hover:text-brand-700">
+              {appText('aiNotListed')}
+            </Link>
+          ) : null}
         </section>
       ) : (
-        <div className="anim-rise rounded-2xl border border-line bg-surface p-5 shadow-card">
-          <div>
-            <p className="font-semibold">{t('We could not match that to a service yet.', 'ہم ابھی اسے کسی خدمت سے نہیں ملا سکے۔')}</p>
-            <p className="mt-1 text-sm text-ink-600">
-              {t('Try naming the appliance or the room, or', 'آلے یا کمرے کا نام بتائیں، یا')}{' '}
-              <Link href="/services" className="font-semibold text-brand-600 hover:text-brand-700">
-                {t('browse every service', 'ہر خدمت دیکھیں')}
-              </Link>
-              .
-            </p>
-          </div>
+        // Nothing fits: post it as "Something else", with the same description (like the app).
+        <div className="anim-rise flex flex-col gap-4 rounded-2xl border border-line bg-surface p-5 shadow-card">
+          <p className="font-semibold">{appText('aiNoMatch')}</p>
+          {somethingElseHref ? (
+            <ButtonLink href={somethingElseHref} className="self-start">
+              {appText('aiPostSomethingElse')}
+            </ButtonLink>
+          ) : (
+            <Link href="/services" className="text-sm font-semibold text-brand-600 hover:text-brand-700">
+              {t('Browse every service', 'ہر خدمت دیکھیں')}
+            </Link>
+          )}
         </div>
       )}
 

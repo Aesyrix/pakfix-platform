@@ -151,7 +151,7 @@ class ProblemTriage
      * category slug => keywords. Longer, more specific phrases score higher.
      */
     private const CATEGORY_KEYWORDS = [
-        'ac-hvac' => ['ac', 'air conditioner', 'air conditioning', 'not cooling', 'split ac', 'inverter ac', 'ac gas', 'cooling', 'ac service', 'ac leaking'],
+        'ac-hvac' => ['ac', 'air conditioner', 'air conditioning', 'split ac', 'inverter ac', 'ac gas', 'ac service', 'ac leaking'],
         'plumbing' => ['leak', 'leaking', 'tap', 'faucet', 'pipe', 'drain', 'blocked', 'sink', 'toilet', 'flush', 'commode', 'shower', 'nalka', 'water pressure', 'geyser', 'water heater'],
         'electrical' => ['breaker', 'tripping', 'trips', 'socket', 'switch', 'wiring', 'light', 'fan', 'bulb', 'electric', 'bijli', 'short circuit', 'voltage', 'db box'],
         'refrigerator-repair' => ['fridge', 'refrigerator', 'freezer', 'deep freezer'],
@@ -208,6 +208,14 @@ class ProblemTriage
         $emergency = $this->detectEmergency($text);
         $matches = $this->matchCategories($text);
 
+        // Nothing recognised: try the services' own names, then small typos.
+        if ($matches->isEmpty()) {
+            $matches = $this->matchCategoryNames($text);
+        }
+        if ($matches->isEmpty()) {
+            $matches = $this->matchTypos($text);
+        }
+
         // An emergency's own category always leads, whatever else matched.
         if ($emergency !== null) {
             $matches = $matches->reject(fn (array $m) => $m['category']->slug === $emergency['category_slug']);
@@ -227,12 +235,86 @@ class ProblemTriage
             'emergency' => $emergency,
             'safety_level' => $this->safetyLevel($emergency, $matches)->value,
             'matches' => $matches->take(3)->values()->all(),
+            // "Something else": offered when nothing matched, and as "Not listed?" otherwise.
+            'custom_category' => ServiceCategory::query()->where('is_custom', true)->where('is_active', true)->first(),
         ];
+    }
+
+    /**
+     * Matches a category whose own name (or trade name) appears in the
+     * text, so a service an admin adds later is found without new keywords.
+     *
+     * @return Collection<int, array{category: ServiceCategory, score: int, confidence: string, matched_terms: list<string>}>
+     */
+    private function matchCategoryNames(string $text): Collection
+    {
+        return ServiceCategory::listed()->get()
+            ->map(function (ServiceCategory $category) use ($text) {
+                $names = array_filter([$category->name, $category->trade_name]);
+                $hit = collect($names)->first(fn (string $name) => mb_strlen(trim($name)) >= 3 && $this->contains($text, $name));
+
+                return $hit === null ? null : [
+                    'category' => $category,
+                    'score' => 20,
+                    'confidence' => 'medium',
+                    'matched_terms' => [mb_strtolower($hit)],
+                ];
+            })
+            ->filter()
+            ->values();
+    }
+
+    /**
+     * Last resort for typing slips ("refrigrator", "plumbr"): a word of five
+     * or more letters one letter away from a keyword (two for long words).
+     * Only Latin-script words; Urdu spelling varies too much for this.
+     *
+     * @return Collection<int, array{category: ServiceCategory, score: int, confidence: string, matched_terms: list<string>}>
+     */
+    private function matchTypos(string $text): Collection
+    {
+        $words = array_unique(array_filter(
+            preg_split('/\s+/u', trim($text)) ?: [],
+            fn (string $w) => preg_match('/^[a-z]{5,}$/', $w) === 1,
+        ));
+        if ($words === []) {
+            return collect();
+        }
+
+        $scores = [];
+        foreach ($this->categoryKeywords() as $slug => $keywords) {
+            foreach ($keywords as $keyword) {
+                if (preg_match('/^[a-z]{5,}$/', $keyword) !== 1) {
+                    continue;
+                }
+                foreach ($words as $word) {
+                    $allowed = strlen($keyword) >= 8 ? 2 : 1;
+                    if ($word !== $keyword && levenshtein($word, $keyword) <= $allowed) {
+                        $scores[$slug]['score'] = ($scores[$slug]['score'] ?? 0) + 5;
+                        $scores[$slug]['terms'][] = $keyword;
+                    }
+                }
+            }
+        }
+
+        return $this->ranked($scores, $text);
+    }
+
+    /** @return array<string, list<string>> English keywords plus Urdu and Roman Urdu ones. */
+    private function categoryKeywords(): array
+    {
+        $all = self::CATEGORY_KEYWORDS;
+        foreach (LocalVocabulary::CATEGORIES as $slug => $words) {
+            $all[$slug] = array_merge($all[$slug] ?? [], $words);
+        }
+
+        return $all;
     }
 
     private function detectEmergency(string $text): ?array
     {
         foreach (self::EMERGENCIES as $type => [$title, $keywords, $steps, $categorySlug]) {
+            $keywords = array_merge($keywords, LocalVocabulary::EMERGENCIES[$type] ?? []);
             if ($this->matchesAnyPhrase($text, $keywords) || $this->matchesAnyRule($text, self::EMERGENCY_RULES[$type] ?? [])) {
                 return [
                     'type' => $type,
@@ -283,16 +365,38 @@ class ProblemTriage
     {
         $scores = [];
 
-        foreach (self::CATEGORY_KEYWORDS as $slug => $keywords) {
+        foreach ($this->categoryKeywords() as $slug => $keywords) {
             foreach ($keywords as $keyword) {
                 if ($this->contains($text, $keyword)) {
-                    // Multi-word phrases are stronger evidence than one word.
-                    $scores[$slug]['score'] = ($scores[$slug]['score'] ?? 0) + 10 * max(1, str_word_count($keyword));
+                    // Multi-word phrases are stronger evidence than one word (any script).
+                    $words = count(preg_split('/\s+/u', trim($keyword)) ?: [$keyword]);
+                    $scores[$slug]['score'] = ($scores[$slug]['score'] ?? 0) + 10 * max(1, $words);
                     $scores[$slug]['terms'][] = $keyword;
                 }
             }
         }
 
+        // Shared symptoms ("not cooling") count for little: the thing named decides.
+        foreach (LocalVocabulary::WEAK as $slug => $keywords) {
+            foreach ($keywords as $keyword) {
+                if ($this->contains($text, $keyword)) {
+                    $scores[$slug]['score'] = ($scores[$slug]['score'] ?? 0) + 3;
+                    $scores[$slug]['terms'][] = $keyword;
+                }
+            }
+        }
+
+        return $this->ranked($scores, $text);
+    }
+
+    /**
+     * Turns scores per category slug into ranked matches.
+     *
+     * @param  array<string, array{score: int, terms: list<string>}>  $scores
+     * @return Collection<int, array{category: ServiceCategory, score: int, confidence: string, matched_terms: list<string>}>
+     */
+    private function ranked(array $scores, string $text): Collection
+    {
         if ($scores === []) {
             return collect();
         }
@@ -304,7 +408,7 @@ class ProblemTriage
 
         // "Car AC not cooling" is about the car: when a vehicle is named and a
         // Car & Bike category matched, the home ones (AC, electrical, locks) drop out.
-        $aboutVehicle = collect(self::VEHICLE_WORDS)->contains(fn (string $word) => $this->contains($text, $word))
+        $aboutVehicle = collect([...self::VEHICLE_WORDS, ...LocalVocabulary::VEHICLE_WORDS])->contains(fn (string $word) => $this->contains($text, $word))
             && $categories->contains(fn (ServiceCategory $c) => $c->section === 'vehicle');
 
         return collect($scores)
@@ -341,19 +445,32 @@ class ProblemTriage
         };
     }
 
+    /**
+     * Lower case, letters and digits of any script kept, everything else a
+     * space. Urdu is folded to one spelling: Arabic yeh/kaf/teh marbuta
+     * become their Urdu forms and diacritics (zabar, zer, pesh...) go.
+     */
     private function normalise(string $text): string
     {
-        return ' ' . Str::of($text)->lower()->replaceMatches('/[^a-z0-9\s\-]/u', ' ')->squish() . ' ';
+        $folded = strtr(mb_strtolower($text), [
+            'ي' => 'ی', 'ى' => 'ی', 'ئ' => 'ی', 'ك' => 'ک', 'ة' => 'ہ', 'ۃ' => 'ہ', 'ه' => 'ہ', 'أ' => 'ا', 'إ' => 'ا', 'آ' => 'ا',
+        ]);
+        $folded = preg_replace('/\p{Mn}/u', '', $folded) ?? $folded;
+
+        return ' ' . Str::of($folded)->replaceMatches('/[^\p{L}\p{N}\s\-]/u', ' ')->squish() . ' ';
     }
 
     /**
-     * Whole-word match, so "ac" does not fire on "back" or "place". A plural
-     * ending is allowed, so "cockroach" matches "cockroaches".
+     * Whole-word match in any script, so "ac" does not fire on "back" or
+     * "place". A plural ending is allowed, so "cockroach" matches "cockroaches".
      */
     private function contains(string $text, string $keyword): bool
     {
         $needle = preg_quote(trim($this->normalise($keyword)), '/');
+        if ($needle === '') {
+            return false;
+        }
 
-        return preg_match('/(?<![a-z0-9])' . $needle . '(?:e?s)?(?![a-z0-9])/', $text) === 1;
+        return preg_match('/(?<![\p{L}\p{N}])' . $needle . '(?:e?s)?(?![\p{L}\p{N}])/u', $text) === 1;
     }
 }
