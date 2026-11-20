@@ -3,7 +3,7 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { CalendarCheck, Clock, MapPin, Radio, XCircle } from 'lucide-react';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
 import { CategoryIcon } from '@/components/marketing/CategoryIcon';
 import {
@@ -228,6 +228,7 @@ function BookedCard({ booking, offer }: { booking: NonNullable<JobRequest['booki
 function OfferCard({ offer, canAct, onChanged }: { offer: Offer; canAct: boolean; onChanged: () => void }) {
   const t = useAppText();
   const toast = useToast();
+  const router = useRouter();
   const [confirm, setConfirm] = useState(false);
   const [busy, setBusy] = useState(false);
   const pro = offer.professional;
@@ -270,8 +271,11 @@ function OfferCard({ offer, canAct, onChanged }: { offer: Offer; canAct: boolean
         confirmLabel={t('bidAccept')}
         onConfirm={async () => {
           try {
-            await customerApi.acceptOffer(offer.id);
+            const { booking } = await customerApi.acceptOffer(offer.id);
             onChanged();
+            // Booked: go straight to the job, like the app.
+            toast.success(t('acceptedOpening'));
+            router.push(`/dashboard/bookings/view?id=${booking.id}`);
           } catch (e) {
             toast.error(errorText(e));
           }
