@@ -498,17 +498,17 @@ function TriageOutcome({ result, description }: { result: TriageResult; descript
                         </p>
                       </div>
                     </div>
-                    <div className="flex flex-wrap gap-2">
-                      <ButtonLink href={`/services/${match.category.slug}`} variant="secondary" size="sm">
-                        {t('About this service', 'اس خدمت کے بارے میں')}
-                      </ButtonLink>
-                      {/* Like the app: the description and the suggested service carry into the job post. */}
+                    {/* One clear next step (like the app); more about the service is a small link. */}
+                    <div className="flex flex-col items-stretch gap-1 sm:items-end">
                       <ButtonLink
                         href={`/dashboard/requests/new?category=${encodeURIComponent(match.category.slug)}&description=${encodeURIComponent(description.slice(0, 2000))}`}
                         size="sm"
                       >
                         {t('Post a request', 'درخواست دیں')}
                       </ButtonLink>
+                      <Link href={`/services/${match.category.slug}`} className="text-center text-sm font-semibold text-brand-600 hover:text-brand-700">
+                        {t('About this service', 'اس خدمت کے بارے میں')}
+                      </Link>
                     </div>
                   </div>
                 </div>
