@@ -181,9 +181,19 @@ export const locationApi = {
   cities: (served = false) =>
     api.get<City[]>('locations/cities', { ...PUBLIC, query: { served: served ? 1 : undefined } }),
   city: (slug: string) => api.get<City>(`locations/cities/${slug}`, PUBLIC),
+  /** What a map pin points at: a short address, the nearest city and whether PakFix works there (signed in). */
+  reverse: (latitude: number, longitude: number) =>
+    api.get<PinPlace>('locations/reverse', { query: { latitude, longitude } }),
   areas: (citySlug: string, search?: string) =>
     api.get<City['areas']>(`locations/cities/${citySlug}/areas`, { token: null, query: { q: search } }),
 };
+
+export interface PinPlace {
+  address: string;
+  area: string | null;
+  city: { id: number; name: string; is_served: boolean } | null;
+  served: boolean;
+}
 
 export interface TechnicianFilters {
   city?: string;
