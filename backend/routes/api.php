@@ -60,6 +60,8 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
     Route::prefix('locations')->name('locations.')->group(function (): void {
         Route::get('provinces', [LocationController::class, 'provinces'])->name('provinces');
         Route::get('cities', [LocationController::class, 'cities'])->name('cities');
+        // Before cities/{slug}. Signed in only: it may call an outside address service.
+        Route::get('reverse', [LocationController::class, 'reverse'])->middleware(['auth:sanctum', 'throttle:30,1,reverse-geocode'])->name('reverse');
         Route::get('cities/{slug}', [LocationController::class, 'city'])->name('city');
         Route::get('cities/{citySlug}/areas', [LocationController::class, 'areas'])->name('areas');
     });

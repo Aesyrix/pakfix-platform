@@ -6,6 +6,7 @@ namespace App\Services\Marketplace;
 
 use App\Models\City;
 use App\Models\TechnicianProfile;
+use App\Services\Location\PlaceFinder;
 use Illuminate\Validation\Rule;
 
 /**
@@ -25,9 +26,6 @@ use Illuminate\Validation\Rule;
 class WorkLocation
 {
     public const MODES = ['here', 'city', 'base'];
-
-    /** A position is labelled with the nearest city within this distance. */
-    private const LABEL_CITY_KM = 60;
 
     /**
      * Validation rules for `PATCH /pro/work-location`.
@@ -93,7 +91,8 @@ class WorkLocation
                 'work_latitude' => $lat,
                 'work_longitude' => $lng,
                 'work_location_source' => TechnicianProfile::WORK_HERE,
-                'work_city_id' => $this->nearestCity($lat, $lng)?->id,
+                // Labelled with the nearest city.
+                'work_city_id' => app(PlaceFinder::class)->nearestCity($lat, $lng)?->id,
                 'work_location_at' => now(),
             ]);
         }
@@ -127,28 +126,5 @@ class WorkLocation
             'follow_location' => (bool) $profile->follow_location,
             'service_radius_km' => app(RequestMatcher::class)->radiusFor($profile),
         ];
-    }
-
-    /** The nearest active city within LABEL_CITY_KM, for the label. */
-    private function nearestCity(float $lat, float $lng): ?City
-    {
-        return City::query()
-            ->where('is_active', true)
-            ->whereNotNull('latitude')
-            ->whereNotNull('longitude')
-            ->get(['id', 'name', 'latitude', 'longitude'])
-            ->map(fn (City $c) => [$c, $this->km($lat, $lng, (float) $c->latitude, (float) $c->longitude)])
-            ->filter(fn (array $p) => $p[1] <= self::LABEL_CITY_KM)
-            ->sortBy(fn (array $p) => $p[1])
-            ->first()[0] ?? null;
-    }
-
-    private function km(float $lat1, float $lng1, float $lat2, float $lng2): float
-    {
-        $dLat = deg2rad($lat2 - $lat1);
-        $dLng = deg2rad($lng2 - $lng1);
-        $a = sin($dLat / 2) ** 2 + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * sin($dLng / 2) ** 2;
-
-        return 6371 * 2 * atan2(sqrt($a), sqrt(1 - $a));
     }
 }

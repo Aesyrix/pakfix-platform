@@ -11,6 +11,7 @@ use App\Http\Resources\V1\ProvinceResource;
 use App\Models\Area;
 use App\Models\City;
 use App\Models\Province;
+use App\Services\Location\PlaceFinder;
 use App\Support\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -51,6 +52,23 @@ class LocationController extends Controller
         );
 
         return ApiResponse::success(CityResource::collection($cities));
+    }
+
+    /**
+     * `GET /locations/reverse?latitude=&longitude=` — what a map pin points
+     * at: a short address, the nearest city and whether PakFix works there.
+     */
+    public function reverse(Request $request, PlaceFinder $places): JsonResponse
+    {
+        $data = $request->validate([
+            'latitude' => ['required', 'numeric', 'between:23.5,37.5'],
+            'longitude' => ['required', 'numeric', 'between:60.5,77.9'],
+        ], [
+            'latitude.between' => 'That place is outside Pakistan.',
+            'longitude.between' => 'That place is outside Pakistan.',
+        ]);
+
+        return ApiResponse::success($places->describe((float) $data['latitude'], (float) $data['longitude']));
     }
 
     public function city(string $slug): JsonResponse

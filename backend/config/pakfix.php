@@ -50,6 +50,14 @@ return [
         'tax_percentage' => (float) env('PLATFORM_TAX_PERCENT', 0),
     ],
 
+    // Street address for a map pin (OpenStreetMap Nominatim, called from the server only).
+    'geocoding' => [
+        'enabled' => (bool) env('PAKFIX_GEOCODING', true),
+        'reverse_url' => env('PAKFIX_GEOCODING_URL', 'https://nominatim.openstreetmap.org/reverse'),
+        'user_agent' => 'PakFix/1.0 (+https://pakfix.pk)',
+        'timeout' => 4,
+    ],
+
     'matching' => [
         // Every weight is configurable; the matcher normalises them.
         'default_radius_km' => 15,
