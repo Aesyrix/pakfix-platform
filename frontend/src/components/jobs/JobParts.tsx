@@ -305,7 +305,7 @@ export function ProSummary({ pro, label }: { pro: ProfessionalCard; label?: stri
         <p className="font-semibold">{pro.name}</p>
         <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-ink-600">
           {pro.is_verified ? <Badge tone="brand">{t('verified')}</Badge> : null}
-          {pro.rating_count > 0 ? (
+          {pro.rating_count > 0 && !pro.record ? (
             <span className="inline-flex items-center gap-1">
               <Star className="h-3.5 w-3.5 fill-warn-500 text-warn-500" aria-hidden="true" />
               {t('ratingCount', { rating: pro.rating_average.toFixed(1), count: pro.rating_count })}
