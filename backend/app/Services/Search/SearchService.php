@@ -9,6 +9,7 @@ use App\Models\Faq;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Models\TechnicianProfile;
+use App\Services\Triage\ProblemTriage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
@@ -41,11 +42,18 @@ class SearchService
             ];
         }
 
+        // Services named in the words, plus what "Check my problem" understands
+        // (Urdu script, Roman Urdu, symptoms, typos), best first.
+        $named = $this->matching(ServiceCategory::listed(), ['name', 'description', 'trade_name'], $term)
+            ->orderBy('sort_order')
+            ->limit($perType)
+            ->get();
+        $understood = collect(app(ProblemTriage::class)->triage($term)['matches'])
+            ->pluck('category')
+            ->filter(fn (ServiceCategory $c) => ! $c->is_custom);
+
         return [
-            'categories' => $this->matching(ServiceCategory::listed(), ['name', 'description', 'trade_name'], $term)
-                ->orderBy('sort_order')
-                ->limit($perType)
-                ->get(),
+            'categories' => $understood->concat($named)->unique('id')->take($perType)->values(),
 
             'services' => $this->matching(Service::active()->with('category'), ['name', 'description'], $term)
                 ->limit($perType)

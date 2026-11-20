@@ -48,6 +48,10 @@ class TriageController extends Controller
                 'confidence' => $match['confidence'],
                 'matched_terms' => $match['matched_terms'],
             ])->all(),
+            // "Something else": the job to post when nothing matched, or when no match fits.
+            'custom_category' => $result['custom_category'] === null
+                ? null
+                : (new ServiceCategoryResource($result['custom_category']))->resolve($request),
             'disclaimer' => 'This is an automatic first check based on the words you used. It is not a diagnosis. A professional confirms the cause on site.',
         ]);
     }
